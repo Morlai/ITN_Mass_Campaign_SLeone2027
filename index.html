@@ -58,7 +58,6 @@ body {
     margin-top: 40px;
 }
 
-/* ✅ LOGO IMAGE */
 .logo {
     text-align: center;
     margin-bottom: 10px;
@@ -66,7 +65,6 @@ body {
 
 .logo img {
     width: 70px;
-    height: auto;
 }
 
 /* Inputs */
@@ -75,15 +73,14 @@ body {
     padding: 12px;
     margin: 8px 0;
     border: 1px solid #ccc;
-    outline: none;
 }
 
+/* Password */
 .password-wrapper {
     position: relative;
 }
 
 .password-wrapper input {
-    width: 100%;
     padding-right: 40px;
 }
 
@@ -93,9 +90,9 @@ body {
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    color: #555;
 }
 
+/* Buttons */
 .btn {
     width: 100%;
     padding: 12px;
@@ -104,8 +101,16 @@ body {
     color: white;
     font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
 }
 
+/* Hover Effects */
+.btn:hover {
+    transform: scale(1.03);
+    opacity: 0.9;
+}
+
+/* Colors */
 .login { background: #2E86C1; }
 .scan { background: #1E8449; }
 
@@ -124,6 +129,12 @@ body {
     color: white;
     font-size: 12px;
     font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
 }
 
 .card i {
@@ -131,6 +142,7 @@ body {
     margin-bottom: 10px;
 }
 
+/* Card colors */
 .network { background: #D35400; }
 .export { background: #2E86C1; }
 .verify { background: #8E44AD; }
@@ -178,53 +190,49 @@ body {
 
     <div class="content">
 
-        <!-- LOGIN -->
         <div class="login-card">
 
-            <!-- ✅ IMAGE LOGO HERE -->
             <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+                <img src="ICF-SL Logo.jpg">
             </div>
 
-            <input class="input" placeholder="USERNAME">
+            <input id="username" class="input" placeholder="USERNAME">
 
             <div class="password-wrapper">
                 <input id="password" class="input" type="password" placeholder="PASSWORD">
                 <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
             </div>
 
-            <button class="btn login">LOGIN</button>
-            <button class="btn scan">SCAN BADGE</button>
+            <button id="loginBtn" class="btn login">LOGIN</button>
+            <button id="scanBtn" class="btn scan">SCAN BADGE</button>
         </div>
 
-        <!-- CARDS -->
         <div class="cards">
 
-            <div class="card network">
+            <div class="card network" id="networkCard">
                 <i class="fa-solid fa-wifi"></i>
-                NETWORK CHECK
+                <span>NETWORK CHECK</span>
             </div>
 
-            <div class="card export">
+            <div class="card export" id="exportCard">
                 <i class="fa-solid fa-download"></i>
-                EXPORT CAMPAIGN LOGS
+                <span>EXPORT CAMPAIGN LOGS</span>
             </div>
 
-            <div class="card verify">
+            <div class="card verify" id="verifyCard">
                 <i class="fa-solid fa-fingerprint"></i>
-                VERIFY BENEFICIARY PRINT
+                <span>VERIFY BENEFICIARY PRINT</span>
             </div>
 
-            <div class="card language">
+            <div class="card language" onclick="toggleLanguage()">
                 <i class="fa-solid fa-language"></i>
-                LANGUAGE
+                <span id="langText">LANGUAGE</span>
             </div>
 
         </div>
 
     </div>
 
-    <!-- CURVE -->
     <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
         <path d="
             M0,65
@@ -237,10 +245,9 @@ body {
             fill="#1E8449"/>
     </svg>
 
-    <!-- FOOTER -->
     <div class="footer">
-        <h4>Developed By</h4>
-        <p>Informatic Consultancy Firm-SL@2026</p>
+        <h4 id="devText">Developed By</h4>
+        <p id="companyText">Informatic Consultancy Firm-SL@2026</p>
     </div>
 
 </div>
@@ -256,6 +263,39 @@ function togglePassword() {
     } else {
         password.type = "password";
         icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
+}
+
+/* 🌍 Language Toggle */
+let isEnglish = true;
+
+function toggleLanguage() {
+    isEnglish = !isEnglish;
+
+    if (!isEnglish) {
+        document.getElementById("username").placeholder = "NOM D'UTILISATEUR";
+        document.getElementById("password").placeholder = "MOT DE PASSE";
+        document.getElementById("loginBtn").innerText = "CONNEXION";
+        document.getElementById("scanBtn").innerText = "SCANNER BADGE";
+
+        document.getElementById("networkCard").querySelector("span").innerText = "RÉSEAU";
+        document.getElementById("exportCard").querySelector("span").innerText = "EXPORTER LES DONNÉES";
+        document.getElementById("verifyCard").querySelector("span").innerText = "VÉRIFIER BÉNÉFICIAIRE";
+        document.getElementById("langText").innerText = "LANGUE";
+
+        document.getElementById("devText").innerText = "Développé Par";
+    } else {
+        document.getElementById("username").placeholder = "USERNAME";
+        document.getElementById("password").placeholder = "PASSWORD";
+        document.getElementById("loginBtn").innerText = "LOGIN";
+        document.getElementById("scanBtn").innerText = "SCAN BADGE";
+
+        document.getElementById("networkCard").querySelector("span").innerText = "NETWORK CHECK";
+        document.getElementById("exportCard").querySelector("span").innerText = "EXPORT CAMPAIGN LOGS";
+        document.getElementById("verifyCard").querySelector("span").innerText = "VERIFY BENEFICIARY PRINT";
+        document.getElementById("langText").innerText = "LANGUAGE";
+
+        document.getElementById("devText").innerText = "Developed By";
     }
 }
 </script>
