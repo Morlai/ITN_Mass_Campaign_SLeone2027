@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>ITNs Campaign Login</title>
 
-<!-- ICON LIBRARY -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
@@ -24,7 +23,6 @@ body {
     height: 100vh;
 }
 
-/* Container */
 .container {
     width: 360px;
     height: 720px;
@@ -34,7 +32,6 @@ body {
     position: relative;
 }
 
-/* Background */
 .bg {
     position: absolute;
     inset: 0;
@@ -48,14 +45,12 @@ body {
     background: rgba(0,0,0,0.45);
 }
 
-/* Content */
 .content {
     position: relative;
     z-index: 2;
     padding: 20px;
 }
 
-/* Login Card */
 .login-card {
     background: rgba(255,255,255,0.92);
     border-radius: 10px;
@@ -63,13 +58,18 @@ body {
     margin-top: 40px;
 }
 
+/* ✅ LOGO IMAGE */
 .logo {
     text-align: center;
-    font-size: 28px;
-    color: #C0392B;
     margin-bottom: 10px;
 }
 
+.logo img {
+    width: 70px;
+    height: auto;
+}
+
+/* Inputs */
 .input {
     width: 100%;
     padding: 12px;
@@ -78,7 +78,6 @@ body {
     outline: none;
 }
 
-/* Password wrapper */
 .password-wrapper {
     position: relative;
 }
@@ -88,7 +87,6 @@ body {
     padding-right: 40px;
 }
 
-/* Eye icon */
 .eye-icon {
     position: absolute;
     right: 12px;
@@ -98,7 +96,6 @@ body {
     color: #555;
 }
 
-/* Buttons */
 .btn {
     width: 100%;
     padding: 12px;
@@ -109,12 +106,10 @@ body {
     cursor: pointer;
 }
 
-/* 🔵 Login now matches export color */
 .login { background: #2E86C1; }
-
 .scan { background: #1E8449; }
 
-/* Cards Grid */
+/* Cards */
 .cards {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -122,7 +117,6 @@ body {
     margin-top: 25px;
 }
 
-/* Card */
 .card {
     border-radius: 12px;
     padding: 18px 10px;
@@ -137,7 +131,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Colors */
 .network { background: #D35400; }
 .export { background: #2E86C1; }
 .verify { background: #8E44AD; }
@@ -174,7 +167,6 @@ body {
     text-decoration: underline;
     font-weight: bold;
 }
-
 </style>
 </head>
 
@@ -188,11 +180,14 @@ body {
 
         <!-- LOGIN -->
         <div class="login-card">
-            <div class="logo"><i class="fa-solid fa-circle-notch"></i></div>
+
+            <!-- ✅ IMAGE LOGO HERE -->
+            <div class="logo">
+                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+            </div>
 
             <input class="input" placeholder="USERNAME">
 
-            <!-- PASSWORD WITH EYE -->
             <div class="password-wrapper">
                 <input id="password" class="input" type="password" placeholder="PASSWORD">
                 <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
@@ -202,7 +197,7 @@ body {
             <button class="btn scan">SCAN BADGE</button>
         </div>
 
-        <!-- ACTION CARDS -->
+        <!-- CARDS -->
         <div class="cards">
 
             <div class="card network">
@@ -250,7 +245,6 @@ body {
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 function togglePassword() {
     const password = document.getElementById("password");
@@ -258,12 +252,10 @@ function togglePassword() {
 
     if (password.type === "password") {
         password.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        icon.classList.replace("fa-eye", "fa-eye-slash");
     } else {
         password.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        icon.classList.replace("fa-eye-slash", "fa-eye");
     }
 }
 </script>
