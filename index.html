@@ -104,13 +104,11 @@ body {
     transition: 0.3s;
 }
 
-/* Hover Effects */
 .btn:hover {
     transform: scale(1.03);
     opacity: 0.9;
 }
 
-/* Colors */
 .login { background: #2E86C1; }
 .scan { background: #1E8449; }
 
@@ -142,7 +140,6 @@ body {
     margin-bottom: 10px;
 }
 
-/* Card colors */
 .network { background: #D35400; }
 .export { background: #2E86C1; }
 .verify { background: #8E44AD; }
@@ -190,10 +187,11 @@ body {
 
     <div class="content">
 
+        <!-- LOGIN -->
         <div class="login-card">
 
             <div class="logo">
-                <img src="ICF-SL Logo.jpg">
+                <img src="ICF-SL Logo.jpg" alt="Logo">
             </div>
 
             <input id="username" class="input" placeholder="USERNAME">
@@ -207,6 +205,7 @@ body {
             <button id="scanBtn" class="btn scan">SCAN BADGE</button>
         </div>
 
+        <!-- CARDS -->
         <div class="cards">
 
             <div class="card network" id="networkCard">
@@ -233,6 +232,7 @@ body {
 
     </div>
 
+    <!-- CURVE -->
     <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
         <path d="
             M0,65
@@ -245,14 +245,18 @@ body {
             fill="#1E8449"/>
     </svg>
 
+    <!-- FOOTER -->
     <div class="footer">
         <h4 id="devText">Developed By</h4>
-        <p id="companyText">Informatic Consultancy Firm-SL@2026</p>
+        <p>Informatic Consultancy Firm-SL@2026</p>
     </div>
 
 </div>
 
 <script>
+let isEnglish = true;
+
+/* PASSWORD TOGGLE */
 function togglePassword() {
     const password = document.getElementById("password");
     const icon = document.querySelector(".eye-icon");
@@ -266,38 +270,53 @@ function togglePassword() {
     }
 }
 
-/* 🌍 Language Toggle */
-let isEnglish = true;
-
+/* 🌍 LANGUAGE SWITCH */
 function toggleLanguage() {
     isEnglish = !isEnglish;
 
     if (!isEnglish) {
-        document.getElementById("username").placeholder = "NOM D'UTILISATEUR";
-        document.getElementById("password").placeholder = "MOT DE PASSE";
-        document.getElementById("loginBtn").innerText = "CONNEXION";
-        document.getElementById("scanBtn").innerText = "SCANNER BADGE";
+        username.placeholder = "Nom d'utilisateur";
+        password.placeholder = "Mot de passe";
+        loginBtn.innerText = "CONNEXION";
+        scanBtn.innerText = "SCANNER BADGE";
 
-        document.getElementById("networkCard").querySelector("span").innerText = "RÉSEAU";
-        document.getElementById("exportCard").querySelector("span").innerText = "EXPORTER LES DONNÉES";
-        document.getElementById("verifyCard").querySelector("span").innerText = "VÉRIFIER BÉNÉFICIAIRE";
-        document.getElementById("langText").innerText = "LANGUE";
-
-        document.getElementById("devText").innerText = "Développé Par";
+        networkCard.querySelector("span").innerText = "RÉSEAU";
+        exportCard.querySelector("span").innerText = "EXPORTER LES DONNÉES";
+        verifyCard.querySelector("span").innerText = "VÉRIFIER BÉNÉFICIAIRE";
+        langText.innerText = "LANGUE";
+        devText.innerText = "Développé Par";
     } else {
-        document.getElementById("username").placeholder = "USERNAME";
-        document.getElementById("password").placeholder = "PASSWORD";
-        document.getElementById("loginBtn").innerText = "LOGIN";
-        document.getElementById("scanBtn").innerText = "SCAN BADGE";
+        username.placeholder = "USERNAME";
+        password.placeholder = "PASSWORD";
+        loginBtn.innerText = "LOGIN";
+        scanBtn.innerText = "SCAN BADGE";
 
-        document.getElementById("networkCard").querySelector("span").innerText = "NETWORK CHECK";
-        document.getElementById("exportCard").querySelector("span").innerText = "EXPORT CAMPAIGN LOGS";
-        document.getElementById("verifyCard").querySelector("span").innerText = "VERIFY BENEFICIARY PRINT";
-        document.getElementById("langText").innerText = "LANGUAGE";
-
-        document.getElementById("devText").innerText = "Developed By";
+        networkCard.querySelector("span").innerText = "NETWORK CHECK";
+        exportCard.querySelector("span").innerText = "EXPORT CAMPAIGN LOGS";
+        verifyCard.querySelector("span").innerText = "VERIFY BENEFICIARY PRINT";
+        langText.innerText = "LANGUAGE";
+        devText.innerText = "Developed By";
     }
 }
+
+/* ✍️ INPUT FORMAT BASED ON LANGUAGE */
+function formatInput(value) {
+    if (isEnglish) {
+        return value.toUpperCase();
+    } else {
+        return value
+            .toLowerCase()
+            .replace(/\b\w/g, c => c.toUpperCase());
+    }
+}
+
+username.addEventListener("input", e => {
+    e.target.value = formatInput(e.target.value);
+});
+
+password.addEventListener("input", e => {
+    e.target.value = formatInput(e.target.value);
+});
 </script>
 
 </body>
