@@ -78,6 +78,27 @@ body {
     outline: none;
 }
 
+/* Password wrapper */
+.password-wrapper {
+    position: relative;
+}
+
+.password-wrapper input {
+    width: 100%;
+    padding-right: 40px;
+}
+
+/* Eye icon */
+.eye-icon {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+}
+
+/* Buttons */
 .btn {
     width: 100%;
     padding: 12px;
@@ -88,7 +109,9 @@ body {
     cursor: pointer;
 }
 
-.login { background: #C0392B; }
+/* 🔵 Login now matches export color */
+.login { background: #2E86C1; }
+
 .scan { background: #1E8449; }
 
 /* Cards Grid */
@@ -109,13 +132,12 @@ body {
     font-weight: bold;
 }
 
-/* Icon */
 .card i {
     font-size: 26px;
     margin-bottom: 10px;
 }
 
-/* Individual Colors */
+/* Colors */
 .network { background: #D35400; }
 .export { background: #2E86C1; }
 .verify { background: #8E44AD; }
@@ -169,7 +191,12 @@ body {
             <div class="logo"><i class="fa-solid fa-circle-notch"></i></div>
 
             <input class="input" placeholder="USERNAME">
-            <input class="input" type="password" placeholder="PASSWORD">
+
+            <!-- PASSWORD WITH EYE -->
+            <div class="password-wrapper">
+                <input id="password" class="input" type="password" placeholder="PASSWORD">
+                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
+            </div>
 
             <button class="btn login">LOGIN</button>
             <button class="btn scan">SCAN BADGE</button>
@@ -222,6 +249,24 @@ body {
     </div>
 
 </div>
+
+<!-- SCRIPT -->
+<script>
+function togglePassword() {
+    const password = document.getElementById("password");
+    const icon = document.querySelector(".eye-icon");
+
+    if (password.type === "password") {
+        password.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+    } else {
+        password.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+    }
+}
+</script>
 
 </body>
 </html>
