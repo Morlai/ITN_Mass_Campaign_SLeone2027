@@ -17,120 +17,107 @@ body {
 /* MAIN CONTAINER */
 .main-container {
     border: 3px solid green;
-    border-radius: 14px;
-    margin: 10px;
+    border-radius: 12px;
+    margin: 4px;
     overflow: hidden;
 }
 
 /* HEADER */
 .header {
     text-align: center;
-    padding: 18px 12px;
+    padding: 6px;
     background: #0b5ed7;
     color: white;
 }
 
 .header img {
-    height: 65px;
-    margin-bottom: 10px;
+    height: 35px;
+    margin-bottom: 4px;
 }
 
-.header h2 {
-    font-size: 14px;
-    line-height: 1.3;
-}
-
-.header h3 {
-    font-size: 13px;
-    margin-top: 6px;
-}
-
-.header p {
-    font-size: 12px;
-}
+.header h2 {font-size: 9px;}
+.header h3 {font-size: 8px;}
+.header p {font-size: 7px;}
 
 /* PARTNERS */
 .partners {
-    padding: 14px;
+    padding: 5px;
     background: #fff;
 }
 
 .partners h3 {
     text-align: center;
-    font-size: 14px;
-    margin-bottom: 10px;
+    font-size: 9px;
 }
 
 .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    gap: 3px;
 }
 
 .partner-grid img {
     width: 100%;
-    height: 60px;
+    height: 35px;
     object-fit: contain;
     border: 1px solid #ddd;
-    padding: 5px;
-    border-radius: 6px;
+    padding: 1px;
 }
 
 /* INFOGRAPHICS */
 .infographics {
-    padding: 12px;
+    padding: 4px;
     text-align: center;
     background: #fff;
     border: 3px solid green;
-    border-radius: 12px;
-    margin: 10px;
+    border-radius: 6px;
+    margin: 4px;
 }
 
 .infographics img {
     width: 100%;
-    max-height: 200px;
+    max-height: 100px;
     object-fit: cover;
-    border-radius: 8px;
+    border-radius: 4px;
 }
 
 /* CAMPAIGN */
 .campaign {
     background: #0b5ed7;
     color: white;
-    padding: 12px;
-    font-size: 12px;
+    padding: 4px;
+    font-size: 8px;
     text-align: center;
-    font-weight: bold;
 }
 
 /* STATUS */
 .status-bar {
     display: flex;
     align-items: center;
-    padding: 10px 14px;
+    padding: 4px 6px;
     background: #fff;
-    font-size: 12px;
+    font-size: 8px;
 }
 
 .green-dot {
-    width: 12px;
-    height: 12px;
+    width: 6px;
+    height: 6px;
     background: green;
     border-radius: 50%;
-    margin-right: 8px;
+    margin-right: 4px;
 }
 
 .circle {
-    width: 18px;
-    height: 18px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #0b5ed7;
     color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 10px;
-    margin-left: 8px;
+    font-size: 6px;
+    margin-left: 4px;
 }
 
 .status-actions-border {
@@ -140,35 +127,33 @@ body {
 /* ACTION CARDS */
 .actions {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    padding: 12px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 3px;
+    padding: 3px;
 }
 
 .card {
     position: relative;
-    padding: 14px 10px;
-    border-radius: 12px;
+    padding: 4px 2px;
+    border-radius: 5px;
     color: white;
-    font-size: 11px;
+    font-size: 6px;
     font-weight: bold;
     text-align: center;
-    min-height: 90px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    line-height: 1.1;
 }
 
 .card i.icon {
-    font-size: 20px;
-    margin-bottom: 8px;
+    display: block;
+    font-size: 10px;
+    margin-bottom: 2px;
 }
 
 .card i.lock {
     position: absolute;
-    top: 8px;
-    right: 10px;
-    font-size: 12px;
+    top: 2px;
+    right: 2px;
+    font-size: 6px;
 }
 
 /* COLORS */
@@ -182,12 +167,12 @@ body {
 /* FOOTER */
 .footer {
     text-align: center;
-    padding: 14px;
+    padding: 5px;
     background: #0b5ed7;
     color: white;
-    font-size: 12px;
-    margin: 10px;
-    border-radius: 10px;
+    font-size: 8px;
+    margin: 4px;
+    border-radius: 6px;
 }
 </style>
 </head>
@@ -237,35 +222,35 @@ body {
 
 <div class="actions">
 
-<div class="card card1"><i class="fas fa-home icon"></i>REGISTER HOUSEHOLD (HHR)<i class="fas fa-lock lock"></i></div>
-<div class="card card2"><i class="fas fa-users icon"></i>HOUSEHOLDS DISTRIBUTION (HHD)<i class="fas fa-lock lock"></i></div>
+<div class="card card1"><i class="fas fa-home icon"></i>REGISTER<br>(HHR)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-users icon"></i>DISTRIBUTION<br>(HHD)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card3"><i class="fas fa-database icon"></i>VIEW DATA (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card card4"><i class="fas fa-chart-line icon"></i>ANALYSIS (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-database icon"></i>VIEW DATA<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card4"><i class="fas fa-chart-line icon"></i>ANALYSIS<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card5"><i class="fas fa-robot icon"></i>AI AGENT (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card card6"><i class="fas fa-eye icon"></i>MONITORING (Nat. MONITORS)<i class="fas fa-lock lock"></i></div>
+<div class="card card5"><i class="fas fa-robot icon"></i>AI AGENT<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card6"><i class="fas fa-eye icon"></i>MONITORING<br>(Nat. MONITORS)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card1"><i class="fas fa-balance-scale icon"></i>RECONCILIATION (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card card2"><i class="fas fa-qrcode icon"></i>REGISTER HOUSEHOLD QR (HHR)<i class="fas fa-lock lock"></i></div>
+<div class="card card1"><i class="fas fa-balance-scale icon"></i>RECONCILIATION<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-qrcode icon"></i>REGISTER QR<br>(HHR)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card3"><i class="fas fa-id-card icon"></i>ID CARDS (ICF-SL)<i class="fas fa-lock lock"></i></div>
-<div class="card card4"><i class="fas fa-tag icon"></i>DEVICE TAG (HHD)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-id-card icon"></i>ID CARDS<br>(ICF-SL)<i class="fas fa-lock lock"></i></div>
+<div class="card card4"><i class="fas fa-tag icon"></i>DEVICE TAG<br>(HHD)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card5"><i class="fas fa-mobile icon"></i>DEVICES (CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
-<div class="card card6"><i class="fas fa-truck icon"></i>ITN MOVEMENT (CONVEYOR)<i class="fas fa-lock lock"></i></div>
+<div class="card card5"><i class="fas fa-mobile icon"></i>DEVICES<br>(CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
+<div class="card card6"><i class="fas fa-truck icon"></i>ITN MOVEMENT<br>(CONVEYOR)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card1"><i class="fas fa-box icon"></i>ITN RECEIVED (PHU STAFF)<i class="fas fa-lock lock"></i></div>
-<div class="card card2"><i class="fas fa-user-check icon"></i>ATTENDANCE (CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
+<div class="card card1"><i class="fas fa-box icon"></i>ITN RECEIVED<br>(PHU STAFF)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-user-check icon"></i>ATTENDANCE<br>(CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
 
-<div class="card card3"><i class="fas fa-file-alt icon"></i>REPORT (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-file-alt icon"></i>REPORT<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
 
 <div class="card card4"><i class="fas fa-sync icon"></i>FORCE SYNC</div>
 <div class="card card5"><i class="fas fa-download icon"></i>UPDATE</div>
 
 </div>
 
-<div class="footer"> 
+<div class="footer">
 Developed By<br>
 Informatic Consultancy Firm-SL©2026
 </div>
