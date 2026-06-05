@@ -3,7 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ITNs Campaign Splash</title>
+<title>ITNs Campaign Login</title>
+
+<!-- ICON LIBRARY -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
 * {
@@ -23,54 +26,115 @@ body {
 
 /* Container */
 .container {
-    width: 350px;
-    height: 700px;
+    width: 360px;
+    height: 720px;
     border-radius: 30px;
     overflow: hidden;
     box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    background: #fff;
-}
-
-/* Image Section */
-.image-section {
-    height: 72%;
     position: relative;
-    background: url('background.png') no-repeat center center/cover;
 }
 
-/* Overlay */
-.image-section::after {
+/* Background */
+.bg {
+    position: absolute;
+    inset: 0;
+    background: url('/mnt/data/red.jpeg') no-repeat center center/cover;
+}
+
+.bg::after {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(46, 204, 113, 0.10);
+    background: rgba(0,0,0,0.45);
 }
 
-/* Time Badge */
-.time-badge {
-    position: absolute;
-    top: 15px;
-    left: 20px;
-    background: #C0392B;
+/* Content */
+.content {
+    position: relative;
+    z-index: 2;
+    padding: 20px;
+}
+
+/* Login Card */
+.login-card {
+    background: rgba(255,255,255,0.92);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 40px;
+}
+
+.logo {
+    text-align: center;
+    font-size: 28px;
+    color: #C0392B;
+    margin-bottom: 10px;
+}
+
+.input {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    outline: none;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
     color: white;
-    padding: 5px 12px;
-    border-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.login { background: #C0392B; }
+.scan { background: #1E8449; }
+
+/* Cards Grid */
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px;
+    margin-top: 25px;
+}
+
+/* Card */
+.card {
+    border-radius: 12px;
+    padding: 18px 10px;
+    text-align: center;
+    color: white;
     font-size: 12px;
     font-weight: bold;
-    z-index: 2;
 }
+
+/* Icon */
+.card i {
+    font-size: 26px;
+    margin-bottom: 10px;
+}
+
+/* Individual Colors */
+.network { background: #D35400; }
+.export { background: #2E86C1; }
+.verify { background: #8E44AD; }
+.language { background: #16A085; }
 
 /* Curve */
 .curve {
-    display: block;
+    position: absolute;
+    bottom: 120px;
     width: 100%;
-    height: 45px;
-    margin-top: -12px;
+    height: 60px;
 }
 
 /* Footer */
 .footer {
-    height: 28%;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 120px;
     background: #1E8449;
     display: flex;
     flex-direction: column;
@@ -79,16 +143,14 @@ body {
     color: white;
 }
 
-/* Text */
 .footer h4 {
     font-size: 11px;
-    margin-bottom: 2px;
 }
 
 .footer p {
     font-size: 13px;
-    font-weight: bold;
     text-decoration: underline;
+    font-weight: bold;
 }
 
 </style>
@@ -98,11 +160,49 @@ body {
 
 <div class="container">
 
-    <div class="image-section">
-        <div class="time-badge">14:50</div>
+    <div class="bg"></div>
+
+    <div class="content">
+
+        <!-- LOGIN -->
+        <div class="login-card">
+            <div class="logo"><i class="fa-solid fa-circle-notch"></i></div>
+
+            <input class="input" placeholder="USERNAME">
+            <input class="input" type="password" placeholder="PASSWORD">
+
+            <button class="btn login">LOGIN</button>
+            <button class="btn scan">SCAN BADGE</button>
+        </div>
+
+        <!-- ACTION CARDS -->
+        <div class="cards">
+
+            <div class="card network">
+                <i class="fa-solid fa-wifi"></i>
+                NETWORK CHECK
+            </div>
+
+            <div class="card export">
+                <i class="fa-solid fa-download"></i>
+                EXPORT CAMPAIGN LOGS
+            </div>
+
+            <div class="card verify">
+                <i class="fa-solid fa-fingerprint"></i>
+                VERIFY BENEFICIARY PRINT
+            </div>
+
+            <div class="card language">
+                <i class="fa-solid fa-language"></i>
+                LANGUAGE
+            </div>
+
+        </div>
+
     </div>
 
-    <!-- 🔥 TRUE IMAGE-LIKE CURVE -->
+    <!-- CURVE -->
     <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
         <path d="
             M0,65
@@ -115,6 +215,7 @@ body {
             fill="#1E8449"/>
     </svg>
 
+    <!-- FOOTER -->
     <div class="footer">
         <h4>Developed By</h4>
         <p>Informatic Consultancy Firm-SL@2026</p>
