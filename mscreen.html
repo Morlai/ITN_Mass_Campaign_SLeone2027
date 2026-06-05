@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICF-SL Dashboard</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+/* MAIN CONTAINER BORDER */
+.main-container {
+    border: 3px solid green;
+    border-radius: 12px;
+    margin: 10px;
+    overflow: hidden;
+}
+
+/* HEADER */
+.header {
+    text-align: center;
+    padding: 25px;
+    background: #0b5ed7;
+    color: white;
+}
+
+.header img {
+    height: 80px;
+    display: block;
+    margin: auto;
+}
+
+.header h2, .header p, .header h3 {
+    margin: 5px;
+}
+
+/* PARTNERS */
+.partners {
+    padding: 20px;
+    background: #fff;
+}
+
+.partners h3 {
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 15px;
+}
+
+.partner-grid img {
+    width: 100%;
+    height: 80px;
+    object-fit: contain;
+    border: 1px solid #ddd;
+    padding: 5px;
+}
+
+/* INFOGRAPHICS */
+.infographics {
+    padding: 20px;
+    text-align: center;
+    background: #fff;
+    border: 3px solid green;
+    border-radius: 12px;
+    margin: 10px;
+}
+
+.infographics img {
+    width: 100%;
+    max-height: 250px;
+    object-fit: cover;
+    border-radius: 6px;
+}
+
+/* CAMPAIGN */
+.campaign {
+    background: #0b5ed7;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+}
+
+/* SEPARATOR */
+.separator {
+    border-top: 3px solid #0b5ed7;
+}
+
+/* STATUS */
+.status-bar {
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    background: #fff;
+    border-bottom: 2px solid #ddd;
+}
+
+/* NEW BORDER BETWEEN STATUS & ACTIONS */
+.status-actions-border {
+    border-top: 3px solid green;
+}
+
+.green-dot {
+    width: 14px;
+    height: 14px;
+    background: green;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.circle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #0b5ed7;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    margin-left: 10px;
+}
+
+/* ACTION CARDS */
+.actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    padding: 20px;
+}
+
+.card {
+    position: relative;
+    padding: 15px;
+    border-radius: 8px;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.card i.icon {
+    font-size: 18px;
+}
+
+.card i.lock {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+}
+
+/* COLORS */
+.card1 { background: #0d6efd; }
+.card2 { background: #198754; }
+.card3 { background: #dc3545; }
+.card4 { background: #ffc107; color: black; }
+.card5 { background: #6f42c1; }
+.card6 { background: #20c997; }
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #0b5ed7;
+    color: white;
+    margin: 10px;
+    border-radius: 10px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="main-container">
+
+<!-- HEADER -->
+<div class="header">
+    <img src="ICF-SL Logo.jpg" alt="ICF Logo">
+
+    <h2>Informatics Consultancy Firm-Sierra Leone (ICF-SL)</h2>
+    <p>Driving Data-Driven Solutions for Health and Development</p>
+
+    <h3>SCHOOL-BASED DISTRIBUTION OF ITNs</h3>
+    <p>Insecticide-Treated Nets Distribution Survey - Sierra Leone</p>
+</div>
+
+<!-- PARTNERS -->
+<div class="partners">
+    <h3>IMPLEMENTING PARTNERS</h3>
+    <div class="partner-grid">
+        <img src="logo1.png">
+        <img src="logo2.png">
+        <img src="logo3.png">
+        <img src="logo4.png">
+        <img src="logo5.png">
+        <img src="logo6.png">
+    </div>
+</div>
+
+<!-- INFOGRAPHICS -->
+<div class="infographics">
+    <img src="infographic.png" alt="Infographic">
+</div>
+
+<!-- CAMPAIGN -->
+<div class="campaign">
+    <i class="fas fa-camera"></i>
+    HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
+</div>
+
+</div>
+
+<!-- SEPARATOR -->
+<div class="separator"></div>
+
+<!-- STATUS -->
+<div class="status-bar">
+    <div class="green-dot"></div>
+    <strong>ONLINE PENDING:</strong>
+    <div class="circle">0</div>
+</div>
+
+<!-- NEW GREEN BORDER -->
+<div class="status-actions-border"></div>
+
+<!-- ACTION CARDS -->
+<div class="actions">
+
+<div class="card card1"><i class="fas fa-home icon"></i>REGISTER HOUSEHOLD (HHR)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-users icon"></i>HOUSEHOLDS DISTRIBUTION (HHD)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-database icon"></i>VIEW DATA (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card4"><i class="fas fa-chart-line icon"></i>ANALYSIS (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card5"><i class="fas fa-robot icon"></i>AI AGENT (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card6"><i class="fas fa-eye icon"></i>MONITORING (Nat. MONITORS)<i class="fas fa-lock lock"></i></div>
+
+<div class="card card1"><i class="fas fa-balance-scale icon"></i>RECONCILIATION (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-qrcode icon"></i>REGISTER HOUSEHOLD QR (HHR)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-id-card icon"></i>ID CARDS (ICF-SL)<i class="fas fa-lock lock"></i></div>
+<div class="card card4"><i class="fas fa-tag icon"></i>DEVICE TAG (HHD)<i class="fas fa-lock lock"></i></div>
+<div class="card card5"><i class="fas fa-mobile icon"></i>DEVICES (CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
+<div class="card card6"><i class="fas fa-truck icon"></i>ITN MOVEMENT (CONVEYOR)<i class="fas fa-lock lock"></i></div>
+
+<div class="card card1"><i class="fas fa-box icon"></i>ITN RECEIVED (PHU STAFF)<i class="fas fa-lock lock"></i></div>
+<div class="card card2"><i class="fas fa-user-check icon"></i>ATTENDANCE (CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
+<div class="card card3"><i class="fas fa-file-alt icon"></i>REPORT (PMI/NMCP)<i class="fas fa-lock lock"></i></div>
+
+<div class="card card4"><i class="fas fa-sync icon"></i>FORCE SYNC</div>
+<div class="card card5"><i class="fas fa-download icon"></i>UPDATE</div>
+
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+    Developed By
+Informatic Consultancy Firm-SL©2026
+</div>
+
+</body>
+</html>
