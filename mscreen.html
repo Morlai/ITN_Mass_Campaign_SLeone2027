@@ -15,7 +15,6 @@
     font-family:Arial, sans-serif;
 }
 
-/* ✅ FULL PHONE FIT */
 body{
     background:#e5e5e5;
     display:flex;
@@ -24,7 +23,7 @@ body{
     height:100vh;
 }
 
-/* ✅ DEVICE SCREEN (NO FIXED HEIGHT) */
+/* PHONE */
 .phone{
     width:100%;
     max-width:360px;
@@ -64,11 +63,24 @@ body{
     gap:2px;
 }
 
-.partner-grid img{
+/* NEW PARTNER ITEM */
+.partner-item{
+    text-align:center;
+    font-size:6px;
+}
+
+.partner-item img{
     width:100%;
-    height:28px;
+    height:26px;
     object-fit:contain;
     border:1px solid #ddd;
+    margin-bottom:2px;
+}
+
+.partner-item span{
+    display:block;
+    font-size:6px;
+    line-height:1.1;
 }
 
 /* INFOGRAPHICS */
@@ -81,7 +93,6 @@ body{
 
 .infographics img{
     width:100%;
-    height:auto;
 }
 
 /* CAMPAIGN */
@@ -127,7 +138,7 @@ body{
     background:green;
 }
 
-/* ✅ PERFECT FIT GRID */
+/* ACTIONS */
 .actions{
     display:grid;
     grid-template-columns:repeat(4,1fr);
@@ -135,7 +146,6 @@ body{
     padding:3px;
 }
 
-/* ✅ COMPACT CARDS */
 .card{
     position:relative;
     padding:5px 2px;
@@ -184,6 +194,7 @@ body{
 <div class="phone">
 <div class="screen">
 
+<!-- HEADER -->
 <div class="header">
 <img src="ICF-SL Logo.jpg">
 <h2>Informatics Consultancy Firm-SL</h2>
@@ -191,27 +202,57 @@ body{
 <h3>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</h3>
 </div>
 
+<!-- PARTNERS -->
 <div class="partners">
 <h3>IMPLEMENTING PARTNERS</h3>
+
 <div class="partner-grid">
+
+<div class="partner-item">
 <img src="usa.png">
-<img src="moh_logo.png">
-<img src="pmi_evolve.png">
+<span>United States Dept</span>
+</div>
+
+<div class="partner-item">
 <img src="global_fund.png">
+<span>Global Fund</span>
+</div>
+
+<div class="partner-item">
+<img src="moh_logo.png">
+<span>MOH</span>
+</div>
+
+<div class="partner-item">
 <img src="NMCP.png">
+<span>NMCP</span>
+</div>
+
+<div class="partner-item">
+<img src="pmi_evolve.png">
+<span>PMI Evolve</span>
+</div>
+
+<div class="partner-item">
 <img src="NMCP.png">
+<span>NMCP</span>
+</div>
+
 </div>
 </div>
 
+<!-- INFOGRAPHICS -->
 <div class="infographics">
 <img src="infographics.png">
 </div>
 
+<!-- CAMPAIGN -->
 <div class="campaign">
 <i class="fas fa-camera"></i>
 HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
 </div>
 
+<!-- STATUS -->
 <div class="status">
 <div class="dot"></div>
 ONLINE PENDING
@@ -220,6 +261,7 @@ ONLINE PENDING
 
 <div class="divider"></div>
 
+<!-- ACTION CARDS -->
 <div class="actions">
 
 <div class="card c1"><i class="fas fa-home icon"></i>REGISTER<br>(HHR)<i class="fas fa-lock lock"></i></div>
@@ -248,6 +290,7 @@ ONLINE PENDING
 
 </div>
 
+<!-- FOOTER -->
 <div class="footer">
 Developed By<br>
 Informatic Consultancy Firm-SL ©2026
