@@ -10,82 +10,81 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ========== BASE STYLES ========== */
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:Arial, sans-serif;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#e5e5e5;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+body {
+    background: #e5e5e5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
 }
 
-.phone{
-    width:100%;
-    max-width:360px;
-    height:100vh;
-    background:#fff;
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-    box-shadow:0 0 20px rgba(0,0,0,0.2);
+.phone {
+    width: 100%;
+    max-width: 360px;
+    height: 100vh;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
-.screen{
-    flex:1;
-    overflow-y:auto;
-    padding-bottom:8px;
+.screen {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 8px;
 }
 
 /* HEADER */
-.header{
-    text-align:center;
-    background:#0b5ed7;
-    color:#fff;
-    padding:6px 4px;
+.header {
+    text-align: center;
+    background: #0b5ed7;
+    color: #fff;
+    padding: 6px 4px;
 }
-.header img{height:30px;}
-.header h2{font-size:9px;}
-.header h3{font-size:8px;}
-.header p{font-size:7px;}
+.header img { height: 30px; }
+.header h2 { font-size: 9px; }
+.header h3 { font-size: 8px; }
+.header p { font-size: 7px; }
 
 /* PARTNERS */
-.partners{padding:4px;}
-.partners h3{text-align:center;font-size:8px;}
-.partner-grid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:6px;
-    padding:0 4px;
+.partners { padding: 4px; }
+.partners h3 { text-align: center; font-size: 8px; }
+.partner-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 6px;
+    padding: 0 4px;
 }
-.partner-item{
-    text-align:center;
-    font-size:6px;
+.partner-item {
+    text-align: center;
+    font-size: 6px;
 }
-.partner-item img{
-    width:75%;
-    height:24px;
-    object-fit:contain;
-    margin:0 auto 3px;
-    display:block;
-    border:1px solid #ddd;
-    border-radius:4px;
-    padding:2px;
-    background:#fff;
+.partner-item img {
+    width: 75%;
+    height: 24px;
+    object-fit: contain;
+    margin: 0 auto 3px;
+    display: block;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 2px;
+    background: #fff;
 }
-.partner-item span{
-    display:block;
-    font-size:6px;
-    line-height:1.2;
+.partner-item span {
+    display: block;
+    font-size: 6px;
+    line-height: 1.2;
 }
 
-/* ========== SMART CAROUSEL (FULLY VISIBLE, WITH FALLBACK) ========== */
+/* ========== INFINITE LOOP CAROUSEL (with clones) ========== */
 .carousel-container {
     margin: 8px 8px 4px 8px;
     position: relative;
@@ -107,7 +106,7 @@ body{
     position: relative;
 }
 
-/* Fallback style when image is missing */
+/* Fallback style when image missing */
 .carousel-slide .fallback-bg {
     position: absolute;
     top: 0;
@@ -192,48 +191,48 @@ body{
 }
 
 /* CAMPAIGN BANNER */
-.campaign{
-    background:#0b5ed7;
-    color:#fff;
-    text-align:center;
-    font-size:8px;
-    padding:3px;
-    margin-top:4px;
+.campaign {
+    background: #0b5ed7;
+    color: #fff;
+    text-align: center;
+    font-size: 8px;
+    padding: 3px;
+    margin-top: 4px;
 }
 
 /* STATUS */
-.status{
-    display:flex;
-    align-items:center;
-    padding:3px;
-    font-size:8px;
+.status {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    font-size: 8px;
 }
-.dot{
-    width:5px;
-    height:5px;
-    background:green;
-    border-radius:50%;
-    margin-right:4px;
+.dot {
+    width: 5px;
+    height: 5px;
+    background: green;
+    border-radius: 50%;
+    margin-right: 4px;
 }
-.badge{
-    width:12px;
-    height:12px;
-    background:#0b5ed7;
-    color:#fff;
-    border-radius:50%;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    font-size:6px;
-    margin-left:4px;
+.badge {
+    width: 12px;
+    height: 12px;
+    background: #0b5ed7;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 6px;
+    margin-left: 4px;
 }
-.divider{
-    height:2px;
-    background:green;
-    margin:4px 0;
+.divider {
+    height: 2px;
+    background: green;
+    margin: 4px 0;
 }
 
-/* ACTION CARDS (same as before) */
+/* ========== ACTION CARDS (with lock icon) ========== */
 .new-actions-section {
     padding: 8px 12px 16px 12px;
     background: #fff;
@@ -258,6 +257,16 @@ body{
 .modern-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.2);
+}
+/* Lock icon on each card (top right) */
+.card-lock {
+    position: absolute;
+    top: 12px;
+    right: 14px;
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.7);
+    z-index: 3;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
 }
 .modern-card .shape-top,
 .modern-card .shape-bottom {
@@ -328,11 +337,13 @@ body{
 .modern-card:hover .chevron-icon {
     transform: translateX(5px);
 }
+/* gradients */
 .card-register { background: linear-gradient(135deg, #1E3A8A, #3B82F6); }
 .card-distribution { background: linear-gradient(135deg, #0F5B2E, #2E9A5E); }
 .card-registerqr { background: linear-gradient(135deg, #6B21A5, #A855F7); }
 .card-stock { background: linear-gradient(135deg, #C2410C, #F97316); }
 .card-dashboard { background: linear-gradient(135deg, #0F5B7A, #14B8A6); }
+/* icon colors */
 .card-register .icon-circle i { color: #1E3A8A; }
 .card-distribution .icon-circle i { color: #0F5B2E; }
 .card-registerqr .icon-circle i { color: #6B21A5; }
@@ -343,15 +354,16 @@ body{
     .modern-card-content { padding: 10px 16px; }
     .icon-circle { width: 44px; height: 44px; font-size: 1.3rem; }
     .card-text h3 { font-size: 0.85rem; }
+    .card-lock { font-size: 0.75rem; top: 8px; right: 10px; }
 }
 .modern-card:active { transform: scale(0.98); transition: transform 0.08s; }
 
-.footer{
-    background:#0b5ed7;
-    color:#fff;
-    text-align:center;
-    font-size:7px;
-    padding:5px;
+.footer {
+    background: #0b5ed7;
+    color: #fff;
+    text-align: center;
+    font-size: 7px;
+    padding: 5px;
 }
 </style>
 </head>
@@ -381,22 +393,9 @@ body{
         </div>
     </div>
 
-    <!-- ========== SMART CAROUSEL (with fallback text, always visible) ========== -->
+    <!-- ========== INFINITE CAROUSEL (clones for seamless loop) ========== -->
     <div class="carousel-container">
-        <div class="carousel-slides" id="carouselSlides">
-            <!-- Slide 1 -->
-            <div class="carousel-slide" id="slide1">
-                <img src="infographics.png" alt="Campaign Infographic 1" onerror="showFallback(this, '📊 Campaign Dashboard', 'Target: 15,000 nets · 58% achieved')">
-            </div>
-            <!-- Slide 2 -->
-            <div class="carousel-slide" id="slide2">
-                <img src="infographicss.jpg" alt="Campaign Infographic 2" onerror="showFallback(this, '🦟 ITN Coverage Map', '84% household coverage · 12 districts')">
-            </div>
-            <!-- Slide 3 -->
-            <div class="carousel-slide" id="slide3">
-                <img src="infographics.jpg" alt="Campaign Infographic 3" onerror="showFallback(this, '📈 Malaria Reduction', 'Zero malaria by 2030 · Progress +22%')">
-            </div>
-        </div>
+        <div class="carousel-slides" id="carouselSlides"></div>
         <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
         <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
         <div class="carousel-dots" id="carouselDots"></div>
@@ -415,10 +414,11 @@ body{
     </div>
     <div class="divider"></div>
 
-    <!-- ACTION CARDS -->
+    <!-- ACTION CARDS with LOCK icon -->
     <div class="new-actions-section">
         <div class="new-actions">
             <div class="modern-card card-register" id="newCardRegister">
+                <i class="fas fa-lock card-lock"></i>
                 <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left"><div class="icon-circle"><i class="fas fa-home"></i></div><div class="card-text"><h3>REGISTER</h3><div class="sub">(HHR)</div></div></div>
@@ -426,6 +426,7 @@ body{
                 </div>
             </div>
             <div class="modern-card card-distribution" id="newCardDistribution">
+                <i class="fas fa-lock card-lock"></i>
                 <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left"><div class="icon-circle"><i class="fas fa-users"></i></div><div class="card-text"><h3>DISTRIBUTION</h3><div class="sub">(HHD)</div></div></div>
@@ -433,6 +434,7 @@ body{
                 </div>
             </div>
             <div class="modern-card card-registerqr" id="newCardRegisterQr">
+                <i class="fas fa-lock card-lock"></i>
                 <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left"><div class="icon-circle"><i class="fas fa-qrcode"></i></div><div class="card-text"><h3>REGISTER QR</h3><div class="sub">(HHR)</div></div></div>
@@ -440,6 +442,7 @@ body{
                 </div>
             </div>
             <div class="modern-card card-stock" id="newCardStock">
+                <i class="fas fa-lock card-lock"></i>
                 <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left"><div class="icon-circle"><i class="fas fa-box"></i></div><div class="card-text"><h3>STOCK</h3><div class="sub">inventory & supplies</div></div></div>
@@ -447,6 +450,7 @@ body{
                 </div>
             </div>
             <div class="modern-card card-dashboard" id="newCardDashboard">
+                <i class="fas fa-lock card-lock"></i>
                 <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left"><div class="icon-circle"><i class="fas fa-chart-line"></i></div><div class="card-text"><h3>DASHBOARD</h3><div class="sub">analytics & overview</div></div></div>
@@ -466,57 +470,105 @@ body{
 </div> <!-- phone -->
 
 <script>
-    // FALLBACK FUNCTION: replaces broken image with a styled div
-    window.showFallback = function(imgElement, title, desc) {
-        if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
-            const fallbackDiv = document.createElement('div');
-            fallbackDiv.className = 'fallback-bg';
-            fallbackDiv.innerHTML = `<i class="fas ${title.includes('Dashboard') ? 'fa-chart-line' : (title.includes('Coverage') ? 'fa-map' : 'fa-chart-simple')}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
-            imgElement.style.display = 'none';
-            imgElement.parentNode.appendChild(fallbackDiv);
-        }
-    };
+    // ========== INFINITE CAROUSEL USING CLONE TECHNIQUE ==========
+    const originalSlides = [
+        { img: "infographics.png", title: "📊 Campaign Dashboard", desc: "Target: 15,000 nets · 58% achieved", icon: "fa-chart-line" },
+        { img: "infographics.png", title: "🦟 ITN Coverage Map", desc: "84% household coverage · 12 districts", icon: "fa-map" },
+        { img: "infographics.png", title: "📈 Malaria Reduction", desc: "Zero malaria by 2030 · Progress +22%", icon: "fa-chart-simple" }
+    ];
 
-    // CAROUSEL LOGIC
+    // Build slide HTML with fallback
+    function buildSlide(data, index) {
+        return `<div class="carousel-slide" data-index="${index}">
+            <img src="${data.img}" alt="slide" onerror="showFallback(this, '${data.title}', '${data.desc}', '${data.icon}')">
+        </div>`;
+    }
+
+    // Prepare clones: [clone of last, original1, original2, original3, clone of first]
+    const cloneFirst = buildSlide(originalSlides[0], 'clone-first');
+    const cloneLast = buildSlide(originalSlides[originalSlides.length-1], 'clone-last');
+    let allSlidesHTML = cloneLast;
+    for (let i = 0; i < originalSlides.length; i++) {
+        allSlidesHTML += buildSlide(originalSlides[i], i);
+    }
+    allSlidesHTML += cloneFirst;
+
     const slidesContainer = document.getElementById('carouselSlides');
+    slidesContainer.innerHTML = allSlidesHTML;
     const slides = document.querySelectorAll('.carousel-slide');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const dotsContainer = document.getElementById('carouselDots');
-    let currentIndex = 0;
-    const totalSlides = slides.length;
+    const totalCloned = slides.length; // 5
+    const realStartIndex = 1;          // first real slide is at index 1
+    let currentIndex = realStartIndex;
     let autoInterval;
-    let startX, isDragging = false;
+    let isTransitioning = false;
 
-    function createDots() {
-        dotsContainer.innerHTML = '';
-        for (let i = 0; i < totalSlides; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (i === currentIndex) dot.classList.add('active');
-            dot.addEventListener('click', () => goToSlide(i));
-            dotsContainer.appendChild(dot);
+    function updateTransform(animate = true) {
+        if (animate) {
+            slidesContainer.style.transition = 'transform 0.4s ease-in-out';
+        } else {
+            slidesContainer.style.transition = 'none';
         }
+        const offset = -currentIndex * 100;
+        slidesContainer.style.transform = `translateX(${offset}%)`;
     }
-    function updateDots() {
-        document.querySelectorAll('.dot').forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === currentIndex);
-        });
-    }
-    function goToSlide(index) {
-        if (index < 0) index = 0;
-        if (index >= totalSlides) index = totalSlides - 1;
+
+    function goToSlide(index, animate = true) {
+        if (isTransitioning) return;
+        isTransitioning = true;
         currentIndex = index;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateTransform(animate);
         updateDots();
+        setTimeout(() => {
+            isTransitioning = false;
+            // Handle infinite loop edge: if at clone-last (index 0), jump to real last
+            if (currentIndex === 0) {
+                currentIndex = originalSlides.length; // last real slide index
+                updateTransform(false);
+                updateDots();
+            } else if (currentIndex === totalCloned - 1) { // clone-first
+                currentIndex = 1; // first real slide
+                updateTransform(false);
+                updateDots();
+            }
+        }, animate ? 400 : 0);
         resetAutoPlay();
     }
-    function nextSlide() { goToSlide((currentIndex + 1) % totalSlides); }
-    function prevSlide() { goToSlide((currentIndex - 1 + totalSlides) % totalSlides); }
+
+    function nextSlide() { goToSlide(currentIndex + 1, true); }
+    function prevSlide() { goToSlide(currentIndex - 1, true); }
+
+    function updateDots() {
+        let realIndex = currentIndex;
+        if (realIndex === 0) realIndex = originalSlides.length;
+        else if (realIndex === totalCloned - 1) realIndex = 1;
+        else realIndex = realIndex;
+        const activeReal = realIndex - 1;
+        document.querySelectorAll('.dot').forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === activeReal);
+        });
+    }
+
     function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
     function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
 
+    // Dots creation
+    function createDots() {
+        const dotsContainer = document.getElementById('carouselDots');
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < originalSlides.length; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === 0) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                goToSlide(i + 1, true);
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+    createDots();
+
     // Touch & mouse events
+    let startX, isDragging = false;
     slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
     slidesContainer.addEventListener('touchend', (e) => {
         if (!isDragging) return;
@@ -533,27 +585,40 @@ body{
         isDragging = false;
         startAutoPlay();
     });
-    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
+    document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+    document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
 
-    createDots();
-    goToSlide(0);
+    // Set initial position to first real slide
+    currentIndex = 1;
+    updateTransform(false);
     startAutoPlay();
 
-    // ACTION CARD FEEDBACK (same as before)
+    // Fallback function for missing images
+    window.showFallback = function(imgElement, title, desc, icon) {
+        if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'fallback-bg';
+            fallbackDiv.innerHTML = `<i class="fas ${icon}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
+            imgElement.style.display = 'none';
+            imgElement.parentNode.appendChild(fallbackDiv);
+        }
+    };
+
+    // Action card feedback with lock visual (toast)
     function showActionFeedback(title, desc) {
         const toast = document.createElement('div');
         toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:#0F172A; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
-        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#34D399;"></i> ${title} ${desc ? '– ' + desc : ''}`;
+        toast.innerHTML = `<i class="fas fa-lock" style="color:#facc15;"></i> ${title} ${desc ? '– ' + desc : ''} (locked)`;
         document.body.appendChild(toast);
         setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2000);
     }
-    document.getElementById('newCardRegister')?.addEventListener('click', () => showActionFeedback('🏠 REGISTER (HHR)', 'New household registration'));
-    document.getElementById('newCardDistribution')?.addEventListener('click', () => showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution'));
-    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code'));
-    document.getElementById('newCardStock')?.addEventListener('click', () => showActionFeedback('📦 STOCK', '5,820 nets available'));
-    document.getElementById('newCardDashboard')?.addEventListener('click', () => showActionFeedback('📊 DASHBOARD', 'Coverage 84%'));
+    document.getElementById('newCardRegister')?.addEventListener('click', () => showActionFeedback('🔒 REGISTER (HHR)', 'Authentication required'));
+    document.getElementById('newCardDistribution')?.addEventListener('click', () => showActionFeedback('🔒 DISTRIBUTION (HHD)', 'Authentication required'));
+    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showActionFeedback('🔒 REGISTER QR (HHR)', 'Authentication required'));
+    document.getElementById('newCardStock')?.addEventListener('click', () => showActionFeedback('🔒 STOCK', 'Authentication required'));
+    document.getElementById('newCardDashboard')?.addEventListener('click', () => showActionFeedback('🔒 DASHBOARD', 'Authentication required'));
 
+    // Tap feedback
     document.querySelectorAll('.modern-card').forEach(card => {
         card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
         card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
