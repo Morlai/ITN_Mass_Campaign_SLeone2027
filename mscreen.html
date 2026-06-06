@@ -34,7 +34,7 @@ body{
     overflow:hidden;
 }
 
-/* SCROLL AREA */
+/* SCROLL */
 .screen{
     flex:1;
     overflow-y:auto;
@@ -60,27 +60,31 @@ body{
 .partner-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
-    gap:2px;
+    gap:6px;
+    padding:0 4px;
 }
 
-/* NEW PARTNER ITEM */
 .partner-item{
     text-align:center;
     font-size:6px;
 }
 
 .partner-item img{
-    width:100%;
-    height:26px;
+    width:75%;
+    height:24px;
     object-fit:contain;
+    margin:0 auto 3px;
+    display:block;
     border:1px solid #ddd;
-    margin-bottom:2px;
+    border-radius:4px;
+    padding:2px;
+    background:#fff;
 }
 
 .partner-item span{
     display:block;
     font-size:6px;
-    line-height:1.1;
+    line-height:1.2;
 }
 
 /* INFOGRAPHICS */
