@@ -2,12 +2,15 @@
 <html lang="en"> 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICF-SL Mobile App</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>ICF-SL | ITN Campaign Actions</title>
 
+<!-- Font Awesome 6 + Google Fonts for modern cards -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
+/* ========== BASE STYLES (original ICF-SL layout) ========== */
 *{
     margin:0;
     padding:0;
@@ -38,6 +41,7 @@ body{
 .screen{
     flex:1;
     overflow-y:auto;
+    padding-bottom: 8px;
 }
 
 /* HEADER */
@@ -140,49 +144,173 @@ body{
 .divider{
     height:2px;
     background:green;
+    margin: 4px 0;
 }
 
-/* ACTIONS */
-.actions{
-    display:grid;
-    grid-template-columns:repeat(4,1fr);
-    gap:3px;
-    padding:3px;
+/* ========== NEW MODERN ACTION CARDS (vertical, gradient backgrounds) ========== */
+.new-actions-section {
+    padding: 8px 12px 16px 12px;
+    background: #fff;
 }
 
-.card{
-    position:relative;
-    padding:5px 2px;
-    border-radius:6px;
-    color:#fff;
-    font-size:6.5px;
-    text-align:center;
-    font-weight:bold;
-    line-height:1.1;
+.new-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
 }
 
-.card i.icon{
-    display:block;
-    font-size:12px;
-    margin-bottom:2px;
+/* modern card base */
+.modern-card {
+    position: relative;
+    width: 100%;
+    border-radius: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    overflow: hidden;
+    box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
 }
 
-.lock{
-    position:absolute;
-    top:2px;
-    right:2px;
-    font-size:7px;
+.modern-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.2);
 }
 
-/* COLORS */
-.c1{background:#0d6efd;}
-.c2{background:#198754;}
-.c3{background:#dc3545;}
-.c4{background:#ffc107;color:#000;}
-.c5{background:#6f42c1;}
-.c6{background:#20c997;}
+/* decorative soft shapes */
+.modern-card .shape-top,
+.modern-card .shape-bottom {
+    position: absolute;
+    left: 0;
+    width: 100px;
+    height: 55%;
+    background: rgba(255,255,255,0.12);
+    z-index: 0;
+    pointer-events: none;
+}
+.modern-card .shape-top {
+    top: 0;
+    border-radius: 0 0 40px 0;
+}
+.modern-card .shape-bottom {
+    bottom: 0;
+    top: auto;
+    border-radius: 0 40px 0 0;
+    background: rgba(0,0,0,0.04);
+}
 
-/* FOOTER */
+/* card content row */
+.modern-card-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 14px 20px 14px 22px;
+    gap: 12px;
+}
+
+.card-left {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* white circle background for icons */
+.icon-circle {
+    width: 52px;
+    height: 52px;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+    transition: all 0.2s;
+}
+
+/* text inside cards (white) */
+.card-text h3 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 1rem;
+    font-weight: 800;
+    letter-spacing: -0.2px;
+    color: white;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+    margin-bottom: 2px;
+}
+
+.card-text .sub {
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.88);
+    letter-spacing: 0.2px;
+}
+
+.chevron-icon {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    transition: transform 0.2s, color 0.2s;
+}
+
+.modern-card:hover .chevron-icon {
+    transform: translateX(5px);
+    color: white;
+}
+
+/* ===== GRADIENT BACKGROUNDS FOR EACH CARD (kept from modern design) ===== */
+.card-register {
+    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
+}
+.card-distribution {
+    background: linear-gradient(135deg, #0F5B2E, #2E9A5E);
+}
+.card-registerqr {
+    background: linear-gradient(135deg, #6B21A5, #A855F7);
+}
+.card-stock {
+    background: linear-gradient(135deg, #C2410C, #F97316);
+}
+.card-dashboard {
+    background: linear-gradient(135deg, #0F5B7A, #14B8A6);
+}
+
+/* icon colors inside white circle (matching gradient) */
+.card-register .icon-circle i { color: #1E3A8A; }
+.card-distribution .icon-circle i { color: #0F5B2E; }
+.card-registerqr .icon-circle i { color: #6B21A5; }
+.card-stock .icon-circle i { color: #C2410C; }
+.card-dashboard .icon-circle i { color: #0F5B7A; }
+
+/* responsive for smaller devices */
+@media (max-width: 380px) {
+    .modern-card-content {
+        padding: 10px 16px;
+    }
+    .icon-circle {
+        width: 44px;
+        height: 44px;
+        font-size: 1.3rem;
+    }
+    .card-text h3 {
+        font-size: 0.85rem;
+    }
+    .card-text .sub {
+        font-size: 0.6rem;
+    }
+}
+
+/* active press effect */
+.modern-card:active {
+    transform: scale(0.98);
+    transition: transform 0.08s;
+}
+
+/* footer */
 .footer{
     background:#0b5ed7;
     color:#fff;
@@ -192,115 +320,237 @@ body{
 }
 </style>
 </head>
-
 <body>
 
 <div class="phone">
 <div class="screen">
 
-<!-- HEADER -->
-<div class="header">
-<img src="ICF-SL Logo.jpg">
-<h2>Informatics Consultancy Firm-SL</h2>
-<p>Driving Data-Driven Solutions</p>
-<h3>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</h3>
-</div>
+    <!-- HEADER (original) -->
+    <div class="header">
+        <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+        <h2>Informatics Consultancy Firm-SL</h2>
+        <p>Driving Data-Driven Solutions</p>
+        <h3>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</h3>
+    </div>
 
-<!-- PARTNERS -->
-<div class="partners">
-<h3>IMPLEMENTING PARTNERS</h3>
+    <!-- PARTNERS (original) -->
+    <div class="partners">
+        <h3>IMPLEMENTING PARTNERS</h3>
+        <div class="partner-grid">
+            <div class="partner-item"><img src="usa.png" alt="USA"><span>United States Dept</span></div>
+            <div class="partner-item"><img src="global_fund.png" alt="Global Fund"><span>Global Fund</span></div>
+            <div class="partner-item"><img src="moh_logo.png" alt="MOH"><span>MOH</span></div>
+            <div class="partner-item"><img src="NMCP.png" alt="NMCP"><span>NMCP</span></div>
+            <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve"><span>PMI Evolve</span></div>
+            <div class="partner-item"><img src="NMCP.png" alt="NMCP"><span>NMCP</span></div>
+        </div>
+    </div>
 
-<div class="partner-grid">
+    <!-- INFOGRAPHICS (original) -->
+    <div class="infographics">
+        <img src="infographics.png" alt="Campaign infographics">
+    </div>
 
-<div class="partner-item">
-<img src="usa.png">
-<span>United States Dept</span>
-</div>
+    <!-- CAMPAIGN BANNER (original) -->
+    <div class="campaign">
+        <i class="fas fa-camera"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
+    </div>
 
-<div class="partner-item">
-<img src="global_fund.png">
-<span>Global Fund</span>
-</div>
+    <!-- STATUS BAR (original) -->
+    <div class="status">
+        <div class="dot"></div>
+        ONLINE PENDING
+        <div class="badge">0</div>
+    </div>
 
-<div class="partner-item">
-<img src="moh_logo.png">
-<span>MOH</span>
-</div>
+    <div class="divider"></div>
 
-<div class="partner-item">
-<img src="NMCP.png">
-<span>NMCP</span>
-</div>
+    <!-- ========== MODERN ACTION CARDS (with icons from original grid) ========== -->
+    <div class="new-actions-section">
+        <div class="new-actions">
+            
+            <!-- 1. REGISTER (HHR) – using original icon: fa-home -->
+            <div class="modern-card card-register" id="newCardRegister">
+                <div class="shape-top"></div>
+                <div class="shape-bottom"></div>
+                <div class="modern-card-content">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <i class="fas fa-home"></i>   <!-- original REGISTER icon -->
+                        </div>
+                        <div class="card-text">
+                            <h3>REGISTER</h3>
+                            <div class="sub">(HHR)</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right chevron-icon"></i>
+                </div>
+            </div>
 
-<div class="partner-item">
-<img src="pmi_evolve.png">
-<span>PMI Evolve</span>
-</div>
+            <!-- 2. DISTRIBUTION (HHD) – original icon: fa-users -->
+            <div class="modern-card card-distribution" id="newCardDistribution">
+                <div class="shape-top"></div>
+                <div class="shape-bottom"></div>
+                <div class="modern-card-content">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <i class="fas fa-users"></i>   <!-- original DISTRIBUTION icon -->
+                        </div>
+                        <div class="card-text">
+                            <h3>DISTRIBUTION</h3>
+                            <div class="sub">(HHD)</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right chevron-icon"></i>
+                </div>
+            </div>
 
-<div class="partner-item">
-<img src="NMCP.png">
-<span>NMCP</span>
-</div>
+            <!-- 3. REGISTER QR (HHR) – original icon: fa-qrcode (matches modern) -->
+            <div class="modern-card card-registerqr" id="newCardRegisterQr">
+                <div class="shape-top"></div>
+                <div class="shape-bottom"></div>
+                <div class="modern-card-content">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <i class="fas fa-qrcode"></i>   <!-- original REGISTER QR icon -->
+                        </div>
+                        <div class="card-text">
+                            <h3>REGISTER QR</h3>
+                            <div class="sub">(HHR)</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right chevron-icon"></i>
+                </div>
+            </div>
 
-</div>
-</div>
+            <!-- 4. STOCK – original icon: fa-box (from "ITN RECEIVED" card) -->
+            <div class="modern-card card-stock" id="newCardStock">
+                <div class="shape-top"></div>
+                <div class="shape-bottom"></div>
+                <div class="modern-card-content">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <i class="fas fa-box"></i>   <!-- original stock / ITN received icon -->
+                        </div>
+                        <div class="card-text">
+                            <h3>STOCK</h3>
+                            <div class="sub">inventory & supplies</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right chevron-icon"></i>
+                </div>
+            </div>
 
-<!-- INFOGRAPHICS -->
-<div class="infographics">
-<img src="infographics.png">
-</div>
+            <!-- 5. DASHBOARD – original icon: fa-chart-line (from "ANALYSIS" card) -->
+            <div class="modern-card card-dashboard" id="newCardDashboard">
+                <div class="shape-top"></div>
+                <div class="shape-bottom"></div>
+                <div class="modern-card-content">
+                    <div class="card-left">
+                        <div class="icon-circle">
+                            <i class="fas fa-chart-line"></i>   <!-- original ANALYSIS / dashboard icon -->
+                        </div>
+                        <div class="card-text">
+                            <h3>DASHBOARD</h3>
+                            <div class="sub">analytics & overview</div>
+                        </div>
+                    </div>
+                    <i class="fas fa-chevron-right chevron-icon"></i>
+                </div>
+            </div>
 
-<!-- CAMPAIGN -->
-<div class="campaign">
-<i class="fas fa-camera"></i>
-HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
-</div>
+        </div>
+    </div>
 
-<!-- STATUS -->
-<div class="status">
-<div class="dot"></div>
-ONLINE PENDING
-<div class="badge">0</div>
-</div>
+</div> <!-- end screen -->
 
-<div class="divider"></div>
-
-<!-- ACTION CARDS -->
-<div class="actions">
-
-<div class="card c1"><i class="fas fa-home icon"></i>REGISTER<br>(HHR)<i class="fas fa-lock lock"></i></div>
-<div class="card c2"><i class="fas fa-users icon"></i>DISTRIBUTION<br>(HHD)<i class="fas fa-lock lock"></i></div>
-<div class="card c3"><i class="fas fa-database icon"></i>VIEW DATA<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card c4"><i class="fas fa-chart-line icon"></i>ANALYSIS<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-
-<div class="card c5"><i class="fas fa-robot icon"></i>AI AGENT<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card c6"><i class="fas fa-eye icon"></i>MONITORING<br>(Nat. MONITORS)<i class="fas fa-lock lock"></i></div>
-<div class="card c1"><i class="fas fa-balance-scale icon"></i>RECONCILIATION<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-<div class="card c2"><i class="fas fa-qrcode icon"></i>REGISTER QR<br>(HHR)<i class="fas fa-lock lock"></i></div>
-
-<div class="card c3"><i class="fas fa-id-card icon"></i>ID CARDS<br>(ICF-SL)<i class="fas fa-lock lock"></i></div>
-<div class="card c4"><i class="fas fa-tag icon"></i>DEVICE TAG<br>(HHD)<i class="fas fa-lock lock"></i></div>
-<div class="card c5"><i class="fas fa-mobile icon"></i>DEVICES<br>(CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
-<div class="card c6"><i class="fas fa-truck icon"></i>ITN MOVEMENT<br>(CONVEYOR)<i class="fas fa-lock lock"></i></div>
-
-<div class="card c1"><i class="fas fa-box icon"></i>ITN RECEIVED<br>(PHU STAFF)<i class="fas fa-lock lock"></i></div>
-<div class="card c2"><i class="fas fa-user-check icon"></i>ATTENDANCE<br>(CHIEFDOM SUP)<i class="fas fa-lock lock"></i></div>
-<div class="card c3"><i class="fas fa-file-alt icon"></i>REPORT<br>(PMI/NMCP)<i class="fas fa-lock lock"></i></div>
-
-<div class="card c4"><i class="fas fa-sync icon"></i>FORCE SYNC</div>
-<div class="card c5"><i class="fas fa-download icon"></i>UPDATE</div>
-
-</div>
-
-</div>
-
-<!-- FOOTER -->
+<!-- FOOTER (original) -->
 <div class="footer">
-Developed By<br>
-Informatic Consultancy Firm-SL ©2026
+    Developed By<br>
+    Informatic Consultancy Firm-SL ©2026
 </div>
 
-</div>
+</div> <!-- end phone -->
+
+<script>
+    // Interactive toast feedback (same as modern design)
+    function showActionFeedback(title, description = '') {
+        const toast = document.createElement('div');
+        toast.style.position = 'fixed';
+        toast.style.bottom = '28px';
+        toast.style.left = '50%';
+        toast.style.transform = 'translateX(-50%)';
+        toast.style.backgroundColor = '#1F2937';
+        toast.style.color = 'white';
+        toast.style.padding = '12px 24px';
+        toast.style.borderRadius = '60px';
+        toast.style.fontSize = '0.85rem';
+        toast.style.fontWeight = '500';
+        toast.style.backdropFilter = 'blur(10px)';
+        toast.style.background = '#0F172A';
+        toast.style.border = '1px solid rgba(255,255,255,0.1)';
+        toast.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.3)';
+        toast.style.zIndex = '999';
+        toast.style.fontFamily = "'Poppins', sans-serif";
+        toast.style.display = 'flex';
+        toast.style.alignItems = 'center';
+        toast.style.gap = '10px';
+        toast.style.letterSpacing = '0.3px';
+        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#34D399; font-size:1rem;"></i> ${title} ${description ? '– ' + description : ''}`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transition = 'opacity 0.25s ease';
+            setTimeout(() => toast.remove(), 280);
+        }, 2000);
+    }
+
+    // Bind click events to modern cards
+    const registerCard = document.getElementById('newCardRegister');
+    const distributionCard = document.getElementById('newCardDistribution');
+    const registerQrCard = document.getElementById('newCardRegisterQr');
+    const stockCard = document.getElementById('newCardStock');
+    const dashboardCard = document.getElementById('newCardDashboard');
+
+    if (registerCard) {
+        registerCard.addEventListener('click', () => {
+            showActionFeedback('🏠 REGISTER (HHR)', 'New household registration form');
+        });
+    }
+    if (distributionCard) {
+        distributionCard.addEventListener('click', () => {
+            showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution & quantities');
+        });
+    }
+    if (registerQrCard) {
+        registerQrCard.addEventListener('click', () => {
+            showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code to register household');
+        });
+    }
+    if (stockCard) {
+        stockCard.addEventListener('click', () => {
+            showActionFeedback('📦 STOCK', 'Current ITN inventory: 5,820 nets available');
+        });
+    }
+    if (dashboardCard) {
+        dashboardCard.addEventListener('click', () => {
+            showActionFeedback('📊 DASHBOARD', 'Coverage rate: 84% · 2,150 HH remaining');
+        });
+    }
+
+    // subtle touch feedback for modern cards
+    const allModernCards = document.querySelectorAll('.modern-card');
+    allModernCards.forEach(card => {
+        card.addEventListener('touchstart', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => { if(this) this.style.transform = ''; }, 120);
+        });
+        card.addEventListener('mousedown', function() {
+            this.style.transform = 'scale(0.98)';
+            setTimeout(() => { if(this) this.style.transform = ''; }, 120);
+        });
+    });
+</script>
 
 </body>
 </html>
