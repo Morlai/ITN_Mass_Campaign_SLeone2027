@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Household Registration</title>
+
+<style>
+body{font-family:Arial;background:#f4f6f9;margin:0;}
+
+.header{padding:15px;font-weight:bold;font-size:20px;}
+
+.steps{position:relative;display:flex;justify-content:space-between;margin:20px;}
+
+.steps::before{
+content:"";
+position:absolute;
+top:15px;
+left:8%;
+right:8%;
+height:4px;
+background:#ccc;
+z-index:0;
+}
+
+.progress-bar{
+position:absolute;
+top:15px;
+left:8%;
+height:4px;
+background:#2c7be5;
+width:0%;
+transition:0.3s;
+z-index:0;
+}
+
+.step{text-align:center;width:25%;position:relative;z-index:1;}
+
+.circle{
+width:30px;height:30px;border-radius:50%;
+background:#ccc;color:#fff;line-height:30px;margin:auto;
+}
+
+.step.active .circle{background:#2c7be5;}
+.step.active .label{font-weight:bold;color:#2c7be5;}
+
+.label{font-size:12px;margin-top:5px;}
+
+.section{display:none;background:#fff;margin:20px;padding:20px;border-radius:8px;}
+.section.active{display:block;}
+
+.row{display:flex;flex-wrap:wrap;justify-content:space-between;}
+.form-group{width:48%;margin-bottom:12px;}
+
+label{font-weight:bold;}
+input{width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;}
+
+.buttons{display:flex;justify-content:space-between;margin-top:20px;}
+
+button{padding:10px 15px;border:none;border-radius:5px;cursor:pointer;}
+.next{background:#2c7be5;color:#fff;}
+.prev{background:#ccc;}
+
+.token-btn{
+background:linear-gradient(45deg,#ff9800,#ff5722);
+color:#fff;
+transition:0.3s;
+}
+.token-btn:hover{transform:scale(1.05);opacity:0.85;}
+
+.token-box{
+margin-top:15px;
+padding:12px;
+background:linear-gradient(45deg,#4caf50,#2e7d32);
+color:#fff;
+text-align:center;
+font-weight:bold;
+border-radius:8px;
+display:none;
+}
+
+.review-box{background:#f9fafc;padding:15px;border-radius:8px;}
+.review-title{font-weight:bold;margin-bottom:10px;}
+.edit-btn{margin-top:10px;padding:8px 15px;background:#ffc107;border-radius:5px;cursor:pointer;}
+
+.success{text-align:center;color:green;margin-top:15px;}
+</style>
+</head>
+
+<body>
+
+<div class="header">📝 REGISTRATION</div>
+
+<div class="steps">
+<div class="progress-bar" id="progress"></div>
+
+<div class="step active"><div class="circle">1</div><div class="label">District Infor</div></div>
+<div class="step"><div class="circle">2</div><div class="label">Household Details</div></div>
+<div class="step"><div class="circle">3</div><div class="label">Review</div></div>
+<div class="step"><div class="circle">4</div><div class="label">Complete</div></div>
+</div>
+
+<!-- SECTION 1 -->
+<div class="section active" id="sec1">
+<div class="row">
+<div class="form-group"><label>Date</label><input id="date" readonly></div>
+<div class="form-group"><label>Region</label><input id="region" placeholder="Enter region"></div>
+<div class="form-group"><label>District</label><input id="district" placeholder="Enter district"></div>
+<div class="form-group"><label>Chiefdom</label><input id="chiefdom" placeholder="Enter chiefdom"></div>
+<div class="form-group"><label>Community</label><input id="community" placeholder="Enter community"></div>
+<div class="form-group"><label>Nearest Health Facility</label><input id="facility" placeholder="Enter facility"></div>
+<div class="form-group"><label>Distribution Point</label><input id="dp" placeholder="Enter distribution point"></div>
+</div>
+
+<div class="buttons">
+<div></div>
+<button class="next" onclick="next()">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 2 -->
+<div class="section" id="sec2">
+<div class="row">
+
+<div class="form-group"><label>Surname</label><input id="surname" placeholder="Enter surname"></div>
+<div class="form-group"><label>Middle Name</label><input id="mname" placeholder="Enter middle name"></div>
+<div class="form-group"><label>First Name</label><input id="fname" placeholder="Enter first name"></div>
+
+<div class="form-group">
+<label>Mobile Number (9 digits)</label>
+<input id="phone" placeholder="Enter 9 digit mobile number" maxlength="9">
+</div>
+
+<div class="form-group">
+<label>Number of people in the Household</label>
+<input type="number" id="people" oninput="calcTotal()">
+</div>
+
+<div class="form-group">
+<label>Number of pregnant women</label>
+<input type="number" id="pregnant" oninput="calcTotal()">
+</div>
+
+<div class="form-group">
+<label>Number of Under-Fives Children</label>
+<input type="number" id="under5" oninput="calcTotal()">
+</div>
+
+<div class="form-group">
+<label>Total Family Members</label>
+<input id="total" readonly>
+</div>
+
+<!-- ✅ NEW FIELD -->
+<div class="form-group">
+<label>Household Register Name</label>
+<input id="registerName" placeholder="Enter household register name">
+</div>
+
+<!-- ✅ GPS AUTO CAPTURE -->
+<div class="form-group">
+<label>GPS Coordinate (Auto Captured)</label>
+<input id="gps" placeholder="Capturing location..." readonly>
+</div>
+
+</div>
+
+<button class="token-btn" onclick="generateToken()">Generate Token</button>
+
+<div class="token-box" id="tokenBox"></div>
+
+<div class="buttons">
+<button class="prev" onclick="prev()">← Previous</button>
+<button class="next" onclick="goReview()">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 3 -->
+<div class="section" id="sec3">
+<div class="review-box">
+<div class="review-title">Household Summary</div>
+<div id="review"></div>
+<div class="edit-btn" onclick="prev()">Edit Household Information</div>
+</div>
+
+<div class="buttons">
+<button class="prev" onclick="prev()">← Previous</button>
+<button class="next" onclick="next()">Next →</button>
+</div>
+</div>
+
+<!-- SECTION 4 -->
+<div class="section" id="sec4">
+<h3>Complete</h3>
+<div class="success" id="successMsg"></div>
+
+<div class="buttons">
+<button class="prev" onclick="prev()">← Previous</button>
+<button class="next" id="registerBtn" onclick="register()">Register Household</button>
+</div>
+</div>
+
+<script>
+
+let step=1;
+let token="";
+let registered=false;
+
+date.value=new Date().toISOString().split('T')[0];
+
+function updateUI(){
+document.querySelectorAll(".section").forEach((s,i)=>{
+s.classList.toggle("active",i===step-1);
+});
+document.querySelectorAll(".step").forEach((s,i)=>{
+s.classList.toggle("active",i<=step-1);
+});
+progress.style.width=((step-1)/3)*84+"%";
+}
+
+function next(){step++;updateUI();}
+function prev(){step--;updateUI();}
+
+phone.addEventListener("input",function(){
+this.value=this.value.replace(/\D/g,'');
+});
+
+function calcTotal(){
+total.value=(+people.value||0)+(+pregnant.value||0)+(+under5.value||0);
+}
+
+/* ✅ GPS AUTO CAPTURE */
+if(navigator.geolocation){
+navigator.geolocation.getCurrentPosition(pos=>{
+gps.value=pos.coords.latitude.toFixed(5)+","+pos.coords.longitude.toFixed(5);
+});
+}
+
+function generateToken(){
+let f=(fname.value||"").substring(0,3).toUpperCase();
+let m=(mname.value||"").substring(0,3).toUpperCase();
+let s=(surname.value||"").substring(0,3).toUpperCase();
+token=`${f}_${m}_${s}_${phone.value}`;
+tokenBox.style.display="block";
+tokenBox.innerText="TOKEN: "+token;
+}
+
+function goReview(){
+if(phone.value.length!==9){
+alert("Phone must be 9 digits");
+return;
+}
+
+let itn= total.value<=2?1: total.value<=4?2:3;
+
+review.innerHTML=`
+Region: ${region.value}<br>
+District: ${district.value}<br>
+Chiefdom: ${chiefdom.value}<br>
+Community: ${community.value}<br>
+Nearest Health Facility: ${facility.value}<br>
+Distribution Point: ${dp.value}<br><br>
+
+Name: ${surname.value} ${mname.value} ${fname.value}<br>
+Mobile Number: ${phone.value}<br>
+Total Family Members: ${total.value}<br>
+Household Register Name: ${registerName.value}<br>
+GPS: ${gps.value}<br><br>
+
+Token: ${token}<br>
+ITNs to be Received: ${itn}
+`;
+
+next();
+}
+
+function register(){
+if(!registered){
+successMsg.innerText="✅ Successfully registered a household";
+registerBtn.innerText="Next: Add Another Household →";
+registered=true;
+}else{
+step=1;
+registered=false;
+successMsg.innerText="";
+registerBtn.innerText="Register Household";
+
+document.querySelectorAll("input").forEach(i=>{
+if(i.id!=="date") i.value="";
+});
+tokenBox.style.display="none";
+
+updateUI();
+}
+}
+
+updateUI();
+
+</script>
+
+</body>
+</html>
