@@ -15,6 +15,7 @@
     font-family:Arial, sans-serif;
 }
 
+/* ✅ FULL PHONE FIT */
 body{
     background:#e5e5e5;
     display:flex;
@@ -23,21 +24,21 @@ body{
     height:100vh;
 }
 
-/* PHONE */
+/* ✅ DEVICE SCREEN (NO FIXED HEIGHT) */
 .phone{
-    width:360px;
-    height:720px;
+    width:100%;
+    max-width:360px;
+    height:100vh;
     background:#fff;
-    border-radius:30px;
-    overflow:hidden;
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
     display:flex;
     flex-direction:column;
+    overflow:hidden;
 }
 
+/* SCROLL AREA */
 .screen{
-    overflow-y:auto;
     flex:1;
+    overflow-y:auto;
 }
 
 /* HEADER */
@@ -45,10 +46,10 @@ body{
     text-align:center;
     background:#0b5ed7;
     color:#fff;
-    padding:6px;
+    padding:6px 4px;
 }
 
-.header img{height:32px;}
+.header img{height:30px;}
 .header h2{font-size:9px;}
 .header h3{font-size:8px;}
 .header p{font-size:7px;}
@@ -65,14 +66,14 @@ body{
 
 .partner-grid img{
     width:100%;
-    height:30px;
+    height:28px;
     object-fit:contain;
     border:1px solid #ddd;
 }
 
 /* INFOGRAPHICS */
 .infographics{
-    margin:4px;
+    margin:3px;
     border:2px solid green;
     border-radius:6px;
     overflow:hidden;
@@ -89,35 +90,35 @@ body{
     color:#fff;
     text-align:center;
     font-size:8px;
-    padding:4px;
+    padding:3px;
 }
 
 /* STATUS */
 .status{
     display:flex;
     align-items:center;
-    padding:4px;
+    padding:3px;
     font-size:8px;
 }
 
 .dot{
-    width:6px;
-    height:6px;
+    width:5px;
+    height:5px;
     background:green;
     border-radius:50%;
     margin-right:4px;
 }
 
 .badge{
-    width:14px;
-    height:14px;
+    width:12px;
+    height:12px;
     background:#0b5ed7;
     color:#fff;
     border-radius:50%;
     display:flex;
     justify-content:center;
     align-items:center;
-    font-size:7px;
+    font-size:6px;
     margin-left:4px;
 }
 
@@ -126,21 +127,21 @@ body{
     background:green;
 }
 
-/* 🔥 4 COLUMN GRID */
+/* ✅ PERFECT FIT GRID */
 .actions{
     display:grid;
     grid-template-columns:repeat(4,1fr);
-    gap:4px;
-    padding:4px;
+    gap:3px;
+    padding:3px;
 }
 
-/* 🔥 BALANCED CARD SIZE */
+/* ✅ COMPACT CARDS */
 .card{
     position:relative;
-    padding:6px 2px;
-    border-radius:8px;
+    padding:5px 2px;
+    border-radius:6px;
     color:#fff;
-    font-size:7px;
+    font-size:6.5px;
     text-align:center;
     font-weight:bold;
     line-height:1.1;
@@ -148,15 +149,15 @@ body{
 
 .card i.icon{
     display:block;
-    font-size:14px;
-    margin-bottom:3px;
+    font-size:12px;
+    margin-bottom:2px;
 }
 
 .lock{
     position:absolute;
-    top:3px;
-    right:3px;
-    font-size:8px;
+    top:2px;
+    right:2px;
+    font-size:7px;
 }
 
 /* COLORS */
@@ -172,8 +173,8 @@ body{
     background:#0b5ed7;
     color:#fff;
     text-align:center;
-    font-size:8px;
-    padding:6px;
+    font-size:7px;
+    padding:5px;
 }
 </style>
 </head>
@@ -219,7 +220,6 @@ ONLINE PENDING
 
 <div class="divider"></div>
 
-<!-- 🔥 4 COLUMN CARDS -->
 <div class="actions">
 
 <div class="card c1"><i class="fas fa-home icon"></i>REGISTER<br>(HHR)<i class="fas fa-lock lock"></i></div>
