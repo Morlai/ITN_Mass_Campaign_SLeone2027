@@ -2,10 +2,10 @@
 <html lang="en"> 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ICF-SL | ITN Campaign Actions</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+<title>ICF-SL | ITN Campaign Carousel</title>
 
-<!-- Font Awesome 6 + Google Fonts for modern cards -->
+<!-- Font Awesome 6 + Google Fonts -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
@@ -35,6 +35,7 @@ body{
     display:flex;
     flex-direction:column;
     overflow:hidden;
+    box-shadow: 0 0 20px rgba(0,0,0,0.2);
 }
 
 /* SCROLL */
@@ -91,25 +92,93 @@ body{
     line-height:1.2;
 }
 
-/* INFOGRAPHICS */
-.infographics{
-    margin:3px;
-    border:2px solid green;
-    border-radius:6px;
-    overflow:hidden;
+/* ========== SMART CAROUSEL (same image for all 3 slides) ========== */
+.carousel-container {
+    margin: 8px 8px 4px 8px;
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    background: #f0f0f0;
 }
 
-.infographics img{
-    width:100%;
+.carousel-slides {
+    display: flex;
+    transition: transform 0.4s ease-in-out;
+    will-change: transform;
 }
 
-/* CAMPAIGN */
+.carousel-slide {
+    flex: 0 0 100%;
+    aspect-ratio: 16 / 9;
+    background: #2c3e50;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Navigation arrows */
+.carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.2s;
+    font-size: 1rem;
+}
+.carousel-btn:hover {
+    background: rgba(0,0,0,0.8);
+}
+.btn-prev { left: 8px; }
+.btn-next { right: 8px; }
+
+/* Dots indicator */
+.carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 8px 0 6px;
+    background: rgba(255,255,255,0.9);
+}
+.dot {
+    width: 8px;
+    height: 8px;
+    background: #ccc;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.dot.active {
+    background: #0b5ed7;
+    width: 20px;
+    border-radius: 10px;
+}
+
+/* CAMPAIGN BANNER */
 .campaign{
     background:#0b5ed7;
     color:#fff;
     text-align:center;
     font-size:8px;
     padding:3px;
+    margin-top: 4px;
 }
 
 /* STATUS */
@@ -147,7 +216,7 @@ body{
     margin: 4px 0;
 }
 
-/* ========== NEW MODERN ACTION CARDS (vertical, gradient backgrounds) ========== */
+/* ========== MODERN ACTION CARDS (vertical) ========== */
 .new-actions-section {
     padding: 8px 12px 16px 12px;
     background: #fff;
@@ -159,7 +228,6 @@ body{
     gap: 16px;
 }
 
-/* modern card base */
 .modern-card {
     position: relative;
     width: 100%;
@@ -178,7 +246,6 @@ body{
     box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.2);
 }
 
-/* decorative soft shapes */
 .modern-card .shape-top,
 .modern-card .shape-bottom {
     position: absolute;
@@ -200,7 +267,6 @@ body{
     background: rgba(0,0,0,0.04);
 }
 
-/* card content row */
 .modern-card-content {
     position: relative;
     z-index: 2;
@@ -218,7 +284,6 @@ body{
     gap: 16px;
 }
 
-/* white circle background for icons */
 .icon-circle {
     width: 52px;
     height: 52px;
@@ -229,10 +294,8 @@ body{
     justify-content: center;
     font-size: 1.6rem;
     box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-    transition: all 0.2s;
 }
 
-/* text inside cards (white) */
 .card-text h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -248,67 +311,38 @@ body{
     font-size: 0.68rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.88);
-    letter-spacing: 0.2px;
 }
 
 .chevron-icon {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.2rem;
-    transition: transform 0.2s, color 0.2s;
+    transition: transform 0.2s;
 }
 
 .modern-card:hover .chevron-icon {
     transform: translateX(5px);
-    color: white;
 }
 
-/* ===== GRADIENT BACKGROUNDS FOR EACH CARD (kept from modern design) ===== */
-.card-register {
-    background: linear-gradient(135deg, #1E3A8A, #3B82F6);
-}
-.card-distribution {
-    background: linear-gradient(135deg, #0F5B2E, #2E9A5E);
-}
-.card-registerqr {
-    background: linear-gradient(135deg, #6B21A5, #A855F7);
-}
-.card-stock {
-    background: linear-gradient(135deg, #C2410C, #F97316);
-}
-.card-dashboard {
-    background: linear-gradient(135deg, #0F5B7A, #14B8A6);
-}
+/* card gradients */
+.card-register { background: linear-gradient(135deg, #1E3A8A, #3B82F6); }
+.card-distribution { background: linear-gradient(135deg, #0F5B2E, #2E9A5E); }
+.card-registerqr { background: linear-gradient(135deg, #6B21A5, #A855F7); }
+.card-stock { background: linear-gradient(135deg, #C2410C, #F97316); }
+.card-dashboard { background: linear-gradient(135deg, #0F5B7A, #14B8A6); }
 
-/* icon colors inside white circle (matching gradient) */
+/* icon colors inside white circle */
 .card-register .icon-circle i { color: #1E3A8A; }
 .card-distribution .icon-circle i { color: #0F5B2E; }
 .card-registerqr .icon-circle i { color: #6B21A5; }
 .card-stock .icon-circle i { color: #C2410C; }
 .card-dashboard .icon-circle i { color: #0F5B7A; }
 
-/* responsive for smaller devices */
 @media (max-width: 380px) {
-    .modern-card-content {
-        padding: 10px 16px;
-    }
-    .icon-circle {
-        width: 44px;
-        height: 44px;
-        font-size: 1.3rem;
-    }
-    .card-text h3 {
-        font-size: 0.85rem;
-    }
-    .card-text .sub {
-        font-size: 0.6rem;
-    }
+    .modern-card-content { padding: 10px 16px; }
+    .icon-circle { width: 44px; height: 44px; font-size: 1.3rem; }
+    .card-text h3 { font-size: 0.85rem; }
 }
-
-/* active press effect */
-.modern-card:active {
-    transform: scale(0.98);
-    transition: transform 0.08s;
-}
+.modern-card:active { transform: scale(0.98); transition: transform 0.08s; }
 
 /* footer */
 .footer{
@@ -325,7 +359,7 @@ body{
 <div class="phone">
 <div class="screen">
 
-    <!-- HEADER (original) -->
+    <!-- HEADER -->
     <div class="header">
         <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
         <h2>Informatics Consultancy Firm-SL</h2>
@@ -333,7 +367,7 @@ body{
         <h3>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</h3>
     </div>
 
-    <!-- PARTNERS (original) -->
+    <!-- PARTNERS -->
     <div class="partners">
         <h3>IMPLEMENTING PARTNERS</h3>
         <div class="partner-grid">
@@ -346,125 +380,109 @@ body{
         </div>
     </div>
 
-    <!-- INFOGRAPHICS (original) -->
-    <div class="infographics">
-        <img src="infographics.png" alt="Campaign infographics">
+    <!-- ========== SMART CAROUSEL (using the same image for all 3 slides) ========== -->
+    <div class="carousel-container">
+        <div class="carousel-slides" id="carouselSlides">
+            <!-- Slide 1 -->
+            <div class="carousel-slide">
+                <img src="infographics.png" alt="Campaign Infographic 1">
+            </div>
+            <!-- Slide 2 - same image -->
+            <div class="carousel-slide">
+                <img src="infographics.png" alt="Campaign Infographic 2">
+            </div>
+            <!-- Slide 3 - same image -->
+            <div class="carousel-slide">
+                <img src="infographics.png" alt="Campaign Infographic 3">
+            </div>
+        </div>
+        <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+        <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+        <div class="carousel-dots" id="carouselDots"></div>
     </div>
 
-    <!-- CAMPAIGN BANNER (original) -->
+    <!-- CAMPAIGN BANNER -->
     <div class="campaign">
         <i class="fas fa-camera"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
     </div>
 
-    <!-- STATUS BAR (original) -->
+    <!-- STATUS BAR -->
     <div class="status">
         <div class="dot"></div>
         ONLINE PENDING
         <div class="badge">0</div>
     </div>
-
     <div class="divider"></div>
 
-    <!-- ========== MODERN ACTION CARDS (with icons from original grid) ========== -->
+    <!-- MODERN ACTION CARDS -->
     <div class="new-actions-section">
         <div class="new-actions">
-            
-            <!-- 1. REGISTER (HHR) – using original icon: fa-home -->
+            <!-- REGISTER -->
             <div class="modern-card card-register" id="newCardRegister">
                 <div class="shape-top"></div>
                 <div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left">
-                        <div class="icon-circle">
-                            <i class="fas fa-home"></i>   <!-- original REGISTER icon -->
-                        </div>
-                        <div class="card-text">
-                            <h3>REGISTER</h3>
-                            <div class="sub">(HHR)</div>
-                        </div>
+                        <div class="icon-circle"><i class="fas fa-home"></i></div>
+                        <div class="card-text"><h3>REGISTER</h3><div class="sub">(HHR)</div></div>
                     </div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-
-            <!-- 2. DISTRIBUTION (HHD) – original icon: fa-users -->
+            <!-- DISTRIBUTION -->
             <div class="modern-card card-distribution" id="newCardDistribution">
                 <div class="shape-top"></div>
                 <div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left">
-                        <div class="icon-circle">
-                            <i class="fas fa-users"></i>   <!-- original DISTRIBUTION icon -->
-                        </div>
-                        <div class="card-text">
-                            <h3>DISTRIBUTION</h3>
-                            <div class="sub">(HHD)</div>
-                        </div>
+                        <div class="icon-circle"><i class="fas fa-users"></i></div>
+                        <div class="card-text"><h3>DISTRIBUTION</h3><div class="sub">(HHD)</div></div>
                     </div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-
-            <!-- 3. REGISTER QR (HHR) – original icon: fa-qrcode (matches modern) -->
+            <!-- REGISTER QR -->
             <div class="modern-card card-registerqr" id="newCardRegisterQr">
                 <div class="shape-top"></div>
                 <div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left">
-                        <div class="icon-circle">
-                            <i class="fas fa-qrcode"></i>   <!-- original REGISTER QR icon -->
-                        </div>
-                        <div class="card-text">
-                            <h3>REGISTER QR</h3>
-                            <div class="sub">(HHR)</div>
-                        </div>
+                        <div class="icon-circle"><i class="fas fa-qrcode"></i></div>
+                        <div class="card-text"><h3>REGISTER QR</h3><div class="sub">(HHR)</div></div>
                     </div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-
-            <!-- 4. STOCK – original icon: fa-box (from "ITN RECEIVED" card) -->
+            <!-- STOCK -->
             <div class="modern-card card-stock" id="newCardStock">
                 <div class="shape-top"></div>
                 <div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left">
-                        <div class="icon-circle">
-                            <i class="fas fa-box"></i>   <!-- original stock / ITN received icon -->
-                        </div>
-                        <div class="card-text">
-                            <h3>STOCK</h3>
-                            <div class="sub">inventory & supplies</div>
-                        </div>
+                        <div class="icon-circle"><i class="fas fa-box"></i></div>
+                        <div class="card-text"><h3>STOCK</h3><div class="sub">inventory & supplies</div></div>
                     </div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-
-            <!-- 5. DASHBOARD – original icon: fa-chart-line (from "ANALYSIS" card) -->
+            <!-- DASHBOARD -->
             <div class="modern-card card-dashboard" id="newCardDashboard">
                 <div class="shape-top"></div>
                 <div class="shape-bottom"></div>
                 <div class="modern-card-content">
                     <div class="card-left">
-                        <div class="icon-circle">
-                            <i class="fas fa-chart-line"></i>   <!-- original ANALYSIS / dashboard icon -->
-                        </div>
-                        <div class="card-text">
-                            <h3>DASHBOARD</h3>
-                            <div class="sub">analytics & overview</div>
-                        </div>
+                        <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
+                        <div class="card-text"><h3>DASHBOARD</h3><div class="sub">analytics & overview</div></div>
                     </div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-
         </div>
     </div>
 
 </div> <!-- end screen -->
 
-<!-- FOOTER (original) -->
+<!-- FOOTER -->
 <div class="footer">
     Developed By<br>
     Informatic Consultancy Firm-SL ©2026
@@ -473,7 +491,128 @@ body{
 </div> <!-- end phone -->
 
 <script>
-    // Interactive toast feedback (same as modern design)
+    // ========== CAROUSEL LOGIC (touch + auto slide) ==========
+    const slidesContainer = document.getElementById('carouselSlides');
+    const slides = document.querySelectorAll('.carousel-slide');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const dotsContainer = document.getElementById('carouselDots');
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+    let autoInterval;
+    let startX, isDragging = false;
+
+    // Create dots
+    function createDots() {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentIndex) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateDots() {
+        document.querySelectorAll('.dot').forEach((dot, idx) => {
+            if (idx === currentIndex) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+    }
+
+    function goToSlide(index) {
+        if (index < 0) index = 0;
+        if (index >= totalSlides) index = totalSlides - 1;
+        currentIndex = index;
+        const offset = -currentIndex * 100;
+        slidesContainer.style.transform = `translateX(${offset}%)`;
+        updateDots();
+        resetAutoPlay();
+    }
+
+    function nextSlide() {
+        if (currentIndex + 1 < totalSlides) {
+            goToSlide(currentIndex + 1);
+        } else {
+            goToSlide(0); // loop
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex - 1 >= 0) {
+            goToSlide(currentIndex - 1);
+        } else {
+            goToSlide(totalSlides - 1);
+        }
+    }
+
+    function startAutoPlay() {
+        if (autoInterval) clearInterval(autoInterval);
+        autoInterval = setInterval(() => {
+            nextSlide();
+        }, 5000);
+    }
+
+    function resetAutoPlay() {
+        if (autoInterval) clearInterval(autoInterval);
+        startAutoPlay();
+    }
+
+    // Touch events for swipe
+    slidesContainer.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+        isDragging = true;
+        resetAutoPlay();
+    });
+    slidesContainer.addEventListener('touchend', (e) => {
+        if (!isDragging) return;
+        const endX = e.changedTouches[0].clientX;
+        const diff = endX - startX;
+        if (Math.abs(diff) > 40) {
+            if (diff > 0) prevSlide();
+            else nextSlide();
+        }
+        isDragging = false;
+        startAutoPlay();
+    });
+    // Mouse events for desktop drag simulation
+    slidesContainer.addEventListener('mousedown', (e) => {
+        startX = e.clientX;
+        isDragging = true;
+        e.preventDefault();
+        resetAutoPlay();
+    });
+    window.addEventListener('mouseup', (e) => {
+        if (!isDragging) return;
+        const endX = e.clientX;
+        const diff = endX - startX;
+        if (Math.abs(diff) > 40) {
+            if (diff > 0) prevSlide();
+            else nextSlide();
+        }
+        isDragging = false;
+        startAutoPlay();
+    });
+
+    // Button events
+    prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        prevSlide();
+        resetAutoPlay();
+    });
+    nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        nextSlide();
+        resetAutoPlay();
+    });
+
+    // initialize carousel
+    createDots();
+    goToSlide(0);
+    startAutoPlay();
+
+    // ========== ACTION CARD FEEDBACK ==========
     function showActionFeedback(title, description = '') {
         const toast = document.createElement('div');
         toast.style.position = 'fixed';
@@ -505,52 +644,23 @@ body{
         }, 2000);
     }
 
-    // Bind click events to modern cards
     const registerCard = document.getElementById('newCardRegister');
     const distributionCard = document.getElementById('newCardDistribution');
     const registerQrCard = document.getElementById('newCardRegisterQr');
     const stockCard = document.getElementById('newCardStock');
     const dashboardCard = document.getElementById('newCardDashboard');
 
-    if (registerCard) {
-        registerCard.addEventListener('click', () => {
-            showActionFeedback('🏠 REGISTER (HHR)', 'New household registration form');
-        });
-    }
-    if (distributionCard) {
-        distributionCard.addEventListener('click', () => {
-            showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution & quantities');
-        });
-    }
-    if (registerQrCard) {
-        registerQrCard.addEventListener('click', () => {
-            showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code to register household');
-        });
-    }
-    if (stockCard) {
-        stockCard.addEventListener('click', () => {
-            showActionFeedback('📦 STOCK', 'Current ITN inventory: 5,820 nets available');
-        });
-    }
-    if (dashboardCard) {
-        dashboardCard.addEventListener('click', () => {
-            showActionFeedback('📊 DASHBOARD', 'Coverage rate: 84% · 2,150 HH remaining');
-        });
-    }
+    if (registerCard) registerCard.addEventListener('click', () => showActionFeedback('🏠 REGISTER (HHR)', 'New household registration form'));
+    if (distributionCard) distributionCard.addEventListener('click', () => showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution & quantities'));
+    if (registerQrCard) registerQrCard.addEventListener('click', () => showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code to register household'));
+    if (stockCard) stockCard.addEventListener('click', () => showActionFeedback('📦 STOCK', 'Current ITN inventory: 5,820 nets available'));
+    if (dashboardCard) dashboardCard.addEventListener('click', () => showActionFeedback('📊 DASHBOARD', 'Coverage rate: 84% · 2,150 HH remaining'));
 
-    // subtle touch feedback for modern cards
-    const allModernCards = document.querySelectorAll('.modern-card');
-    allModernCards.forEach(card => {
-        card.addEventListener('touchstart', function() {
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => { if(this) this.style.transform = ''; }, 120);
-        });
-        card.addEventListener('mousedown', function() {
-            this.style.transform = 'scale(0.98)';
-            setTimeout(() => { if(this) this.style.transform = ''; }, 120);
-        });
+    // micro tap feedback
+    document.querySelectorAll('.modern-card').forEach(card => {
+        card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
+        card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
     });
 </script>
-
 </body>
 </html>
