@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-/* ========== BASE STYLES (original ICF-SL layout) ========== */
+/* ========== BASE STYLES ========== */
 *{
     margin:0;
     padding:0;
@@ -26,7 +26,6 @@ body{
     height:100vh;
 }
 
-/* PHONE */
 .phone{
     width:100%;
     max-width:360px;
@@ -35,14 +34,13 @@ body{
     display:flex;
     flex-direction:column;
     overflow:hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
-/* SCROLL */
 .screen{
     flex:1;
     overflow-y:auto;
-    padding-bottom: 8px;
+    padding-bottom:8px;
 }
 
 /* HEADER */
@@ -52,7 +50,6 @@ body{
     color:#fff;
     padding:6px 4px;
 }
-
 .header img{height:30px;}
 .header h2{font-size:9px;}
 .header h3{font-size:8px;}
@@ -61,19 +58,16 @@ body{
 /* PARTNERS */
 .partners{padding:4px;}
 .partners h3{text-align:center;font-size:8px;}
-
 .partner-grid{
     display:grid;
     grid-template-columns:repeat(3,1fr);
     gap:6px;
     padding:0 4px;
 }
-
 .partner-item{
     text-align:center;
     font-size:6px;
 }
-
 .partner-item img{
     width:75%;
     height:24px;
@@ -85,21 +79,20 @@ body{
     padding:2px;
     background:#fff;
 }
-
 .partner-item span{
     display:block;
     font-size:6px;
     line-height:1.2;
 }
 
-/* ========== SMART CAROUSEL (same image for all 3 slides) ========== */
+/* ========== SMART CAROUSEL (FULLY VISIBLE, WITH FALLBACK) ========== */
 .carousel-container {
     margin: 8px 8px 4px 8px;
     position: relative;
-    border-radius: 12px;
+    border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    background: #f0f0f0;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    background: #1e2a3a;
 }
 
 .carousel-slides {
@@ -111,10 +104,35 @@ body{
 .carousel-slide {
     flex: 0 0 100%;
     aspect-ratio: 16 / 9;
-    background: #2c3e50;
+    position: relative;
+}
+
+/* Fallback style when image is missing */
+.carousel-slide .fallback-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(145deg, #0b5ed7, #1e6f5c);
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
+    color: white;
+    gap: 12px;
+    text-align: center;
+    z-index: 1;
+}
+.carousel-slide .fallback-bg i {
+    font-size: 2.5rem;
+}
+.carousel-slide .fallback-bg p {
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: rgba(0,0,0,0.4);
+    padding: 5px 12px;
+    border-radius: 30px;
 }
 
 .carousel-slide img {
@@ -122,6 +140,8 @@ body{
     height: 100%;
     object-fit: cover;
     display: block;
+    position: relative;
+    z-index: 0;
 }
 
 /* Navigation arrows */
@@ -129,45 +149,45 @@ body{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     color: white;
     border: none;
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    z-index: 10;
+    z-index: 20;
     transition: all 0.2s;
     font-size: 1rem;
 }
 .carousel-btn:hover {
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.9);
 }
-.btn-prev { left: 8px; }
-.btn-next { right: 8px; }
+.btn-prev { left: 10px; }
+.btn-next { right: 10px; }
 
 /* Dots indicator */
 .carousel-dots {
     display: flex;
     justify-content: center;
-    gap: 8px;
-    padding: 8px 0 6px;
-    background: rgba(255,255,255,0.9);
+    gap: 10px;
+    padding: 10px 0 8px;
+    background: rgba(255,255,255,0.95);
 }
 .dot {
     width: 8px;
     height: 8px;
-    background: #ccc;
+    background: #bbb;
     border-radius: 50%;
     cursor: pointer;
     transition: all 0.2s;
 }
 .dot.active {
     background: #0b5ed7;
-    width: 20px;
+    width: 22px;
     border-radius: 10px;
 }
 
@@ -178,7 +198,7 @@ body{
     text-align:center;
     font-size:8px;
     padding:3px;
-    margin-top: 4px;
+    margin-top:4px;
 }
 
 /* STATUS */
@@ -188,7 +208,6 @@ body{
     padding:3px;
     font-size:8px;
 }
-
 .dot{
     width:5px;
     height:5px;
@@ -196,7 +215,6 @@ body{
     border-radius:50%;
     margin-right:4px;
 }
-
 .badge{
     width:12px;
     height:12px;
@@ -209,25 +227,22 @@ body{
     font-size:6px;
     margin-left:4px;
 }
-
 .divider{
     height:2px;
     background:green;
-    margin: 4px 0;
+    margin:4px 0;
 }
 
-/* ========== MODERN ACTION CARDS (vertical) ========== */
+/* ACTION CARDS (same as before) */
 .new-actions-section {
     padding: 8px 12px 16px 12px;
     background: #fff;
 }
-
 .new-actions {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
-
 .modern-card {
     position: relative;
     width: 100%;
@@ -240,12 +255,10 @@ body{
     transition: transform 0.2s ease, box-shadow 0.2s ease;
     cursor: pointer;
 }
-
 .modern-card:hover {
     transform: translateY(-2px);
     box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.2);
 }
-
 .modern-card .shape-top,
 .modern-card .shape-bottom {
     position: absolute;
@@ -266,7 +279,6 @@ body{
     border-radius: 0 40px 0 0;
     background: rgba(0,0,0,0.04);
 }
-
 .modern-card-content {
     position: relative;
     z-index: 2;
@@ -277,13 +289,11 @@ body{
     padding: 14px 20px 14px 22px;
     gap: 12px;
 }
-
 .card-left {
     display: flex;
     align-items: center;
     gap: 16px;
 }
-
 .icon-circle {
     width: 52px;
     height: 52px;
@@ -295,7 +305,6 @@ body{
     font-size: 1.6rem;
     box-shadow: 0 5px 12px rgba(0,0,0,0.15);
 }
-
 .card-text h3 {
     font-family: 'Poppins', sans-serif;
     font-size: 1rem;
@@ -305,32 +314,25 @@ body{
     text-shadow: 0 1px 2px rgba(0,0,0,0.1);
     margin-bottom: 2px;
 }
-
 .card-text .sub {
     font-family: 'Poppins', sans-serif;
     font-size: 0.68rem;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.88);
 }
-
 .chevron-icon {
     color: rgba(255, 255, 255, 0.9);
     font-size: 1.2rem;
     transition: transform 0.2s;
 }
-
 .modern-card:hover .chevron-icon {
     transform: translateX(5px);
 }
-
-/* card gradients */
 .card-register { background: linear-gradient(135deg, #1E3A8A, #3B82F6); }
 .card-distribution { background: linear-gradient(135deg, #0F5B2E, #2E9A5E); }
 .card-registerqr { background: linear-gradient(135deg, #6B21A5, #A855F7); }
 .card-stock { background: linear-gradient(135deg, #C2410C, #F97316); }
 .card-dashboard { background: linear-gradient(135deg, #0F5B7A, #14B8A6); }
-
-/* icon colors inside white circle */
 .card-register .icon-circle i { color: #1E3A8A; }
 .card-distribution .icon-circle i { color: #0F5B2E; }
 .card-registerqr .icon-circle i { color: #6B21A5; }
@@ -344,7 +346,6 @@ body{
 }
 .modern-card:active { transform: scale(0.98); transition: transform 0.08s; }
 
-/* footer */
 .footer{
     background:#0b5ed7;
     color:#fff;
@@ -380,20 +381,20 @@ body{
         </div>
     </div>
 
-    <!-- ========== SMART CAROUSEL (using the same image for all 3 slides) ========== -->
+    <!-- ========== SMART CAROUSEL (with fallback text, always visible) ========== -->
     <div class="carousel-container">
         <div class="carousel-slides" id="carouselSlides">
             <!-- Slide 1 -->
-            <div class="carousel-slide">
-                <img src="infographics.png" alt="Campaign Infographic 1">
+            <div class="carousel-slide" id="slide1">
+                <img src="infographics.png" alt="Campaign Infographic 1" onerror="showFallback(this, '📊 Campaign Dashboard', 'Target: 15,000 nets · 58% achieved')">
             </div>
-            <!-- Slide 2 - same image -->
-            <div class="carousel-slide">
-                <img src="infographics.png" alt="Campaign Infographic 2">
+            <!-- Slide 2 -->
+            <div class="carousel-slide" id="slide2">
+                <img src="infographics.png" alt="Campaign Infographic 2" onerror="showFallback(this, '🦟 ITN Coverage Map', '84% household coverage · 12 districts')">
             </div>
-            <!-- Slide 3 - same image -->
-            <div class="carousel-slide">
-                <img src="infographics.png" alt="Campaign Infographic 3">
+            <!-- Slide 3 -->
+            <div class="carousel-slide" id="slide3">
+                <img src="infographics.png" alt="Campaign Infographic 3" onerror="showFallback(this, '📈 Malaria Reduction', 'Zero malaria by 2030 · Progress +22%')">
             </div>
         </div>
         <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
@@ -406,7 +407,7 @@ body{
         <i class="fas fa-camera"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
     </div>
 
-    <!-- STATUS BAR -->
+    <!-- STATUS -->
     <div class="status">
         <div class="dot"></div>
         ONLINE PENDING
@@ -414,84 +415,69 @@ body{
     </div>
     <div class="divider"></div>
 
-    <!-- MODERN ACTION CARDS -->
+    <!-- ACTION CARDS -->
     <div class="new-actions-section">
         <div class="new-actions">
-            <!-- REGISTER -->
             <div class="modern-card card-register" id="newCardRegister">
-                <div class="shape-top"></div>
-                <div class="shape-bottom"></div>
+                <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
-                    <div class="card-left">
-                        <div class="icon-circle"><i class="fas fa-home"></i></div>
-                        <div class="card-text"><h3>REGISTER</h3><div class="sub">(HHR)</div></div>
-                    </div>
+                    <div class="card-left"><div class="icon-circle"><i class="fas fa-home"></i></div><div class="card-text"><h3>REGISTER</h3><div class="sub">(HHR)</div></div></div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-            <!-- DISTRIBUTION -->
             <div class="modern-card card-distribution" id="newCardDistribution">
-                <div class="shape-top"></div>
-                <div class="shape-bottom"></div>
+                <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
-                    <div class="card-left">
-                        <div class="icon-circle"><i class="fas fa-users"></i></div>
-                        <div class="card-text"><h3>DISTRIBUTION</h3><div class="sub">(HHD)</div></div>
-                    </div>
+                    <div class="card-left"><div class="icon-circle"><i class="fas fa-users"></i></div><div class="card-text"><h3>DISTRIBUTION</h3><div class="sub">(HHD)</div></div></div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-            <!-- REGISTER QR -->
             <div class="modern-card card-registerqr" id="newCardRegisterQr">
-                <div class="shape-top"></div>
-                <div class="shape-bottom"></div>
+                <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
-                    <div class="card-left">
-                        <div class="icon-circle"><i class="fas fa-qrcode"></i></div>
-                        <div class="card-text"><h3>REGISTER QR</h3><div class="sub">(HHR)</div></div>
-                    </div>
+                    <div class="card-left"><div class="icon-circle"><i class="fas fa-qrcode"></i></div><div class="card-text"><h3>REGISTER QR</h3><div class="sub">(HHR)</div></div></div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-            <!-- STOCK -->
             <div class="modern-card card-stock" id="newCardStock">
-                <div class="shape-top"></div>
-                <div class="shape-bottom"></div>
+                <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
-                    <div class="card-left">
-                        <div class="icon-circle"><i class="fas fa-box"></i></div>
-                        <div class="card-text"><h3>STOCK</h3><div class="sub">inventory & supplies</div></div>
-                    </div>
+                    <div class="card-left"><div class="icon-circle"><i class="fas fa-box"></i></div><div class="card-text"><h3>STOCK</h3><div class="sub">inventory & supplies</div></div></div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
-            <!-- DASHBOARD -->
             <div class="modern-card card-dashboard" id="newCardDashboard">
-                <div class="shape-top"></div>
-                <div class="shape-bottom"></div>
+                <div class="shape-top"></div><div class="shape-bottom"></div>
                 <div class="modern-card-content">
-                    <div class="card-left">
-                        <div class="icon-circle"><i class="fas fa-chart-line"></i></div>
-                        <div class="card-text"><h3>DASHBOARD</h3><div class="sub">analytics & overview</div></div>
-                    </div>
+                    <div class="card-left"><div class="icon-circle"><i class="fas fa-chart-line"></i></div><div class="card-text"><h3>DASHBOARD</h3><div class="sub">analytics & overview</div></div></div>
                     <i class="fas fa-chevron-right chevron-icon"></i>
                 </div>
             </div>
         </div>
     </div>
 
-</div> <!-- end screen -->
+</div> <!-- screen -->
 
-<!-- FOOTER -->
 <div class="footer">
     Developed By<br>
     Informatic Consultancy Firm-SL ©2026
 </div>
 
-</div> <!-- end phone -->
+</div> <!-- phone -->
 
 <script>
-    // ========== CAROUSEL LOGIC (touch + auto slide) ==========
+    // FALLBACK FUNCTION: replaces broken image with a styled div
+    window.showFallback = function(imgElement, title, desc) {
+        if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
+            const fallbackDiv = document.createElement('div');
+            fallbackDiv.className = 'fallback-bg';
+            fallbackDiv.innerHTML = `<i class="fas ${title.includes('Dashboard') ? 'fa-chart-line' : (title.includes('Coverage') ? 'fa-map' : 'fa-chart-simple')}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
+            imgElement.style.display = 'none';
+            imgElement.parentNode.appendChild(fallbackDiv);
+        }
+    };
+
+    // CAROUSEL LOGIC
     const slidesContainer = document.getElementById('carouselSlides');
     const slides = document.querySelectorAll('.carousel-slide');
     const prevBtn = document.getElementById('prevBtn');
@@ -502,7 +488,6 @@ body{
     let autoInterval;
     let startX, isDragging = false;
 
-    // Create dots
     function createDots() {
         dotsContainer.innerHTML = '';
         for (let i = 0; i < totalSlides; i++) {
@@ -513,150 +498,62 @@ body{
             dotsContainer.appendChild(dot);
         }
     }
-
     function updateDots() {
         document.querySelectorAll('.dot').forEach((dot, idx) => {
-            if (idx === currentIndex) dot.classList.add('active');
-            else dot.classList.remove('active');
+            dot.classList.toggle('active', idx === currentIndex);
         });
     }
-
     function goToSlide(index) {
         if (index < 0) index = 0;
         if (index >= totalSlides) index = totalSlides - 1;
         currentIndex = index;
-        const offset = -currentIndex * 100;
-        slidesContainer.style.transform = `translateX(${offset}%)`;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
         updateDots();
         resetAutoPlay();
     }
+    function nextSlide() { goToSlide((currentIndex + 1) % totalSlides); }
+    function prevSlide() { goToSlide((currentIndex - 1 + totalSlides) % totalSlides); }
+    function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
+    function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
 
-    function nextSlide() {
-        if (currentIndex + 1 < totalSlides) {
-            goToSlide(currentIndex + 1);
-        } else {
-            goToSlide(0); // loop
-        }
-    }
-
-    function prevSlide() {
-        if (currentIndex - 1 >= 0) {
-            goToSlide(currentIndex - 1);
-        } else {
-            goToSlide(totalSlides - 1);
-        }
-    }
-
-    function startAutoPlay() {
-        if (autoInterval) clearInterval(autoInterval);
-        autoInterval = setInterval(() => {
-            nextSlide();
-        }, 5000);
-    }
-
-    function resetAutoPlay() {
-        if (autoInterval) clearInterval(autoInterval);
-        startAutoPlay();
-    }
-
-    // Touch events for swipe
-    slidesContainer.addEventListener('touchstart', (e) => {
-        startX = e.touches[0].clientX;
-        isDragging = true;
-        resetAutoPlay();
-    });
+    // Touch & mouse events
+    slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
     slidesContainer.addEventListener('touchend', (e) => {
         if (!isDragging) return;
-        const endX = e.changedTouches[0].clientX;
-        const diff = endX - startX;
-        if (Math.abs(diff) > 40) {
-            if (diff > 0) prevSlide();
-            else nextSlide();
-        }
+        const diff = e.changedTouches[0].clientX - startX;
+        if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
         isDragging = false;
         startAutoPlay();
     });
-    // Mouse events for desktop drag simulation
-    slidesContainer.addEventListener('mousedown', (e) => {
-        startX = e.clientX;
-        isDragging = true;
-        e.preventDefault();
-        resetAutoPlay();
-    });
+    slidesContainer.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; e.preventDefault(); resetAutoPlay(); });
     window.addEventListener('mouseup', (e) => {
         if (!isDragging) return;
-        const endX = e.clientX;
-        const diff = endX - startX;
-        if (Math.abs(diff) > 40) {
-            if (diff > 0) prevSlide();
-            else nextSlide();
-        }
+        const diff = e.clientX - startX;
+        if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
         isDragging = false;
         startAutoPlay();
     });
+    prevBtn.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+    nextBtn.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
 
-    // Button events
-    prevBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        prevSlide();
-        resetAutoPlay();
-    });
-    nextBtn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        nextSlide();
-        resetAutoPlay();
-    });
-
-    // initialize carousel
     createDots();
     goToSlide(0);
     startAutoPlay();
 
-    // ========== ACTION CARD FEEDBACK ==========
-    function showActionFeedback(title, description = '') {
+    // ACTION CARD FEEDBACK (same as before)
+    function showActionFeedback(title, desc) {
         const toast = document.createElement('div');
-        toast.style.position = 'fixed';
-        toast.style.bottom = '28px';
-        toast.style.left = '50%';
-        toast.style.transform = 'translateX(-50%)';
-        toast.style.backgroundColor = '#1F2937';
-        toast.style.color = 'white';
-        toast.style.padding = '12px 24px';
-        toast.style.borderRadius = '60px';
-        toast.style.fontSize = '0.85rem';
-        toast.style.fontWeight = '500';
-        toast.style.backdropFilter = 'blur(10px)';
-        toast.style.background = '#0F172A';
-        toast.style.border = '1px solid rgba(255,255,255,0.1)';
-        toast.style.boxShadow = '0 12px 24px -10px rgba(0,0,0,0.3)';
-        toast.style.zIndex = '999';
-        toast.style.fontFamily = "'Poppins', sans-serif";
-        toast.style.display = 'flex';
-        toast.style.alignItems = 'center';
-        toast.style.gap = '10px';
-        toast.style.letterSpacing = '0.3px';
-        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#34D399; font-size:1rem;"></i> ${title} ${description ? '– ' + description : ''}`;
+        toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:#0F172A; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
+        toast.innerHTML = `<i class="fas fa-check-circle" style="color:#34D399;"></i> ${title} ${desc ? '– ' + desc : ''}`;
         document.body.appendChild(toast);
-        setTimeout(() => {
-            toast.style.opacity = '0';
-            toast.style.transition = 'opacity 0.25s ease';
-            setTimeout(() => toast.remove(), 280);
-        }, 2000);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2000);
     }
+    document.getElementById('newCardRegister')?.addEventListener('click', () => showActionFeedback('🏠 REGISTER (HHR)', 'New household registration'));
+    document.getElementById('newCardDistribution')?.addEventListener('click', () => showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution'));
+    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code'));
+    document.getElementById('newCardStock')?.addEventListener('click', () => showActionFeedback('📦 STOCK', '5,820 nets available'));
+    document.getElementById('newCardDashboard')?.addEventListener('click', () => showActionFeedback('📊 DASHBOARD', 'Coverage 84%'));
 
-    const registerCard = document.getElementById('newCardRegister');
-    const distributionCard = document.getElementById('newCardDistribution');
-    const registerQrCard = document.getElementById('newCardRegisterQr');
-    const stockCard = document.getElementById('newCardStock');
-    const dashboardCard = document.getElementById('newCardDashboard');
-
-    if (registerCard) registerCard.addEventListener('click', () => showActionFeedback('🏠 REGISTER (HHR)', 'New household registration form'));
-    if (distributionCard) distributionCard.addEventListener('click', () => showActionFeedback('👥 DISTRIBUTION (HHD)', 'Record net distribution & quantities'));
-    if (registerQrCard) registerQrCard.addEventListener('click', () => showActionFeedback('📱 REGISTER QR (HHR)', 'Scan QR code to register household'));
-    if (stockCard) stockCard.addEventListener('click', () => showActionFeedback('📦 STOCK', 'Current ITN inventory: 5,820 nets available'));
-    if (dashboardCard) dashboardCard.addEventListener('click', () => showActionFeedback('📊 DASHBOARD', 'Coverage rate: 84% · 2,150 HH remaining'));
-
-    // micro tap feedback
     document.querySelectorAll('.modern-card').forEach(card => {
         card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
         card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
