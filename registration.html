@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-<title>Household Registration | ITN Campaign</title>  
+<title>Household Registration | ITN Campaign</title> 
 
 <style>
 * {
@@ -301,7 +301,7 @@ button {
 <div class="step"><div class="circle">4</div><div class="label">Complete</div></div>
 </div>
 
-<!-- SECTION 1 - DEMOGRAPHIC INFO with cascading dropdowns from CSV -->
+<!-- SECTION 1 - DEMOGRAPHIC INFO (with Health Facility dropdown from CSV) -->
 <div class="section active" id="sec1">
 <div class="row">
 <div class="form-group"><label>Date</label><input id="date" readonly></div>
@@ -309,8 +309,8 @@ button {
 <div class="form-group"><label>District</label><select id="district" disabled><option value="">-- First select Region --</option></select></div>
 <div class="form-group"><label>Chiefdom</label><select id="chiefdom" disabled><option value="">-- First select District --</option></select></div>
 <div class="form-group"><label>Community</label><select id="community" disabled><option value="">-- First select Chiefdom --</option></select></div>
+<div class="form-group"><label>Nearest Health Facility</label><select id="facility" disabled><option value="">-- First select Community --</option></select></div>
 <div class="form-group"><label>Distribution Point</label><select id="dp" disabled><option value="">-- First select Community --</option></select></div>
-<div class="form-group"><label>Nearest Health Facility</label><input id="facility" placeholder="Enter facility name"></div>
 </div>
 <div class="buttons">
 <div></div>
@@ -318,7 +318,7 @@ button {
 </div>
 </div>
 
-<!-- SECTION 2 (unchanged) -->
+<!-- SECTION 2 - HOUSEHOLD DETAILS (unchanged) -->
 <div class="section" id="sec2">
 <div class="row">
 <div class="form-group"><label>Surname</label><input id="surname" placeholder="Enter surname"></div>
@@ -340,7 +340,7 @@ button {
 </div>
 </div>
 
-<!-- SECTION 3 (unchanged) -->
+<!-- SECTION 3 - REVIEW (updated order) -->
 <div class="section" id="sec3">
 <div class="review-box">
 <div class="review-title">🏠 Household Summary</div>
@@ -353,7 +353,7 @@ button {
 </div>
 </div>
 
-<!-- SECTION 4 (unchanged) -->
+<!-- SECTION 4 - COMPLETE -->
 <div class="section" id="sec4">
 <h3 style="font-size:1.2rem; margin-bottom:8px;">✅ Complete</h3>
 <div class="success" id="successMsg"></div>
@@ -366,9 +366,9 @@ button {
 
 <script>
 // ========================
-// 1) Load CSV and build cascading dropdowns
+// 1) Load CSV and build cascading dropdowns (including Health Facility)
 // ========================
-let locationData = []; // array of objects: {Region, District, Chiefdom, Community, DistributionPoint}
+let locationData = [];
 
 async function loadLocationData() {
     try {
@@ -382,33 +382,53 @@ async function loadLocationData() {
         const districtIdx = headers.indexOf('district');
         const chiefdomIdx = headers.indexOf('chiefdom');
         const communityIdx = headers.indexOf('community');
+        const healthFacilityIdx = headers.indexOf('healthfacility');
         const dpIdx = headers.indexOf('distributionpoint');
+        
         if (regionIdx === -1 || districtIdx === -1 || chiefdomIdx === -1 || communityIdx === -1 || dpIdx === -1) {
-            throw new Error('CSV missing required columns');
+            throw new Error('CSV missing required columns: region, district, chiefdom, community, distributionpoint');
         }
+        
         for (let i = 1; i < lines.length; i++) {
             const values = lines[i].split(',').map(v => v.trim());
-            if (values.length < 5) continue;
+            if (values.length < 6 && healthFacilityIdx === -1) continue;
             locationData.push({
                 Region: values[regionIdx],
                 District: values[districtIdx],
                 Chiefdom: values[chiefdomIdx],
                 Community: values[communityIdx],
+                HealthFacility: healthFacilityIdx !== -1 ? values[healthFacilityIdx] : "",
                 DistributionPoint: values[dpIdx]
             });
         }
         console.log(`Loaded ${locationData.length} location records`);
         populateRegionDropdown();
+        
+        // If no health facility column, show a fallback text input
+        if (healthFacilityIdx === -1) {
+            const facilityGroup = document.querySelector('.form-group:has(label[for="facility"])') || 
+                                 document.querySelector('.form-group:nth-child(6)');
+            if (facilityGroup) {
+                const selectElem = document.getElementById('facility');
+                const inputElem = document.createElement('input');
+                inputElem.id = 'facility';
+                inputElem.placeholder = 'Enter facility name';
+                inputElem.className = 'form-control';
+                selectElem.parentNode.replaceChild(inputElem, selectElem);
+                inputElem.classList.add('input');
+                console.warn('CSV missing "healthfacility" column. Using text input instead.');
+            }
+        }
     } catch (err) {
         console.warn('Error loading CSV, using fallback demo data:', err);
-        // Fallback demo data (for testing)
+        // Fallback demo data with health facility
         locationData = [
-            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Mambo", DistributionPoint: "PHU Mambo" },
-            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Rogbere", DistributionPoint: "Rogbere CHC" },
-            { Region: "North", District: "Kambia", Chiefdom: "Mambolo", Community: "Kychom", DistributionPoint: "Kychom HP" },
-            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "Bo Town", DistributionPoint: "Bo Govt Hospital" },
-            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "New Site", DistributionPoint: "New Site Clinic" },
-            { Region: "East", District: "Kenema", Chiefdom: "Dama", Community: "Kenyema", DistributionPoint: "Kenyema CHC" }
+            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Mambo", HealthFacility: "Mambo CHC", DistributionPoint: "PHU Mambo" },
+            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Rogbere", HealthFacility: "Rogbere Clinic", DistributionPoint: "Rogbere CHC" },
+            { Region: "North", District: "Kambia", Chiefdom: "Mambolo", Community: "Kychom", HealthFacility: "Kychom HP", DistributionPoint: "Kychom HP" },
+            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "Bo Town", HealthFacility: "Bo Govt Hospital", DistributionPoint: "Bo Govt Hospital" },
+            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "New Site", HealthFacility: "New Site Clinic", DistributionPoint: "New Site Clinic" },
+            { Region: "East", District: "Kenema", Chiefdom: "Dama", Community: "Kenyema", HealthFacility: "Kenyema CHC", DistributionPoint: "Kenyema CHC" }
         ];
         populateRegionDropdown();
         showToast('⚠️ Using demo location data (TestDisData.csv not found)', false);
@@ -452,6 +472,16 @@ function getCommunitiesForChiefdom(region, district, chiefdom) {
     return Array.from(communities).sort();
 }
 
+function getHealthFacilitiesForCommunity(region, district, chiefdom, community) {
+    const facilities = new Set();
+    locationData.forEach(item => {
+        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom && item.Community === community) {
+            if (item.HealthFacility) facilities.add(item.HealthFacility);
+        }
+    });
+    return Array.from(facilities).sort();
+}
+
 function getDistributionPointsForCommunity(region, district, chiefdom, community) {
     const points = new Set();
     locationData.forEach(item => {
@@ -467,6 +497,7 @@ function updateDistrictDropdown() {
     const districtSelect = document.getElementById('district');
     const chiefdomSelect = document.getElementById('chiefdom');
     const communitySelect = document.getElementById('community');
+    const facilitySelect = document.getElementById('facility');
     const dpSelect = document.getElementById('dp');
     if (!region) {
         districtSelect.innerHTML = '<option value="">-- First select Region --</option>';
@@ -475,6 +506,10 @@ function updateDistrictDropdown() {
         chiefdomSelect.disabled = true;
         communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
         communitySelect.disabled = true;
+        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+            facilitySelect.disabled = true;
+        }
         dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
         dpSelect.disabled = true;
         return;
@@ -493,6 +528,10 @@ function updateDistrictDropdown() {
     chiefdomSelect.disabled = true;
     communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
     communitySelect.disabled = true;
+    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+        facilitySelect.disabled = true;
+    }
     dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
     dpSelect.disabled = true;
 }
@@ -502,12 +541,17 @@ function updateChiefdomDropdown() {
     const district = document.getElementById('district').value;
     const chiefdomSelect = document.getElementById('chiefdom');
     const communitySelect = document.getElementById('community');
+    const facilitySelect = document.getElementById('facility');
     const dpSelect = document.getElementById('dp');
     if (!region || !district) {
         chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
         chiefdomSelect.disabled = true;
         communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
         communitySelect.disabled = true;
+        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+            facilitySelect.disabled = true;
+        }
         dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
         dpSelect.disabled = true;
         return;
@@ -523,6 +567,10 @@ function updateChiefdomDropdown() {
     chiefdomSelect.disabled = false;
     communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
     communitySelect.disabled = true;
+    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+        facilitySelect.disabled = true;
+    }
     dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
     dpSelect.disabled = true;
 }
@@ -532,10 +580,15 @@ function updateCommunityDropdown() {
     const district = document.getElementById('district').value;
     const chiefdom = document.getElementById('chiefdom').value;
     const communitySelect = document.getElementById('community');
+    const facilitySelect = document.getElementById('facility');
     const dpSelect = document.getElementById('dp');
     if (!region || !district || !chiefdom) {
         communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
         communitySelect.disabled = true;
+        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+            facilitySelect.disabled = true;
+        }
         dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
         dpSelect.disabled = true;
         return;
@@ -549,8 +602,35 @@ function updateCommunityDropdown() {
         communitySelect.appendChild(opt);
     });
     communitySelect.disabled = false;
+    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
+        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+        facilitySelect.disabled = true;
+    }
     dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
     dpSelect.disabled = true;
+}
+
+function updateHealthFacilityDropdown() {
+    const region = document.getElementById('region').value;
+    const district = document.getElementById('district').value;
+    const chiefdom = document.getElementById('chiefdom').value;
+    const community = document.getElementById('community').value;
+    const facilitySelect = document.getElementById('facility');
+    if (!facilitySelect || facilitySelect.tagName !== 'SELECT') return;
+    if (!region || !district || !chiefdom || !community) {
+        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
+        facilitySelect.disabled = true;
+        return;
+    }
+    const facilities = getHealthFacilitiesForCommunity(region, district, chiefdom, community);
+    facilitySelect.innerHTML = '<option value="">-- Select Health Facility --</option>';
+    facilities.forEach(fac => {
+        const opt = document.createElement('option');
+        opt.value = fac;
+        opt.textContent = fac;
+        facilitySelect.appendChild(opt);
+    });
+    facilitySelect.disabled = facilities.length === 0;
 }
 
 function updateDistributionPointDropdown() {
@@ -572,7 +652,7 @@ function updateDistributionPointDropdown() {
         opt.textContent = pt;
         dpSelect.appendChild(opt);
     });
-    dpSelect.disabled = false;
+    dpSelect.disabled = points.length === 0;
 }
 
 // attach event listeners
@@ -586,6 +666,7 @@ document.getElementById('chiefdom').addEventListener('change', () => {
     updateCommunityDropdown();
 });
 document.getElementById('community').addEventListener('change', () => {
+    updateHealthFacilityDropdown();
     updateDistributionPointDropdown();
 });
 
@@ -657,15 +738,30 @@ function goReview() {
     const total = parseInt(document.getElementById('total')?.value) || 0;
     let itn = total <= 2 ? 1 : total <= 4 ? 2 : 3;
 
+    const region = document.getElementById('region')?.options[document.getElementById('region').selectedIndex]?.text || "";
+    const district = document.getElementById('district')?.options[document.getElementById('district').selectedIndex]?.text || "";
+    const chiefdom = document.getElementById('chiefdom')?.options[document.getElementById('chiefdom').selectedIndex]?.text || "";
+    const community = document.getElementById('community')?.options[document.getElementById('community').selectedIndex]?.text || "";
+    let facility = "";
+    const facilityElem = document.getElementById('facility');
+    if (facilityElem) {
+        if (facilityElem.tagName === 'SELECT') {
+            facility = facilityElem.options[facilityElem.selectedIndex]?.text || "";
+        } else {
+            facility = facilityElem.value || "";
+        }
+    }
+    const dp = document.getElementById('dp')?.options[document.getElementById('dp').selectedIndex]?.text || "";
+
     const reviewDiv = document.getElementById('review');
     reviewDiv.innerHTML = `
         <strong>📍 Location</strong><br>
-        Region: ${document.getElementById('region')?.options[document.getElementById('region').selectedIndex]?.text || ""}<br>
-        District: ${document.getElementById('district')?.options[document.getElementById('district').selectedIndex]?.text || ""}<br>
-        Chiefdom: ${document.getElementById('chiefdom')?.options[document.getElementById('chiefdom').selectedIndex]?.text || ""}<br>
-        Community: ${document.getElementById('community')?.options[document.getElementById('community').selectedIndex]?.text || ""}<br>
-        Distribution Point: ${document.getElementById('dp')?.options[document.getElementById('dp').selectedIndex]?.text || ""}<br>
-        Health Facility: ${document.getElementById('facility')?.value || "-"}<br><br>
+        Region: ${region}<br>
+        District: ${district}<br>
+        Chiefdom: ${chiefdom}<br>
+        Community: ${community}<br>
+        Nearest Health Facility: ${facility || "-"}<br>
+        Distribution Point: ${dp}<br><br>
         <strong>👪 Household</strong><br>
         Name: ${document.getElementById('surname')?.value || ""} ${document.getElementById('mname')?.value || ""} ${document.getElementById('fname')?.value || ""}<br>
         Mobile: ${phone}<br>
@@ -690,7 +786,7 @@ function register() {
         registered = false;
         successDiv.innerHTML = "";
         registerBtn.innerText = "Register Household";
-        // clear all inputs except date and location dropdowns? Keep location dropdowns? For simplicity reset all.
+        // clear all inputs except date
         document.querySelectorAll("input").forEach(input => {
             if (input.id !== "date") input.value = "";
         });
@@ -698,10 +794,15 @@ function register() {
         document.getElementById('district').innerHTML = '<option value="">-- First select Region --</option>';
         document.getElementById('chiefdom').innerHTML = '<option value="">-- First select District --</option>';
         document.getElementById('community').innerHTML = '<option value="">-- First select Chiefdom --</option>';
+        const facilityElem = document.getElementById('facility');
+        if (facilityElem && facilityElem.tagName === 'SELECT') {
+            facilityElem.innerHTML = '<option value="">-- First select Community --</option>';
+        }
         document.getElementById('dp').innerHTML = '<option value="">-- First select Community --</option>';
         document.getElementById('district').disabled = true;
         document.getElementById('chiefdom').disabled = true;
         document.getElementById('community').disabled = true;
+        if (facilityElem && facilityElem.tagName === 'SELECT') facilityElem.disabled = true;
         document.getElementById('dp').disabled = true;
         document.getElementById('tokenBox').style.display = "none";
         token = "";
