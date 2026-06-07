@@ -207,7 +207,7 @@ body {
     padding: 3px;
     font-size: 8px;
 }
-.dot {
+.status-dot {
     width: 5px;
     height: 5px;
     background: green;
@@ -365,6 +365,125 @@ body {
     font-size: 7px;
     padding: 5px;
 }
+
+/* ========== MODAL LOGIN ========== */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.75);
+    backdrop-filter: blur(5px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+.modal-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+.modal-container {
+    width: 85%;
+    max-width: 300px;
+    background: #fff;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 20px 35px -12px black;
+    text-align: center;
+    transform: scale(0.95);
+    transition: transform 0.2s ease;
+}
+.modal-overlay.active .modal-container {
+    transform: scale(1);
+}
+.modal-header {
+    background: linear-gradient(135deg, #0b5ed7, #1e6f5c);
+    color: white;
+    padding: 20px 12px 16px;
+}
+.modal-header i {
+    font-size: 2rem;
+    background: white;
+    color: #0b5ed7;
+    border-radius: 50%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+.modal-header h2 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+}
+.modal-header p {
+    font-size: 0.7rem;
+    opacity: 0.9;
+    margin-top: 4px;
+}
+.modal-body {
+    padding: 20px 18px 24px;
+}
+.input-group {
+    margin-bottom: 18px;
+    text-align: left;
+}
+.input-group label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 5px;
+}
+.input-group input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 28px;
+    font-size: 0.85rem;
+    outline: none;
+    transition: 0.2s;
+}
+.input-group input:focus {
+    border-color: #0b5ed7;
+    box-shadow: 0 0 0 2px rgba(11,94,215,0.2);
+}
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 12px;
+}
+.modal-btn {
+    flex: 1;
+    padding: 10px 0;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: 0.2s;
+    border: none;
+    background: #e2e8f0;
+    color: #1e293b;
+}
+.modal-btn.login-btn {
+    background: #0b5ed7;
+    color: white;
+}
+.modal-btn.login-btn:hover {
+    background: #094aac;
+}
+.modal-btn.cancel-btn:hover {
+    background: #cbd5e1;
+}
+.error-msg {
+    color: #dc2626;
+    font-size: 0.7rem;
+    margin-top: 8px;
+    display: none;
+}
 </style>
 </head>
 <body>
@@ -393,7 +512,7 @@ body {
         </div>
     </div>
 
-    <!-- ========== INFINITE CAROUSEL (clones for seamless loop) ========== -->
+    <!-- INFINITE CAROUSEL -->
     <div class="carousel-container">
         <div class="carousel-slides" id="carouselSlides"></div>
         <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
@@ -408,7 +527,7 @@ body {
 
     <!-- STATUS -->
     <div class="status">
-        <div class="dot"></div>
+        <div class="status-dot"></div>
         ONLINE PENDING
         <div class="badge">0</div>
     </div>
@@ -469,22 +588,46 @@ body {
 
 </div> <!-- phone -->
 
+<!-- LOGIN MODAL -->
+<div class="modal-overlay" id="loginModal">
+    <div class="modal-container">
+        <div class="modal-header">
+            <i class="fas fa-lock"></i>
+            <h2>ACCESS REQUIRED</h2>
+            <p>Data Entry — Field Staff Access</p>
+        </div>
+        <div class="modal-body">
+            <div class="input-group">
+                <label><i class="fas fa-user"></i> USERNAME</label>
+                <input type="text" id="loginUsername" placeholder="Enter username" autocomplete="off">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-key"></i> PASSWORD</label>
+                <input type="password" id="loginPassword" placeholder="Enter password">
+            </div>
+            <div class="error-msg" id="loginError">Invalid credentials. Please try again.</div>
+            <div class="modal-actions">
+                <button class="modal-btn cancel-btn" id="cancelModalBtn">CANCEL</button>
+                <button class="modal-btn login-btn" id="loginBtn">LOGIN</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script>
-    // ========== INFINITE CAROUSEL USING CLONE TECHNIQUE ==========
+    // ========== INFINITE CAROUSEL (unchanged) ==========
     const originalSlides = [
         { img: "infographics.png", title: "📊 Campaign Dashboard", desc: "Target: 15,000 nets · 58% achieved", icon: "fa-chart-line" },
         { img: "infographicss.jpg", title: "🦟 ITN Coverage Map", desc: "84% household coverage · 12 districts", icon: "fa-map" },
         { img: "infographics.jpg", title: "📈 Malaria Reduction", desc: "Zero malaria by 2030 · Progress +22%", icon: "fa-chart-simple" }
     ];
 
-    // Build slide HTML with fallback
     function buildSlide(data, index) {
         return `<div class="carousel-slide" data-index="${index}">
             <img src="${data.img}" alt="slide" onerror="showFallback(this, '${data.title}', '${data.desc}', '${data.icon}')">
         </div>`;
     }
 
-    // Prepare clones: [clone of last, original1, original2, original3, clone of first]
     const cloneFirst = buildSlide(originalSlides[0], 'clone-first');
     const cloneLast = buildSlide(originalSlides[originalSlides.length-1], 'clone-last');
     let allSlidesHTML = cloneLast;
@@ -496,8 +639,8 @@ body {
     const slidesContainer = document.getElementById('carouselSlides');
     slidesContainer.innerHTML = allSlidesHTML;
     const slides = document.querySelectorAll('.carousel-slide');
-    const totalCloned = slides.length; // 5
-    const realStartIndex = 1;          // first real slide is at index 1
+    const totalCloned = slides.length;
+    const realStartIndex = 1;
     let currentIndex = realStartIndex;
     let autoInterval;
     let isTransitioning = false;
@@ -520,13 +663,12 @@ body {
         updateDots();
         setTimeout(() => {
             isTransitioning = false;
-            // Handle infinite loop edge: if at clone-last (index 0), jump to real last
             if (currentIndex === 0) {
-                currentIndex = originalSlides.length; // last real slide index
+                currentIndex = originalSlides.length;
                 updateTransform(false);
                 updateDots();
-            } else if (currentIndex === totalCloned - 1) { // clone-first
-                currentIndex = 1; // first real slide
+            } else if (currentIndex === totalCloned - 1) {
+                currentIndex = 1;
                 updateTransform(false);
                 updateDots();
             }
@@ -541,7 +683,6 @@ body {
         let realIndex = currentIndex;
         if (realIndex === 0) realIndex = originalSlides.length;
         else if (realIndex === totalCloned - 1) realIndex = 1;
-        else realIndex = realIndex;
         const activeReal = realIndex - 1;
         document.querySelectorAll('.dot').forEach((dot, idx) => {
             dot.classList.toggle('active', idx === activeReal);
@@ -551,7 +692,6 @@ body {
     function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
     function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
 
-    // Dots creation
     function createDots() {
         const dotsContainer = document.getElementById('carouselDots');
         dotsContainer.innerHTML = '';
@@ -559,15 +699,12 @@ body {
             const dot = document.createElement('div');
             dot.classList.add('dot');
             if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => {
-                goToSlide(i + 1, true);
-            });
+            dot.addEventListener('click', () => { goToSlide(i + 1, true); });
             dotsContainer.appendChild(dot);
         }
     }
     createDots();
 
-    // Touch & mouse events
     let startX, isDragging = false;
     slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
     slidesContainer.addEventListener('touchend', (e) => {
@@ -588,12 +725,10 @@ body {
     document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
     document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
 
-    // Set initial position to first real slide
     currentIndex = 1;
     updateTransform(false);
     startAutoPlay();
 
-    // Fallback function for missing images
     window.showFallback = function(imgElement, title, desc, icon) {
         if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
             const fallbackDiv = document.createElement('div');
@@ -604,21 +739,142 @@ body {
         }
     };
 
-    // Action card feedback with lock visual (toast)
-    function showActionFeedback(title, desc) {
-        const toast = document.createElement('div');
-        toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:#0F172A; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
-        toast.innerHTML = `<i class="fas fa-lock" style="color:#facc15;"></i> ${title} ${desc ? '– ' + desc : ''} (locked)`;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2000);
-    }
-    document.getElementById('newCardRegister')?.addEventListener('click', () => showActionFeedback('🔒 REGISTER (HHR)', 'Authentication required'));
-    document.getElementById('newCardDistribution')?.addEventListener('click', () => showActionFeedback('🔒 DISTRIBUTION (HHD)', 'Authentication required'));
-    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showActionFeedback('🔒 REGISTER QR (HHR)', 'Authentication required'));
-    document.getElementById('newCardStock')?.addEventListener('click', () => showActionFeedback('🔒 STOCK', 'Authentication required'));
-    document.getElementById('newCardDashboard')?.addEventListener('click', () => showActionFeedback('🔒 DASHBOARD', 'Authentication required'));
+    // ========== CSV AUTHENTICATION ==========
+    let credentials = []; // stores { username, password, access }
 
-    // Tap feedback
+    // Load Keys.csv
+    async function loadCredentials() {
+        try {
+            const response = await fetch('Keys.csv');
+            if (!response.ok) throw new Error('CSV file not found');
+            const csvText = await response.text();
+            // Parse CSV (simple parser)
+            const lines = csvText.trim().split(/\r?\n/);
+            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+            const usernameIdx = headers.indexOf('username');
+            const passwordIdx = headers.indexOf('password');
+            const accessIdx = headers.indexOf('access'); // column specifying allowed action (REGISTER, DISTRIBUTION, etc.)
+            if (usernameIdx === -1 || passwordIdx === -1) {
+                console.warn('CSV missing username or password column');
+                return;
+            }
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values.length < 2) continue;
+                const username = values[usernameIdx];
+                const password = values[passwordIdx];
+                const access = accessIdx !== -1 ? values[accessIdx] : 'ALL';
+                credentials.push({ username, password, access: access.toUpperCase() });
+            }
+            console.log(`Loaded ${credentials.length} credential entries from Keys.csv`);
+        } catch (err) {
+            console.error('Failed to load Keys.csv:', err);
+            // Fallback: allow demo credentials for testing (remove in production)
+            credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
+            credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
+            credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
+            showToast('⚠️ Keys.csv not found. Using demo credentials: hhr_user/hhr123 for REGISTER, hhd_user/hhd123 for DISTRIBUTION', false);
+        }
+    }
+
+    function showToast(message, isSuccess = true) {
+        const toast = document.createElement('div');
+        toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
+        toast.innerHTML = `<i class="fas ${isSuccess ? 'fa-unlock-alt' : 'fa-exclamation-triangle'}"></i> ${message}`;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2500);
+    }
+
+    // Modal logic
+    const modal = document.getElementById('loginModal');
+    const usernameInput = document.getElementById('loginUsername');
+    const passwordInput = document.getElementById('loginPassword');
+    const errorMsg = document.getElementById('loginError');
+    const cancelBtn = document.getElementById('cancelModalBtn');
+    const loginBtn = document.getElementById('loginBtn');
+    let pendingAction = null;
+
+    function showModal(actionName) {
+        pendingAction = actionName;
+        usernameInput.value = '';
+        passwordInput.value = '';
+        errorMsg.style.display = 'none';
+        modal.classList.add('active');
+    }
+
+    function hideModal() {
+        modal.classList.remove('active');
+        pendingAction = null;
+    }
+
+    // Validate against CSV
+    function validateCredentials(username, password, requiredAccess) {
+        // requiredAccess is like 'REGISTER', 'DISTRIBUTION', etc.
+        for (let cred of credentials) {
+            if (cred.username === username && cred.password === password) {
+                // Check access: if cred.access is 'ALL' or matches requiredAccess exactly
+                if (cred.access === 'ALL' || cred.access === requiredAccess) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    // Map card names to required access strings
+    function getRequiredAccess(cardName) {
+        if (cardName === 'REGISTER (HHR)') return 'REGISTER';
+        if (cardName === 'DISTRIBUTION (HHD)') return 'DISTRIBUTION';
+        if (cardName === 'REGISTER QR (HHR)') return 'REGISTER_QR';
+        if (cardName === 'STOCK') return 'STOCK';
+        if (cardName === 'DASHBOARD') return 'DASHBOARD';
+        return 'ALL';
+    }
+
+    // Attach click handlers to all five cards
+    const registerCard = document.getElementById('newCardRegister');
+    const distributionCard = document.getElementById('newCardDistribution');
+    const registerQrCard = document.getElementById('newCardRegisterQr');
+    const stockCard = document.getElementById('newCardStock');
+    const dashboardCard = document.getElementById('newCardDashboard');
+
+    if (registerCard) registerCard.addEventListener('click', () => showModal('REGISTER (HHR)'));
+    if (distributionCard) distributionCard.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
+    if (registerQrCard) registerQrCard.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
+    if (stockCard) stockCard.addEventListener('click', () => showModal('STOCK'));
+    if (dashboardCard) dashboardCard.addEventListener('click', () => showModal('DASHBOARD'));
+
+    cancelBtn.addEventListener('click', hideModal);
+    modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
+
+    loginBtn.addEventListener('click', () => {
+        const username = usernameInput.value.trim();
+        const password = passwordInput.value.trim();
+        if (!username || !password) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = '❌ Please enter both username and password';
+            return;
+        }
+        if (!pendingAction) {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = '⚠️ No action selected. Please try again.';
+            return;
+        }
+        const required = getRequiredAccess(pendingAction);
+        const isValid = validateCredentials(username, password, required);
+        if (isValid) {
+            hideModal();
+            showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
+        } else {
+            errorMsg.style.display = 'block';
+            errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
+        }
+    });
+
+    // Load CSV on page start
+    loadCredentials();
+
+    // Tap feedback for cards
     document.querySelectorAll('.modern-card').forEach(card => {
         card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
         card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
