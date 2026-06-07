@@ -673,279 +673,293 @@ body {
 </div>
 
 <script>
-    // ========== INFINITE CAROUSEL (unchanged) ==========
-    const originalSlides = [
-        { img: "infographics.png", title: "📊 Campaign Dashboard", desc: "Target: 15,000 nets · 58% achieved", icon: "fa-chart-line" },
-        { img: "infographicss.jpg", title: "🦟 ITN Coverage Map", desc: "84% household coverage · 12 districts", icon: "fa-map" },
-        { img: "infographics.jpg", title: "📈 Malaria Reduction", desc: "Zero malaria by 2030 · Progress +22%", icon: "fa-chart-simple" }
-    ];
+    (function() {
+        // ========== INFINITE CAROUSEL (unchanged but included for completeness) ==========
+        const originalSlides = [
+            { img: "infographics.png", title: "📊 Campaign Dashboard", desc: "Target: 15,000 nets · 58% achieved", icon: "fa-chart-line" },
+            { img: "infographicss.jpg", title: "🦟 ITN Coverage Map", desc: "84% household coverage · 12 districts", icon: "fa-map" },
+            { img: "infographics.jpg", title: "📈 Malaria Reduction", desc: "Zero malaria by 2030 · Progress +22%", icon: "fa-chart-simple" }
+        ];
 
-    function buildSlide(data, index) {
-        return `<div class="carousel-slide" data-index="${index}">
-            <img src="${data.img}" alt="slide" onerror="showFallback(this, '${data.title}', '${data.desc}', '${data.icon}')">
-        </div>`;
-    }
-
-    const cloneFirst = buildSlide(originalSlides[0], 'clone-first');
-    const cloneLast = buildSlide(originalSlides[originalSlides.length-1], 'clone-last');
-    let allSlidesHTML = cloneLast;
-    for (let i = 0; i < originalSlides.length; i++) {
-        allSlidesHTML += buildSlide(originalSlides[i], i);
-    }
-    allSlidesHTML += cloneFirst;
-
-    const slidesContainer = document.getElementById('carouselSlides');
-    slidesContainer.innerHTML = allSlidesHTML;
-    const slides = document.querySelectorAll('.carousel-slide');
-    const totalCloned = slides.length;
-    const realStartIndex = 1;
-    let currentIndex = realStartIndex;
-    let autoInterval;
-    let isTransitioning = false;
-
-    function updateTransform(animate = true) {
-        if (animate) {
-            slidesContainer.style.transition = 'transform 0.4s ease-in-out';
-        } else {
-            slidesContainer.style.transition = 'none';
+        function buildSlide(data, index) {
+            return `<div class="carousel-slide" data-index="${index}">
+                <img src="${data.img}" alt="slide" onerror="showFallback(this, '${data.title}', '${data.desc}', '${data.icon}')">
+            </div>`;
         }
-        const offset = -currentIndex * 100;
-        slidesContainer.style.transform = `translateX(${offset}%)`;
-    }
 
-    function goToSlide(index, animate = true) {
-        if (isTransitioning) return;
-        isTransitioning = true;
-        currentIndex = index;
-        updateTransform(animate);
-        updateDots();
-        setTimeout(() => {
-            isTransitioning = false;
-            if (currentIndex === 0) {
-                currentIndex = originalSlides.length;
-                updateTransform(false);
-                updateDots();
-            } else if (currentIndex === totalCloned - 1) {
-                currentIndex = 1;
-                updateTransform(false);
-                updateDots();
-            }
-        }, animate ? 400 : 0);
-        resetAutoPlay();
-    }
-
-    function nextSlide() { goToSlide(currentIndex + 1, true); }
-    function prevSlide() { goToSlide(currentIndex - 1, true); }
-
-    function updateDots() {
-        let realIndex = currentIndex;
-        if (realIndex === 0) realIndex = originalSlides.length;
-        else if (realIndex === totalCloned - 1) realIndex = 1;
-        const activeReal = realIndex - 1;
-        document.querySelectorAll('.dot').forEach((dot, idx) => {
-            dot.classList.toggle('active', idx === activeReal);
-        });
-    }
-
-    function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
-    function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
-
-    function createDots() {
-        const dotsContainer = document.getElementById('carouselDots');
-        dotsContainer.innerHTML = '';
+        const cloneFirst = buildSlide(originalSlides[0], 'clone-first');
+        const cloneLast = buildSlide(originalSlides[originalSlides.length-1], 'clone-last');
+        let allSlidesHTML = cloneLast;
         for (let i = 0; i < originalSlides.length; i++) {
-            const dot = document.createElement('div');
-            dot.classList.add('dot');
-            if (i === 0) dot.classList.add('active');
-            dot.addEventListener('click', () => { goToSlide(i + 1, true); });
-            dotsContainer.appendChild(dot);
+            allSlidesHTML += buildSlide(originalSlides[i], i);
         }
-    }
-    createDots();
+        allSlidesHTML += cloneFirst;
 
-    let startX, isDragging = false;
-    slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
-    slidesContainer.addEventListener('touchend', (e) => {
-        if (!isDragging) return;
-        const diff = e.changedTouches[0].clientX - startX;
-        if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
-        isDragging = false;
-        startAutoPlay();
-    });
-    slidesContainer.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; e.preventDefault(); resetAutoPlay(); });
-    window.addEventListener('mouseup', (e) => {
-        if (!isDragging) return;
-        const diff = e.clientX - startX;
-        if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
-        isDragging = false;
-        startAutoPlay();
-    });
-    document.getElementById('prevBtn').addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-    document.getElementById('nextBtn').addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
+        const slidesContainer = document.getElementById('carouselSlides');
+        if (slidesContainer) slidesContainer.innerHTML = allSlidesHTML;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const totalCloned = slides.length;
+        const realStartIndex = 1;
+        let currentIndex = realStartIndex;
+        let autoInterval;
+        let isTransitioning = false;
 
-    currentIndex = 1;
-    updateTransform(false);
-    startAutoPlay();
-
-    window.showFallback = function(imgElement, title, desc, icon) {
-        if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
-            const fallbackDiv = document.createElement('div');
-            fallbackDiv.className = 'fallback-bg';
-            fallbackDiv.innerHTML = `<i class="fas ${icon}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
-            imgElement.style.display = 'none';
-            imgElement.parentNode.appendChild(fallbackDiv);
-        }
-    };
-
-    // ========== CSV AUTHENTICATION ==========
-    let credentials = [];
-
-    async function loadCredentials() {
-        try {
-            const response = await fetch('Keys.csv');
-            if (!response.ok) throw new Error('CSV file not found');
-            const csvText = await response.text();
-            const lines = csvText.trim().split(/\r?\n/);
-            const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-            const usernameIdx = headers.indexOf('username');
-            const passwordIdx = headers.indexOf('password');
-            const accessIdx = headers.indexOf('access');
-            if (usernameIdx === -1 || passwordIdx === -1) {
-                console.warn('CSV missing username/password columns');
-                return;
+        function updateTransform(animate = true) {
+            if (!slidesContainer) return;
+            if (animate) {
+                slidesContainer.style.transition = 'transform 0.4s ease-in-out';
+            } else {
+                slidesContainer.style.transition = 'none';
             }
-            for (let i = 1; i < lines.length; i++) {
-                const values = lines[i].split(',').map(v => v.trim());
-                if (values.length < 2) continue;
-                const username = values[usernameIdx];
-                const password = values[passwordIdx];
-                const access = accessIdx !== -1 ? values[accessIdx].toUpperCase() : 'ALL';
-                credentials.push({ username, password, access });
-            }
-            console.log(`Loaded ${credentials.length} entries from Keys.csv`);
-        } catch (err) {
-            console.error('Failed to load Keys.csv:', err);
-            // Fallback demo credentials
-            credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
-            credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
-            credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
-            showToast('⚠️ Keys.csv not found. Using demo credentials (hhr_user/hhr123 for REGISTER)', false);
+            const offset = -currentIndex * 100;
+            slidesContainer.style.transform = `translateX(${offset}%)`;
         }
-    }
 
-    function showToast(message, isSuccess = true) {
-        const toast = document.createElement('div');
-        toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
-        toast.innerHTML = `<i class="fas ${isSuccess ? 'fa-unlock-alt' : 'fa-exclamation-triangle'}"></i> ${message}`;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2500);
-    }
+        function goToSlide(index, animate = true) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            currentIndex = index;
+            updateTransform(animate);
+            updateDots();
+            setTimeout(() => {
+                isTransitioning = false;
+                if (currentIndex === 0) {
+                    currentIndex = originalSlides.length;
+                    updateTransform(false);
+                    updateDots();
+                } else if (currentIndex === totalCloned - 1) {
+                    currentIndex = 1;
+                    updateTransform(false);
+                    updateDots();
+                }
+            }, animate ? 400 : 0);
+            resetAutoPlay();
+        }
 
-    // Login Modal logic
-    const modal = document.getElementById('loginModal');
-    const usernameInput = document.getElementById('loginUsername');
-    const passwordInput = document.getElementById('loginPassword');
-    const errorMsg = document.getElementById('loginError');
-    const cancelBtn = document.getElementById('cancelModalBtn');
-    const loginBtn = document.getElementById('loginBtn');
-    let pendingAction = null;
+        function nextSlide() { goToSlide(currentIndex + 1, true); }
+        function prevSlide() { goToSlide(currentIndex - 1, true); }
 
-    // Iframe modal elements
-    const iframeModal = document.getElementById('iframeModal');
-    const registrationFrame = document.getElementById('registrationFrame');
-    const closeIframeBtn = document.getElementById('closeIframeBtn');
+        function updateDots() {
+            let realIndex = currentIndex;
+            if (realIndex === 0) realIndex = originalSlides.length;
+            else if (realIndex === totalCloned - 1) realIndex = 1;
+            const activeReal = realIndex - 1;
+            document.querySelectorAll('.dot').forEach((dot, idx) => {
+                dot.classList.toggle('active', idx === activeReal);
+            });
+        }
 
-    function showModal(actionName) {
-        pendingAction = actionName;
-        usernameInput.value = '';
-        passwordInput.value = '';
-        errorMsg.style.display = 'none';
-        modal.classList.add('active');
-    }
+        function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
+        function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
 
-    function hideModal() {
-        modal.classList.remove('active');
-        pendingAction = null;
-    }
+        function createDots() {
+            const dotsContainer = document.getElementById('carouselDots');
+            if (!dotsContainer) return;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < originalSlides.length; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => { goToSlide(i + 1, true); });
+                dotsContainer.appendChild(dot);
+            }
+        }
+        createDots();
 
-    function openIframeRegistration() {
-        registrationFrame.src = 'registration.html';
-        iframeModal.classList.add('active');
-    }
+        let startX, isDragging = false;
+        if (slidesContainer) {
+            slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
+            slidesContainer.addEventListener('touchend', (e) => {
+                if (!isDragging) return;
+                const diff = e.changedTouches[0].clientX - startX;
+                if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
+                isDragging = false;
+                startAutoPlay();
+            });
+            slidesContainer.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; e.preventDefault(); resetAutoPlay(); });
+            window.addEventListener('mouseup', (e) => {
+                if (!isDragging) return;
+                const diff = e.clientX - startX;
+                if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
+                isDragging = false;
+                startAutoPlay();
+            });
+        }
+        document.getElementById('prevBtn')?.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
+        document.getElementById('nextBtn')?.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
 
-    function closeIframe() {
-        iframeModal.classList.remove('active');
-        registrationFrame.src = 'about:blank'; // stop loading
-    }
+        if (slidesContainer) {
+            currentIndex = 1;
+            updateTransform(false);
+            startAutoPlay();
+        }
 
-    closeIframeBtn.addEventListener('click', closeIframe);
+        window.showFallback = function(imgElement, title, desc, icon) {
+            if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
+                const fallbackDiv = document.createElement('div');
+                fallbackDiv.className = 'fallback-bg';
+                fallbackDiv.innerHTML = `<i class="fas ${icon}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
+                imgElement.style.display = 'none';
+                imgElement.parentNode.appendChild(fallbackDiv);
+            }
+        };
 
-    function validateCredentials(username, password, requiredAccess) {
-        for (let cred of credentials) {
-            if (cred.username === username && cred.password === password) {
-                if (cred.access === 'ALL' || cred.access === requiredAccess) {
-                    return true;
+        // ========== AUTHENTICATION (with immediate fallback) ==========
+        let credentials = [];
+
+        // Add demo credentials immediately (will be overridden by CSV if successful)
+        credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
+        credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
+        credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
+
+        async function loadCredentials() {
+            try {
+                const response = await fetch('Keys.csv');
+                if (!response.ok) throw new Error('CSV not found');
+                const csvText = await response.text();
+                const lines = csvText.trim().split(/\r?\n/);
+                if (lines.length < 2) return;
+                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+                const usernameIdx = headers.indexOf('username');
+                const passwordIdx = headers.indexOf('password');
+                const accessIdx = headers.indexOf('access');
+                if (usernameIdx === -1 || passwordIdx === -1) return;
+                const newCreds = [];
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].split(',').map(v => v.trim());
+                    if (values.length < 2) continue;
+                    const username = values[usernameIdx];
+                    const password = values[passwordIdx];
+                    const access = accessIdx !== -1 ? values[accessIdx].toUpperCase() : 'ALL';
+                    newCreds.push({ username, password, access });
+                }
+                if (newCreds.length > 0) {
+                    credentials = newCreds; // replace with CSV credentials
+                    console.log('CSV loaded:', credentials);
+                    showToast('✅ Credentials loaded from Keys.csv', true);
+                }
+            } catch (err) {
+                console.warn('Using demo credentials because Keys.csv not found:', err);
+                showToast('⚠️ Using demo credentials: hhr_user/hhr123 for REGISTER', false);
+            }
+        }
+
+        function showToast(message, isSuccess = true) {
+            const toast = document.createElement('div');
+            toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
+            toast.innerHTML = `<i class="fas ${isSuccess ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i> ${message}`;
+            document.body.appendChild(toast);
+            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2500);
+        }
+
+        // DOM elements
+        const modal = document.getElementById('loginModal');
+        const usernameInput = document.getElementById('loginUsername');
+        const passwordInput = document.getElementById('loginPassword');
+        const errorMsg = document.getElementById('loginError');
+        const cancelBtn = document.getElementById('cancelModalBtn');
+        const loginBtn = document.getElementById('loginBtn');
+        const iframeModal = document.getElementById('iframeModal');
+        const registrationFrame = document.getElementById('registrationFrame');
+        const closeIframeBtn = document.getElementById('closeIframeBtn');
+
+        let pendingAction = null;
+
+        function showModal(actionName) {
+            pendingAction = actionName;
+            usernameInput.value = '';
+            passwordInput.value = '';
+            errorMsg.style.display = 'none';
+            if (modal) modal.classList.add('active');
+        }
+
+        function hideModal() {
+            if (modal) modal.classList.remove('active');
+            pendingAction = null;
+        }
+
+        function openIframeRegistration() {
+            if (registrationFrame) registrationFrame.src = 'registration.html';
+            if (iframeModal) iframeModal.classList.add('active');
+        }
+
+        function closeIframe() {
+            if (iframeModal) iframeModal.classList.remove('active');
+            if (registrationFrame) registrationFrame.src = 'about:blank';
+        }
+
+        if (closeIframeBtn) closeIframeBtn.addEventListener('click', closeIframe);
+
+        function validateCredentials(username, password, requiredAccess) {
+            for (let cred of credentials) {
+                if (cred.username === username && cred.password === password) {
+                    if (cred.access === 'ALL' || cred.access === requiredAccess) {
+                        return true;
+                    }
                 }
             }
+            return false;
         }
-        return false;
-    }
 
-    function getRequiredAccess(cardName) {
-        if (cardName === 'REGISTER (HHR)') return 'REGISTER';
-        if (cardName === 'DISTRIBUTION (HHD)') return 'DISTRIBUTION';
-        if (cardName === 'REGISTER QR (HHR)') return 'REGISTER_QR';
-        if (cardName === 'STOCK') return 'STOCK';
-        if (cardName === 'DASHBOARD') return 'DASHBOARD';
-        return 'ALL';
-    }
-
-    // Attach click handlers
-    document.getElementById('newCardRegister')?.addEventListener('click', () => showModal('REGISTER (HHR)'));
-    document.getElementById('newCardDistribution')?.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
-    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
-    document.getElementById('newCardStock')?.addEventListener('click', () => showModal('STOCK'));
-    document.getElementById('newCardDashboard')?.addEventListener('click', () => showModal('DASHBOARD'));
-
-    cancelBtn.addEventListener('click', hideModal);
-    modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
-
-    loginBtn.addEventListener('click', () => {
-        const username = usernameInput.value.trim();
-        const password = passwordInput.value.trim();
-        if (!username || !password) {
-            errorMsg.style.display = 'block';
-            errorMsg.textContent = '❌ Please enter both username and password';
-            return;
+        function getRequiredAccess(cardName) {
+            if (cardName === 'REGISTER (HHR)') return 'REGISTER';
+            if (cardName === 'DISTRIBUTION (HHD)') return 'DISTRIBUTION';
+            if (cardName === 'REGISTER QR (HHR)') return 'REGISTER_QR';
+            if (cardName === 'STOCK') return 'STOCK';
+            if (cardName === 'DASHBOARD') return 'DASHBOARD';
+            return 'ALL';
         }
-        if (!pendingAction) {
-            errorMsg.style.display = 'block';
-            errorMsg.textContent = '⚠️ No action selected. Please try again.';
-            return;
-        }
-        const required = getRequiredAccess(pendingAction);
-        const isValid = validateCredentials(username, password, required);
-        if (isValid) {
-            hideModal();
-            if (pendingAction === 'REGISTER (HHR)') {
-                openIframeRegistration();
-            } else {
-                showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
-            }
-        } else {
-            errorMsg.style.display = 'block';
-            errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
-        }
-    });
 
-    // Load credentials on page start
-    loadCredentials();
+        // Card click handlers
+        document.getElementById('newCardRegister')?.addEventListener('click', () => showModal('REGISTER (HHR)'));
+        document.getElementById('newCardDistribution')?.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
+        document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
+        document.getElementById('newCardStock')?.addEventListener('click', () => showModal('STOCK'));
+        document.getElementById('newCardDashboard')?.addEventListener('click', () => showModal('DASHBOARD'));
 
-    // Tap feedback
-    document.querySelectorAll('.modern-card').forEach(card => {
-        card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
-        card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
-    });
+        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+        if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
+
+        if (loginBtn) {
+            loginBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const username = usernameInput.value.trim();
+                const password = passwordInput.value.trim();
+                if (!username || !password) {
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = '❌ Please enter both username and password';
+                    return;
+                }
+                if (!pendingAction) {
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = '⚠️ No action selected. Please try again.';
+                    return;
+                }
+                const required = getRequiredAccess(pendingAction);
+                const isValid = validateCredentials(username, password, required);
+                if (isValid) {
+                    hideModal();
+                    if (pendingAction === 'REGISTER (HHR)') {
+                        openIframeRegistration();
+                    } else {
+                        showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
+                    }
+                } else {
+                    errorMsg.style.display = 'block';
+                    errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
+                }
+            });
+        }
+
+        // Load CSV on start
+        loadCredentials();
+
+        // Tap feedback for cards
+        document.querySelectorAll('.modern-card').forEach(card => {
+            card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
+            card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
+        });
+    })();
 </script>
 </body>
 </html>
