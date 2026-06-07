@@ -34,6 +34,7 @@ body {
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 0 20px rgba(0,0,0,0.2);
+    position: relative;
 }
 
 .screen {
@@ -366,7 +367,7 @@ body {
     padding: 5px;
 }
 
-/* ========== MODAL LOGIN ========== */
+/* ========== LOGIN MODAL ========== */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -483,6 +484,52 @@ body {
     font-size: 0.7rem;
     margin-top: 8px;
     display: none;
+}
+
+/* ========== IFRAME MODAL FOR REGISTRATION.HTML ========== */
+.iframe-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: white;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.3s, opacity 0.3s;
+}
+.iframe-overlay.active {
+    visibility: visible;
+    opacity: 1;
+}
+.iframe-header {
+    background: #0b5ed7;
+    color: white;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1rem;
+    font-weight: bold;
+}
+.iframe-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+.iframe-container {
+    flex: 1;
+    width: 100%;
+}
+.iframe-container iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
 }
 </style>
 </head>
@@ -614,6 +661,17 @@ body {
     </div>
 </div>
 
+<!-- IFRAME MODAL FOR REGISTRATION.HTML -->
+<div class="iframe-overlay" id="iframeModal">
+    <div class="iframe-header">
+        <span>📋 Household Registration (HHR)</span>
+        <button id="closeIframeBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="iframe-container">
+        <iframe id="registrationFrame" src="about:blank" title="Registration Form"></iframe>
+    </div>
+</div>
+
 <script>
     // ========== INFINITE CAROUSEL (unchanged) ==========
     const originalSlides = [
@@ -740,7 +798,7 @@ body {
     };
 
     // ========== CSV AUTHENTICATION ==========
-    let credentials = []; // stores { username, password, access }
+    let credentials = [];
 
     async function loadCredentials() {
         try {
@@ -767,7 +825,7 @@ body {
             console.log(`Loaded ${credentials.length} entries from Keys.csv`);
         } catch (err) {
             console.error('Failed to load Keys.csv:', err);
-            // Fallback demo credentials (for testing only)
+            // Fallback demo credentials
             credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
             credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
             credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
@@ -783,7 +841,7 @@ body {
         setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2500);
     }
 
-    // Modal logic
+    // Login Modal logic
     const modal = document.getElementById('loginModal');
     const usernameInput = document.getElementById('loginUsername');
     const passwordInput = document.getElementById('loginPassword');
@@ -791,6 +849,11 @@ body {
     const cancelBtn = document.getElementById('cancelModalBtn');
     const loginBtn = document.getElementById('loginBtn');
     let pendingAction = null;
+
+    // Iframe modal elements
+    const iframeModal = document.getElementById('iframeModal');
+    const registrationFrame = document.getElementById('registrationFrame');
+    const closeIframeBtn = document.getElementById('closeIframeBtn');
 
     function showModal(actionName) {
         pendingAction = actionName;
@@ -804,6 +867,18 @@ body {
         modal.classList.remove('active');
         pendingAction = null;
     }
+
+    function openIframeRegistration() {
+        registrationFrame.src = 'registration.html';
+        iframeModal.classList.add('active');
+    }
+
+    function closeIframe() {
+        iframeModal.classList.remove('active');
+        registrationFrame.src = 'about:blank'; // stop loading
+    }
+
+    closeIframeBtn.addEventListener('click', closeIframe);
 
     function validateCredentials(username, password, requiredAccess) {
         for (let cred of credentials) {
@@ -825,7 +900,7 @@ body {
         return 'ALL';
     }
 
-    // Card click handlers
+    // Attach click handlers
     document.getElementById('newCardRegister')?.addEventListener('click', () => showModal('REGISTER (HHR)'));
     document.getElementById('newCardDistribution')?.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
     document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
@@ -852,9 +927,8 @@ body {
         const isValid = validateCredentials(username, password, required);
         if (isValid) {
             hideModal();
-            // SPECIAL: for REGISTER (HHR) → open registration.html
             if (pendingAction === 'REGISTER (HHR)') {
-                window.location.href = 'registration.html';
+                openIframeRegistration();
             } else {
                 showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
             }
@@ -867,7 +941,7 @@ body {
     // Load credentials on page start
     loadCredentials();
 
-    // Tap feedback for cards
+    // Tap feedback
     document.querySelectorAll('.modern-card').forEach(card => {
         card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
         card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
