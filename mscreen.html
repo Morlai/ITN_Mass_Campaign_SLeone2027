@@ -834,7 +834,7 @@ body {
                     newCreds.push({ username, password, access });
                 }
                 if (newCreds.length > 0) {
-                    credentials = newCreds; // replace with CSV credentials
+                    credentials = newCreds;
                     console.log('CSV loaded:', credentials);
                     showToast('✅ Credentials loaded from Keys.csv', true);
                 }
@@ -875,7 +875,7 @@ body {
 
         function hideModal() {
             if (modal) modal.classList.remove('active');
-            pendingAction = null;
+            // Do NOT clear pendingAction here! We need it after closing.
         }
 
         function openIframeRegistration() {
@@ -917,8 +917,11 @@ body {
         document.getElementById('newCardStock')?.addEventListener('click', () => showModal('STOCK'));
         document.getElementById('newCardDashboard')?.addEventListener('click', () => showModal('DASHBOARD'));
 
-        if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
-        if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
+        if (cancelBtn) cancelBtn.addEventListener('click', () => {
+            hideModal();
+            pendingAction = null; // clear only on cancel
+        });
+        if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) { hideModal(); pendingAction = null; } });
 
         if (loginBtn) {
             loginBtn.addEventListener('click', (e) => {
@@ -938,12 +941,15 @@ body {
                 const required = getRequiredAccess(pendingAction);
                 const isValid = validateCredentials(username, password, required);
                 if (isValid) {
-                    hideModal();
-                    if (pendingAction === 'REGISTER (HHR)') {
+                    // Save action before closing modal
+                    const action = pendingAction;
+                    hideModal();          // close modal but keep pendingAction? We'll clear after use.
+                    if (action === 'REGISTER (HHR)') {
                         openIframeRegistration();
                     } else {
-                        showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
+                        showToast(`✅ Access granted! ${action} unlocked.`, true);
                     }
+                    pendingAction = null; // clear after successful login
                 } else {
                     errorMsg.style.display = 'block';
                     errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
