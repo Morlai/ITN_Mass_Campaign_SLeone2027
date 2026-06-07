@@ -24,24 +24,32 @@ body {
     min-height: 100vh;
 }
 
+/* Phone container - flex column, no absolute overlapping */
 .container {
     width: 360px;
     max-width: 100%;
     height: 100vh;
     max-height: 780px;
-    border-radius: 30px;
-    overflow: hidden;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    position: relative;
     background: #fff;
+    border-radius: 30px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    display: flex;
+    flex-direction: column;
 }
 
+/* Background image (optional) */
 .bg {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
     background: url('background.png') no-repeat center/cover;
+    z-index: 0;
 }
-
 .bg::after {
     content: "";
     position: absolute;
@@ -49,11 +57,12 @@ body {
     background: rgba(0,0,0,0.45);
 }
 
+/* Main content - scrollable if needed */
 .content {
     position: relative;
     z-index: 2;
     padding: 20px 16px;
-    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -85,9 +94,8 @@ body {
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 40px;
-    font-size: 16px; /* Prevents zoom on focus in iOS */
+    font-size: 16px; /* prevents zoom on iOS */
     background: #fff;
-    -webkit-appearance: none;
 }
 
 .password-wrapper {
@@ -160,24 +168,21 @@ body {
 .verify { background: #8E44AD; }
 .language { background: #16A085; }
 
+/* Curve and footer as normal flow elements (no absolute) */
+.curve-wrapper {
+    position: relative;
+    z-index: 2;
+    margin-top: auto;
+}
 .curve {
-    position: absolute;
-    bottom: 110px;
     width: 100%;
-    height: 60px;
-    left: 0;
-    pointer-events: none;
+    height: 50px;
+    display: block;
 }
 .footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    height: 110px;
     background: #1E8449;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    padding: 12px 16px 20px;
+    text-align: center;
     color: white;
     border-radius: 20px 20px 0 0;
 }
@@ -189,8 +194,10 @@ body {
     font-size: 13px;
     text-decoration: underline;
     font-weight: bold;
+    margin-top: 4px;
 }
 
+/* Scanner modal */
 #scannerModal {
     position: fixed;
     inset: 0;
@@ -217,7 +224,7 @@ body {
     cursor: pointer;
 }
 
-/* Mobile specific fixes */
+/* Mobile responsive */
 @media (max-width: 380px) {
     .container {
         width: 100%;
@@ -240,7 +247,6 @@ body {
 }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -279,14 +285,15 @@ body {
         </div>
     </div>
 
-    <!-- CURVE SVG -->
-    <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
-        <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
-    </svg>
-
-    <div class="footer">
-        <h4 id="devText">Developed By</h4>
-        <p>Informatic Consultancy Firm-SL ©2026</p>
+    <!-- Curve + Footer as normal elements (no absolute positioning) -->
+    <div class="curve-wrapper">
+        <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
+        </svg>
+        <div class="footer">
+            <h4 id="devText">Developed By</h4>
+            <p>Informatic Consultancy Firm-SL ©2026</p>
+        </div>
     </div>
 </div>
 
@@ -332,6 +339,7 @@ document.getElementById("loginBtn").addEventListener("click", function () {
     const valid = users.find(user => user.username === u && user.password === p);
 
     if (valid) {
+        // Replace current page with mscreen.html
         document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
     } else {
         alert("Invalid Username or Password");
@@ -413,9 +421,6 @@ function stopScanner() {
         document.getElementById("scannerModal").style.display = "none";
     }
 }
-
-// Prevent zoom on input focus (already handled by viewport meta + font-size 16px)
 </script>
-
 </body>
 </html>
