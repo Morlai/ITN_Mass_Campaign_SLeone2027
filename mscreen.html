@@ -742,20 +742,18 @@ body {
     // ========== CSV AUTHENTICATION ==========
     let credentials = []; // stores { username, password, access }
 
-    // Load Keys.csv
     async function loadCredentials() {
         try {
             const response = await fetch('Keys.csv');
             if (!response.ok) throw new Error('CSV file not found');
             const csvText = await response.text();
-            // Parse CSV (simple parser)
             const lines = csvText.trim().split(/\r?\n/);
             const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
             const usernameIdx = headers.indexOf('username');
             const passwordIdx = headers.indexOf('password');
-            const accessIdx = headers.indexOf('access'); // column specifying allowed action (REGISTER, DISTRIBUTION, etc.)
+            const accessIdx = headers.indexOf('access');
             if (usernameIdx === -1 || passwordIdx === -1) {
-                console.warn('CSV missing username or password column');
+                console.warn('CSV missing username/password columns');
                 return;
             }
             for (let i = 1; i < lines.length; i++) {
@@ -763,17 +761,17 @@ body {
                 if (values.length < 2) continue;
                 const username = values[usernameIdx];
                 const password = values[passwordIdx];
-                const access = accessIdx !== -1 ? values[accessIdx] : 'ALL';
-                credentials.push({ username, password, access: access.toUpperCase() });
+                const access = accessIdx !== -1 ? values[accessIdx].toUpperCase() : 'ALL';
+                credentials.push({ username, password, access });
             }
-            console.log(`Loaded ${credentials.length} credential entries from Keys.csv`);
+            console.log(`Loaded ${credentials.length} entries from Keys.csv`);
         } catch (err) {
             console.error('Failed to load Keys.csv:', err);
-            // Fallback: allow demo credentials for testing (remove in production)
+            // Fallback demo credentials (for testing only)
             credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
             credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
             credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
-            showToast('⚠️ Keys.csv not found. Using demo credentials: hhr_user/hhr123 for REGISTER, hhd_user/hhd123 for DISTRIBUTION', false);
+            showToast('⚠️ Keys.csv not found. Using demo credentials (hhr_user/hhr123 for REGISTER)', false);
         }
     }
 
@@ -807,12 +805,9 @@ body {
         pendingAction = null;
     }
 
-    // Validate against CSV
     function validateCredentials(username, password, requiredAccess) {
-        // requiredAccess is like 'REGISTER', 'DISTRIBUTION', etc.
         for (let cred of credentials) {
             if (cred.username === username && cred.password === password) {
-                // Check access: if cred.access is 'ALL' or matches requiredAccess exactly
                 if (cred.access === 'ALL' || cred.access === requiredAccess) {
                     return true;
                 }
@@ -821,7 +816,6 @@ body {
         return false;
     }
 
-    // Map card names to required access strings
     function getRequiredAccess(cardName) {
         if (cardName === 'REGISTER (HHR)') return 'REGISTER';
         if (cardName === 'DISTRIBUTION (HHD)') return 'DISTRIBUTION';
@@ -831,18 +825,12 @@ body {
         return 'ALL';
     }
 
-    // Attach click handlers to all five cards
-    const registerCard = document.getElementById('newCardRegister');
-    const distributionCard = document.getElementById('newCardDistribution');
-    const registerQrCard = document.getElementById('newCardRegisterQr');
-    const stockCard = document.getElementById('newCardStock');
-    const dashboardCard = document.getElementById('newCardDashboard');
-
-    if (registerCard) registerCard.addEventListener('click', () => showModal('REGISTER (HHR)'));
-    if (distributionCard) distributionCard.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
-    if (registerQrCard) registerQrCard.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
-    if (stockCard) stockCard.addEventListener('click', () => showModal('STOCK'));
-    if (dashboardCard) dashboardCard.addEventListener('click', () => showModal('DASHBOARD'));
+    // Card click handlers
+    document.getElementById('newCardRegister')?.addEventListener('click', () => showModal('REGISTER (HHR)'));
+    document.getElementById('newCardDistribution')?.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
+    document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
+    document.getElementById('newCardStock')?.addEventListener('click', () => showModal('STOCK'));
+    document.getElementById('newCardDashboard')?.addEventListener('click', () => showModal('DASHBOARD'));
 
     cancelBtn.addEventListener('click', hideModal);
     modal.addEventListener('click', (e) => { if (e.target === modal) hideModal(); });
@@ -864,14 +852,19 @@ body {
         const isValid = validateCredentials(username, password, required);
         if (isValid) {
             hideModal();
-            showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
+            // SPECIAL: for REGISTER (HHR) → open registration.html
+            if (pendingAction === 'REGISTER (HHR)') {
+                window.location.href = 'registration.html';
+            } else {
+                showToast(`✅ Access granted! ${pendingAction} unlocked.`, true);
+            }
         } else {
             errorMsg.style.display = 'block';
             errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
         }
     });
 
-    // Load CSV on page start
+    // Load credentials on page start
     loadCredentials();
 
     // Tap feedback for cards
