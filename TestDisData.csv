@@ -1,0 +1,1850 @@
+list_name,name,label,Region,District,Chiefdom,Community,Distribution Point
+region,1,Eastern,,,,,
+region,2,South,,,,,
+region,3,North,,,,,
+region,4,North_west,,,,,
+region,5,Western_area,,,,,
+district,6,Kailahun,1,,,,
+district,7,Kenema,1,,,,
+district,8,Kono,1,,,,
+district,9,Bo,2,,,,
+district,10,Bonthe,2,,,,
+district,11,Moyamba,2,,,,
+district,12,Pujehun,2,,,,
+district,13,Bombali,3,,,,
+district,14,Tonkolili,3,,,,
+district,15,Koinadugu,3,,,,
+district,16,Falaba,3,,,,
+district,17,Kambia,4,,,,
+district,18,Port_loko,4,,,,
+district,19,Karene,4,,,,
+district,20,Wester_area_rural,5,,,,
+district,21,Wester_area_urban,5,,,,
+chiefdom,22,Dea,,6,,,
+chiefdom,23,Gaura,,6,,,
+chiefdom,24,Jahn,,6,,,
+chiefdom,25,Jawei,,6,,,
+chiefdom,26,Kissi Kama,,6,,,
+chiefdom,27,Kissi Teng,,6,,,
+chiefdom,28,Kissi Tongi,,6,,,
+chiefdom,29,Luawa,,6,,,
+chiefdom,30,Malema,,6,,,
+chiefdom,31,Mambdu,,6,,,
+chiefdom,32,Njaluahun,,6,,,
+chiefdom,33,Peje Bonge,,6,,,
+chiefdom,34,Peje West,,6,,,
+chiefdom,35,Penguia,,6,,,
+chiefdom,36,Upper Bambara,,6,,,
+chiefdom,37,Yawei,,6,,,
+chiefdom,38,Dama,,7,,,
+chiefdom,39,Dodo,,7,,,
+chiefdom,40,Gaura,,7,,,
+chiefdom,41,Gorama Mende,,7,,,
+chiefdom,42,Kandu Leppiama,,7,,,
+chiefdom,43,Koya,,7,,,
+chiefdom,44,Langrama,,7,,,
+chiefdom,45,Lower Bambara,,7,,,
+chiefdom,46,Malegohun,,7,,,
+chiefdom,47,Niawa,,7,,,
+chiefdom,48,Nomo,,7,,,
+chiefdom,49,Nongowa,,7,,,
+chiefdom,50,Simbaru,,7,,,
+chiefdom,51,Small Bo,,7,,,
+chiefdom,52,Tunkia,,7,,,
+chiefdom,53,Wandor,,7,,,
+chiefdom,54,Fiama,,8,,,
+chiefdom,55,Gbane,,8,,,
+chiefdom,56,Gbane kandor,,8,,,
+chiefdom,57,Gbense,,8,,,
+chiefdom,58,Gorama Kono,,8,,,
+chiefdom,59,Kamara,,8,,,
+chiefdom,60,Koidu City,,8,,,
+chiefdom,61,Lei,,8,,,
+chiefdom,62,Mafindor,,8,,,
+chiefdom,63,Nimikoro,,8,,,
+chiefdom,64,Nimiyama,,8,,,
+chiefdom,65,Sandor,,8,,,
+chiefdom,66,Soa,,8,,,
+chiefdom,67,Tankoro,,8,,,
+chiefdom,68,Toli,,8,,,
+chiefdom,69,Badjia,,9,,,
+chiefdom,70,Bagbwe,,9,,,
+chiefdom,71,Baoma,,9,,,
+chiefdom,72,Bargbo,,9,,,
+chiefdom,73,Bo city,,9,,,
+chiefdom,74,Bongor,,9,,,
+chiefdom,75,Bumpe Ngao,,9,,,
+chiefdom,76,Gbo,,9,,,
+chiefdom,77,Jaiama,,9,,,
+chiefdom,78,Kakua,,9,,,
+chiefdom,79,Komboya,,9,,,
+chiefdom,80,Lugbu,,9,,,
+chiefdom,81,Niawa Lenga,,9,,,
+chiefdom,82,Selenga,,9,,,
+chiefdom,83,Tikonko,,9,,,
+chiefdom,84,Wonde,,9,,,
+chiefdom,85,Benducha,,10,,,
+chiefdom,86,Bonthe Municipal Council,,10,,,
+chiefdom,87,Bum,,10,,,
+chiefdom,88,Dema,,10,,,
+chiefdom,89,Imperi,,10,,,
+chiefdom,90,Jong,,10,,,
+chiefdom,91,Kpanda Kemoh,,10,,,
+chiefdom,92,Kwamebai Krim,,10,,,
+chiefdom,93,Nongoba Bullom,,10,,,
+chiefdom,94,Sittia,,10,,,
+chiefdom,95,Sogbini,,10,,,
+chiefdom,96,Yawbeko,,10,,,
+chiefdom,97,Banguawa,,11,,,
+chiefdom,98,Bumpeh,,11,,,
+chiefdom,99,Dasse,,11,,,
+chiefdom,100,Fakunya,,11,,,
+chiefdom,101,Kagboro,,11,,,
+chiefdom,102,Kaiyamba,,11,,,
+chiefdom,103,Kamjei,,11,,,
+chiefdom,104,Komgbora,,11,,,
+chiefdom,105,Kori,,11,,,
+chiefdom,106,Lower Banta,,11,,,
+chiefdom,107,Ribbi,,11,,,
+chiefdom,108,Timdale,,11,,,
+chiefdom,109,Upper Banta,,11,,,
+chiefdom,110,Barri,,12,,,
+chiefdom,111,Galliness,,12,,,
+chiefdom,112,Kabonde,,12,,,
+chiefdom,113,Kpaka,,12,,,
+chiefdom,114,Kpanga,,12,,,
+chiefdom,115,Kpanga Krim,,12,,,
+chiefdom,116,Makpele,,12,,,
+chiefdom,117,Malen,,12,,,
+chiefdom,118,Mano Sakrim,,12,,,
+chiefdom,119,Peje,,12,,,
+chiefdom,120,Perri,,12,,,
+chiefdom,121,Soro Gbeima,,12,,,
+chiefdom,122,Sowa,,12,,,
+chiefdom,123,Yakemoh Kpukumu Krim,,12,,,
+chiefdom,124,Biriwa,,13,,,
+chiefdom,125,Bombali Sebora,,13,,,
+chiefdom,126,Bombali Serry,,13,,,
+chiefdom,127,Gbanti,,13,,,
+chiefdom,128,Gbendembu,,13,,,
+chiefdom,129,Kamaranka,,13,,,
+chiefdom,130,Magbaimba Ndowahun,,13,,,
+chiefdom,131,Makarie,,13,,,
+chiefdom,132,Mara,,13,,,
+chiefdom,133,Ngowahun,,13,,,
+chiefdom,134,Paki Masabong,,13,,,
+chiefdom,135,Safroko Limba,,13,,,
+chiefdom,136,Dansigoia,,14,,,
+chiefdom,137,Gbokolenken,,14,,,
+chiefdom,138,Gbokolenken Mayeppoh,,14,,,
+chiefdom,139,Gbokolenken Polie,,14,,,
+chiefdom,140,Gbonkolenken Masankong,,14,,,
+chiefdom,141,Kafe,,14,,,
+chiefdom,142,Kalantuba,,14,,,
+chiefdom,143,Kholifa Mabang,,14,,,
+chiefdom,144,Kholifa Mamuntha,,14,,,
+chiefdom,145,Kholifa Rowalla,,14,,,
+chiefdom,146,Kunike Barina,,14,,,
+chiefdom,147,Kunike Fulawusu,,14,,,
+chiefdom,148,Kunike Sanda,,14,,,
+chiefdom,149,Malal,,14,,,
+chiefdom,150,Sambaya Bendugu,,14,,,
+chiefdom,151,Simiria,,14,,,
+chiefdom,152,Tane,,14,,,
+chiefdom,153,Yoni Mabata,,14,,,
+chiefdom,154,Yoni Mamala,,14,,,
+chiefdom,155,Diang,,15,,,
+chiefdom,156,Gbonkorbor Kayaka,,15,,,
+chiefdom,157,Kallian,,15,,,
+chiefdom,158,Kamukeh,,15,,,
+chiefdom,159,Kasunko,,15,,,
+chiefdom,160,Neini,,15,,,
+chiefdom,161,Sengbeh,,15,,,
+chiefdom,162,Thamiso,,15,,,
+chiefdom,163,Wara Wara Bafodia,,15,,,
+chiefdom,164,Wara Wara Yagala,,15,,,
+chiefdom,165,Barawa,,16,,,
+chiefdom,166,Delmandugu,,16,,,
+chiefdom,167,Dembelia Sinkunia,,16,,,
+chiefdom,168,Folosaba Dembelia,,16,,,
+chiefdom,169,Folosaba Kamba,,16,,,
+chiefdom,170,Kabelia,,16,,,
+chiefdom,171,Kamadugu Yiraia,,16,,,
+chiefdom,172,Kulor Saradu,,16,,,
+chiefdom,173,Mongo,,16,,,
+chiefdom,174,Morifindu,,16,,,
+chiefdom,175,Neya,,16,,,
+chiefdom,176,Nyedu,,16,,,
+chiefdom,177,Sulima,,16,,,
+chiefdom,178,Bramaia,,17,,,
+chiefdom,179,Dixon,,17,,,
+chiefdom,180,Gbinleh,,17,,,
+chiefdom,181,Konimaka,,17,,,
+chiefdom,182,Magbema,,17,,,
+chiefdom,183,Mambolo,,17,,,
+chiefdom,184,Masumgbala,,17,,,
+chiefdom,185,Munu Thalla,,17,,,
+chiefdom,186,Samu,,17,,,
+chiefdom,187,Tonko Limba,,17,,,
+chiefdom,188,Buya,,18,,,
+chiefdom,189,Dibia,,18,,,
+chiefdom,190,Gbanti,,18,,,
+chiefdom,191,Gormbahun,,18,,,
+chiefdom,192,Mafonda Makerembay,,18,,,
+chiefdom,193,Romende,,18,,,
+chiefdom,194,Safroko,,18,,,
+chiefdom,195,Sanda Loko,,18,,,
+chiefdom,196,Sanda Magbolonthor,,18,,,
+chiefdom,197,Sanda Tendaren,,18,,,
+chiefdom,198,Sella Limba,,18,,,
+chiefdom,199,Tambaka Simibuge,,18,,,
+chiefdom,200,Tambaka Yobange,,18,,,
+chiefdom,201,Bakeloko,,19,,,
+chiefdom,202,Bureh,,19,,,
+chiefdom,203,Kafu bullum,,19,,,
+chiefdom,204,Kamasondo,,19,,,
+chiefdom,205,Kasseh,,19,,,
+chiefdom,206,Koya ,,19,,,
+chiefdom,207,Lokomasama,,19,,,
+chiefdom,208,Macimera,,19,,,
+chiefdom,209,Maconteh,,19,,,
+chiefdom,210,Maforki,,19,,,
+chiefdom,211,Makama,,19,,,
+chiefdom,212,Marampa,,19,,,
+chiefdom,213,Tambaka,,19,,,
+chiefdom,214,Koya,,20,,,
+chiefdom,215,Mountain Rural,,20,,,
+chiefdom,216,Waterloo Rural,,20,,,
+chiefdom,217,York,,20,,,
+chiefdom,218,Central 1,,21,,,
+chiefdom,219,Central 2,,21,,,
+chiefdom,220,East 1,,21,,,
+chiefdom,221,East 2,,21,,,
+chiefdom,222,East 3,,21,,,
+chiefdom,223,West 1,,21,,,
+chiefdom,224,West 2,,21,,,
+chiefdom,225,West 3,,21,,,
+health_facility,226,Baiwala CHP,,,22,22,22
+health_facility,227,Nagbena CHP,,,22,22,22
+health_facility,228,Sienga CHP,,,22,22,22
+health_facility,229,Joru CHC,,,23,23,23
+health_facility,230,Kokoru CHP,,,23,23,23
+health_facility,231,Mendekelema (Gaura) CHP,,,23,23,23
+health_facility,232,Perrie MCHP,,,23,23,23
+health_facility,233,Sandaru (Gaura) MCHP,,,23,23,23
+health_facility,234,Semehun (Gaura) MCHP,,,23,23,23
+health_facility,235,Tikonko (Gaura) MCHP,,,23,23,23
+health_facility,236,Venima CHP,,,23,23,23
+health_facility,237,Gbeika CHP,,,24,24,24
+health_facility,238,Bombohun MCHP,,,25,25,25
+health_facility,239,Daru CHC,,,25,25,25
+health_facility,240,Kambama CHP,,,25,25,25
+health_facility,241,Kortuma MCHP,,,25,25,25
+health_facility,242,Mamabu CHP,,,25,25,25
+health_facility,243,Njala-Grima CHP,,,25,25,25
+health_facility,244,Nyeama CHP,,,25,25,25
+health_facility,245,Pellie CHP,,,25,25,25
+health_facility,246,Pewama CHP,,,25,25,25
+health_facility,247,Swakab (Jawei) Clinic,,,25,25,25
+health_facility,248,Dia CHC,,,26,26,26
+health_facility,249,Foidu CHP,,,26,26,26
+health_facility,250,Bayama (Kissi Teng) CHP,,,27,27,27
+health_facility,251,Kangama (Kissi Teng) CHP,,,27,27,27
+health_facility,252,Koindu CHC,,,27,27,27
+health_facility,253,Buedu CHC,,,28,28,28
+health_facility,254,Dawa CHP,,,28,28,28
+health_facility,255,Gbandiwulo CHP,,,28,28,28
+health_facility,256,Madopolahun CHP,,,28,28,28
+health_facility,257,Sandia (Kissi Tongi) MCHP,,,28,28,28
+health_facility,258,Voahun CHP,,,28,28,28
+health_facility,259,Bandajuma Sinneh MCHP,,,29,29,29
+health_facility,260,Baoma (Luawa) CHP,,,29,29,29
+health_facility,261,Dodo-Kortuma CHP,,,29,29,29
+health_facility,262,Gbalahun CHP,,,29,29,29
+health_facility,263,Gbeworbu Gao CHP,,,29,29,29
+health_facility,264,Giema (Luawa) CHP,,,29,29,29
+health_facility,265,Kailahun Government Hospital,,,29,29,29
+health_facility,266,Konjo (Luawa) CHP,,,29,29,29
+health_facility,267,Kpandebu (Luawa) MCHP,,,29,29,29
+health_facility,268,Luawa Under Fives CHC,,,29,29,29
+health_facility,269,Mano-Sewalu CHP,,,29,29,29
+health_facility,270,Marie Stopes (Luawa) Clinic,,,29,29,29
+health_facility,271,Mende Buima MCHP,,,29,29,29
+health_facility,272,Morfindor CHP,,,29,29,29
+health_facility,273,Ngiehun (Luawa) CHP,,,29,29,29
+health_facility,274,Nyandehun (Luawa) CHP,,,29,29,29
+health_facility,275,Sandeyallu CHP,,,29,29,29
+health_facility,276,Sengema (Luawa) CHP,,,29,29,29
+health_facility,277,Talia (Luawa) MCHP,,,29,29,29
+health_facility,278,Fobu CHP,,,30,30,30
+health_facility,279,Jojoima CHC,,,30,30,30
+health_facility,280,Madina (Malema) CHP,,,30,30,30
+health_facility,281,Njama (Malema) MCHP,,,30,30,30
+health_facility,282,Baiima CHP,,,31,31,31
+health_facility,283,Levuma (Mandu) CHP,,,31,31,31
+health_facility,284,Mobai CHC,,,31,31,31
+health_facility,285,Yoyah CHP,,,31,31,31
+health_facility,286,Bandajuma Kpolihun CHP,,,32,32,32
+health_facility,287,Dambu CHC,,,32,32,32
+health_facility,288,Follah MCHP,,,32,32,32
+health_facility,289,Laleihun (Njaluahun) CHP,,,32,32,32
+health_facility,290,Mano-Menima CHP,,,32,32,32
+health_facility,291,Niahun Gbuyama CHP,,,32,32,32
+health_facility,292,Nixon Hospital,,,32,32,32
+health_facility,293,Nixon Under Fives CHC,,,32,32,32
+health_facility,294,Njaluahun Military Hospital,,,32,32,32
+health_facility,295,Nyandehun Nguvoihun CHP,,,32,32,32
+health_facility,296,Pendembu-Njeigbla CHP,,,32,32,32
+health_facility,297,Segbwema (Njaluahun) MCHP,,,32,32,32
+health_facility,298,Gbahama (Peje Bongre) CHP,,,33,33,33
+health_facility,299,Grima MCHP,,,33,33,33
+health_facility,300,Mamboma (Peje Bongre) CHP,,,33,33,33
+health_facility,301,Manowa CHC,,,33,33,33
+health_facility,302,Ngolahun MCHP,,,33,33,33
+health_facility,303,Pujehun (Peje Bongre) CHP,,,33,33,33
+health_facility,304,Bunumbu CHC,,,34,34,34
+health_facility,305,El-Shadai (Peje West) Clinic,,,34,34,34
+health_facility,306,Jokibu CHP,,,34,34,34
+health_facility,307,Peje Baoma CHP,,,34,34,34
+health_facility,308,Pejewa (Peje West) CHP,,,34,34,34
+health_facility,309,Kono-Bendu CHP,,,35,35,35
+health_facility,310,Lalehun CHP,,,35,35,35
+health_facility,311,Sandaru (Penguia) CHC,,,35,35,35
+health_facility,312,Woroma CHP,,,35,35,35
+health_facility,313,Bomaru CHP,,,36,36,36
+health_facility,314,Hand Maid Clinic,,,36,36,36
+health_facility,315,Jenneh MCHP,,,36,36,36
+health_facility,316,Mendekelema (Upper Bambara) CHP,,,36,36,36
+health_facility,317,Pendembu (Upper Bambara) CHC,,,36,36,36
+health_facility,318,Siama (Upper Bambara) CHP,,,36,36,36
+health_facility,319,Bandajuma CHC,,,37,37,37
+health_facility,320,Bendu CHP,,,37,37,37
+health_facility,321,Kwellu-Ngieya CHP,,,37,37,37
+health_facility,322,Malema (Yawei) CHP,,,37,37,37
+health_facility,323,Massayeima CHP,,,37,37,37
+health_facility,324,Bumpeh (Malema) CHP,,,37,37,37
+health_facility,325,Diamei MCHP,,,38,38,38
+health_facility,326,Gao MCHP,,,38,38,38
+health_facility,327,Giema CHP,,,38,38,38
+health_facility,328,Konia (Dama) MCHP,,,38,38,38
+health_facility,329,Konjo (Dama) CHP,,,38,38,38
+health_facility,330,Kpandebu CHC,,,38,38,38
+health_facility,331,Lileima MCHP,,,38,38,38
+health_facility,332,Loppa CHP,,,38,38,38
+health_facility,333,Majihun MCHP,,,38,38,38
+health_facility,334,Patama MCHP,,,38,38,38
+health_facility,335,Tawahun MCHP,,,38,38,38
+health_facility,336,Tokpombu (Dama) CHP,,,38,38,38
+health_facility,337,Dodo CHC,,,39,39,39
+health_facility,338,Guala MCHP,,,39,39,39
+health_facility,339,Kundorma CHP,,,39,39,39
+health_facility,340,Mbowohun CHP,,,39,39,39
+health_facility,341,Joru CHC,,,40,40,40
+health_facility,342,Kokoru CHP,,,40,40,40
+health_facility,343,Mendekelema (Gaura) CHP,,,40,40,40
+health_facility,344,Perrie MCHP,,,40,40,40
+health_facility,345,Sandaru (Gaura) MCHP,,,40,40,40
+health_facility,346,Semehun (Gaura) MCHP,,,40,40,40
+health_facility,347,Tikonko (Gaura) MCHP,,,40,40,40
+health_facility,348,Venima CHP,,,40,40,40
+health_facility,349,Bambara Kaima CHP,,,41,41,41
+health_facility,350,Fomaya CHP,,,41,41,41
+health_facility,351,Konta (Gorama Mende) CHP,,,41,41,41
+health_facility,352,Kortuhun (Gorama Mende) MCHP,,,41,41,41
+health_facility,353,Mondema CHC,,,41,41,41
+health_facility,354,Ngiegboiye CHP,,,41,41,41
+health_facility,355,Njagbewema (Gorama Mende) MCHP,,,41,41,41
+health_facility,356,Punduru CHP,,,41,41,41
+health_facility,357,Tungie CHC,,,41,41,41
+health_facility,358,Baoma Oil Mill CHC,,,42,42,42
+health_facility,359,Diema MCHP,,,42,42,42
+health_facility,360,Gbado CHP,,,42,42,42
+health_facility,361,Levuma (Kandu Leppiama) CHC,,,42,42,42
+health_facility,362,Sembehun (Kandu Leppiama) MCHP,,,42,42,42
+health_facility,363,Baoma (Koya) CHC,,,43,43,43
+health_facility,364,Bongor (Koya) MCHP,,,43,43,43
+health_facility,365,Jui (Koya) CHP,,,43,43,43
+health_facility,366,Menima MCHP,,,43,43,43
+health_facility,367,Njaluahun (Koya) MCHP,,,43,43,43
+health_facility,368,Nyandehun (Koya) MCHP,,,43,43,43
+health_facility,369,Serabu (Koya) CHP,,,43,43,43
+health_facility,370,Woyama MCHP,,,44,44,44
+health_facility,371,Yabaima CHP,,,44,44,44
+health_facility,372,Bomie MCHP,,,45,45,45
+health_facility,373,Foindu (Lower Bambara) CHP,,,45,45,45
+health_facility,374,Kamboma (Lower Bambara) MCHP,,,45,45,45
+health_facility,375,Komende Getewalu CHP,,,45,45,45
+health_facility,376,Komende Luyema MCHP,,,45,45,45
+health_facility,377,Konjo (Lower Bambara) MCHP,,,45,45,45
+health_facility,378,Kornia Kpindema CHP,,,45,45,45
+health_facility,379,Kpandebu (Lower Bambara) MCHP,,,45,45,45
+health_facility,380,Kpetema (Lower Bambara) CHP,,,45,45,45
+health_facility,381,Lowoma (Lower Bambara) CHC,,,45,45,45
+health_facility,382,Ngiehun (Lower Bambara) CHC,,,45,45,45
+health_facility,383,Njagbahun (Lower Bambara) MCHP,,,45,45,45
+health_facility,384,Panguma Hospital,,,45,45,45
+health_facility,385,Pelewahun (Lower Bambara) MCHP,,,45,45,45
+health_facility,386,Saama CHP,,,45,45,45
+health_facility,387,Sandeyiema MCHP,,,45,45,45
+health_facility,388,Sembiema MCHP,,,45,45,45
+health_facility,389,Semewabu MCHP,,,45,45,45
+health_facility,390,Tongo CHC,,,45,45,45
+health_facility,391,Wiema CHC,,,45,45,45
+health_facility,392,Bendu (Malegohun) CHC,,,46,46,46
+health_facility,393,Benduma (Malegohun) MCHP,,,46,46,46
+health_facility,394,Helegombu MCHP,,,46,46,46
+health_facility,395,Ngiehun Konjo CHP,,,46,46,46
+health_facility,396,Bandawor MCHP,,,47,47,47
+health_facility,397,Gandorhun (Niawa) CHP,,,47,47,47
+health_facility,398,Sendumei CHC,,,47,47,47
+health_facility,399,Damabara MCHP,,,48,48,48
+health_facility,400,Faama CHC,,,48,48,48
+health_facility,401,African Muslim Agency Clinic,,,49,49,49
+health_facility,402,Ahmadiyya Muslim (Nongowa) Hospital,,,49,49,49
+health_facility,403,BL Services Clinic,,,49,49,49
+health_facility,404,Burma 2 MCHP,,,49,49,49
+health_facility,405,Degbuama MCHP,,,49,49,49
+health_facility,406,Direct Aid Orphanage (Kenema City) Clinic,,,49,49,49
+health_facility,407,Egyptian (Kenema City) Clinic,,,49,49,49
+health_facility,408,Ensah Foundation Clinic,,,49,49,49
+health_facility,409,Gbo-Kakajama 1 MCHP,,,49,49,49
+health_facility,410,Gbo-Kakajama 2 MCHP,,,49,49,49
+health_facility,411,Gbo-Lambayama 1 CHC,,,49,49,49
+health_facility,412,Gbo-Lambayama 2 MCHP,,,49,49,49
+health_facility,413,Kenema City Military Clinic,,,49,49,49
+health_facility,414,Kenema Government Hospital,,,49,49,49
+health_facility,415,Kondebotihun MCHP,,,49,49,49
+health_facility,416,Koyagbema MCHP,,,49,49,49
+health_facility,417,Kpayama 1 MCHP,,,49,49,49
+health_facility,418,Kpayama 2 MCHP,,,49,49,49
+health_facility,419,Kpetema (Kenema City) CHC,,,49,49,49
+health_facility,420,Lango Town MCHP,,,49,49,49
+health_facility,421,Marie Stopes (Kenema City) Clinic,,,49,49,49
+health_facility,422,Nongowa Static MCHP,,,49,49,49
+health_facility,423,Nyandeyama MCHP,,,49,49,49
+health_facility,424,Rainbow Clinic,,,49,49,49
+health_facility,425,Red Cross (Kenema City) CHP,,,49,49,49
+health_facility,426,Samai Town CHC,,,49,49,49
+health_facility,427,Torkpombu MCHP,,,49,49,49
+health_facility,428,Bambawo MCHP,,,49,49,49
+health_facility,429,Hangah CHC,,,49,49,49
+health_facility,430,Jormu (Nongowa) CHP,,,49,49,49
+health_facility,431,Komende (Nongowa) MCHP,,,49,49,49
+health_facility,432,Konabu MCHP,,,49,49,49
+health_facility,433,Largo CHC,,,49,49,49
+health_facility,434,Massahun MCHP,,,49,49,49
+health_facility,435,Medicins Sans Frontiere Hospital,,,49,49,49
+health_facility,436,Ngelehun (Nongowa) MCHP,,,49,49,49
+health_facility,437,Niahun Buima MCHP,,,49,49,49
+health_facility,438,Niekabu CHC,,,49,49,49
+health_facility,439,Nongowa Under Fives CHP,,,49,49,49
+health_facility,440,Panderu MCHP,,,49,49,49
+health_facility,441,Potehun MCHP,,,49,49,49
+health_facility,442,Talia (Nongowa) CHC,,,49,49,49
+health_facility,443,Vaahun MCHP,,,49,49,49
+health_facility,444,Boajibu CHC,,,50,50,50
+health_facility,445,Gbageima MCHP,,,50,50,50
+health_facility,446,Blama CHC,,,51,51,51
+health_facility,447,Doujo CHP,,,51,51,51
+health_facility,448,Gelehun MCHP,,,51,51,51
+health_facility,449,London (Blama) MCHP,,,51,51,51
+health_facility,450,Nyangbe-Bo MCHP,,,51,51,51
+health_facility,451,Sarabu CHP,,,51,51,51
+health_facility,452,Tobanda CHC,,,51,51,51
+health_facility,453,Belebu CHP,,,52,52,52
+health_facility,454,Fayiema CHP,,,52,52,52
+health_facility,455,Gbeworbu CHP,,,52,52,52
+health_facility,456,Gegbwema CHC,,,52,52,52
+health_facility,457,Vaahun MCHP,,,52,52,52
+health_facility,458,Jao CHP,,,52,52,52
+health_facility,459,Mano Ngiebla CHP,,,52,52,52
+health_facility,460,Ngiewahun CHP,,,52,52,52
+health_facility,461,Nyiemiga MCHP,,,52,52,52
+health_facility,462,Senge MCHP,,,52,52,52
+health_facility,463,Baama CHC,,,53,53,53
+health_facility,464,Bambara MCHP,,,53,53,53
+health_facility,465,Faala CHP,,,53,53,53
+health_facility,466,Gendema MCHP,,,53,53,53
+health_facility,467,Kamboma (Wandor) MCHP,,,53,53,53
+health_facility,468,Bandasuma (Fiama) CHP,,,54,54,54
+health_facility,469,Bombordu CHP,,,54,54,54
+health_facility,470,Gbetema (Fiama) MCHP,,,54,54,54
+health_facility,471,Njagbwema (Fiama) CHC,,,54,54,54
+health_facility,472,Yekior MCHP,,,54,54,54
+health_facility,473,Fembedu CHP,,,55,55,55
+health_facility,474,Foindu (Gbane) CHP,,,55,55,55
+health_facility,475,Gandorhun (Gbane) CHC,,,55,55,55
+health_facility,476,Kanekor MCHP,,,55,55,55
+health_facility,477,Kuangor MCHP,,,55,55,55
+health_facility,478,Mbaoma (Gbane) CHP,,,55,55,55
+health_facility,479,Sunga MCHP,,,55,55,55
+health_facility,480,Koardu CHC,,,56,56,56
+health_facility,481,Sindadu MCHP,,,56,56,56
+health_facility,482,Boroma CHP,,,57,57,57
+health_facility,483,Gbangadu MCHP,,,57,57,57
+health_facility,484,Koakor MCHP,,,57,57,57
+health_facility,485,Musa and Family CHC,,,57,57,57
+health_facility,486,Quidadu MCHP,,,57,57,57
+health_facility,487,Small Sefadu CHP,,,57,57,57
+health_facility,488,Well Body Clinic,,,57,57,57
+health_facility,489,Bunabu CHP,,,58,58,58
+health_facility,490,Kangama (Gorama Kono) CHC,,,58,58,58
+health_facility,491,Njagbwema (Gorama Kono) CHP,,,58,58,58
+health_facility,492,Torkpumbu MCHP,,,58,58,58
+health_facility,493,Peyima CHP,,,59,59,59
+health_facility,494,Samiquidu MCHP,,,59,59,59
+health_facility,495,Sukudu (Kamara) CHP,,,59,59,59
+health_facility,496,Tombodu CHC,,,59,59,59
+health_facility,497,Arabic Clinic,,,60,60,60
+health_facility,498,Dabundeh Clinic,,,60,60,60
+health_facility,499,Egyptian (Koidu) Clinic,,,60,60,60
+health_facility,500,Gbongonlekeh Clinic,,,60,60,60
+health_facility,501,Hussein Mackie Memorial Hospital,,,60,60,60
+health_facility,502,In God Be Truth Clinic,,,60,60,60
+health_facility,503,Joanna Enterprise Clinic,,,60,60,60
+health_facility,504,Kamadu CHP,,,60,60,60
+health_facility,505,Koeyor CHP,,,60,60,60
+health_facility,506,Koidu Government Hospital,,,60,60,60
+health_facility,507,Koidu Static CHP,,,60,60,60
+health_facility,508,Marie Stopes (Koidu) Clinic,,,60,60,60
+health_facility,509,Obama Clinic,,,60,60,60
+health_facility,510,Paul Sorie Farma's Hospital,,,60,60,60
+health_facility,511,Pessima Clinic,,,60,60,60
+health_facility,512,Simbakoro MCHP,,,60,60,60
+health_facility,513,Foakor MCHP,,,61,61,61
+health_facility,514,Gbongongor MCHP,,,61,61,61
+health_facility,515,Kenewa MCHP,,,61,61,61
+health_facility,516,Koima (Lei) MCHP,,,61,61,61
+health_facility,517,Komba Yendeh CHC,,,61,61,61
+health_facility,518,Kongoifeh CHP,,,61,61,61
+health_facility,519,Kunundu MCHP,,,61,61,61
+health_facility,520,Saiama (Lei) CHP,,,61,61,61
+health_facility,521,Kamiendor MCHP,,,62,62,62
+health_facility,522,Koindu-Kuteh MCHP,,,62,62,62
+health_facility,523,Sambaya (Mafindor) CHP,,,62,62,62
+health_facility,524,Aiah Mass Clinic,,,63,63,63
+health_facility,525,Ashley Clinic,,,63,63,63
+health_facility,526,Bumpeh (Nimikoro) CHC,,,63,63,63
+health_facility,527,Bumpeh (Nimikoro) CHP,,,63,63,63
+health_facility,528,Gondama (Nimikoro) MCHP,,,63,63,63
+health_facility,529,Jaiama CHC,,,63,63,63
+health_facility,530,Mansundu (Nimikoro) MCHP,,,63,63,63
+health_facility,531,Motema CHC,,,63,63,63
+health_facility,532,Ngaiya MCHP,,,63,63,63
+health_facility,533,Njagbwema (Nimikoro) CHC,,,63,63,63
+health_facility,534,Njala (Nimikoro) CHC,,,63,63,63
+health_facility,535,Seidu MCHP,,,63,63,63
+health_facility,536,Senjekoro MCHP,,,63,63,63
+health_facility,537,Tongorma MCHP,,,63,63,63
+health_facility,538,United Methodist Church Jaiama Clinic,,,63,63,63
+health_facility,539,Yengema (Nimikoro) CHC,,,63,63,63
+health_facility,540,Condama CHP,,,64,64,64
+health_facility,541,Jaiama Sewafe CHC,,,64,64,64
+health_facility,542,Massabendu MCHP,,,64,64,64
+health_facility,543,Ngo Town CHP,,,64,64,64
+health_facility,544,Peya MCHP,,,64,64,64
+health_facility,545,Sandia (Nimiyama) MCHP,,,64,64,64
+health_facility,546,Walihun (Nimiyama) MCHP,,,64,64,64
+health_facility,547,Bangambaya CHP,,,65,65,65
+health_facility,548,Dunamor CHP,,,65,65,65
+health_facility,549,Gbambiadu MCHP,,,65,65,65
+health_facility,550,Gbeya MCHP,,,65,65,65
+health_facility,551,Kayima CHC,,,65,65,65
+health_facility,552,Kochero MCHP,,,65,65,65
+health_facility,553,Koima (Sandor) MCHP,,,65,65,65
+health_facility,554,Kondeya (Sandor) MCHP,,,65,65,65
+health_facility,555,Mansundu (Sandor) MCHP,,,65,65,65
+health_facility,556,Samandu MCHP,,,65,65,65
+health_facility,557,Tefeya CHP,,,65,65,65
+health_facility,558,Wordu CHP,,,65,65,65
+health_facility,559,Yardu MCHP,,,65,65,65
+health_facility,560,Yormandu CHC,,,65,65,65
+health_facility,561,Bandasuma (Soa) MCHP,,,66,66,66
+health_facility,562,Feuror MCHP,,,66,66,66
+health_facility,563,Foindu Mongor CHP,,,66,66,66
+health_facility,564,Gbamandu MCHP,,,66,66,66
+health_facility,565,Kainkordu CHP,,,66,66,66
+health_facility,566,Manjama MCHP,,,66,66,66
+health_facility,567,Sukudu (Soa) MCHP,,,66,66,66
+health_facility,568,Adama Marth Memorial CHC,,,67,67,67
+health_facility,569,Baiama CHC,,,67,67,67
+health_facility,570,Kensay CHP,,,67,67,67
+health_facility,571,Kimbadu CHC,,,67,67,67
+health_facility,572,Kissi Bona CHP,,,67,67,67
+health_facility,573,Koakoyima CHC,,,67,67,67
+health_facility,574,Sukudu New Site MCHP,,,67,67,67
+health_facility,575,Tongoro MCHP,,,67,67,67
+health_facility,576,White House Clinic,,,67,67,67
+health_facility,577,Woama CHP,,,67,67,67
+health_facility,578,Kondewakoro MCHP,,,68,68,68
+health_facility,579,Kpetema (Toli) MCHP,,,68,68,68
+health_facility,580,Ngelehun (Badjia) CHC,,,69,69,69
+health_facility,581,Njagbahun (Badjia) MCHP,,,69,69,69
+health_facility,582,Njandama MCHP,,,69,69,69
+health_facility,583,Barlie MCHP,,,70,70,70
+health_facility,584,Benduma (Bagbwe) MCHP,,,70,70,70
+health_facility,585,Kondiama MCHP,,,70,70,70
+health_facility,586,Kpetema (Bagbwe) MCHP,,,70,70,70
+health_facility,587,Mendewa MCHP,,,70,70,70
+health_facility,588,Ngalu CHC,,,70,70,70
+health_facility,589,Samie Buma MCHP,,,70,70,70
+health_facility,590,Baoma Station CHP,,,71,71,71
+health_facility,591,Blamawo MCHP,,,71,71,71
+health_facility,592,Faabu CHP,,,71,71,71
+health_facility,593,Foindu (Baoma) MCHP,,,71,71,71
+health_facility,594,Gbahama (Baoma) CHP,,,71,71,71
+health_facility,595,Gerehun CHC,,,71,71,71
+health_facility,596,Golu MCHP,,,71,71,71
+health_facility,597,Jembe CHC,,,71,71,71
+health_facility,598,Jormu (Baoma) MCHP,,,71,71,71
+health_facility,599,Kigbai MCHP,,,71,71,71
+health_facility,600,Kpunbu MCHP,,,71,71,71
+health_facility,601,Mbundorbu MCHP,,,71,71,71
+health_facility,602,Pelewahun (Baoma) MCHP,,,71,71,71
+health_facility,603,Tugbebu CHP,,,71,71,71
+health_facility,604,Yakaji MCHP,,,71,71,71
+health_facility,605,Yamandu CHC,,,71,71,71
+health_facility,606,Bum Kaku MCHP,,,72,72,72
+health_facility,607,Gbangbalia MCHP,,,72,72,72
+health_facility,608,Jimmi CHC,,,72,72,72
+health_facility,609,Kakama MCHP,,,72,72,72
+health_facility,610,Kasse MCHP,,,72,72,72
+health_facility,611,Limba CHP,,,72,72,72
+health_facility,612,Mano Yorgbo MCHP,,,72,72,72
+health_facility,613,Momajo CHP,,,72,72,72
+health_facility,614,Niagorehun (Bargbo) CHP,,,72,72,72
+health_facility,615,Senehun Ngolan MCHP,,,72,72,72
+health_facility,616,Aethel CHP,,,73,73,73
+health_facility,617,Agape Way CHP,,,73,73,73
+health_facility,618,Anglican Diocese Clinic,,,73,73,73
+health_facility,619,Batiama Layout MCHP,,,73,73,73
+health_facility,620,Bo Government Hospital,,,73,73,73
+health_facility,621,Bo School Bay CHP,,,73,73,73
+health_facility,622,Brima Town CHP,,,73,73,73
+health_facility,623,EDC Unit CHP,,,73,73,73
+health_facility,624,Favour MCHP,,,73,73,73
+health_facility,625,Gbanja Town MCHP,,,73,73,73
+health_facility,626,Gbotima CHP,,,73,73,73
+health_facility,627,Genda MCHP,,,73,73,73
+health_facility,628,Gilas Hospital,,,73,73,73
+health_facility,629,Haikel CHP,,,73,73,73
+health_facility,630,Kakua Static CHC,,,73,73,73
+health_facility,631,Kandeh Town CHP,,,73,73,73
+health_facility,632,Kindoya Hospital,,,73,73,73
+health_facility,633,Kowama (Kakua) CHP,,,73,73,73
+health_facility,634,Lewaibu CHP,,,73,73,73
+health_facility,635,Lyn Maternity MCHP,,,73,73,73
+health_facility,636,Mercy (Bo City) Hospital,,,73,73,73
+health_facility,637,Mid Land MCHP,,,73,73,73
+health_facility,638,Morning Star MCHP,,,73,73,73
+health_facility,639,Nafaya MCHP,,,73,73,73
+health_facility,640,Needy CHP,,,73,73,73
+health_facility,641,New Police Barracks CHC,,,73,73,73
+health_facility,642,Praise Foundation CHC,,,73,73,73
+health_facility,643,Red Cross (Bo City) CHC,,,73,73,73
+health_facility,644,Rescue Health Care Clinic,,,73,73,73
+health_facility,645,Simbo Town CHP,,,73,73,73
+health_facility,646,Sowa's Clinic,,,73,73,73
+health_facility,647,St Monica's Clinic,,,73,73,73
+health_facility,648,Tengbewabu MCHP,,,73,73,73
+health_facility,649,Topkoi Town CHP,,,73,73,73
+health_facility,650,UNIMUS MCHP,,,73,73,73
+health_facility,651,Yemoh Town CHC,,,73,73,73
+health_facility,652,Gbaama MCHP,,,74,74,74
+health_facility,653,Lowoma (Bongor) MCHP,,,74,74,74
+health_facility,654,Mamboma (Bongor) CHC,,,74,74,74
+health_facility,655,Telu CHC,,,74,74,74
+health_facility,656,Bongor (Bumpe Ngao) MCHP,,,75,75,75
+health_facility,657,Buma MCHP,,,75,75,75
+health_facility,658,Bumpe CHC,,,75,75,75
+health_facility,659,Kabiyama MCHP,,,75,75,75
+health_facility,660,Kaniya MCHP,,,75,75,75
+health_facility,661,Kpetema (Bumpe Ngao) CHP,,,75,75,75
+health_facility,662,Makayonie MCHP,,,75,75,75
+health_facility,663,Mokoba MCHP,,,75,75,75
+health_facility,664,Mokpende MCHP,,,75,75,75
+health_facility,665,Ngolahun (Bumpe Ngao) CHC,,,75,75,75
+health_facility,666,Niagorehun Vaakie MCHP,,,75,75,75
+health_facility,667,Sahn (Bumpe Ngao) CHP,,,75,75,75
+health_facility,668,Serabu (Bumpe Ngao) CHC,,,75,75,75
+health_facility,669,Serabu Mission Hospital,,,75,75,75
+health_facility,670,Taninahun (Bumpe Ngao) CHP,,,75,75,75
+health_facility,671,Walihun (Bumpe Ngao) MCHP,,,75,75,75
+health_facility,672,Yengema (Bumpe Ngao) MCHP,,,75,75,75
+health_facility,673,Gbaiima CHC,,,76,76,76
+health_facility,674,Sembehun Mamagewoh CHC,,,76,76,76
+health_facility,675,Koribondo CHC,,,77,77,77
+health_facility,676,Mano-Jaiama CHP,,,77,77,77
+health_facility,677,Niayahun CHP,,,77,77,77
+health_facility,678,Bandajuma MCHP,,,78,78,78
+health_facility,679,Bo Childrens Hospital,,,78,78,78
+health_facility,680,Egyptian (Bo) Clinic,,,78,78,78
+health_facility,681,Fengehun MCHP,,,78,78,78
+health_facility,682,Fullawahun MCHP,,,78,78,78
+health_facility,683,Gbongboma MCHP,,,78,78,78
+health_facility,684,Maguama CHP,,,78,78,78
+health_facility,685,Manjiama CHC,,,78,78,78
+health_facility,686,Marie Stopes (Kakua) Clinic,,,78,78,78
+health_facility,687,Massah Memorial Maternity MCHP,,,78,78,78
+health_facility,688,Ndegbomie MCHP,,,78,78,78
+health_facility,689,Nduvuibu MCHP,,,78,78,78
+health_facility,690,United Methodist Church Manjama CHC,,,78,78,78
+health_facility,691,Gumahun MCHP,,,79,79,79
+health_facility,692,Komboya Gbauja MCHP,,,79,79,79
+health_facility,693,Kpamajama MCHP,,,79,79,79
+health_facility,694,Niagorehun (Komboya) MCHP,,,79,79,79
+health_facility,695,Njala (Komboya) CHC,,,79,79,79
+health_facility,696,Teibor CHP,,,79,79,79
+health_facility,697,Bontiwo MCHP,,,80,80,80
+health_facility,698,Feiba CHP,,,80,80,80
+health_facility,699,Hima MCHP,,,80,80,80
+health_facility,700,Karleh MCHP,,,80,80,80
+health_facility,701,Kpetewoma CHP,,,80,80,80
+health_facility,702,Ngieyehun MCHP,,,80,80,80
+health_facility,703,Sumbuya (Lugbu) CHC,,,80,80,80
+health_facility,704,Upper Saama MCHP,,,80,80,80
+health_facility,705,Yambama MCHP,,,80,80,80
+health_facility,706,Korbu MCHP,,,81,81,81
+health_facility,707,Nengbema CHP,,,81,81,81
+health_facility,708,Ngogbebu MCHP,,,81,81,81
+health_facility,709,Pendebu MCHP,,,81,81,81
+health_facility,710,Sahn (Niawa Lenga) CHC,,,81,81,81
+health_facility,711,Damballa CHC,,,82,82,82
+health_facility,712,Gbangba MCHP,,,82,82,82
+health_facility,713,Gondama (Tikonko) CHC,,,83,83,83
+health_facility,714,Griema MCHP,,,83,83,83
+health_facility,715,Kassama MCHP,,,83,83,83
+health_facility,716,Mattru on the Rail MCHP,,,83,83,83
+health_facility,717,Mendewa CHP,,,83,83,83
+health_facility,718,Sebehun Tarbay MCHP,,,83,83,83
+health_facility,719,Sembehun 17 (Tikonko) CHP,,,83,83,83
+health_facility,720,Theresa Hakim CHP,,,83,83,83
+health_facility,721,Tikonko (Bo) CHC,,,83,83,83
+health_facility,722,Towama MCHP,,,83,83,83
+health_facility,723,We Care Health Centre Clinic,,,83,83,83
+health_facility,724,Zion CHC,,,83,83,83
+health_facility,725,Baomahun CHC,,,83,83,83
+health_facility,726,Foya (Valunia) CHP,,,83,83,83
+health_facility,727,Grima (Valunia) CHP,,,83,83,83
+health_facility,728,Kenema Blango CHC,,,83,83,83
+health_facility,729,Kpewama MCHP,,,83,83,83
+health_facility,730,Kpuabu MCHP,,,83,83,83
+health_facility,731,Mongere CHC,,,83,83,83
+health_facility,732,Ngolahun Jabaty CHP,,,83,83,83
+health_facility,733,Pujehun (Valunia) CHP,,,83,83,83
+health_facility,734,Bathurst MCHP,,,84,84,84
+health_facility,735,Fanima (Wonde) MCHP,,,84,84,84
+health_facility,736,Gboyama CHC,,,84,84,84
+health_facility,737,Kambawama MCHP,,,84,84,84
+health_facility,738,Bendu (Bendu-Cha) CHC,,,85,85,85
+health_facility,739,Foya (Bendu-Cha) CHP,,,85,85,85
+health_facility,740,Giebina CHP,,,85,85,85
+health_facility,741,Mindohun MCHP,,,85,85,85
+health_facility,742,Mo-Davies CHP,,,85,85,85
+health_facility,743,Taigbe CHP,,,85,85,85
+health_facility,744,Bonthe Government Hospital,,,86,86,86
+health_facility,745,Bonthe Under Fives Clinic,,,86,86,86
+health_facility,746,Red Cross (Bonthe) CHP,,,86,86,86
+health_facility,747,St Joseph's Clinic,,,86,86,86
+health_facility,748,York Island CHP,,,86,86,86
+health_facility,749,Madina (Bum) CHC,,,87,87,87
+health_facility,750,Mammy CHP,,,87,87,87
+health_facility,751,Ngepehun CHP,,,87,87,87
+health_facility,752,Ngessehun MCHP,,,87,87,87
+health_facility,753,Sogballeh MCHP,,,87,87,87
+health_facility,754,Tassor CHP,,,87,87,87
+health_facility,755,Torma Bum CHP,,,87,87,87
+health_facility,756,Bumpetoke (Dema) CHP,,,88,88,88
+health_facility,757,Mbaoma CHP,,,88,88,88
+health_facility,758,Mut CHP,,,88,88,88
+health_facility,759,Tissana (Dema) CHC,,,88,88,88
+health_facility,760,Tombay CHP,,,88,88,88
+health_facility,761,Gaindema CHP,,,89,89,89
+health_facility,762,Gbamgbaia CHC,,,89,89,89
+health_facility,763,Gbamgbama CHC,,,89,89,89
+health_facility,764,Jangallor CHP,,,89,89,89
+health_facility,765,Junctionla MCHP,,,89,89,89
+health_facility,766,Mogbwemo CHC,,,89,89,89
+health_facility,767,Mokaba MCHP,,,89,89,89
+health_facility,768,Moriba Town (Imperri) CHC,,,89,89,89
+health_facility,769,Mount Hope Hospital,,,89,89,89
+health_facility,770,Sierra Rutile Hospital,,,89,89,89
+health_facility,771,Victoria MCHP,,,89,89,89
+health_facility,772,Yargio CHP,,,89,89,89
+health_facility,773,Gambia CHC,,,90,90,90
+health_facility,774,Gbaninga CHP,,,90,90,90
+health_facility,775,Henry Kormoi Community Hospital,,,90,90,90
+health_facility,776,Jorma CHP,,,90,90,90
+health_facility,777,Kabati CHP,,,90,90,90
+health_facility,778,Komende (Jong) MCHP,,,90,90,90
+health_facility,779,Mattru CHC,,,90,90,90
+health_facility,780,Mattru UBC Hospital,,,90,90,90
+health_facility,781,Mo-Savie MCHP,,,90,90,90
+health_facility,782,Mogbwe MCHP,,,90,90,90
+health_facility,783,Mongerewa MCHP,,,90,90,90
+health_facility,784,Moyowa MCHP,,,90,90,90
+health_facility,785,Red Cross (Mattru) CHP,,,90,90,90
+health_facility,786,Segbwema (Jong) MCHP,,,90,90,90
+health_facility,787,Semabu (Jong) CHP,,,90,90,90
+health_facility,788,Tissana CHP,,,90,90,90
+health_facility,789,Gambia Popayma MCHP,,,91,91,91
+health_facility,790,Gbongeh MCHP,,,91,91,91
+health_facility,791,Lawana (Kpanda Kemo) MCHP,,,91,91,91
+health_facility,792,Mottuo CHC,,,91,91,91
+health_facility,793,Senjehun MCHP,,,91,91,91
+health_facility,794,Benduma CHC,,,92,92,92
+health_facility,795,Hoya CHP,,,92,92,92
+health_facility,796,MasaKpanguma CHP,,,92,92,92
+health_facility,797,Mosenteh CHP,,,92,92,92
+health_facility,798,Tei CHP,,,92,92,92
+health_facility,799,Topain CHP,,,92,92,92
+health_facility,800,Batahall CHP,,,93,93,93
+health_facility,801,Gbamani CHP,,,93,93,93
+health_facility,802,Gbap CHC,,,93,93,93
+health_facility,803,Maamu MCHP,,,93,93,93
+health_facility,804,Mbaoma Kpengeh CHP,,,93,93,93
+health_facility,805,Minah CHP,,,93,93,93
+health_facility,806,Sembehun (Nongoba Bullom) MCHP,,,93,93,93
+health_facility,807,Torma Gbagba CHP,,,93,93,93
+health_facility,808,Waiba MCHP,,,93,93,93
+health_facility,809,Delken MCHP,,,94,94,94
+health_facility,810,Mania MCHP,,,94,94,94
+health_facility,811,Mbokie MCHP,,,94,94,94
+health_facility,812,Mo-Sandi CHP,,,94,94,94
+health_facility,813,Ngepay CHP,,,94,94,94
+health_facility,814,Sanhaya CHP,,,94,94,94
+health_facility,815,Yoni (Sittia) CHC,,,94,94,94
+health_facility,816,Grima (Sogbini) CHP,,,95,95,95
+health_facility,817,Kanga (Sogbini) MCHP,,,95,95,95
+health_facility,818,Kpetema (Sogbini) MCHP,,,95,95,95
+health_facility,819,Mandu CHP,,,95,95,95
+health_facility,820,Ngueh MCHP,,,95,95,95
+health_facility,821,Tihun CHC,,,95,95,95
+health_facility,822,Mobefa MCHP,,,96,96,96
+health_facility,823,Sargor CHP,,,96,96,96
+health_facility,824,Senehun MCHP,,,96,96,96
+health_facility,825,Talia (Yawbeko) CHC,,,96,96,96
+health_facility,826,Benkeh MCHP,,,97,97,97
+health_facility,827,Kawaya CHP,,,97,97,97
+health_facility,828,Mokassie CHP,,,97,97,97
+health_facility,829,Mosenegor MCHP,,,97,97,97
+health_facility,830,Ngiebu CHC,,,97,97,97
+health_facility,831,Sembehun (Bagruwa) CHC,,,97,97,97
+health_facility,832,Sembehunwo MCHP,,,97,97,97
+health_facility,833,Belletin CHP,,,98,98,98
+health_facility,834,Bumpeh River CHP,,,98,98,98
+health_facility,835,Mende Town MCHP,,,98,98,98
+health_facility,836,Moforay MCHP,,,98,98,98
+health_facility,837,Mokaiyegbeh MCHP,,,98,98,98
+health_facility,838,Mosella CHP,,,98,98,98
+health_facility,839,Motorbong MCHP,,,98,98,98
+health_facility,840,Moyeamoh CHP,,,98,98,98
+health_facility,841,Rotifunk CHC,,,98,98,98
+health_facility,842,Sahun (Bumpeh) MCHP,,,98,98,98
+health_facility,843,Samu CHP,,,98,98,98
+health_facility,844,Seweima MCHP,,,98,98,98
+health_facility,845,UMC Rotifunk Hospital,,,98,98,98
+health_facility,846,Yenkessa MCHP,,,98,98,98
+health_facility,847,Bambuibu Tommy MCHP,,,99,99,99
+health_facility,848,Hope Rising CHP,,,99,99,99
+health_facility,849,Kabaima MCHP,,,99,99,99
+health_facility,850,Kenema Gbandoma MCHP,,,99,99,99
+health_facility,851,Mano (Dasse) CHC,,,99,99,99
+health_facility,852,Mogbaske CHP,,,99,99,99
+health_facility,853,Taninihun Kapuima MCHP,,,99,99,99
+health_facility,854,Falaba MCHP,,,100,100,100
+health_facility,855,Gandorhun (Fakunya) CHC,,,100,100,100
+health_facility,856,Mokalley MCHP,,,100,100,100
+health_facility,857,Mokorewa MCHP,,,100,100,100
+health_facility,858,Moyamba Junction CHC,,,100,100,100
+health_facility,859,Moyollo MCHP,,,100,100,100
+health_facility,860,Njagbahun (Fakunya) MCHP,,,100,100,100
+health_facility,861,Rotawa CHP,,,100,100,100
+health_facility,862,Bumpetoke (Kargboro) CHP,,,101,101,101
+health_facility,863,Mokaisumana CHP,,,101,101,101
+health_facility,864,Mokandoh CHP,,,101,101,101
+health_facility,865,Mokobo MCHP,,,101,101,101
+health_facility,866,Mokonbetty MCHP,,,101,101,101
+health_facility,867,Mopailleh MCHP,,,101,101,101
+health_facility,868,Ngeihun (Kargboro) MCHP,,,101,101,101
+health_facility,869,Plaintain Island MCHP,,,101,101,101
+health_facility,870,Shenge CHC,,,101,101,101
+health_facility,871,Yorgbofore MCHP,,,101,101,101
+health_facility,872,Youndu CHP,,,101,101,101
+health_facility,873,Gbonjeima MCHP,,,102,102,102
+health_facility,874,Kangahun CHC,,,102,102,102
+health_facility,875,Komende (Kaiyamba) MCHP,,,102,102,102
+health_facility,876,Korgbotuma MCHP,,,102,102,102
+health_facility,877,Levuma (Kaiyamba) MCHP,,,102,102,102
+health_facility,878,Moyamba Government Hospital,,,102,102,102
+health_facility,879,Moyamba Static 1 CHP,,,102,102,102
+health_facility,880,Moyamba Static 2 CHC,,,102,102,102
+health_facility,881,Salina CHP,,,102,102,102
+health_facility,882,Yoyema MCHP,,,102,102,102
+health_facility,883,Gondama (Kamajei) CHP,,,103,103,103
+health_facility,884,Joyah MCHP,,,103,103,103
+health_facility,885,Mogbuama MCHP,,,103,103,103
+health_facility,886,Senehun (Kamajei) CHC,,,103,103,103
+health_facility,887,Bauya (Kongbora) CHC,,,104,104,104
+health_facility,888,Lawana (Kongbora) MCHP,,,104,104,104
+health_facility,889,Levuma Nyomeh CHP,,,104,104,104
+health_facility,890,Magbenka CHP,,,104,104,104
+health_facility,891,Taninihun Mboka MCHP,,,104,104,104
+health_facility,892,Bai Largo MCHP,,,105,105,105
+health_facility,893,Fogbo (Kori) CHP,,,105,105,105
+health_facility,894,Gbuihun MCHP,,,105,105,105
+health_facility,895,Judy Smith CHP,,,105,105,105
+health_facility,896,Juma MCHP,,,105,105,105
+health_facility,897,Konda CHP,,,105,105,105
+health_facility,898,Manjeihun MCHP,,,105,105,105
+health_facility,899,Mosongo MCHP,,,105,105,105
+health_facility,900,Njala (Kori) CHC,,,105,105,105
+health_facility,901,Njala University Hospital,,,105,105,105
+health_facility,902,Taiama (Kori) CHC,,,105,105,105
+health_facility,903,United Methodist Church Taiama CHP,,,105,105,105
+health_facility,904,Waiima (Kori) MCHP,,,105,105,105
+health_facility,905,Gbangbatoke CHC,,,106,106,106
+health_facility,906,Kanga (Lower Banta) MCHP,,,106,106,106
+health_facility,907,Mokanji CHC,,,106,106,106
+health_facility,908,Mokotawa CHP,,,106,106,106
+health_facility,909,Moriba Town (Lower Banta) CHP,,,106,106,106
+health_facility,910,Mosenesie Junction CHP,,,106,106,106
+health_facility,911,Njagbahun (Lower Banta) MCHP,,,106,106,106
+health_facility,912,St Mary's Clinic,,,106,106,106
+health_facility,913,Bradford CHC,,,107,107,107
+health_facility,914,Ferry CHP,,,107,107,107
+health_facility,915,Mabang (Ribbi) MCHP,,,107,107,107
+health_facility,916,Mogbongisseh MCHP,,,107,107,107
+health_facility,917,Mokorbu MCHP,,,107,107,107
+health_facility,918,Motoni MCHP,,,107,107,107
+health_facility,919,Motonkoh MCHP,,,107,107,107
+health_facility,920,Rokolor MCHP,,,107,107,107
+health_facility,921,Suen CHP,,,107,107,107
+health_facility,922,Bomotoke CHC,,,108,108,108
+health_facility,923,Mokaiyamba MCHP,,,108,108,108
+health_facility,924,Mokpanabom MCHP,,,108,108,108
+health_facility,925,Mosagbeh MCHP,,,108,108,108
+health_facility,926,Mosanda CHP,,,108,108,108
+health_facility,927,Children of the Nation Ngolala CHP,,,109,109,109
+health_facility,928,Gondama (Upper Banta) MCHP,,,109,109,109
+health_facility,929,Modonkor CHP,,,109,109,109
+health_facility,930,Mogomgbe MCHP,,,109,109,109
+health_facility,931,Mokelleh CHC,,,109,109,109
+health_facility,932,Bandasuma (Barri) CHC,,,110,110,110
+health_facility,933,Jeoma Barri MCHP,,,110,110,110
+health_facility,934,Konia (Barri) MCHP,,,110,110,110
+health_facility,935,Kundorwahun CHP,,,110,110,110
+health_facility,936,Njaluahun (Barri) CHP,,,110,110,110
+health_facility,937,Potoru CHC,,,110,110,110
+health_facility,938,Saahun (Barri) MCHP,,,110,110,110
+health_facility,939,Tambeiyama MCHP,,,110,110,110
+health_facility,940,Taninahun (Barri) MCHP,,,110,110,110
+health_facility,941,Vaama (Barri) CHP,,,110,110,110
+health_facility,942,Waiima (Barri) MCHP,,,110,110,110
+health_facility,943,Bandama MCHP,,,111,111,111
+health_facility,944,Blama Massaquoi CHC,,,111,111,111
+health_facility,945,Fonikoh MCHP,,,111,111,111
+health_facility,946,Funyehun CHP,,,111,111,111
+health_facility,947,Kpetema (Galliness) MCHP,,,111,111,111
+health_facility,948,Kpowubu MCHP,,,111,111,111
+health_facility,949,Makorma CHP,,,111,111,111
+health_facility,950,Pehala MCHP,,,112,112,112
+health_facility,951,Liya MCHP,,,113,113,113
+health_facility,952,Massam CHC,,,113,113,113
+health_facility,953,Saahun (Kpaka) MCHP,,,113,113,113
+health_facility,954,Semabu (Kpaka) MCHP,,,113,113,113
+health_facility,955,Sumbuya Bessima CHP,,,113,113,113
+health_facility,956,Basalleh MCHP,,,114,114,114
+health_facility,957,Blama Puilla MCHP,,,114,114,114
+health_facility,958,Bomu Samba MCHP,,,114,114,114
+health_facility,959,Dandabu CHP,,,114,114,114
+health_facility,960,Gbondapi CHC,,,114,114,114
+health_facility,961,Gibina MCHP,,,114,114,114
+health_facility,962,Mandeima MCHP,,,114,114,114
+health_facility,963,Pujehun Government Hospital,,,114,114,114
+health_facility,964,Pujehun Static CHC,,,114,114,114
+health_facility,965,Salima Samba MCHP,,,114,114,114
+health_facility,966,Sawula MCHP,,,114,114,114
+health_facility,967,Sorbeh Grima MCHP,,,114,114,114
+health_facility,968,Taninahun Makemuma MCHP,,,114,114,114
+health_facility,969,Tongay MCHP,,,114,114,114
+health_facility,970,Vawahun Kayimba MCHP,,,114,114,114
+health_facility,971,Bayama MCHP,,,115,115,115
+health_facility,972,Borborbu MCHP,,,115,115,115
+health_facility,973,Gobaru CHC,,,115,115,115
+health_facility,974,Vaama (Kpanga Krim) MCHP,,,115,115,115
+health_facility,975,Dumagbe MCHP,,,116,116,116
+health_facility,976,Gbaa (Makpele) CHP,,,116,116,116
+health_facility,977,Gbahama (Makpele) MCHP,,,116,116,116
+health_facility,978,Gissiwolo MCHP,,,116,116,116
+health_facility,979,Gofor CHP,,,116,116,116
+health_facility,980,Ndombu MCHP,,,116,116,116
+health_facility,981,Pewa MCHP,,,116,116,116
+health_facility,982,Zimmi CHC,,,116,116,116
+health_facility,983,Bendu (Malen) MCHP,,,117,117,117
+health_facility,984,Hongai CHP,,,117,117,117
+health_facility,985,Jao (Malen) MCHP,,,117,117,117
+health_facility,986,Ngandorhun MCHP,,,117,117,117
+health_facility,987,Nianyahun MCHP,,,117,117,117
+health_facility,988,Nyandehun (Malen) MCHP,,,117,117,117
+health_facility,989,Sahn (Malen) CHC,,,117,117,117
+health_facility,990,Sengema (Malen) CHP,,,117,117,117
+health_facility,991,Taninahun (Malen) CHP,,,117,117,117
+health_facility,992,Bengani MCHP,,,118,118,118
+health_facility,993,Gbombu MCHP,,,118,118,118
+health_facility,994,Kassay MCHP,,,118,118,118
+health_facility,995,Mano Gbongema CHC,,,118,118,118
+health_facility,996,Mende MSK MCHP,,,118,118,118
+health_facility,997,Nyandehun (Mano Sakrim) MCHP,,,118,118,118
+health_facility,998,Senbengu MCHP,,,118,118,118
+health_facility,999,Bongay MCHP,,,119,119,119
+health_facility,1000,Bumbeh MCHP,,,119,119,119
+health_facility,1001,Futa Pejeh CHC,,,119,119,119
+health_facility,1002,Helebu Pejeh MCHP,,,119,119,119
+health_facility,1003,Pejewa (Futa Peje) MCHP,,,119,119,119
+health_facility,1004,Blama Perri MCHP,,,120,120,120
+health_facility,1005,Bomi MCHP,,,120,120,120
+health_facility,1006,Bumpeh (Perri) CHC,,,120,120,120
+health_facility,1007,Falaba CHP,,,120,120,120
+health_facility,1008,Kowama (Perri) MCHP,,,120,120,120
+health_facility,1009,Ngajubaoma/Missibu MCHP,,,120,120,120
+health_facility,1010,Saama Perri MCHP,,,120,120,120
+health_facility,1011,Fairo CHC,,,121,121,121
+health_facility,1012,Fanima (Soro) CHP,,,121,121,121
+health_facility,1013,Futa Golawoma MCHP,,,121,121,121
+health_facility,1014,Gondama Massaquoi MCHP,,,121,121,121
+health_facility,1015,Jendema CHC,,,121,121,121
+health_facility,1016,Koijeh MCHP,,,121,121,121
+health_facility,1017,Malema 1 MCHP,,,121,121,121
+health_facility,1018,Malema 2 MCHP,,,121,121,121
+health_facility,1019,Navai MCHP,,,121,121,121
+health_facility,1020,Sengama Soro MCHP,,,121,121,121
+health_facility,1021,Sulima CHP,,,121,121,121
+health_facility,1022,Tindor MCHP,,,121,121,121
+health_facility,1023,Wai MCHP,,,121,121,121
+health_facility,1024,Bandajuma Sowa CHC,,,122,122,122
+health_facility,1025,Geoma Jarjoh CHP,,,122,122,122
+health_facility,1026,Lower Komende MCHP,,,122,122,122
+health_facility,1027,Upper Komende MCHP,,,122,122,122
+health_facility,1028,Vaawahun Sowa MCHP,,,122,122,122
+health_facility,1029,Bangorma MCHP,,,123,123,123
+health_facility,1030,Borma (Yakemu Kpukumu) MCHP,,,123,123,123
+health_facility,1031,Karlu CHC,,,123,123,123
+health_facility,1032,Kombeima MCHP,,,123,123,123
+health_facility,1033,Kombopi MCHP,,,123,123,123
+health_facility,1034,Messima MCHP,,,123,123,123
+health_facility,1035,Saama Sowunde MCHP,,,123,123,123
+health_facility,1036,Bumban CHP,,,124,124,124
+health_facility,1037,Bumbanday MCHP,,,124,124,124
+health_facility,1038,Kagbaneh CHC,,,124,124,124
+health_facility,1039,Kagbankona MCHP,,,124,124,124
+health_facility,1040,Kamabai CHC,,,124,124,124
+health_facility,1041,Kamasikie CHP,,,124,124,124
+health_facility,1042,Kamathudgu MCHP,,,124,124,124
+health_facility,1043,Kanikay MCHP,,,124,124,124
+health_facility,1044,Karina CHP,,,124,124,124
+health_facility,1045,Kayainkassa CHP,,,124,124,124
+health_facility,1046,Kayongoro CHP,,,124,124,124
+health_facility,1047,Manjoro MCHP,,,124,124,124
+health_facility,1048,Arab (Makeni) Clinic,,,125,125,125
+health_facility,1049,Maboleh CHP,,,125,125,125
+health_facility,1050,Maforay (Bombali Sebora) CHP,,,125,125,125
+health_facility,1051,Makama CHP,,,125,125,125
+health_facility,1052,Makump CHP,,,125,125,125
+health_facility,1053,Masory CHP,,,125,125,125
+health_facility,1054,Patebana CHC,,,125,125,125
+health_facility,1055,Robat CHP,,,125,125,125
+health_facility,1056,Manonkoh Clinic,,,126,126,126
+health_facility,1057,Rokonta CHC,,,126,126,126
+health_facility,1058,Kunsho CHP,,,127,127,127
+health_facility,1059,Panlap CHP,,,127,127,127
+health_facility,1060,Stocco CHP,,,127,127,127
+health_facility,1061,Yoni (Gbanti) CHP,,,127,127,127
+health_facility,1062,Gbendembu CHC,,,128,128,128
+health_facility,1063,Kortohun MCHP,,,128,128,128
+health_facility,1064,Madina Loko CHP,,,128,128,128
+health_facility,1065,Mamaka (Gbendembu) MCHP,,,128,128,128
+health_facility,1066,Mambala MCHP,,,128,128,128
+health_facility,1067,Kamaranka CHC,,,129,129,129
+health_facility,1068,Makaiba MCHP,,,129,129,129
+health_facility,1069,Royeama CHP,,,129,129,129
+health_facility,1070,Hunduwa MCHP,,,130,130,130
+health_facility,1071,Kagbere CHC,,,130,130,130
+health_facility,1072,Mambiama MCHP,,,130,130,130
+health_facility,1073,Fullah Town 1 (Makarie) CHP,,,131,131,131
+health_facility,1074,Kerefay Loko MCHP,,,131,131,131
+health_facility,1075,Kolisokoh CHP,,,131,131,131
+health_facility,1076,Mabayo MCHP,,,131,131,131
+health_facility,1077,Magbaikoli MCHP,,,131,131,131
+health_facility,1078,Magbenteh Hospital,,,131,131,131
+health_facility,1079,Makarie MCHP,,,131,131,131
+health_facility,1080,Mangay Loko MCHP,,,131,131,131
+health_facility,1081,Marie Stopes (Makarie) Clinic,,,131,131,131
+health_facility,1082,Masongbo (Makarie) CHC,,,131,131,131
+health_facility,1083,Mateneh MCHP,,,131,131,131
+health_facility,1084,Puntung MCHP,,,131,131,131
+health_facility,1085,Thonkoba CHP,,,131,131,131
+health_facility,1086,Yainkassa CHP,,,131,131,131
+health_facility,1087,Kiampkakolo MCHP,,,132,132,132
+health_facility,1088,Manewa MCHP,,,132,132,132
+health_facility,1089,Mara CHC,,,132,132,132
+health_facility,1090,Kalangba (Ngowahun) CHC,,,133,133,133
+health_facility,1091,Maharie CHP,,,133,133,133
+health_facility,1092,Makiteh (Ngowahun) MCHP,,,133,133,133
+health_facility,1093,Masongbo Loko CHP,,,133,133,133
+health_facility,1094,Tambiama CHP,,,133,133,133
+health_facility,1095,Kathanta Bana CHP,,,134,134,134
+health_facility,1096,Kathekeya Kaboli CHP,,,134,134,134
+health_facility,1097,Makeni Lol MCHP,,,134,134,134
+health_facility,1098,Makolor CHP,,,134,134,134
+health_facility,1099,Mapaki CHC,,,134,134,134
+health_facility,1100,Masabong Pil MCHP,,,134,134,134
+health_facility,1101,Masingbi Lol MCHP,,,134,134,134
+health_facility,1102,Binkolo CHC,,,135,135,135
+health_facility,1103,Kabombeh MCHP,,,135,135,135
+health_facility,1104,Kabonka MCHP,,,135,135,135
+health_facility,1105,Kagbo MCHP,,,135,135,135
+health_facility,1106,Kapethe MCHP,,,135,135,135
+health_facility,1107,Kateneh MCHP,,,135,135,135
+health_facility,1108,Kayasie CHP,,,135,135,135
+health_facility,1109,Mabonkani MCHP,,,135,135,135
+health_facility,1110,Maselleh MCHP,,,135,135,135
+health_facility,1111,Masongbo Limba MCHP,,,135,135,135
+health_facility,1112,Bassaia MCHP,,,136,136,136
+health_facility,1113,Bumbuna CHC,,,136,136,136
+health_facility,1114,Kemedugu MCHP,,,136,136,136
+health_facility,1115,New Ferengbeya CHP,,,136,136,136
+health_facility,1116,Lion Heart Hospital,,,137,137,137
+health_facility,1117,Mafay MCHP,,,137,137,137
+health_facility,1118,Manowo CHC,,,137,137,137
+health_facility,1119,Yeben MCHP,,,137,137,137
+health_facility,1120,Yele CHC,,,137,137,137
+health_facility,1121,Makonkorie CHP,,,138,138,138
+health_facility,1122,Mayepoh CHP,,,138,138,138
+health_facility,1123,Petifu Mayepoh MCHP,,,138,138,138
+health_facility,1124,Mabankra MCHP,,,139,139,139
+health_facility,1125,Mabarr Polie MCHP,,,139,139,139
+health_facility,1126,Maraka MCHP,,,139,139,139
+health_facility,1127,Mathamp MCHP,,,139,139,139
+health_facility,1128,Mansumana CHP,,,140,140,140
+health_facility,1129,Warrima (Gbonkolenken) MCHP,,,140,140,140
+health_facility,1130,Kamarugu MCHP,,,141,141,141
+health_facility,1131,Masumbrie CHC,,,141,141,141
+health_facility,1132,Kamasaypana MCHP,,,142,142,142
+health_facility,1133,Kathombo MCHP,,,142,142,142
+health_facility,1134,Komrabai Station MCHP,,,143,143,143
+health_facility,1135,Mabai (Kholifa Mabang) MCHP,,,143,143,143
+health_facility,1136,Mabang (Kholifa Mabang) CHC,,,143,143,143
+health_facility,1137,Mamanso Kafla MCHP,,,143,143,143
+health_facility,1138,Marunia MCHP,,,143,143,143
+health_facility,1139,Mathinkalol MCHP,,,143,143,143
+health_facility,1140,Mabom CHC,,,144,144,144
+health_facility,1141,Maborie MCHP,,,144,144,144
+health_facility,1142,Magbass CHP,,,144,144,144
+health_facility,1143,Mamuntha MCHP,,,144,144,144
+health_facility,1144,Masagbill MCHP,,,144,144,144
+health_facility,1145,Masoko MCHP,,,144,144,144
+health_facility,1146,Mayossoh MCHP,,,144,144,144
+health_facility,1147,Family (Magburaka) Clinic,,,145,145,145
+health_facility,1148,Mabai (Kholifa Rowalla) MCHP,,,145,145,145
+health_facility,1149,Magburaka Government Hospital,,,145,145,145
+health_facility,1150,Magburaka Under Fives Clinic,,,145,145,145
+health_facility,1151,Malone MCHP,,,145,145,145
+health_facility,1152,Masanga Leprosy Hospital,,,145,145,145
+health_facility,1153,Masanga MCHP,,,145,145,145
+health_facility,1154,Makali CHC,,,146,146,146
+health_facility,1155,Makoni Line MCHP,,,146,146,146
+health_facility,1156,Mapamurie MCHP,,,146,146,146
+health_facility,1157,Massaba MCHP,,,146,146,146
+health_facility,1158,Wonkibor MCHP,,,146,146,146
+health_facility,1159,Fothaneh Bana MCHP,,,147,147,147
+health_facility,1160,Mafulka MCHP,,,147,147,147
+health_facility,1161,Magbanabom MCHP,,,147,147,147
+health_facility,1162,Magbanto Bana MCHP,,,147,147,147
+health_facility,1163,Mamanso Sanka CHP,,,147,147,147
+health_facility,1164,Petifu Mandugu MCHP,,,147,147,147
+health_facility,1165,Fothaneh Junction MCHP,,,148,148,148
+health_facility,1166,Mabineh MCHP,,,148,148,148
+health_facility,1167,Maconteh Tama MCHP,,,148,148,148
+health_facility,1168,Masiaka (Kunike Sanda) MCHP,,,148,148,148
+health_facility,1169,Masingbi CHC,,,148,148,148
+health_facility,1170,Matholey MCHP,,,148,148,148
+health_facility,1171,Petifuline CHP,,,148,148,148
+health_facility,1172,Makoba Bana MCHP,,,149,149,149
+health_facility,1173,Robina CHP,,,149,149,149
+health_facility,1174,Rochen Malal CHP,,,149,149,149
+health_facility,1175,Bendugu CHC,,,150,150,150
+health_facility,1176,Dankawalia CHP,,,150,150,150
+health_facility,1177,Kholifaga MCHP,,,150,150,150
+health_facility,1178,Kunya CHP,,,150,150,150
+health_facility,1179,Nninkikoro MCHP,,,150,150,150
+health_facility,1180,Mabontor CHP,,,151,151,151
+health_facility,1181,Makonthanday MCHP,,,151,151,151
+health_facility,1182,Mayassoh MCHP,,,151,151,151
+health_facility,1183,Makelleh Tane MCHP,,,152,152,152
+health_facility,1184,Makona mchp,,,152,152,152
+health_facility,1185,makrugbeh chp,,,152,152,152
+health_facility,1186,Mananthelie mchp,,,152,152,152
+health_facility,1187,Mangaybana mchp,,,152,152,152
+health_facility,1188,Masankoro MCHP,,,152,152,152
+health_facility,1189,Mathonkara mchp,,,152,152,152
+health_facility,1190,Mathufulie MCHP,,,152,152,152
+health_facility,1191,Matotoka CHP,,,152,152,152
+health_facility,1192,Rosengbeh MCHP,,,152,152,152
+health_facility,1193,Bakeloko CHP,,,153,153,153
+health_facility,1194,Bath Bana MCHP,,,153,153,153
+health_facility,1195,Magbaesa MCHP,,,153,153,153
+health_facility,1196,Magbaft MCHP,,,153,153,153
+health_facility,1197,Magbassabana MCHP,,,153,153,153
+health_facility,1198,Makeni-Rokfullah MCHP,,,153,153,153
+health_facility,1199,Makundu MCHP,,,153,153,153
+health_facility,1200,Matawa MCHP,,,153,153,153
+health_facility,1201,Petifu Fulamasa CHP,,,153,153,153
+health_facility,1202,Robarie MCHP,,,153,153,153
+health_facility,1203,Ronietta MCHP,,,153,153,153
+health_facility,1204,Rorocks CHC,,,153,153,153
+health_facility,1205,Ahmadiyya Muslim (Yoni Mamala) Hospital,,,154,154,154
+health_facility,1206,Bonkababay CHP,,,154,154,154
+health_facility,1207,Foindu (Yoni Mamala) MCHP,,,154,154,154
+health_facility,1208,Hinistas CHC,,,154,154,154
+health_facility,1209,Kumrabai Yoni CHP,,,154,154,154
+health_facility,1210,Macrogba CHP,,,154,154,154
+health_facility,1211,Magboki Road Mile 91 CHP,,,154,154,154
+health_facility,1212,Magbosie MCHP,,,154,154,154
+health_facility,1213,Makelleh CHP,,,154,154,154
+health_facility,1214,Mamaka (Yoni Mamala) MCHP,,,154,154,154
+health_facility,1215,Mananie MCHP,,,154,154,154
+health_facility,1216,Masengbeh CHP,,,154,154,154
+health_facility,1217,Maseprr MCHP,,,154,154,154
+health_facility,1218,Mathoir CHC,,,154,154,154
+health_facility,1219,Mayorgbor MCHP,,,154,154,154
+health_facility,1220,Our Lady of Guadalupe Clinic,,,154,154,154
+health_facility,1221,Rochen Kamandao CHP,,,154,154,154
+health_facility,1222,Rokimbi MCHP,,,154,154,154
+health_facility,1223,United Methodist Church Yonibana CHC,,,154,154,154
+health_facility,1224,Yonibana MCHP,,,154,154,154
+health_facility,1225,Yonibana Sai Hospital,,,154,154,154
+health_facility,1226,Badala MCHP,,,155,155,155
+health_facility,1227,Dalakuru CHP,,,155,155,155
+health_facility,1228,Diang Kamaron MCHP,,,155,155,155
+health_facility,1229,Diang Sokurala MCHP,,,155,155,155
+health_facility,1230,Foria CHP,,,155,155,155
+health_facility,1231,Kania (Diang) CHP,,,155,155,155
+health_facility,1232,Kondembaia CHC,,,155,155,155
+health_facility,1233,Lengekoro CHP,,,155,155,155
+health_facility,1234,Solia MCHP,,,155,155,155
+health_facility,1235,Yara CHP,,,155,155,155
+health_facility,1236,Yiben MCHP,,,155,155,155
+health_facility,1237,Kasassie CHP,,,156,156,156
+health_facility,1238,Madina Gbonkorbor CHP,,,156,156,156
+health_facility,1239,Alkalia CHP,,,157,157,157
+health_facility,1240,Kumala CHP,,,157,157,157
+health_facility,1241,Mandia MCHP,,,158,158,158
+health_facility,1242,Thellia CHP,,,158,158,158
+health_facility,1243,Fadugu CHC,,,159,159,159
+health_facility,1244,Kagbasia MCHP,,,159,159,159
+health_facility,1245,Sawuria CHP,,,159,159,159
+health_facility,1246,Fankoya CHP,,,160,160,160
+health_facility,1247,Kandeya MCHP,,,160,160,160
+health_facility,1248,Kaya MCHP,,,160,160,160
+health_facility,1249,Krutor CHP,,,160,160,160
+health_facility,1250,Mangae MCHP,,,160,160,160
+health_facility,1251,Safinia MCHP,,,160,160,160
+health_facility,1252,Sumbaria CHP,,,160,160,160
+health_facility,1253,Yiffin CHC,,,160,160,160
+health_facility,1254,Bambukoro CHP,,,161,161,161
+health_facility,1255,Gbenikoro MCHP,,,161,161,161
+health_facility,1256,Koinadugu 2 CHC,,,161,161,161
+health_facility,1257,Kondeya (Sengbeh) MCHP,,,161,161,161
+health_facility,1258,Nasarah Clinic,,,161,161,161
+health_facility,1259,Red Cross (Sengbeh) Clinic,,,161,161,161
+health_facility,1260,Karasa MCHP,,,162,162,162
+health_facility,1261,Kasanikoro CHP,,,162,162,162
+health_facility,1262,Bafodia CHC,,,163,163,163
+health_facility,1263,Kadanso MCHP,,,163,163,163
+health_facility,1264,Kakoya MCHP,,,163,163,163
+health_facility,1265,Sakuta MCHP,,,163,163,163
+health_facility,1266,Samamaia MCHP,,,163,163,163
+health_facility,1267,Arab (Wara Wara Yagala) Clinic,,,164,164,164
+health_facility,1268,Heremakono CHP,,,164,164,164
+health_facility,1269,Kabala Government Hospital,,,164,164,164
+health_facility,1270,Kabala Static CHC,,,164,164,164
+health_facility,1271,Konkoba MCHP,,,164,164,164
+health_facility,1272,Mamudia Koro MCHP,,,164,164,164
+health_facility,1273,Marie Stopes (Kabala) Clinic,,,164,164,164
+health_facility,1274,Senekedugu CHP,,,164,164,164
+health_facility,1275,Wara Wara Faith Clinic,,,164,164,164
+health_facility,1276,Yataya CHP,,,164,164,164
+health_facility,1277,Banadakafaia CHP,,,165,165,165
+health_facility,1278,Bandakoro MCHP,,,165,165,165
+health_facility,1279,Firawa CHP,,,165,165,165
+health_facility,1280,Konombaia CHP,,,165,165,165
+health_facility,1281,Deldu Kamaron MCHP,,,166,166,166
+health_facility,1282,Mansadu CHC,,,166,166,166
+health_facility,1283,Mongo Kamaron CHP,,,166,166,166
+health_facility,1284,Tambalia Balia MCHP,,,166,166,166
+health_facility,1285,Fullamansa MCHP,,,167,167,167
+health_facility,1286,Gbindi CHP,,,167,167,167
+health_facility,1287,Manna MCHP,,,167,167,167
+health_facility,1288,Sinkunia CHC,,,167,167,167
+health_facility,1289,Dogoloya CHP,,,168,168,168
+health_facility,1290,Koromasilia MCHP,,,168,168,168
+health_facility,1291,Musaia (Dembelia) CHC,,,168,168,168
+health_facility,1292,Gbentu CHC,,,169,169,169
+health_facility,1293,Hamadalia MCHP,,,169,169,169
+health_facility,1294,Kamba Mamudia CHP,,,169,169,169
+health_facility,1295,Ganya CHP,,,170,170,170
+health_facility,1296,Kaliyereh MCHP,,,170,170,170
+health_facility,1297,Dankawalie CHC,,,171,171,171
+health_facility,1298,Kamadu Badala MCHP,,,171,171,171
+health_facility,1299,Kamadu Sokuralla CHP,,,171,171,171
+health_facility,1300,Yiraia CHP,,,171,171,171
+health_facility,1301,Bandapirie CHP,,,172,172,172
+health_facility,1302,Durukoro MCHP,,,172,172,172
+health_facility,1303,Kulanko MCHP,,,172,172,172
+health_facility,1304,Kulia CHP,,,172,172,172
+health_facility,1305,Yarawadu MCHP,,,172,172,172
+health_facility,1306,Kombili CHP,,,173,173,173
+health_facility,1307,Mongo Bendugu CHC,,,173,173,173
+health_facility,1308,Mongo Karifaia MCHP,,,173,173,173
+health_facility,1309,Seria CHP,,,173,173,173
+health_facility,1310,Walia MCHP,,,173,173,173
+health_facility,1311,Gberefeh MCHP,,,174,174,174
+health_facility,1312,Serekolia CHC,,,174,174,174
+health_facility,1313,Tubah MCHP,,,174,174,174
+health_facility,1314,Kurubonla CHC,,,175,175,175
+health_facility,1315,Mansofinia CHP,,,175,175,175
+health_facility,1316,Porpon MCHP,,,175,175,175
+health_facility,1317,Bumbukoro CHC,,,176,176,176
+health_facility,1318,Masonia MCHP,,,176,176,176
+health_facility,1319,Falaba CHC,,,177,177,177
+health_facility,1320,Gberia Timbakor CHP,,,177,177,177
+health_facility,1321,Koindu Kura CHP,,,177,177,177
+health_facility,1322,Sonkoya MCHP,,,177,177,177
+health_facility,1323,Gbolon MCHP,,,178,178,178
+health_facility,1324,Kanku Bramaia MCHP,,,178,178,178
+health_facility,1325,Kukuna CHC,,,178,178,178
+health_facility,1326,Shekaia MCHP,,,178,178,178
+health_facility,1327,Fodaya MCHP,,,179,179,179
+health_facility,1328,Mafaray CHP,,,179,179,179
+health_facility,1329,Gbalamuya CHC,,,180,180,180
+health_facility,1330,Madamaya Good Grace Clinic,,,180,180,180
+health_facility,1331,Magbengbeh MCHP,,,180,180,180
+health_facility,1332,Tawuya MCHP,,,180,180,180
+health_facility,1333,Worreh MCHP,,,180,180,180
+health_facility,1334,Barakuya MCHP,,,181,181,181
+health_facility,1335,Konta (Bramaia) CHP,,,181,181,181
+health_facility,1336,Ahmadiyya Mission Clinic,,,182,182,182
+health_facility,1337,Arab (Magbema) Clinic,,,182,182,182
+health_facility,1338,Barmoi Luma CHP,,,182,182,182
+health_facility,1339,Dibia CHP,,,182,182,182
+health_facility,1340,Gbonkomaria CHP,,,182,182,182
+health_facility,1341,Kamba MCHP,,,182,182,182
+health_facility,1342,Kambia Government Hospital,,,182,182,182
+health_facility,1343,Magbema Under Fives Clinic,,,182,182,182
+health_facility,1344,Magbethy MCHP,,,182,182,182
+health_facility,1345,Mathuraneh MCHP,,,182,182,182
+health_facility,1346,Menicurve MCHP,,,182,182,182
+health_facility,1347,Mile 18 MCHP,,,182,182,182
+health_facility,1348,Modia MCHP,,,182,182,182
+health_facility,1349,Red Cross (Magbema) CHP,,,182,182,182
+health_facility,1350,Rokupr CHC,,,182,182,182
+health_facility,1351,Senthai MCHP,,,182,182,182
+health_facility,1352,Wullah Thenkle MCHP,,,182,182,182
+health_facility,1353,Kalainkay MCHP,,,183,183,183
+health_facility,1354,Macoth MCHP,,,183,183,183
+health_facility,1355,Mambolo (Kambia) CHC,,,183,183,183
+health_facility,1356,Mayakie MCHP,,,183,183,183
+health_facility,1357,Rokel (Mambolo) MCHP,,,183,183,183
+health_facility,1358,Romando MCHP,,,183,183,183
+health_facility,1359,Rotain Bana CHP,,,183,183,183
+health_facility,1360,Tombo Wallah CHP,,,183,183,183
+health_facility,1361,Banka Makuloh MCHP,,,184,184,184
+health_facility,1362,Kania CHC,,,184,184,184
+health_facility,1363,Kawula CHC,,,184,184,184
+health_facility,1364,Barmoi Munu CHC,,,185,185,185
+health_facility,1365,Gbalan Thallan MCHP,,,185,185,185
+health_facility,1366,Bapuya CHP,,,186,186,186
+health_facility,1367,Kangbor MCHP,,,186,186,186
+health_facility,1368,Kassirie CHC,,,186,186,186
+health_facility,1369,Kortimoh MCHP,,,186,186,186
+health_facility,1370,Koya (Samu) MCHP,,,186,186,186
+health_facility,1371,Kychom CHC,,,186,186,186
+health_facility,1372,Mafufuneh CHC,,,186,186,186
+health_facility,1373,Mange Bissan MCHP,,,186,186,186
+health_facility,1374,Mapotolon CHC,,,186,186,186
+health_facility,1375,Moribaya MCHP,,,186,186,186
+health_facility,1376,Rokai MCHP,,,186,186,186
+health_facility,1377,Rosinor CHP,,,186,186,186
+health_facility,1378,Soriebolomia MCHP,,,186,186,186
+health_facility,1379,Yelieboya CHP,,,186,186,186
+health_facility,1380,Bubuya MCHP,,,187,187,187
+health_facility,1381,Kamagbewu MCHP,,,187,187,187
+health_facility,1382,Kamassasa CHC,,,187,187,187
+health_facility,1383,Kamawala MCHP,,,187,187,187
+health_facility,1384,Kasoria CHP,,,187,187,187
+health_facility,1385,Katherie MCHP,,,187,187,187
+health_facility,1386,Layia Gboray CHP,,,187,187,187
+health_facility,1387,Madina (Tonko Limba) CHC,,,187,187,187
+health_facility,1388,Madina Wesleyan Clinic,,,187,187,187
+health_facility,1389,Masaralie MCHP,,,187,187,187
+health_facility,1390,Masselleh CHP,,,187,187,187
+health_facility,1391,Masunthun CHP,,,187,187,187
+health_facility,1392,Mile 14 CHP,,,187,187,187
+health_facility,1393,Numea CHP,,,187,187,187
+health_facility,1394,Samaia MCHP,,,187,187,187
+health_facility,1395,Sellah Kafta MCHP,,,187,187,187
+health_facility,1396,Timbo MCHP,,,187,187,187
+health_facility,1397,Yebaya MCHP,,,187,187,187
+health_facility,1398,Kamasondo CHC,,,188,188,188
+health_facility,1399,Manumtheneh MCHP,,,188,188,188
+health_facility,1400,Masamboi MCHP,,,188,188,188
+health_facility,1401,Rosint Buya MCHP,,,188,188,188
+health_facility,1402,Gbinty CHC,,,189,189,189
+health_facility,1403,Gbombana MCHP,,,189,189,189
+health_facility,1404,Magborognoh MCHP,,,189,189,189
+health_facility,1405,Rogballan (Dibia) CHP,,,189,189,189
+health_facility,1406,Rokutolon MCHP,,,189,189,189
+health_facility,1407,Borongoh Makarankay MCHP,,,190,190,190
+health_facility,1408,Gbainkfay MCHP,,,190,190,190
+health_facility,1409,Gbanti CHP,,,190,190,190
+health_facility,1410,Gbinti Maria MCHP,,,190,190,190
+health_facility,1411,Gbonkobana MCHP,,,190,190,190
+health_facility,1412,Kambia CHP,,,190,190,190
+health_facility,1413,BatKanu CHC,,,191,191,191
+health_facility,1414,Kiamunday MCHP,,,191,191,191
+health_facility,1415,Magbaingba MCHP,,,191,191,191
+health_facility,1416,Matoto MCHP,,,191,191,191
+health_facility,1417,Gbonkonka MCHP,,,192,192,192
+health_facility,1418,Rochain Loko CHP,,,192,192,192
+health_facility,1419,Foredugu MCHP,,,193,193,193
+health_facility,1420,Gbomsamba MCHP,,,193,193,193
+health_facility,1421,Mabureh Mende MCHP,,,193,193,193
+health_facility,1422,Rokamba MCHP,,,193,193,193
+health_facility,1423,Worreh Bana MCHP,,,193,193,193
+health_facility,1424,Maron CHP,,,194,194,194
+health_facility,1425,Kamalo CHC,,,195,195,195
+health_facility,1426,Laiya MCHP,,,195,195,195
+health_facility,1427,Laminaya CHP,,,195,195,195
+health_facility,1428,Madina Fullah MCHP,,,195,195,195
+health_facility,1429,Maharibo CHP,,,195,195,195
+health_facility,1430,Marcorba Loko MCHP,,,195,195,195
+health_facility,1431,Mayolla CHP,,,195,195,195
+health_facility,1432,Rochain Salcost CHP,,,195,195,195
+health_facility,1433,Rothatha MCHP,,,195,195,195
+health_facility,1434,Gbogbodo MCHP,,,196,196,196
+health_facility,1435,Kantia MCHP,,,196,196,196
+health_facility,1436,Komneh CHP,,,196,196,196
+health_facility,1437,Magbolonthor MCHP,,,196,196,196
+health_facility,1438,Sendugu CHC,,,196,196,196
+health_facility,1439,Mabunduka CHC,,,197,197,197
+health_facility,1440,Malontho MCHP,,,197,197,197
+health_facility,1441,Manack MCHP,,,197,197,197
+health_facility,1442,Mateboi CHC,,,197,197,197
+health_facility,1443,Rogbin MCHP,,,197,197,197
+health_facility,1444,Rokulan CHC,,,197,197,197
+health_facility,1445,Royanka Lol CHP,,,197,197,197
+health_facility,1446,Kabba Ferry CHP,,,198,198,198
+health_facility,1447,Kagboray MCHP,,,198,198,198
+health_facility,1448,Kamabaio MCHP,,,198,198,198
+health_facility,1449,Kamakwie CHP,,,198,198,198
+health_facility,1450,Kamakwie Wesleyan Hospital,,,198,198,198
+health_facility,1451,Kamawornie MCHP,,,198,198,198
+health_facility,1452,Kaponkie MCHP,,,198,198,198
+health_facility,1453,Kathanta Yimbor CHC,,,198,198,198
+health_facility,1454,Masankorie CHP,,,198,198,198
+health_facility,1455,Komoya CHP,,,199,199,199
+health_facility,1456,Samaya MCHP,,,199,199,199
+health_facility,1457,Dumbaya CHP,,,200,200,200
+health_facility,1458,Fintonia CHC,,,200,200,200
+health_facility,1459,Sanya MCHP,,,200,200,200
+health_facility,1460,Arab (Bake-Loko) Clinic,,,201,201,201
+health_facility,1461,Ernest Bai Koroma University (EBK-PL) Clinic,,,201,201,201
+health_facility,1462,Gbonkoh Kereneh MCHP,,,201,201,201
+health_facility,1463,Kamaranka Under Fives CHP,,,201,201,201
+health_facility,1464,Malal CHP,,,201,201,201
+health_facility,1465,Sierra Leone Church Maforki CHP,,,201,201,201
+health_facility,1466,Barmoi CHP,,,202,202,202
+health_facility,1467,Bureh MCHP,,,202,202,202
+health_facility,1468,Kalangba (Bureh) MCHP,,,202,202,202
+health_facility,1469,Mange CHC,,,202,202,202
+health_facility,1470,Masseseh MCHP,,,202,202,202
+health_facility,1471,Al-Amin Clinic,,,203,203,203
+health_facility,1472,Almamy Amara Clinic,,,203,203,203
+health_facility,1473,Arab (Lungi) Clinic,,,203,203,203
+health_facility,1474,Bai Bureh Memorial Hospital,,,203,203,203
+health_facility,1475,Conacry Dee CHC,,,203,203,203
+health_facility,1476,Direct Aid Orphanage (Port Loko) Clinic,,,203,203,203
+health_facility,1477,Evans CHC,,,203,203,203
+health_facility,1478,Gbaneh Bana CHP,,,203,203,203
+health_facility,1479,Gbaneh Lol MCHP,,,203,203,203
+health_facility,1480,Grace Community Clinic,,,203,203,203
+health_facility,1481,Kasongha CHP,,,203,203,203
+health_facility,1482,Long Life Centre Clinic,,,203,203,203
+health_facility,1483,Lungi Airport Centre Clinic,,,203,203,203
+health_facility,1484,Lungi Government Hospital,,,203,203,203
+health_facility,1485,Lungi Under Fives CHP,,,203,203,203
+health_facility,1486,Mahera CHC,,,203,203,203
+health_facility,1487,Mamankie MCHP,,,203,203,203
+health_facility,1488,Mkamsondo MCHP,,,203,203,203
+health_facility,1489,Modia CHC,,,203,203,203
+health_facility,1490,St John of God CHP,,,203,203,203
+health_facility,1491,Tagrin CHC,,,203,203,203
+health_facility,1492,Yongoro CHC,,,203,203,203
+health_facility,1493,Benkia MCHP,,,204,204,204
+health_facility,1494,Bundulai MCHP,,,204,204,204
+health_facility,1495,Katongha MCHP,,,204,204,204
+health_facility,1496,Malap CHP,,,204,204,204
+health_facility,1497,Mana 2 CHP,,,204,204,204
+health_facility,1498,Pepel CHC,,,204,204,204
+health_facility,1499,Kagbantama CHP,,,205,205,205
+health_facility,1500,Kawengha MCHP,,,205,205,205
+health_facility,1501,Rogballan (Kasseh) MCHP,,,205,205,205
+health_facility,1502,Romeni MCHP,,,205,205,205
+health_facility,1503,Kissy Koya MCHP,,,206,206,206
+health_facility,1504,Komrabai Ngolla CHP,,,206,206,206
+health_facility,1505,Kurankoh CHP,,,206,206,206
+health_facility,1506,M'baimba Adama MCHP,,,206,206,206
+health_facility,1507,Mabora MCHP,,,206,206,206
+health_facility,1508,Magbeni MCHP,,,206,206,206
+health_facility,1509,Makalie MCHP,,,206,206,206
+health_facility,1510,Makarankay CHP,,,206,206,206
+health_facility,1511,Makiteh (Koya) CHP,,,206,206,206
+health_facility,1512,Malenki MCHP,,,206,206,206
+health_facility,1513,Masiaka (Koya) CHC,,,206,206,206
+health_facility,1514,Masumana CHP,,,206,206,206
+health_facility,1515,Mawoma MCHP,,,206,206,206
+health_facility,1516,Mile 38 CHC,,,206,206,206
+health_facility,1517,Rofoindu CHP,,,206,206,206
+health_facility,1518,Rokon MCHP,,,206,206,206
+health_facility,1519,Sumbuya (Koya) CHP,,,206,206,206
+health_facility,1520,Warima (Koya) MCHP,,,206,206,206
+health_facility,1521,Babara CHC,,,207,207,207
+health_facility,1522,Bailor CHP,,,207,207,207
+health_facility,1523,Gbainty Wallah CHP,,,207,207,207
+health_facility,1524,Kalangba (Lokomasama) MCHP,,,207,207,207
+health_facility,1525,Kargbulor CHP,,,207,207,207
+health_facility,1526,Konta Wallah CHC,,,207,207,207
+health_facility,1527,Love Bridge Hospital,,,207,207,207
+health_facility,1528,Mapillah MCHP,,,207,207,207
+health_facility,1529,Masulamany CHP,,,207,207,207
+health_facility,1530,Mathen MCHP,,,207,207,207
+health_facility,1531,Menika CHP,,,207,207,207
+health_facility,1532,Musaia (Lokomasama) CHP,,,207,207,207
+health_facility,1533,Petifu Junction CHC,,,207,207,207
+health_facility,1534,Katick CHP,,,208,208,208
+health_facility,1535,Konta Line CHC,,,208,208,208
+health_facility,1536,Mamaligie MCHP,,,208,208,208
+health_facility,1537,Masimera CHC,,,208,208,208
+health_facility,1538,Mathineh CHP,,,208,208,208
+health_facility,1539,Mayola Lal Ratun MCHP,,,208,208,208
+health_facility,1540,Mayombo MCHP,,,208,208,208
+health_facility,1541,Nonkoba CHP,,,208,208,208
+health_facility,1542,Rokassa CHC,,,208,208,208
+health_facility,1543,Rokel (Masimera) MCHP,,,208,208,208
+health_facility,1544,Rotheren MCHP,,,208,208,208
+health_facility,1545,Rothuma MCHP,,,208,208,208
+health_facility,1546,Royeiben CHP,,,208,208,208
+health_facility,1547,Mabain MCHP,,,209,209,209
+health_facility,1548,Minthomore CHP,,,209,209,209
+health_facility,1549,Mabonie CHP,,,210,210,210
+health_facility,1550,Mafoimara CHP,,,210,210,210
+health_facility,1551,Maforay (Maforki) MCHP,,,210,210,210
+health_facility,1552,Magbengbenra MCHP,,,210,210,210
+health_facility,1553,Makaba MCHP,,,210,210,210
+health_facility,1554,Mapawn MCHP,,,210,210,210
+health_facility,1555,Maronko MCHP,,,210,210,210
+health_facility,1556,New Maforki CHP,,,210,210,210
+health_facility,1557,Petifu (Maforki) MCHP,,,210,210,210
+health_facility,1558,Rogbere Junction CHC,,,210,210,210
+health_facility,1559,Kambia Makama CHP,,,211,211,211
+health_facility,1560,Malekuray CHC,,,211,211,211
+health_facility,1561,Arab (Lunsar) Clinic,,,212,212,212
+health_facility,1562,Lunsar CHC,,,212,212,212
+health_facility,1563,Magbele MCHP,,,212,212,212
+health_facility,1564,Magbill CHP,,,212,212,212
+health_facility,1565,Makabo MCHP,,,212,212,212
+health_facility,1566,Mamusa MCHP,,,212,212,212
+health_facility,1567,Mange Acre CHC,,,212,212,212
+health_facility,1568,Pincr's Clinic,,,212,212,212
+health_facility,1569,Poor Man's Clinic,,,212,212,212
+health_facility,1570,Rolembray MCHP,,,212,212,212
+health_facility,1571,St John of God Hospital,,,212,212,212
+health_facility,1572,St John of God Under Fives CHP,,,212,212,212
+health_facility,1573,Asheea MCHP,,,213,213,213
+health_facility,1574,Robaka MCHP,,,213,213,213
+health_facility,1575,Rogbaneh MCHP,,,213,213,213
+health_facility,1576,Crossing MCHP,,,214,214,214
+health_facility,1577,Don Bosco Fambul Clinic,,,214,214,214
+health_facility,1578,Fogbo (Koya Rural) MCHP,,,214,214,214
+health_facility,1579,Madaka MCHP,,,214,214,214
+health_facility,1580,Makobeh MCHP,,,214,214,214
+health_facility,1581,Makonkondey MCHP,,,214,214,214
+health_facility,1582,Malambay CHP,,,214,214,214
+health_facility,1583,Masorie CHP,,,214,214,214
+health_facility,1584,Newton CHC,,,214,214,214
+health_facility,1585,Songo CHC,,,214,214,214
+health_facility,1586,Charlotte CHP,,,215,215,215
+health_facility,1587,Fourah Bay College CHC,,,215,215,215
+health_facility,1588,Gloucester CHP,,,215,215,215
+health_facility,1589,Leicester (Mountain Rural) CHP,,,215,215,215
+health_facility,1590,Regent (Mountain Rural) CHC,,,215,215,215
+health_facility,1591,Adra Hospital,,,216,216,216
+health_facility,1592,ADRA Mobile Clinic,,,216,216,216
+health_facility,1593,African Christian Fellowship (ACF) Clinic,,,216,216,216
+health_facility,1594,Afro Arab Clinic,,,216,216,216
+health_facility,1595,Arab (Waterloo) Clinic,,,216,216,216
+health_facility,1596,Benguema Grassfield MCHP,,,216,216,216
+health_facility,1597,Benguema Military (MI Room) Clinic,,,216,216,216
+health_facility,1598,Biola Wright Memorial Clinic,,,216,216,216
+health_facility,1599,Borah Maternity Clinic,,,216,216,216
+health_facility,1600,Brown Memorial Clinic,,,216,216,216
+health_facility,1601,Campbell Town CHP,,,216,216,216
+health_facility,1602,Cashew Farm MCHP,,,216,216,216
+health_facility,1603,Christ the King Clinic,,,216,216,216
+health_facility,1604,Deep Eye Water MCHP,,,216,216,216
+health_facility,1605,El-Shadai (Waterloo Rural) Clinic,,,216,216,216
+health_facility,1606,Evangelical College of Theology Clinic,,,216,216,216
+health_facility,1607,Freetown Teachers College Clinic,,,216,216,216
+health_facility,1608,Gift of Life Clinic,,,216,216,216
+health_facility,1609,Grafton CHC,,,216,216,216
+health_facility,1610,Hastings CHC,,,216,216,216
+health_facility,1611,Heart and Hands Care Clinic,,,216,216,216
+health_facility,1612,Jays Clinic,,,216,216,216
+health_facility,1613,John Thorpe MCHP,,,216,216,216
+health_facility,1614,Jui Police (MI Room) Clinic,,,216,216,216
+health_facility,1615,Kissy Town CHP,,,216,216,216
+health_facility,1616,Lumpa CHP,,,216,216,216
+health_facility,1617,Mabureh CHP,,,216,216,216
+health_facility,1618,MacDonald MCHP,,,216,216,216
+health_facility,1619,Maila Clinic,,,216,216,216
+health_facility,1620,Mapac Grafton Clinic,,,216,216,216
+health_facility,1621,Margaret and Johnny MCHP,,,216,216,216
+health_facility,1622,Mariama Hassan Hospital,,,216,216,216
+health_facility,1623,Matainkay and Masantigie MCHP,,,216,216,216
+health_facility,1624,MedZain MCHP,,,216,216,216
+health_facility,1625,Monsignor Daniel Sullivan Health Clinic,,,216,216,216
+health_facility,1626,New London MCHP,,,216,216,216
+health_facility,1627,Rogbangba MCHP,,,216,216,216
+health_facility,1628,Rokel (Waterloo Rural) CHP,,,216,216,216
+health_facility,1629,Rokel Arab (Waterloo) Clinic,,,216,216,216
+health_facility,1630,Salifu Kondeh Clinic,,,216,216,216
+health_facility,1631,Sierra Leone-China Teaching Hospital,,,216,216,216
+health_facility,1632,SWAKAB (Waterloo) Clinic,,,216,216,216
+health_facility,1633,TECT Jui CHP,,,216,216,216
+health_facility,1634,Waterloo CHC,,,216,216,216
+health_facility,1635,Waterloo People's Clinic,,,216,216,216
+health_facility,1636,Waterloo Rural Community Hospital,,,216,216,216
+health_facility,1637,White Stone MCHP,,,216,216,216
+health_facility,1638,Wind Addep Clinic,,,216,216,216
+health_facility,1639,Yam Farm CHP,,,216,216,216
+health_facility,1640,Adonkia CHP,,,217,217,217
+health_facility,1641,Banana Island MCHP,,,217,217,217
+health_facility,1642,Bethlehem Clinic,,,217,217,217
+health_facility,1643,Emergency (Goderich) Hospital,,,217,217,217
+health_facility,1644,Friends of God Clinic,,,217,217,217
+health_facility,1645,Goderich CHC,,,217,217,217
+health_facility,1646,Goderich Military (MI Room) Clinic,,,217,217,217
+health_facility,1647,Hamilton MCHP,,,217,217,217
+health_facility,1648,Kent CHP,,,217,217,217
+health_facility,1649,Lakka Government Hospital,,,217,217,217
+health_facility,1650,Lakka/Ogoo Farm CHC,,,217,217,217
+health_facility,1651,Lion for Lion Clinic,,,217,217,217
+health_facility,1652,Mambo CHP,,,217,217,217
+health_facility,1653,Metchen MCHP,,,217,217,217
+health_facility,1654,Milton Margai College Clinic,,,217,217,217
+health_facility,1655,Mutual Faith Clinic,,,217,217,217
+health_facility,1656,Sussex MCHP,,,217,217,217
+health_facility,1657,Tissana (York Rural) MCHP,,,217,217,217
+health_facility,1658,Tokeh MCHP,,,217,217,217
+health_facility,1659,Tombo (York Rural) CHC,,,217,217,217
+health_facility,1660,York CHC,,,217,217,217
+health_facility,1661,Abernita Hospital,,,218,218,218
+health_facility,1662,Blessed Mokaba Central CHP,,,218,218,218
+health_facility,1663,Bojojo Clinic,,,218,218,218
+health_facility,1664,Dr A Edwin Clinic,,,218,218,218
+health_facility,1665,Dr Abdulai Jalloh Clinic,,,218,218,218
+health_facility,1666,Dr Donald Harding Clinic,,,218,218,218
+health_facility,1667,Dr Dunstan Thomas Clinic,,,218,218,218
+health_facility,1668,Dr Finda Ngongor Clinic,,,218,218,218
+health_facility,1669,Dr Hassan Hariri Clinic,,,218,218,218
+health_facility,1670,Farm Care Clinic,,,218,218,218
+health_facility,1671,Macauley Street Government Hospital,,,218,218,218
+health_facility,1672,Marina House Birth Centre Clinic,,,218,218,218
+health_facility,1673,Parliament CHC,,,218,218,218
+health_facility,1674,Susan's Bay CHC,,,218,218,218
+health_facility,1675,Takish Clinic,,,218,218,218
+health_facility,1676,Women Health Centre,,,218,218,218
+health_facility,1677,Central 2 Medical Clinic,,,219,219,219
+health_facility,1678,Connaught Chest Clinic,,,219,219,219
+health_facility,1679,Connaught Hospital,,,219,219,219
+health_facility,1680,Dr ADO Wright Clinic,,,219,219,219
+health_facility,1681,Dr Asale Ganda Clinic,,,219,219,219
+health_facility,1682,Dr Effie Gooding Clinic,,,219,219,219
+health_facility,1683,Dr Frazer Whitfield Clinic,,,219,219,219
+health_facility,1684,Dr Isatou Hyde-Forster Clinic,,,219,219,219
+health_facility,1685,Dr J Russel Clinic,,,219,219,219
+health_facility,1686,Dr Kelvin Nicolls Clinic,,,219,219,219
+health_facility,1687,Dr Len-Gordon Harris Clinic,,,219,219,219
+health_facility,1688,Dr Patrick Coker Clinic,,,219,219,219
+health_facility,1689,Dr Shuman Medical Clinic and Laboratory,,,219,219,219
+health_facility,1690,Dr Taquis Clinic,,,219,219,219
+health_facility,1691,Dr Victor Willoughby Memorial Hospital,,,219,219,219
+health_facility,1692,Dr VR Willoughby Clinic,,,219,219,219
+health_facility,1693,Khadijah Clinic,,,219,219,219
+health_facility,1694,Kroo Bay CHC,,,219,219,219
+health_facility,1695,Liverpool Street (Jimmy Pratt) Clinic,,,219,219,219
+health_facility,1696,Mano River Countries Clinic,,,219,219,219
+health_facility,1697,NASSIT Mobile Clinic,,,219,219,219
+health_facility,1698,Prime Care Clinic,,,219,219,219
+health_facility,1699,Red Cross (Pultney Street) Clinic,,,219,219,219
+health_facility,1700,Shuman (Kroo Bay) Hospital,,,219,219,219
+health_facility,1701,Sing Song Hospital,,,219,219,219
+health_facility,1702,St Mary's Immaculate Hospital,,,219,219,219
+health_facility,1703,West End Clinic,,,219,219,219
+health_facility,1704,Arab (Ferry Junction) Clinic,,,220,220,220
+health_facility,1705,Fourah Bay Community MCHP,,,220,220,220
+health_facility,1706,Guoji (Cline Town) Clinic,,,220,220,220
+health_facility,1707,Happy Kid and Adolescence (East 1 Zone) Clinic,,,220,220,220
+health_facility,1708,Jenner Wright Clinic,,,220,220,220
+health_facility,1709,Kargbo Dockyard CHP,,,220,220,220
+health_facility,1710,Mabella CHC,,,220,220,220
+health_facility,1711,5orba Hospital,,,220,220,220
+health_facility,1712,Ola During Children's Hospital,,,220,220,220
+health_facility,1713,Ola During Under Fives CHP,,,220,220,220
+health_facility,1714,Princess Christian Maternity Hospital,,,220,220,220
+health_facility,1715,Principal Medical Office (Cline Town) CHP,,,220,220,220
+health_facility,1716,Ross Road CHC,,,220,220,220
+health_facility,1717,Sierra Leone Port Authority Clinic,,,220,220,220
+health_facility,1718,Thullahs Community Health Clinic,,,220,220,220
+health_facility,1719,Arab (Shad) Clinic,,,221,221,221
+health_facility,1720,Better Health Clinic,,,221,221,221
+health_facility,1721,Coconut Farm MCHP,,,221,221,221
+health_facility,1722,Dr Songo Williams Clinic,,,221,221,221
+health_facility,1723,Ginger Hall CHC,,,221,221,221
+health_facility,1724,Julipha Ashobie Corner MCHP,,,221,221,221
+health_facility,1725,New Harvest Clinic,,,221,221,221
+health_facility,1726,Quarry MCHP,,,221,221,221
+health_facility,1727,Ad-Bangs Quarry MCHP,,,222,222,222
+health_facility,1728,Ahmadiyya Muslim (Calaba Town) Hospital,,,222,222,222
+health_facility,1729,Al-Khatab CHC,,,222,222,222
+health_facility,1730,Allen Town CHP,,,222,222,222
+health_facility,1731,Approved School CHC,,,222,222,222
+health_facility,1732,Arab (Calaba Town) Clinic,,,222,222,222
+health_facility,1733,Arab (Shell) Clinic,,,222,222,222
+health_facility,1734,AWAKE CHP,,,222,222,222
+health_facility,1735,Blessed Mokaba East Clinic,,,222,222,222
+health_facility,1736,Calaba Town CHC,,,222,222,222
+health_facility,1737,Edemsil Hospital,,,222,222,222
+health_facility,1738,Egyptian (Calaba Town) Clinic,,,222,222,222
+health_facility,1739,Egyptian (Shell) Clinic,,,222,222,222
+health_facility,1740,Esther Faith Healing Clinic,,,222,222,222
+health_facility,1741,Evangelical Lutheran Clinic,,,222,222,222
+health_facility,1742,Faith Community Clinic,,,222,222,222
+health_facility,1743,Family Home Movement CHP,,,222,222,222
+health_facility,1744,Gbaneh Hospital,,,222,222,222
+health_facility,1745,Haja Neneh CHC,,,222,222,222
+health_facility,1746,Hamdalaye Mission Clinic,,,222,222,222
+health_facility,1747,Holy Mary Clinic,,,222,222,222
+health_facility,1748,Iscon CHP,,,222,222,222
+health_facility,1749,Kamba of Charity Clinic,,,222,222,222
+health_facility,1750,Kissy CHC,,,222,222,222
+health_facility,1751,Kissy Dockyard Missionary Clinic,,,222,222,222
+health_facility,1752,Kola Tree MCHP,,,222,222,222
+health_facility,1753,Konikay Clinic,,,222,222,222
+health_facility,1754,Koya Town CHC,,,222,222,222
+health_facility,1755,Kuntorloh CHP,,,222,222,222
+health_facility,1756,Life Care (Kissy) Hospital,,,222,222,222
+health_facility,1757,Looking Town MCHP,,,222,222,222
+health_facility,1758,Madina (East 3) CHC,,,222,222,222
+health_facility,1759,Marie Stopes (Kissy) Clinic,,,222,222,222
+health_facility,1760,5emi MCHP,,,222,222,222
+health_facility,1761,Moyiba CHC,,,222,222,222
+health_facility,1762,Orugu MCHP,,,222,222,222
+health_facility,1763,Philip Street Clinic,,,222,222,222
+health_facility,1764,Rokupa Government Hospital,,,222,222,222
+health_facility,1765,Shuman (Kissy) Hospital,,,222,222,222
+health_facility,1766,Sierra Leone Psychiatric Hospital,,,222,222,222
+health_facility,1767,SLIMS Clinic,,,222,222,222
+health_facility,1768,St Joseph's CHC,,,222,222,222
+health_facility,1769,St Luke's Wellington Clinic,,,222,222,222
+health_facility,1770,Tasley Global Clinic,,,222,222,222
+health_facility,1771,Tassoh MCHP,,,222,222,222
+health_facility,1772,Thunder Hill MCHP,,,222,222,222
+health_facility,1773,United Methodist Church PLHA Kissy Clinic,,,222,222,222
+health_facility,1774,United Methodist Church Urban Centre Hospital,,,222,222,222
+health_facility,1775,Up-Wata CHP,,,222,222,222
+health_facility,1776,UPAL MCHP,,,222,222,222
+health_facility,1777,Wellington CHC,,,222,222,222
+health_facility,1778,Wesleyan Health Clinic,,,222,222,222
+health_facility,1779,Affordable Health Clinic,,,223,223,223
+health_facility,1780,Childrens Day Clinic,,,223,223,223
+health_facility,1781,Cupid Health Centre,,,223,223,223
+health_facility,1782,Dr Claudius Cole Clinic,,,223,223,223
+health_facility,1783,God Grace Clinic,,,223,223,223
+health_facility,1784,Kingtom Police Hospital,,,223,223,223
+health_facility,1785,Marie Stopes (Waterloo Street) Clinic,,,223,223,223
+health_facility,1786,Rejanic Clinic,,,223,223,223
+health_facility,1787,St Anthony's CHC,,,223,223,223
+health_facility,1788,Al-Farouk Clinic,,,224,224,224
+health_facility,1789,AMI Expeditionary Healthcare Clinic,,,224,224,224
+health_facility,1790,Arab (Dwarzak) Clinic,,,224,224,224
+health_facility,1791,Blue Shield Hospital,,,224,224,224
+health_facility,1792,Dr Daniel Bash Taqi Clinic,,,224,224,224
+health_facility,1793,EcoMed Medical Centre Clinic,,,224,224,224
+health_facility,1794,EPI Headquarter (New England) CHP,,,224,224,224
+health_facility,1795,George Brook CHC,,,224,224,224
+health_facility,1796,Grey Bush CHC,,,224,224,224
+health_facility,1797,Hope and New Life Clinic,,,224,224,224
+health_facility,1798,Kingharman Road Hospital,,,224,224,224
+health_facility,1799,Methodist Community Health Clinic,,,224,224,224
+health_facility,1800,Mubarak Clinic,,,224,224,224
+health_facility,1801,NACTIB New Life Hospital,,,224,224,224
+health_facility,1802,New England CHP,,,224,224,224
+health_facility,1803,Pademba Correctional Hospital,,,224,224,224
+health_facility,1804,PPASL Clinic,,,224,224,224
+health_facility,1805,Redeemer Health Clinic,,,224,224,224
+health_facility,1806,Rina Clinic,,,224,224,224
+health_facility,1807,St John Clinic and Nursing Home,,,224,224,224
+health_facility,1808,Treasure Health Hospital,,,224,224,224
+health_facility,1809,Aberdeen Women Centre Hospital,,,225,225,225
+health_facility,1810,Aids Health Foundation (AHF),,,225,225,225
+health_facility,1811,Al-Sheefa Arab Clinic,,,225,225,225
+health_facility,1812,Arab (Malama) Clinic,,,225,225,225
+health_facility,1813,Cheaper Land Clinic,,,225,225,225
+health_facility,1814,Choithrams Memorial Hospital,,,225,225,225
+health_facility,1815,Davidson Nicol Medical Centre Hospital,,,225,225,225
+health_facility,1816,Dr DJO Robin-Coker Clinic,,,225,225,225
+health_facility,1817,Family CHP,,,225,225,225
+health_facility,1818,Good Shepherd Hospital,,,225,225,225
+health_facility,1819,Healing Clinic,,,225,225,225
+health_facility,1820,Healthy Step Paediatric Clinic,,,225,225,225
+health_facility,1821,Hill Station CHP,,,225,225,225
+health_facility,1822,Iranian Red Crescent Clinic,,,225,225,225
+health_facility,1823,Juba Military (MI Room) CHP,,,225,225,225
+health_facility,1824,Life Care (Lumley) Hospital,,,225,225,225
+health_facility,1825,Lumley Government Hospital,,,225,225,225
+health_facility,1826,Lumley Under Fives CHP,,,225,225,225
+health_facility,1827,Malama MCHP,,,225,225,225
+health_facility,1828,Marie Stopes (Aberdeen Rd) Clinic,,,225,225,225
+health_facility,1829,Marie Stopes (Ahmed Drive) Clinic,,,225,225,225
+health_facility,1830,Marie Stopes (Ahmed Drive) EPI Clinic,,,225,225,225
+health_facility,1831,Mariposa Hospital,,,225,225,225
+health_facility,1832,Mercy Ships (Aberdeen Fistula Centre) Clinic,,,225,225,225
+health_facility,1833,Murray Town (MI Room) CHP,,,225,225,225
+health_facility,1834,Murray Town CHC,,,225,225,225
+health_facility,1835,PAYCY's Clinic,,,225,225,225
+health_facility,1836,Pentagon CHP,,,225,225,225
+health_facility,1837,Samaritan Hospital,,,225,225,225
+health_facility,1838,Satu's Clinic,,,225,225,225
+health_facility,1839,Scan Drive MCHP,,,225,225,225
+health_facility,1840,Sea Coach Aberdeen CHC,,,225,225,225
+health_facility,1841,Signal Hill MCHP,,,225,225,225
+health_facility,1842,Stella Maris Clinic,,,225,225,225
+health_facility,1843,Sunshine MCHP,,,225,225,225
+health_facility,1844,Thompson Bay MCHP,,,225,225,225
+health_facility,1845,UN Joint Medical Service Clinic,,,225,225,225
+health_facility,1846,Well Woman Clinic,,,225,225,225
+health_facility,1847,Wellness (West 3) Clinic,,,225,225,225
+health_facility,1848,Wilberforce 34 Military Hospital,,,225,225,225
+health_facility,1849,Wilberforce CHC,,,225,225,225
