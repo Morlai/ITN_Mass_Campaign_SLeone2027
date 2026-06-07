@@ -2,301 +2,732 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Household Registration</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+<title>Household Registration | ITN Campaign</title>
 
 <style>
-body{font-family:Arial;background:#f4f6f9;margin:0;}
-
-.header{padding:15px;font-weight:bold;font-size:20px;}
-
-.steps{position:relative;display:flex;justify-content:space-between;margin:20px;}
-
-.steps::before{
-content:"";
-position:absolute;
-top:15px;
-left:8%;
-right:8%;
-height:4px;
-background:#ccc;
-z-index:0;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.progress-bar{
-position:absolute;
-top:15px;
-left:8%;
-height:4px;
-background:#2c7be5;
-width:0%;
-transition:0.3s;
-z-index:0;
+body {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 12px 0 30px 0;
 }
 
-.step{text-align:center;width:25%;position:relative;z-index:1;}
-
-.circle{
-width:30px;height:30px;border-radius:50%;
-background:#ccc;color:#fff;line-height:30px;margin:auto;
+.registration-container {
+    max-width: 480px;
+    width: 100%;
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 28px 28px 24px 24px;
+    overflow: hidden;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
 }
 
-.step.active .circle{background:#2c7be5;}
-.step.active .label{font-weight:bold;color:#2c7be5;}
-
-.label{font-size:12px;margin-top:5px;}
-
-.section{display:none;background:#fff;margin:20px;padding:20px;border-radius:8px;}
-.section.active{display:block;}
-
-.row{display:flex;flex-wrap:wrap;justify-content:space-between;}
-.form-group{width:48%;margin-bottom:12px;}
-
-label{font-weight:bold;}
-input{width:100%;padding:8px;border:1px solid #ccc;border-radius:5px;}
-
-.buttons{display:flex;justify-content:space-between;margin-top:20px;}
-
-button{padding:10px 15px;border:none;border-radius:5px;cursor:pointer;}
-.next{background:#2c7be5;color:#fff;}
-.prev{background:#ccc;}
-
-.token-btn{
-background:linear-gradient(45deg,#ff9800,#ff5722);
-color:#fff;
-transition:0.3s;
-}
-.token-btn:hover{transform:scale(1.05);opacity:0.85;}
-
-.token-box{
-margin-top:15px;
-padding:12px;
-background:linear-gradient(45deg,#4caf50,#2e7d32);
-color:#fff;
-text-align:center;
-font-weight:bold;
-border-radius:8px;
-display:none;
+.header {
+    padding: 18px 20px;
+    font-weight: 700;
+    font-size: 1.35rem;
+    background: linear-gradient(135deg, #0b5ed7, #1e6f5c);
+    color: white;
+    letter-spacing: -0.3px;
 }
 
-.review-box{background:#f9fafc;padding:15px;border-radius:8px;}
-.review-title{font-weight:bold;margin-bottom:10px;}
-.edit-btn{margin-top:10px;padding:8px 15px;background:#ffc107;border-radius:5px;cursor:pointer;}
+.steps {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 24px 20px 16px 20px;
+}
 
-.success{text-align:center;color:green;margin-top:15px;}
+.steps::before {
+    content: "";
+    position: absolute;
+    top: 16px;
+    left: 10%;
+    right: 10%;
+    height: 4px;
+    background: #e2e8f0;
+    border-radius: 4px;
+    z-index: 0;
+}
+
+.progress-bar {
+    position: absolute;
+    top: 16px;
+    left: 10%;
+    height: 4px;
+    background: #2c7be5;
+    width: 0%;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+    z-index: 1;
+}
+
+.step {
+    text-align: center;
+    width: 25%;
+    position: relative;
+    z-index: 2;
+}
+
+.circle {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    color: white;
+    font-weight: bold;
+    font-size: 0.85rem;
+    line-height: 34px;
+    margin: 0 auto;
+    transition: all 0.2s;
+}
+
+.step.active .circle {
+    background: #2c7be5;
+    box-shadow: 0 2px 8px rgba(44,123,229,0.3);
+}
+
+.label {
+    font-size: 0.65rem;
+    margin-top: 6px;
+    color: #475569;
+    font-weight: 500;
+}
+
+.step.active .label {
+    color: #2c7be5;
+    font-weight: 700;
+}
+
+.section {
+    display: none;
+    background: #ffffff;
+    padding: 8px 20px 20px 20px;
+}
+
+.section.active {
+    display: block;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 4px;
+}
+
+@media (min-width: 420px) {
+    .form-group {
+        width: calc(50% - 6px);
+    }
+}
+
+label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #1e293b;
+    display: block;
+    margin-bottom: 4px;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 14px;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    background: #ffffff;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #2c7be5;
+    box-shadow: 0 0 0 3px rgba(44,123,229,0.1);
+}
+
+input[readonly] {
+    background: #f8fafc;
+    color: #334155;
+}
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 24px;
+    margin-bottom: 12px;
+}
+
+button {
+    padding: 12px 18px;
+    border: none;
+    border-radius: 40px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    flex: 1;
+}
+
+.next {
+    background: #2c7be5;
+    color: white;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.prev {
+    background: #e2e8f0;
+    color: #1e293b;
+}
+
+.prev:hover, .next:hover {
+    transform: translateY(-1px);
+    filter: brightness(0.96);
+}
+
+.token-btn {
+    background: linear-gradient(145deg, #ff9800, #f97316);
+    color: white;
+    border-radius: 40px;
+    width: 100%;
+    margin-top: 12px;
+    font-weight: 700;
+    padding: 12px;
+}
+
+.token-box {
+    margin-top: 16px;
+    padding: 14px;
+    background: linear-gradient(145deg, #10b981, #059669);
+    color: white;
+    text-align: center;
+    font-weight: 700;
+    border-radius: 24px;
+    font-size: 0.85rem;
+    word-break: break-all;
+    display: none;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.review-box {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 24px;
+    border: 1px solid #e2e8f0;
+}
+
+.review-title {
+    font-weight: 800;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #0f172a;
+}
+
+.review-box #review {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: #1e293b;
+}
+
+.edit-btn {
+    margin-top: 16px;
+    padding: 10px 16px;
+    background: #facc15;
+    border-radius: 40px;
+    text-align: center;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.2s;
+    font-size: 0.8rem;
+    display: inline-block;
+    width: auto;
+}
+
+.success {
+    text-align: center;
+    background: #dcfce7;
+    color: #15803d;
+    padding: 16px;
+    border-radius: 24px;
+    font-weight: 700;
+    margin-top: 16px;
+}
+
+#registerBtn {
+    background: #2c7be5;
+    margin-top: 8px;
+}
+
+@media (max-width: 400px) {
+    .steps {
+        margin: 20px 12px 12px 12px;
+    }
+    .section {
+        padding: 4px 16px 20px 16px;
+    }
+    .circle {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        font-size: 0.75rem;
+    }
+    .label {
+        font-size: 0.6rem;
+    }
+}
 </style>
 </head>
-
 <body>
-
+<div class="registration-container">
 <div class="header">📝 REGISTRATION</div>
 
 <div class="steps">
 <div class="progress-bar" id="progress"></div>
-
-<div class="step active"><div class="circle">1</div><div class="label">District Infor</div></div>
+<div class="step active"><div class="circle">1</div><div class="label">Demographic Info</div></div>
 <div class="step"><div class="circle">2</div><div class="label">Household Details</div></div>
 <div class="step"><div class="circle">3</div><div class="label">Review</div></div>
 <div class="step"><div class="circle">4</div><div class="label">Complete</div></div>
 </div>
 
-<!-- SECTION 1 -->
+<!-- SECTION 1 - DEMOGRAPHIC INFO with cascading dropdowns from CSV -->
 <div class="section active" id="sec1">
 <div class="row">
 <div class="form-group"><label>Date</label><input id="date" readonly></div>
-<div class="form-group"><label>Region</label><input id="region" placeholder="Enter region"></div>
-<div class="form-group"><label>District</label><input id="district" placeholder="Enter district"></div>
-<div class="form-group"><label>Chiefdom</label><input id="chiefdom" placeholder="Enter chiefdom"></div>
-<div class="form-group"><label>Community</label><input id="community" placeholder="Enter community"></div>
-<div class="form-group"><label>Nearest Health Facility</label><input id="facility" placeholder="Enter facility"></div>
-<div class="form-group"><label>Distribution Point</label><input id="dp" placeholder="Enter distribution point"></div>
+<div class="form-group"><label>Region</label><select id="region"><option value="">-- Select Region --</option></select></div>
+<div class="form-group"><label>District</label><select id="district" disabled><option value="">-- First select Region --</option></select></div>
+<div class="form-group"><label>Chiefdom</label><select id="chiefdom" disabled><option value="">-- First select District --</option></select></div>
+<div class="form-group"><label>Community</label><select id="community" disabled><option value="">-- First select Chiefdom --</option></select></div>
+<div class="form-group"><label>Distribution Point</label><select id="dp" disabled><option value="">-- First select Community --</option></select></div>
+<div class="form-group"><label>Nearest Health Facility</label><input id="facility" placeholder="Enter facility name"></div>
 </div>
-
 <div class="buttons">
 <div></div>
 <button class="next" onclick="next()">Next →</button>
 </div>
 </div>
 
-<!-- SECTION 2 -->
+<!-- SECTION 2 (unchanged) -->
 <div class="section" id="sec2">
 <div class="row">
-
 <div class="form-group"><label>Surname</label><input id="surname" placeholder="Enter surname"></div>
 <div class="form-group"><label>Middle Name</label><input id="mname" placeholder="Enter middle name"></div>
 <div class="form-group"><label>First Name</label><input id="fname" placeholder="Enter first name"></div>
-
-<div class="form-group">
-<label>Mobile Number (9 digits)</label>
-<input id="phone" placeholder="Enter 9 digit mobile number" maxlength="9">
+<div class="form-group"><label>Mobile Number (9 digits)</label><input id="phone" placeholder="Enter 9 digit mobile number" maxlength="9" inputmode="numeric"></div>
+<div class="form-group"><label>Number of people in the Household</label><input type="number" id="people" oninput="calcTotal()" min="0"></div>
+<div class="form-group"><label>Number of pregnant women</label><input type="number" id="pregnant" oninput="calcTotal()" min="0"></div>
+<div class="form-group"><label>Number of Under-Fives Children</label><input type="number" id="under5" oninput="calcTotal()" min="0"></div>
+<div class="form-group"><label>Total Family Members</label><input id="total" readonly></div>
+<div class="form-group"><label>Household Register Name</label><input id="registerName" placeholder="Enter household register name"></div>
+<div class="form-group"><label>GPS Coordinate (Auto Captured)</label><input id="gps" placeholder="Capturing location..." readonly></div>
 </div>
-
-<div class="form-group">
-<label>Number of people in the Household</label>
-<input type="number" id="people" oninput="calcTotal()">
-</div>
-
-<div class="form-group">
-<label>Number of pregnant women</label>
-<input type="number" id="pregnant" oninput="calcTotal()">
-</div>
-
-<div class="form-group">
-<label>Number of Under-Fives Children</label>
-<input type="number" id="under5" oninput="calcTotal()">
-</div>
-
-<div class="form-group">
-<label>Total Family Members</label>
-<input id="total" readonly>
-</div>
-
-<!-- ✅ NEW FIELD -->
-<div class="form-group">
-<label>Household Register Name</label>
-<input id="registerName" placeholder="Enter household register name">
-</div>
-
-<!-- ✅ GPS AUTO CAPTURE -->
-<div class="form-group">
-<label>GPS Coordinate (Auto Captured)</label>
-<input id="gps" placeholder="Capturing location..." readonly>
-</div>
-
-</div>
-
-<button class="token-btn" onclick="generateToken()">Generate Token</button>
-
+<button class="token-btn" onclick="generateToken()">🔐 Generate Token</button>
 <div class="token-box" id="tokenBox"></div>
-
 <div class="buttons">
 <button class="prev" onclick="prev()">← Previous</button>
 <button class="next" onclick="goReview()">Next →</button>
 </div>
 </div>
 
-<!-- SECTION 3 -->
+<!-- SECTION 3 (unchanged) -->
 <div class="section" id="sec3">
 <div class="review-box">
-<div class="review-title">Household Summary</div>
+<div class="review-title">🏠 Household Summary</div>
 <div id="review"></div>
-<div class="edit-btn" onclick="prev()">Edit Household Information</div>
+<div class="edit-btn" onclick="prev()">✏️ Edit Household Information</div>
 </div>
-
 <div class="buttons">
 <button class="prev" onclick="prev()">← Previous</button>
 <button class="next" onclick="next()">Next →</button>
 </div>
 </div>
 
-<!-- SECTION 4 -->
+<!-- SECTION 4 (unchanged) -->
 <div class="section" id="sec4">
-<h3>Complete</h3>
+<h3 style="font-size:1.2rem; margin-bottom:8px;">✅ Complete</h3>
 <div class="success" id="successMsg"></div>
-
 <div class="buttons">
 <button class="prev" onclick="prev()">← Previous</button>
 <button class="next" id="registerBtn" onclick="register()">Register Household</button>
 </div>
 </div>
+</div>
 
 <script>
+// ========================
+// 1) Load CSV and build cascading dropdowns
+// ========================
+let locationData = []; // array of objects: {Region, District, Chiefdom, Community, DistributionPoint}
 
-let step=1;
-let token="";
-let registered=false;
+async function loadLocationData() {
+    try {
+        const response = await fetch('TestDisData.csv');
+        if (!response.ok) throw new Error('CSV not found');
+        const csvText = await response.text();
+        const lines = csvText.trim().split(/\r?\n/);
+        if (lines.length < 2) throw new Error('Empty CSV');
+        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
+        const regionIdx = headers.indexOf('region');
+        const districtIdx = headers.indexOf('district');
+        const chiefdomIdx = headers.indexOf('chiefdom');
+        const communityIdx = headers.indexOf('community');
+        const dpIdx = headers.indexOf('distributionpoint');
+        if (regionIdx === -1 || districtIdx === -1 || chiefdomIdx === -1 || communityIdx === -1 || dpIdx === -1) {
+            throw new Error('CSV missing required columns');
+        }
+        for (let i = 1; i < lines.length; i++) {
+            const values = lines[i].split(',').map(v => v.trim());
+            if (values.length < 5) continue;
+            locationData.push({
+                Region: values[regionIdx],
+                District: values[districtIdx],
+                Chiefdom: values[chiefdomIdx],
+                Community: values[communityIdx],
+                DistributionPoint: values[dpIdx]
+            });
+        }
+        console.log(`Loaded ${locationData.length} location records`);
+        populateRegionDropdown();
+    } catch (err) {
+        console.warn('Error loading CSV, using fallback demo data:', err);
+        // Fallback demo data (for testing)
+        locationData = [
+            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Mambo", DistributionPoint: "PHU Mambo" },
+            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Rogbere", DistributionPoint: "Rogbere CHC" },
+            { Region: "North", District: "Kambia", Chiefdom: "Mambolo", Community: "Kychom", DistributionPoint: "Kychom HP" },
+            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "Bo Town", DistributionPoint: "Bo Govt Hospital" },
+            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "New Site", DistributionPoint: "New Site Clinic" },
+            { Region: "East", District: "Kenema", Chiefdom: "Dama", Community: "Kenyema", DistributionPoint: "Kenyema CHC" }
+        ];
+        populateRegionDropdown();
+        showToast('⚠️ Using demo location data (TestDisData.csv not found)', false);
+    }
+}
 
-date.value=new Date().toISOString().split('T')[0];
+function populateRegionDropdown() {
+    const regionSet = new Set(locationData.map(item => item.Region));
+    const regionSelect = document.getElementById('region');
+    regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
+    Array.from(regionSet).sort().forEach(region => {
+        const opt = document.createElement('option');
+        opt.value = region;
+        opt.textContent = region;
+        regionSelect.appendChild(opt);
+    });
+    regionSelect.disabled = false;
+}
 
-function updateUI(){
-document.querySelectorAll(".section").forEach((s,i)=>{
-s.classList.toggle("active",i===step-1);
+function getDistrictsForRegion(region) {
+    const districts = new Set();
+    locationData.forEach(item => {
+        if (item.Region === region) districts.add(item.District);
+    });
+    return Array.from(districts).sort();
+}
+
+function getChiefdomsForDistrict(region, district) {
+    const chiefdoms = new Set();
+    locationData.forEach(item => {
+        if (item.Region === region && item.District === district) chiefdoms.add(item.Chiefdom);
+    });
+    return Array.from(chiefdoms).sort();
+}
+
+function getCommunitiesForChiefdom(region, district, chiefdom) {
+    const communities = new Set();
+    locationData.forEach(item => {
+        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom) communities.add(item.Community);
+    });
+    return Array.from(communities).sort();
+}
+
+function getDistributionPointsForCommunity(region, district, chiefdom, community) {
+    const points = new Set();
+    locationData.forEach(item => {
+        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom && item.Community === community) {
+            points.add(item.DistributionPoint);
+        }
+    });
+    return Array.from(points).sort();
+}
+
+function updateDistrictDropdown() {
+    const region = document.getElementById('region').value;
+    const districtSelect = document.getElementById('district');
+    const chiefdomSelect = document.getElementById('chiefdom');
+    const communitySelect = document.getElementById('community');
+    const dpSelect = document.getElementById('dp');
+    if (!region) {
+        districtSelect.innerHTML = '<option value="">-- First select Region --</option>';
+        districtSelect.disabled = true;
+        chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
+        chiefdomSelect.disabled = true;
+        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
+        communitySelect.disabled = true;
+        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+        dpSelect.disabled = true;
+        return;
+    }
+    const districts = getDistrictsForRegion(region);
+    districtSelect.innerHTML = '<option value="">-- Select District --</option>';
+    districts.forEach(dist => {
+        const opt = document.createElement('option');
+        opt.value = dist;
+        opt.textContent = dist;
+        districtSelect.appendChild(opt);
+    });
+    districtSelect.disabled = false;
+    // reset dependent
+    chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
+    chiefdomSelect.disabled = true;
+    communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
+    communitySelect.disabled = true;
+    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+    dpSelect.disabled = true;
+}
+
+function updateChiefdomDropdown() {
+    const region = document.getElementById('region').value;
+    const district = document.getElementById('district').value;
+    const chiefdomSelect = document.getElementById('chiefdom');
+    const communitySelect = document.getElementById('community');
+    const dpSelect = document.getElementById('dp');
+    if (!region || !district) {
+        chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
+        chiefdomSelect.disabled = true;
+        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
+        communitySelect.disabled = true;
+        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+        dpSelect.disabled = true;
+        return;
+    }
+    const chiefdoms = getChiefdomsForDistrict(region, district);
+    chiefdomSelect.innerHTML = '<option value="">-- Select Chiefdom --</option>';
+    chiefdoms.forEach(ch => {
+        const opt = document.createElement('option');
+        opt.value = ch;
+        opt.textContent = ch;
+        chiefdomSelect.appendChild(opt);
+    });
+    chiefdomSelect.disabled = false;
+    communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
+    communitySelect.disabled = true;
+    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+    dpSelect.disabled = true;
+}
+
+function updateCommunityDropdown() {
+    const region = document.getElementById('region').value;
+    const district = document.getElementById('district').value;
+    const chiefdom = document.getElementById('chiefdom').value;
+    const communitySelect = document.getElementById('community');
+    const dpSelect = document.getElementById('dp');
+    if (!region || !district || !chiefdom) {
+        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
+        communitySelect.disabled = true;
+        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+        dpSelect.disabled = true;
+        return;
+    }
+    const communities = getCommunitiesForChiefdom(region, district, chiefdom);
+    communitySelect.innerHTML = '<option value="">-- Select Community --</option>';
+    communities.forEach(comm => {
+        const opt = document.createElement('option');
+        opt.value = comm;
+        opt.textContent = comm;
+        communitySelect.appendChild(opt);
+    });
+    communitySelect.disabled = false;
+    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+    dpSelect.disabled = true;
+}
+
+function updateDistributionPointDropdown() {
+    const region = document.getElementById('region').value;
+    const district = document.getElementById('district').value;
+    const chiefdom = document.getElementById('chiefdom').value;
+    const community = document.getElementById('community').value;
+    const dpSelect = document.getElementById('dp');
+    if (!region || !district || !chiefdom || !community) {
+        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
+        dpSelect.disabled = true;
+        return;
+    }
+    const points = getDistributionPointsForCommunity(region, district, chiefdom, community);
+    dpSelect.innerHTML = '<option value="">-- Select Distribution Point --</option>';
+    points.forEach(pt => {
+        const opt = document.createElement('option');
+        opt.value = pt;
+        opt.textContent = pt;
+        dpSelect.appendChild(opt);
+    });
+    dpSelect.disabled = false;
+}
+
+// attach event listeners
+document.getElementById('region').addEventListener('change', () => {
+    updateDistrictDropdown();
 });
-document.querySelectorAll(".step").forEach((s,i)=>{
-s.classList.toggle("active",i<=step-1);
+document.getElementById('district').addEventListener('change', () => {
+    updateChiefdomDropdown();
 });
-progress.style.width=((step-1)/3)*84+"%";
-}
-
-function next(){step++;updateUI();}
-function prev(){step--;updateUI();}
-
-phone.addEventListener("input",function(){
-this.value=this.value.replace(/\D/g,'');
+document.getElementById('chiefdom').addEventListener('change', () => {
+    updateCommunityDropdown();
+});
+document.getElementById('community').addEventListener('change', () => {
+    updateDistributionPointDropdown();
 });
 
-function calcTotal(){
-total.value=(+people.value||0)+(+pregnant.value||0)+(+under5.value||0);
+// ========================
+// 2) Existing form logic (steps, GPS, token, etc.)
+// ========================
+let step = 1;
+let token = "";
+let registered = false;
+
+document.getElementById('date').value = new Date().toISOString().split('T')[0];
+
+function updateUI() {
+    document.querySelectorAll(".section").forEach((s, i) => {
+        s.classList.toggle("active", i === step - 1);
+    });
+    document.querySelectorAll(".step").forEach((s, i) => {
+        s.classList.toggle("active", i <= step - 1);
+    });
+    const progressPercent = ((step - 1) / 3) * 84;
+    document.getElementById("progress").style.width = progressPercent + "%";
 }
 
-/* ✅ GPS AUTO CAPTURE */
-if(navigator.geolocation){
-navigator.geolocation.getCurrentPosition(pos=>{
-gps.value=pos.coords.latitude.toFixed(5)+","+pos.coords.longitude.toFixed(5);
-});
+function next() { if (step < 4) { step++; updateUI(); } }
+function prev() { if (step > 1) { step--; updateUI(); } }
+
+const phoneInput = document.getElementById('phone');
+if (phoneInput) {
+    phoneInput.addEventListener("input", function() {
+        this.value = this.value.replace(/\D/g, '').slice(0, 9);
+    });
 }
 
-function generateToken(){
-let f=(fname.value||"").substring(0,3).toUpperCase();
-let m=(mname.value||"").substring(0,3).toUpperCase();
-let s=(surname.value||"").substring(0,3).toUpperCase();
-token=`${f}_${m}_${s}_${phone.value}`;
-tokenBox.style.display="block";
-tokenBox.innerText="TOKEN: "+token;
+function calcTotal() {
+    const people = parseInt(document.getElementById('people')?.value) || 0;
+    const pregnant = parseInt(document.getElementById('pregnant')?.value) || 0;
+    const under5 = parseInt(document.getElementById('under5')?.value) || 0;
+    document.getElementById('total').value = people + pregnant + under5;
 }
 
-function goReview(){
-if(phone.value.length!==9){
-alert("Phone must be 9 digits");
-return;
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        pos => { document.getElementById('gps').value = pos.coords.latitude.toFixed(5) + "," + pos.coords.longitude.toFixed(5); },
+        err => { document.getElementById('gps').value = "Location unavailable"; }
+    );
+} else {
+    document.getElementById('gps').value = "GPS not supported";
 }
 
-let itn= total.value<=2?1: total.value<=4?2:3;
-
-review.innerHTML=`
-Region: ${region.value}<br>
-District: ${district.value}<br>
-Chiefdom: ${chiefdom.value}<br>
-Community: ${community.value}<br>
-Nearest Health Facility: ${facility.value}<br>
-Distribution Point: ${dp.value}<br><br>
-
-Name: ${surname.value} ${mname.value} ${fname.value}<br>
-Mobile Number: ${phone.value}<br>
-Total Family Members: ${total.value}<br>
-Household Register Name: ${registerName.value}<br>
-GPS: ${gps.value}<br><br>
-
-Token: ${token}<br>
-ITNs to be Received: ${itn}
-`;
-
-next();
+function generateToken() {
+    const f = (document.getElementById('fname')?.value || "").substring(0, 3).toUpperCase();
+    const m = (document.getElementById('mname')?.value || "").substring(0, 3).toUpperCase();
+    const s = (document.getElementById('surname')?.value || "").substring(0, 3).toUpperCase();
+    const phone = document.getElementById('phone')?.value || "";
+    token = `${f}_${m}_${s}_${phone}`;
+    const tokenBox = document.getElementById('tokenBox');
+    tokenBox.style.display = "block";
+    tokenBox.innerText = "🔑 TOKEN: " + token;
 }
 
-function register(){
-if(!registered){
-successMsg.innerText="✅ Successfully registered a household";
-registerBtn.innerText="Next: Add Another Household →";
-registered=true;
-}else{
-step=1;
-registered=false;
-successMsg.innerText="";
-registerBtn.innerText="Register Household";
+function goReview() {
+    const phone = document.getElementById('phone')?.value;
+    if (!phone || phone.length !== 9) {
+        alert("Mobile number must be exactly 9 digits.");
+        return;
+    }
+    if (!token) generateToken();
 
-document.querySelectorAll("input").forEach(i=>{
-if(i.id!=="date") i.value="";
-});
-tokenBox.style.display="none";
+    const total = parseInt(document.getElementById('total')?.value) || 0;
+    let itn = total <= 2 ? 1 : total <= 4 ? 2 : 3;
+
+    const reviewDiv = document.getElementById('review');
+    reviewDiv.innerHTML = `
+        <strong>📍 Location</strong><br>
+        Region: ${document.getElementById('region')?.options[document.getElementById('region').selectedIndex]?.text || ""}<br>
+        District: ${document.getElementById('district')?.options[document.getElementById('district').selectedIndex]?.text || ""}<br>
+        Chiefdom: ${document.getElementById('chiefdom')?.options[document.getElementById('chiefdom').selectedIndex]?.text || ""}<br>
+        Community: ${document.getElementById('community')?.options[document.getElementById('community').selectedIndex]?.text || ""}<br>
+        Distribution Point: ${document.getElementById('dp')?.options[document.getElementById('dp').selectedIndex]?.text || ""}<br>
+        Health Facility: ${document.getElementById('facility')?.value || "-"}<br><br>
+        <strong>👪 Household</strong><br>
+        Name: ${document.getElementById('surname')?.value || ""} ${document.getElementById('mname')?.value || ""} ${document.getElementById('fname')?.value || ""}<br>
+        Mobile: ${phone}<br>
+        Total Members: ${total}<br>
+        Register Name: ${document.getElementById('registerName')?.value || "-"}<br>
+        GPS: ${document.getElementById('gps')?.value || "—"}<br><br>
+        <strong>🎟️ Token:</strong> ${token}<br>
+        <strong>🦟 ITNs to be Received:</strong> ${itn}
+    `;
+    next();
+}
+
+function register() {
+    const successDiv = document.getElementById('successMsg');
+    const registerBtn = document.getElementById('registerBtn');
+    if (!registered) {
+        successDiv.innerHTML = "✅ Successfully registered a household!";
+        registerBtn.innerText = "Next: Add Another Household →";
+        registered = true;
+    } else {
+        step = 1;
+        registered = false;
+        successDiv.innerHTML = "";
+        registerBtn.innerText = "Register Household";
+        // clear all inputs except date and location dropdowns? Keep location dropdowns? For simplicity reset all.
+        document.querySelectorAll("input").forEach(input => {
+            if (input.id !== "date") input.value = "";
+        });
+        document.getElementById('region').value = "";
+        document.getElementById('district').innerHTML = '<option value="">-- First select Region --</option>';
+        document.getElementById('chiefdom').innerHTML = '<option value="">-- First select District --</option>';
+        document.getElementById('community').innerHTML = '<option value="">-- First select Chiefdom --</option>';
+        document.getElementById('dp').innerHTML = '<option value="">-- First select Community --</option>';
+        document.getElementById('district').disabled = true;
+        document.getElementById('chiefdom').disabled = true;
+        document.getElementById('community').disabled = true;
+        document.getElementById('dp').disabled = true;
+        document.getElementById('tokenBox').style.display = "none";
+        token = "";
+        updateUI();
+        calcTotal();
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(pos => {
+                document.getElementById('gps').value = pos.coords.latitude.toFixed(5) + "," + pos.coords.longitude.toFixed(5);
+            });
+        }
+    }
+}
+
+function showToast(msg, isSuccess) {
+    const toast = document.createElement('div');
+    toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; z-index:999; font-family:sans-serif;`;
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+}
+
+// Initialize CSV loading
+loadLocationData();
 
 updateUI();
-}
-}
-
-updateUI();
-
+calcTotal();
 </script>
-
 </body>
 </html>
