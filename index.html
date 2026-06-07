@@ -2,164 +2,241 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ITNs Campaign Login</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial;}
-
-body{
-background:#f2f2f2;
-display:flex;
-justify-content:center;
-align-items:center;
-height:100vh;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Arial, sans-serif;
 }
 
-.container{
-width:360px;
-height:720px;
-border-radius:30px;
-overflow:hidden;
-box-shadow:0 10px 25px rgba(0,0,0,0.2);
-position:relative;
+body {
+    background: #f2f2f2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
 }
 
-.bg{
-position:absolute;
-inset:0;
-background:url('background.png') no-repeat center/cover;
+.container {
+    width: 360px;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 780px;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+    position: relative;
+    background: #fff;
 }
 
-.bg::after{
-content:"";
-position:absolute;
-inset:0;
-background:rgba(0,0,0,0.45);
+.bg {
+    position: absolute;
+    inset: 0;
+    background: url('background.png') no-repeat center/cover;
 }
 
-.content{
-position:relative;
-z-index:2;
-padding:20px;
+.bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
 }
 
-.login-card{
-background:rgba(255,255,255,0.92);
-border-radius:10px;
-padding:15px;
-margin-top:40px;
+.content {
+    position: relative;
+    z-index: 2;
+    padding: 20px 16px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.logo{text-align:center;margin-bottom:10px;}
-.logo img{width:70px;}
-
-.input{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:1px solid #ccc;
+.login-card {
+    background: rgba(255,255,255,0.96);
+    border-radius: 24px;
+    padding: 20px 16px;
+    margin-top: 20px;
+    backdrop-filter: blur(2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
 }
 
-.password-wrapper{position:relative;}
-.password-wrapper input{padding-right:40px;}
-
-.eye-icon{
-position:absolute;
-right:12px;
-top:50%;
-transform:translateY(-50%);
-cursor:pointer;
+.logo {
+    text-align: center;
+    margin-bottom: 16px;
+}
+.logo img {
+    width: 65px;
+    border-radius: 50%;
+    background: white;
+    padding: 4px;
 }
 
-.btn{
-width:100%;
-padding:12px;
-margin-top:10px;
-border:none;
-color:white;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+.input {
+    width: 100%;
+    padding: 14px 12px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 40px;
+    font-size: 16px; /* Prevents zoom on focus in iOS */
+    background: #fff;
+    -webkit-appearance: none;
 }
 
-.btn:hover{transform:scale(1.03);opacity:0.9;}
-
-.login{background:#2E86C1;}
-.scan{background:#1E8449;}
-
-.cards{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:18px;
-margin-top:25px;
+.password-wrapper {
+    position: relative;
+}
+.password-wrapper input {
+    padding-right: 50px;
+}
+.eye-icon {
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #555;
+    font-size: 1.2rem;
 }
 
-.card{
-border-radius:12px;
-padding:18px 10px;
-text-align:center;
-color:white;
-font-size:12px;
-font-weight:bold;
-cursor:pointer;
-transition:0.3s;
+.btn {
+    width: 100%;
+    padding: 12px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 40px;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.btn:hover {
+    transform: scale(1.02);
+    opacity: 0.9;
+}
+.login {
+    background: #2E86C1;
+}
+.scan {
+    background: #1E8449;
 }
 
-.card:hover{transform:scale(1.05);}
-.card i{font-size:26px;margin-bottom:10px;}
+.cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin: 20px 0 10px 0;
+}
+.card {
+    border-radius: 20px;
+    padding: 14px 6px;
+    text-align: center;
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+}
+.card:hover {
+    transform: scale(1.02);
+}
+.card i {
+    font-size: 26px;
+}
+.network { background: #D35400; }
+.export { background: #2E86C1; }
+.verify { background: #8E44AD; }
+.language { background: #16A085; }
 
-.network{background:#D35400;}
-.export{background:#2E86C1;}
-.verify{background:#8E44AD;}
-.language{background:#16A085;}
-
-.curve{
-position:absolute;
-bottom:120px;
-width:100%;
-height:60px;
+.curve {
+    position: absolute;
+    bottom: 110px;
+    width: 100%;
+    height: 60px;
+    left: 0;
+    pointer-events: none;
+}
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 110px;
+    background: #1E8449;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    border-radius: 20px 20px 0 0;
+}
+.footer h4 {
+    font-size: 11px;
+    font-weight: normal;
+}
+.footer p {
+    font-size: 13px;
+    text-decoration: underline;
+    font-weight: bold;
 }
 
-.footer{
-position:absolute;
-bottom:0;
-width:100%;
-height:120px;
-background:#1E8449;
-display:flex;
-flex-direction:column;
-justify-content:center;
-align-items:center;
-color:white;
+#scannerModal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+    flex-direction: column;
+}
+#reader {
+    width: 280px;
+    border-radius: 20px;
+    overflow: hidden;
+}
+.close-btn {
+    margin-top: 20px;
+    padding: 10px 24px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 40px;
+    font-size: 1rem;
+    cursor: pointer;
 }
 
-.footer h4{font-size:11px;}
-.footer p{font-size:13px;text-decoration:underline;font-weight:bold;}
-
-#scannerModal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,0.9);
-display:none;
-justify-content:center;
-align-items:center;
-z-index:999;
-flex-direction:column;
-}
-
-#reader{width:300px;}
-
-.close-btn{
-margin-top:15px;
-padding:10px 20px;
-background:red;
-color:white;
-border:none;
-cursor:pointer;
+/* Mobile specific fixes */
+@media (max-width: 380px) {
+    .container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+    }
+    .login-card {
+        padding: 16px 12px;
+    }
+    .cards {
+        gap: 10px;
+    }
+    .card {
+        padding: 10px 4px;
+        font-size: 11px;
+    }
+    .card i {
+        font-size: 22px;
+    }
 }
 </style>
 </head>
@@ -167,71 +244,56 @@ cursor:pointer;
 <body>
 
 <div class="container">
+    <div class="bg"></div>
+    <div class="content">
+        <div class="login-card">
+            <div class="logo">
+                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+            </div>
+            <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
+            <div class="password-wrapper">
+                <input id="password" class="input" type="password" placeholder="PASSWORD">
+                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
+            </div>
+            <button id="loginBtn" class="btn login">LOGIN</button>
+            <button id="scanBtn" class="btn scan" onclick="startScanner()">SCAN BADGE</button>
+        </div>
 
-<div class="bg"></div>
+        <div class="cards">
+            <div class="card network" id="networkCard">
+                <i class="fa-solid fa-wifi"></i>
+                <span>NETWORK CHECK</span>
+            </div>
+            <div class="card export" id="exportCard">
+                <i class="fa-solid fa-download"></i>
+                <span>EXPORT CAMPAIGN LOGS</span>
+            </div>
+            <div class="card verify" id="verifyCard">
+                <i class="fa-solid fa-fingerprint"></i>
+                <span>VERIFY BENEFICIARY PRINT</span>
+            </div>
+            <div class="card language" onclick="toggleLanguage()">
+                <i class="fa-solid fa-language"></i>
+                <span id="langText">ENGLISH</span>
+            </div>
+        </div>
+    </div>
 
-<div class="content">
+    <!-- CURVE SVG -->
+    <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
+        <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
+    </svg>
 
-<div class="login-card">
-
-<div class="logo">
-<img src="ICF-SL Logo.jpg">
+    <div class="footer">
+        <h4 id="devText">Developed By</h4>
+        <p>Informatic Consultancy Firm-SL ©2026</p>
+    </div>
 </div>
 
-<input id="username" class="input" placeholder="USERNAME">
-
-<div class="password-wrapper">
-<input id="password" class="input" type="password" placeholder="PASSWORD">
-<i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
-</div>
-
-<button id="loginBtn" class="btn login">LOGIN</button>
-<button id="scanBtn" class="btn scan" onclick="startScanner()">SCAN BADGE</button>
-
-</div>
-
-<div class="cards">
-
-<div class="card network" id="networkCard">
-<i class="fa-solid fa-wifi"></i>
-<span>NETWORK CHECK</span>
-</div>
-
-<div class="card export" id="exportCard">
-<i class="fa-solid fa-download"></i>
-<span>EXPORT CAMPAIGN LOGS</span>
-</div>
-
-<div class="card verify" id="verifyCard">
-<i class="fa-solid fa-fingerprint"></i>
-<span>VERIFY BENEFICIARY PRINT</span>
-</div>
-
-<div class="card language" onclick="toggleLanguage()">
-<i class="fa-solid fa-language"></i>
-<span id="langText">ENGLISH</span>
-</div>
-
-</div>
-</div>
-
-<!-- CURVE -->
-<svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
-<path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
-</svg>
-
-<!-- FOOTER -->
-<div class="footer">
-<h4 id="devText">Developed By</h4>
-<p>Informatic Consultancy Firm-SL©2026</p>
-</div>
-  
-</div>
-
-<!-- SCANNER -->
+<!-- QR SCANNER MODAL -->
 <div id="scannerModal">
-<div id="reader"></div>
-<button class="close-btn" onclick="stopScanner()">Close</button>
+    <div id="reader"></div>
+    <button class="close-btn" onclick="stopScanner()">Close</button>
 </div>
 
 <script>
@@ -239,24 +301,30 @@ let isEnglish = true;
 let html5QrCode;
 let users = [];
 
-/* LOAD CSV */
+// Load CSV credentials
 async function loadCSV() {
-    const response = await fetch("Passwords.csv");
-    const data = await response.text();
-
-    const rows = data.split("\n").slice(1);
-
-    users = rows.map(row => {
-        const [username, password] = row.split(",");
-        return {
-            username: username?.trim(),
-            password: password?.trim()
-        };
-    });
+    try {
+        const response = await fetch("Passwords.csv");
+        const data = await response.text();
+        const rows = data.split("\n").slice(1);
+        users = rows.map(row => {
+            const [username, password] = row.split(",");
+            return {
+                username: username?.trim(),
+                password: password?.trim()
+            };
+        }).filter(u => u.username && u.password);
+    } catch (err) {
+        console.warn("CSV not found, using demo users");
+        users = [
+            { username: "admin", password: "admin123" },
+            { username: "user", password: "pass123" }
+        ];
+    }
 }
 loadCSV();
 
-/* LOGIN */
+// Login handler
 document.getElementById("loginBtn").addEventListener("click", function () {
     const u = document.getElementById("username").value.trim();
     const p = document.getElementById("password").value.trim();
@@ -264,78 +332,89 @@ document.getElementById("loginBtn").addEventListener("click", function () {
     const valid = users.find(user => user.username === u && user.password === p);
 
     if (valid) {
-        document.body.innerHTML = `
-        <iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>
-        `;
+        document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
     } else {
         alert("Invalid Username or Password");
     }
 });
 
-/* PASSWORD */
-function togglePassword(){
-const password=document.getElementById("password");
-const icon=document.querySelector(".eye-icon");
-
-if(password.type==="password"){
-password.type="text";
-icon.classList.replace("fa-eye","fa-eye-slash");
-}else{
-password.type="password";
-icon.classList.replace("fa-eye-slash","fa-eye");
-}
-}
-
-/* LANGUAGE */
-function toggleLanguage(){
-isEnglish=!isEnglish;
-
-if(!isEnglish){
-username.placeholder="Nom d'utilisateur";
-password.placeholder="Mot de passe";
-loginBtn.innerText="CONNEXION";
-scanBtn.innerText="SCANNER BADGE";
-networkCard.querySelector("span").innerText="RÉSEAU";
-exportCard.querySelector("span").innerText="EXPORTER LES DONNÉES";
-verifyCard.querySelector("span").innerText="VÉRIFIER BÉNÉFICIAIRE";
-langText.innerText="FRANÇAIS";
-devText.innerText="Développé Par";
-}else{
-username.placeholder="USERNAME";
-password.placeholder="PASSWORD";
-loginBtn.innerText="LOGIN";
-scanBtn.innerText="SCAN BADGE";
-networkCard.querySelector("span").innerText="NETWORK CHECK";
-exportCard.querySelector("span").innerText="EXPORT CAMPAIGN LOGS";
-verifyCard.querySelector("span").innerText="VERIFY BENEFICIARY PRINT";
-langText.innerText="ENGLISH";
-devText.innerText="Developed By";
-}
+// Toggle password visibility
+function togglePassword() {
+    const password = document.getElementById("password");
+    const icon = document.querySelector(".eye-icon");
+    if (password.type === "password") {
+        password.type = "text";
+        icon.classList.replace("fa-eye", "fa-eye-slash");
+    } else {
+        password.type = "password";
+        icon.classList.replace("fa-eye-slash", "fa-eye");
+    }
 }
 
-/* SCANNER */
-function startScanner(){
-document.getElementById("scannerModal").style.display="flex";
+// Language toggle (English / French)
+function toggleLanguage() {
+    isEnglish = !isEnglish;
+    const usernameField = document.getElementById("username");
+    const passwordField = document.getElementById("password");
+    const loginBtn = document.getElementById("loginBtn");
+    const scanBtn = document.getElementById("scanBtn");
+    const networkSpan = document.querySelector("#networkCard span");
+    const exportSpan = document.querySelector("#exportCard span");
+    const verifySpan = document.querySelector("#verifyCard span");
+    const langSpan = document.getElementById("langText");
+    const devText = document.getElementById("devText");
 
-html5QrCode=new Html5Qrcode("reader");
+    if (!isEnglish) {
+        usernameField.placeholder = "Nom d'utilisateur";
+        passwordField.placeholder = "Mot de passe";
+        loginBtn.innerText = "CONNEXION";
+        scanBtn.innerText = "SCANNER BADGE";
+        networkSpan.innerText = "RÉSEAU";
+        exportSpan.innerText = "EXPORTER LES DONNÉES";
+        verifySpan.innerText = "VÉRIFIER BÉNÉFICIAIRE";
+        langSpan.innerText = "FRANÇAIS";
+        devText.innerText = "Développé Par";
+    } else {
+        usernameField.placeholder = "USERNAME";
+        passwordField.placeholder = "PASSWORD";
+        loginBtn.innerText = "LOGIN";
+        scanBtn.innerText = "SCAN BADGE";
+        networkSpan.innerText = "NETWORK CHECK";
+        exportSpan.innerText = "EXPORT CAMPAIGN LOGS";
+        verifySpan.innerText = "VERIFY BENEFICIARY PRINT";
+        langSpan.innerText = "ENGLISH";
+        devText.innerText = "Developed By";
+    }
+}
 
-html5QrCode.start(
-{facingMode:"environment"},
-{fps:10,qrbox:250},
-qr=>{
-alert("Scanned: "+qr);
-stopScanner();
-}
-);
+// QR Scanner
+function startScanner() {
+    const modal = document.getElementById("scannerModal");
+    modal.style.display = "flex";
+    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        qr => {
+            alert("Scanned: " + qr);
+            stopScanner();
+        }
+    ).catch(err => console.error("Scanner error", err));
 }
 
-function stopScanner(){
-if(html5QrCode){
-html5QrCode.stop().then(()=>{
-document.getElementById("scannerModal").style.display="none";
-});
+function stopScanner() {
+    if (html5QrCode) {
+        html5QrCode.stop().then(() => {
+            document.getElementById("scannerModal").style.display = "none";
+        }).catch(() => {
+            document.getElementById("scannerModal").style.display = "none";
+        });
+    } else {
+        document.getElementById("scannerModal").style.display = "none";
+    }
 }
-}
+
+// Prevent zoom on input focus (already handled by viewport meta + font-size 16px)
 </script>
 
 </body>
