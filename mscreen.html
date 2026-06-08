@@ -1,971 +1,166 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
-<title>ICF-SL | ITN Campaign Carousel</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICF-SL | ITN Campaign</title>
 
-<!-- Font Awesome 6 + Google Fonts -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
 
-<style> 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial, sans-serif;
-}
-
-body {
-    background: #e5e5e5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-}
-
-.phone {
-    width: 100%;
-    max-width: 360px;
-    height: 100vh;
-    background: #fff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 0 20px rgba(0,0,0,0.2);
-    position: relative;
-}
-
-.screen {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 8px;
-}
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{background:#e5e5e5;display:flex;justify-content:center}
+.phone{max-width:360px;width:100%;background:#fff;height:100vh;display:flex;flex-direction:column}
 
 /* HEADER */
-.header {
-    text-align: center;
-    background: #0b5ed7;
-    color: #fff;
-    padding: 6px 4px;
-}
-.header img { height: 30px; }
-.header h2 { font-size: 9px; }
-.header h3 { font-size: 8px; }
-.header p { font-size: 7px; }
+.header{background:#0b5ed7;color:#fff;text-align:center;padding:8px}
+.header img{height:30px}
+.header h2{font-size:10px}
+.header p{font-size:8px}
+.header h3{font-size:9px}
 
 /* PARTNERS */
-.partners { padding: 4px; }
-.partners h3 { text-align: center; font-size: 8px; }
-.partner-grid {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 6px;
-    padding: 0 4px;
-}
-.partner-item {
-    text-align: center;
-    font-size: 6px;
-}
-.partner-item img {
-    width: 75%;
-    height: 24px;
-    object-fit: contain;
-    margin: 0 auto 3px;
-    display: block;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 2px;
-    background: #fff;
-}
-.partner-item span {
-    display: block;
-    font-size: 6px;
-    line-height: 1.2;
-}
+.partner-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;padding:5px}
+.partner-item{text-align:center;font-size:7px}
+.partner-item img{width:100%;height:25px;object-fit:contain;border:1px solid #ddd;border-radius:4px}
 
-/* ========== INFINITE LOOP CAROUSEL (with clones) ========== */
-.carousel-container {
-    margin: 8px 8px 4px 8px;
-    position: relative;
-    border-radius: 16px;
-    overflow: hidden;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    background: #1e2a3a;
-}
+/* CAROUSEL */
+.carousel{position:relative;overflow:hidden;margin:8px;border-radius:12px}
+.slides{display:flex;transition:.4s}
+.slide{min-width:100%;height:150px}
+.slide img{width:100%;height:100%;object-fit:cover}
+.btn{position:absolute;top:50%;transform:translateY(-50%);background:#0008;color:#fff;border:none;width:30px;height:30px;border-radius:50%}
+.prev{left:5px}
+.next{right:5px}
 
-.carousel-slides {
-    display: flex;
-    transition: transform 0.4s ease-in-out;
-    will-change: transform;
-}
+/* ACTION CARDS */
+.actions{padding:10px;display:flex;flex-direction:column;gap:12px}
+.card{border-radius:20px;padding:15px;color:#fff;display:flex;justify-content:space-between;align-items:center;cursor:pointer}
+.card i{font-size:20px}
+.register{background:linear-gradient(#1E3A8A,#3B82F6)}
+.distribution{background:linear-gradient(#0F5B2E,#2E9A5E)}
+.stock{background:linear-gradient(#C2410C,#F97316)}
+.dashboard{background:linear-gradient(#0F5B7A,#14B8A6)}
 
-.carousel-slide {
-    flex: 0 0 100%;
-    aspect-ratio: 16 / 9;
-    position: relative;
-}
+/* FOOTER */
+.footer{text-align:center;background:#0b5ed7;color:#fff;font-size:8px;padding:5px}
 
-/* Fallback style when image missing */
-.carousel-slide .fallback-bg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(145deg, #0b5ed7, #1e6f5c);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    gap: 12px;
-    text-align: center;
-    z-index: 1;
-}
-.carousel-slide .fallback-bg i {
-    font-size: 2.5rem;
-}
-.carousel-slide .fallback-bg p {
-    font-size: 0.85rem;
-    font-weight: 600;
-    background: rgba(0,0,0,0.4);
-    padding: 5px 12px;
-    border-radius: 30px;
-}
+/* MODAL */
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#0009;display:none;align-items:center;justify-content:center}
+.modal-box{background:#fff;padding:20px;border-radius:20px;width:80%}
+.modal input{width:100%;padding:8px;margin:5px 0;border-radius:10px;border:1px solid #ccc}
+.modal button{padding:10px;width:48%;border:none;border-radius:20px}
+.login{background:#0b5ed7;color:#fff}
+.cancel{background:#ddd}
 
-.carousel-slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-    position: relative;
-    z-index: 0;
-}
-
-/* Navigation arrows */
-.carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0,0,0,0.6);
-    color: white;
-    border: none;
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    z-index: 20;
-    transition: all 0.2s;
-    font-size: 1rem;
-}
-.carousel-btn:hover {
-    background: rgba(0,0,0,0.9);
-}
-.btn-prev { left: 10px; }
-.btn-next { right: 10px; }
-
-/* Dots indicator */
-.carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px 0 8px;
-    background: rgba(255,255,255,0.95);
-}
-.dot {
-    width: 8px;
-    height: 8px;
-    background: #bbb;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-.dot.active {
-    background: #0b5ed7;
-    width: 22px;
-    border-radius: 10px;
-}
-
-/* CAMPAIGN BANNER */
-.campaign {
-    background: #0b5ed7;
-    color: #fff;
-    text-align: center;
-    font-size: 8px;
-    padding: 3px;
-    margin-top: 4px;
-}
-
-/* STATUS */
-.status {
-    display: flex;
-    align-items: center;
-    padding: 3px;
-    font-size: 8px;
-}
-.status-dot {
-    width: 5px;
-    height: 5px;
-    background: green;
-    border-radius: 50%;
-    margin-right: 4px;
-}
-.badge {
-    width: 12px;
-    height: 12px;
-    background: #0b5ed7;
-    color: #fff;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 6px;
-    margin-left: 4px;
-}
-.divider {
-    height: 2px;
-    background: green;
-    margin: 4px 0;
-}
-
-/* ========== ACTION CARDS (with lock icon) ========== */
-.new-actions-section {
-    padding: 8px 12px 16px 12px;
-    background: #fff;
-}
-.new-actions {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-.modern-card {
-    position: relative;
-    width: 100%;
-    border-radius: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden;
-    box-shadow: 0 10px 20px -8px rgba(0, 0, 0, 0.15);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-    cursor: pointer;
-}
-.modern-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 18px 28px -10px rgba(0, 0, 0, 0.2);
-}
-/* Lock icon on each card (top right) */
-.card-lock {
-    position: absolute;
-    top: 12px;
-    right: 14px;
-    font-size: 0.9rem;
-    color: rgba(255,255,255,0.7);
-    z-index: 3;
-    text-shadow: 0 1px 1px rgba(0,0,0,0.2);
-}
-.modern-card .shape-top,
-.modern-card .shape-bottom {
-    position: absolute;
-    left: 0;
-    width: 100px;
-    height: 55%;
-    background: rgba(255,255,255,0.12);
-    z-index: 0;
-    pointer-events: none;
-}
-.modern-card .shape-top {
-    top: 0;
-    border-radius: 0 0 40px 0;
-}
-.modern-card .shape-bottom {
-    bottom: 0;
-    top: auto;
-    border-radius: 0 40px 0 0;
-    background: rgba(0,0,0,0.04);
-}
-.modern-card-content {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    padding: 14px 20px 14px 22px;
-    gap: 12px;
-}
-.card-left {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-}
-.icon-circle {
-    width: 52px;
-    height: 52px;
-    border-radius: 28px;
-    background: rgba(255, 255, 255, 0.96);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.6rem;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-}
-.card-text h3 {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1rem;
-    font-weight: 800;
-    letter-spacing: -0.2px;
-    color: white;
-    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-    margin-bottom: 2px;
-}
-.card-text .sub {
-    font-family: 'Poppins', sans-serif;
-    font-size: 0.68rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.88);
-}
-.chevron-icon {
-    color: rgba(255, 255, 255, 0.9);
-    font-size: 1.2rem;
-    transition: transform 0.2s;
-}
-.modern-card:hover .chevron-icon {
-    transform: translateX(5px);
-}
-/* gradients */
-.card-register { background: linear-gradient(135deg, #1E3A8A, #3B82F6); }
-.card-distribution { background: linear-gradient(135deg, #0F5B2E, #2E9A5E); }
-.card-registerqr { background: linear-gradient(135deg, #6B21A5, #A855F7); }
-.card-stock { background: linear-gradient(135deg, #C2410C, #F97316); }
-.card-dashboard { background: linear-gradient(135deg, #0F5B7A, #14B8A6); }
-/* icon colors */
-.card-register .icon-circle i { color: #1E3A8A; }
-.card-distribution .icon-circle i { color: #0F5B2E; }
-.card-registerqr .icon-circle i { color: #6B21A5; }
-.card-stock .icon-circle i { color: #C2410C; }
-.card-dashboard .icon-circle i { color: #0F5B7A; }
-
-@media (max-width: 380px) {
-    .modern-card-content { padding: 10px 16px; }
-    .icon-circle { width: 44px; height: 44px; font-size: 1.3rem; }
-    .card-text h3 { font-size: 0.85rem; }
-    .card-lock { font-size: 0.75rem; top: 8px; right: 10px; }
-}
-.modern-card:active { transform: scale(0.98); transition: transform 0.08s; }
-
-.footer {
-    background: #0b5ed7;
-    color: #fff;
-    text-align: center;
-    font-size: 7px;
-    padding: 5px;
-}
-
-/* ========== LOGIN MODAL ========== */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.75);
-    backdrop-filter: blur(5px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease;
-}
-.modal-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
-.modal-container {
-    width: 85%;
-    max-width: 300px;
-    background: #fff;
-    border-radius: 32px;
-    overflow: hidden;
-    box-shadow: 0 20px 35px -12px black;
-    text-align: center;
-    transform: scale(0.95);
-    transition: transform 0.2s ease;
-}
-.modal-overlay.active .modal-container {
-    transform: scale(1);
-}
-.modal-header {
-    background: linear-gradient(135deg, #0b5ed7, #1e6f5c);
-    color: white;
-    padding: 20px 12px 16px;
-}
-.modal-header i {
-    font-size: 2rem;
-    background: white;
-    color: #0b5ed7;
-    border-radius: 50%;
-    padding: 10px;
-    margin-bottom: 10px;
-}
-.modal-header h2 {
-    font-size: 1.2rem;
-    font-weight: 700;
-    font-family: 'Poppins', sans-serif;
-}
-.modal-header p {
-    font-size: 0.7rem;
-    opacity: 0.9;
-    margin-top: 4px;
-}
-.modal-body {
-    padding: 20px 18px 24px;
-}
-.input-group {
-    margin-bottom: 18px;
-    text-align: left;
-}
-.input-group label {
-    display: block;
-    font-size: 0.7rem;
-    font-weight: 600;
-    color: #1e293b;
-    margin-bottom: 5px;
-}
-.input-group input {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 28px;
-    font-size: 0.85rem;
-    outline: none;
-    transition: 0.2s;
-}
-.input-group input:focus {
-    border-color: #0b5ed7;
-    box-shadow: 0 0 0 2px rgba(11,94,215,0.2);
-}
-.modal-actions {
-    display: flex;
-    gap: 12px;
-    margin-top: 12px;
-}
-.modal-btn {
-    flex: 1;
-    padding: 10px 0;
-    border-radius: 40px;
-    font-weight: 700;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: 0.2s;
-    border: none;
-    background: #e2e8f0;
-    color: #1e293b;
-}
-.modal-btn.login-btn {
-    background: #0b5ed7;
-    color: white;
-}
-.modal-btn.login-btn:hover {
-    background: #094aac;
-}
-.modal-btn.cancel-btn:hover {
-    background: #cbd5e1;
-}
-.error-msg {
-    color: #dc2626;
-    font-size: 0.7rem;
-    margin-top: 8px;
-    display: none;
-}
-
-/* ========== IFRAME MODAL FOR REGISTRATION.HTML ========== */
-.iframe-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: white;
-    z-index: 1100;
-    display: flex;
-    flex-direction: column;
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0.3s, opacity 0.3s;
-}
-.iframe-overlay.active {
-    visibility: visible;
-    opacity: 1;
-}
-.iframe-header {
-    background: #0b5ed7;
-    color: white;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 1rem;
-    font-weight: bold;
-}
-.iframe-header button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 1.2rem;
-    cursor: pointer;
-}
-.iframe-container {
-    flex: 1;
-    width: 100%;
-}
-.iframe-container iframe {
-    width: 100%;
-    height: 100%;
-    border: none;
-}
+/* IFRAME */
+.iframe{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;display:none;flex-direction:column}
+.iframe header{background:#0b5ed7;color:#fff;padding:10px;display:flex;justify-content:space-between}
+iframe{flex:1;border:none}
 </style>
 </head>
+
 <body>
 
 <div class="phone">
-<div class="screen">
 
-    <!-- HEADER -->
-    <div class="header">
-        <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
-        <h2>Informatics Consultancy Firm-SL</h2>
-        <p>Driving Data-Driven Solutions</p>
-        <h3>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</h3>
-    </div>
+<div class="header">
+<img src="ICF-SL Logo.jpg">
+<h2>Informatics Consultancy Firm-SL</h2>
+<p>Driving Data-Driven Solutions</p>
+<h3>ITN DISTRIBUTION CAMPAIGN</h3>
+</div>
 
-    <!-- PARTNERS -->
-    <div class="partners">
-        <h3>IMPLEMENTING PARTNERS</h3>
-        <div class="partner-grid">
-            <div class="partner-item"><img src="usa.png" alt="USA"><span>United States Dept</span></div>
-            <div class="partner-item"><img src="global_fund.png" alt="Global Fund"><span>Global Fund</span></div>
-            <div class="partner-item"><img src="moh_logo.png" alt="MOH"><span>MOH</span></div>
-            <div class="partner-item"><img src="NMCP.png" alt="NMCP"><span>NMCP</span></div>
-            <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve"><span>PMI Evolve</span></div>
-            <div class="partner-item"><img src="NMCP.png" alt="NMCP"><span>NMCP</span></div>
-        </div>
-    </div>
+<div class="partner-grid">
+<div class="partner-item"><img src="usa.png"><span>USA</span></div>
+<div class="partner-item"><img src="global_fund.png"><span>Global Fund</span></div>
+<div class="partner-item"><img src="moh_logo.png"><span>MOH</span></div>
+</div>
 
-    <!-- INFINITE CAROUSEL -->
-    <div class="carousel-container">
-        <div class="carousel-slides" id="carouselSlides"></div>
-        <button class="carousel-btn btn-prev" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
-        <button class="carousel-btn btn-next" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
-        <div class="carousel-dots" id="carouselDots"></div>
-    </div>
+<div class="carousel">
+<div class="slides" id="slides">
+<div class="slide"><img src="infographics.png"></div>
+<div class="slide"><img src="infographicss.jpg"></div>
+<div class="slide"><img src="infographics.jpg"></div>
+</div>
+<button class="btn prev" onclick="move(-1)">❮</button>
+<button class="btn next" onclick="move(1)">❯</button>
+</div>
 
-    <!-- CAMPAIGN BANNER -->
-    <div class="campaign">
-        <i class="fas fa-camera"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
-    </div>
-
-    <!-- STATUS -->
-    <div class="status">
-        <div class="status-dot"></div>
-        ONLINE PENDING
-        <div class="badge">0</div>
-    </div>
-    <div class="divider"></div>
-
-    <!-- ACTION CARDS with LOCK icon -->
-    <div class="new-actions-section">
-        <div class="new-actions">
-            <div class="modern-card card-register" id="newCardRegister">
-                <i class="fas fa-lock card-lock"></i>
-                <div class="shape-top"></div><div class="shape-bottom"></div>
-                <div class="modern-card-content">
-                    <div class="card-left"><div class="icon-circle"><i class="fas fa-home"></i></div><div class="card-text"><h3>REGISTER</h3><div class="sub">(HHR)</div></div></div>
-                    <i class="fas fa-chevron-right chevron-icon"></i>
-                </div>
-            </div>
-            <div class="modern-card card-distribution" id="newCardDistribution">
-                <i class="fas fa-lock card-lock"></i>
-                <div class="shape-top"></div><div class="shape-bottom"></div>
-                <div class="modern-card-content">
-                    <div class="card-left"><div class="icon-circle"><i class="fas fa-users"></i></div><div class="card-text"><h3>DISTRIBUTION</h3><div class="sub">(HHD)</div></div></div>
-                    <i class="fas fa-chevron-right chevron-icon"></i>
-                </div>
-            </div>
-            <div class="modern-card card-registerqr" id="newCardRegisterQr">
-                <i class="fas fa-lock card-lock"></i>
-                <div class="shape-top"></div><div class="shape-bottom"></div>
-                <div class="modern-card-content">
-                    <div class="card-left"><div class="icon-circle"><i class="fas fa-qrcode"></i></div><div class="card-text"><h3>REGISTER QR</h3><div class="sub">(HHR)</div></div></div>
-                    <i class="fas fa-chevron-right chevron-icon"></i>
-                </div>
-            </div>
-            <div class="modern-card card-stock" id="newCardStock">
-                <i class="fas fa-lock card-lock"></i>
-                <div class="shape-top"></div><div class="shape-bottom"></div>
-                <div class="modern-card-content">
-                    <div class="card-left"><div class="icon-circle"><i class="fas fa-box"></i></div><div class="card-text"><h3>STOCK</h3><div class="sub">inventory & supplies</div></div></div>
-                    <i class="fas fa-chevron-right chevron-icon"></i>
-                </div>
-            </div>
-            <div class="modern-card card-dashboard" id="newCardDashboard">
-                <i class="fas fa-lock card-lock"></i>
-                <div class="shape-top"></div><div class="shape-bottom"></div>
-                <div class="modern-card-content">
-                    <div class="card-left"><div class="icon-circle"><i class="fas fa-chart-line"></i></div><div class="card-text"><h3>DASHBOARD</h3><div class="sub">analytics & overview</div></div></div>
-                    <i class="fas fa-chevron-right chevron-icon"></i>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</div> <!-- screen -->
+<div class="actions">
+<div class="card register" onclick="openLogin('REGISTER')"><span>REGISTER (HHR)</span><i class="fas fa-home"></i></div>
+<div class="card distribution" onclick="openLogin('DISTRIBUTION')"><span>DISTRIBUTION (HHD)</span><i class="fas fa-users"></i></div>
+<div class="card stock" onclick="openLogin('STOCK')"><span>STOCK</span><i class="fas fa-box"></i></div>
+<div class="card dashboard" onclick="openLogin('DASHBOARD')"><span>DASHBOARD</span><i class="fas fa-chart-line"></i></div>
+</div>
 
 <div class="footer">
-    Developed By<br>
-    Informatic Consultancy Firm-SL ©2026
+Developed By ICF-SL ©2026
 </div>
 
-</div> <!-- phone -->
-
-<!-- LOGIN MODAL -->
-<div class="modal-overlay" id="loginModal">
-    <div class="modal-container">
-        <div class="modal-header">
-            <i class="fas fa-lock"></i>
-            <h2>ACCESS REQUIRED</h2>
-            <p>Data Entry — Field Staff Access</p>
-        </div>
-        <div class="modal-body">
-            <div class="input-group">
-                <label><i class="fas fa-user"></i> USERNAME</label>
-                <input type="text" id="loginUsername" placeholder="Enter username" autocomplete="off">
-            </div>
-            <div class="input-group">
-                <label><i class="fas fa-key"></i> PASSWORD</label>
-                <input type="password" id="loginPassword" placeholder="Enter password">
-            </div>
-            <div class="error-msg" id="loginError">Invalid credentials. Please try again.</div>
-            <div class="modal-actions">
-                <button class="modal-btn cancel-btn" id="cancelModalBtn">CANCEL</button>
-                <button class="modal-btn login-btn" id="loginBtn">LOGIN</button>
-            </div>
-        </div>
-    </div>
 </div>
 
-<!-- IFRAME MODAL FOR REGISTRATION.HTML -->
-<div class="iframe-overlay" id="iframeModal">
-    <div class="iframe-header">
-        <span>📋 Household Registration (HHR)</span>
-        <button id="closeIframeBtn"><i class="fas fa-times"></i></button>
-    </div>
-    <div class="iframe-container">
-        <iframe id="registrationFrame" src="about:blank" title="Registration Form"></iframe>
-    </div>
+<!-- LOGIN -->
+<div class="modal" id="modal">
+<div class="modal-box">
+<h3>Login</h3>
+<input type="text" id="user" placeholder="Username">
+<input type="password" id="pass" placeholder="Password">
+<div style="display:flex;justify-content:space-between">
+<button class="cancel" onclick="closeModal()">Cancel</button>
+<button class="login" onclick="login()">Login</button>
+</div>
+<p id="error" style="color:red;font-size:12px"></p>
+</div>
+</div>
+
+<!-- IFRAME -->
+<div class="iframe" id="iframeBox">
+<header>
+<span>Registration</span>
+<button onclick="closeFrame()">✖</button>
+</header>
+<iframe src="registration.html"></iframe>
 </div>
 
 <script>
-    (function() {
-        // ========== INFINITE CAROUSEL (unchanged but included for completeness) ==========
-        const originalSlides = [
-            { img: "infographics.png", title: "📊 Campaign Dashboard", desc: "Target: 15,000 nets · 58% achieved", icon: "fa-chart-line" },
-            { img: "infographicss.jpg", title: "🦟 ITN Coverage Map", desc: "84% household coverage · 12 districts", icon: "fa-map" },
-            { img: "infographics.jpg", title: "📈 Malaria Reduction", desc: "Zero malaria by 2030 · Progress +22%", icon: "fa-chart-simple" }
-        ];
+let index=0
+function move(dir){
+const slides=document.getElementById('slides')
+index+=dir
+if(index<0)index=2
+if(index>2)index=0
+slides.style.transform=`translateX(-${index*100}%)`
+}
 
-        function buildSlide(data, index) {
-            return `<div class="carousel-slide" data-index="${index}">
-                <img src="${data.img}" alt="slide" onerror="showFallback(this, '${data.title}', '${data.desc}', '${data.icon}')">
-            </div>`;
-        }
+let action=""
+function openLogin(a){
+action=a
+document.getElementById('modal').style.display='flex'
+}
+function closeModal(){
+document.getElementById('modal').style.display='none'
+}
+function login(){
+let u=document.getElementById('user').value
+let p=document.getElementById('pass').value
 
-        const cloneFirst = buildSlide(originalSlides[0], 'clone-first');
-        const cloneLast = buildSlide(originalSlides[originalSlides.length-1], 'clone-last');
-        let allSlidesHTML = cloneLast;
-        for (let i = 0; i < originalSlides.length; i++) {
-            allSlidesHTML += buildSlide(originalSlides[i], i);
-        }
-        allSlidesHTML += cloneFirst;
-
-        const slidesContainer = document.getElementById('carouselSlides');
-        if (slidesContainer) slidesContainer.innerHTML = allSlidesHTML;
-        const slides = document.querySelectorAll('.carousel-slide');
-        const totalCloned = slides.length;
-        const realStartIndex = 1;
-        let currentIndex = realStartIndex;
-        let autoInterval;
-        let isTransitioning = false;
-
-        function updateTransform(animate = true) {
-            if (!slidesContainer) return;
-            if (animate) {
-                slidesContainer.style.transition = 'transform 0.4s ease-in-out';
-            } else {
-                slidesContainer.style.transition = 'none';
-            }
-            const offset = -currentIndex * 100;
-            slidesContainer.style.transform = `translateX(${offset}%)`;
-        }
-
-        function goToSlide(index, animate = true) {
-            if (isTransitioning) return;
-            isTransitioning = true;
-            currentIndex = index;
-            updateTransform(animate);
-            updateDots();
-            setTimeout(() => {
-                isTransitioning = false;
-                if (currentIndex === 0) {
-                    currentIndex = originalSlides.length;
-                    updateTransform(false);
-                    updateDots();
-                } else if (currentIndex === totalCloned - 1) {
-                    currentIndex = 1;
-                    updateTransform(false);
-                    updateDots();
-                }
-            }, animate ? 400 : 0);
-            resetAutoPlay();
-        }
-
-        function nextSlide() { goToSlide(currentIndex + 1, true); }
-        function prevSlide() { goToSlide(currentIndex - 1, true); }
-
-        function updateDots() {
-            let realIndex = currentIndex;
-            if (realIndex === 0) realIndex = originalSlides.length;
-            else if (realIndex === totalCloned - 1) realIndex = 1;
-            const activeReal = realIndex - 1;
-            document.querySelectorAll('.dot').forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === activeReal);
-            });
-        }
-
-        function startAutoPlay() { if (autoInterval) clearInterval(autoInterval); autoInterval = setInterval(nextSlide, 5000); }
-        function resetAutoPlay() { if (autoInterval) clearInterval(autoInterval); startAutoPlay(); }
-
-        function createDots() {
-            const dotsContainer = document.getElementById('carouselDots');
-            if (!dotsContainer) return;
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < originalSlides.length; i++) {
-                const dot = document.createElement('div');
-                dot.classList.add('dot');
-                if (i === 0) dot.classList.add('active');
-                dot.addEventListener('click', () => { goToSlide(i + 1, true); });
-                dotsContainer.appendChild(dot);
-            }
-        }
-        createDots();
-
-        let startX, isDragging = false;
-        if (slidesContainer) {
-            slidesContainer.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; resetAutoPlay(); });
-            slidesContainer.addEventListener('touchend', (e) => {
-                if (!isDragging) return;
-                const diff = e.changedTouches[0].clientX - startX;
-                if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
-                isDragging = false;
-                startAutoPlay();
-            });
-            slidesContainer.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; e.preventDefault(); resetAutoPlay(); });
-            window.addEventListener('mouseup', (e) => {
-                if (!isDragging) return;
-                const diff = e.clientX - startX;
-                if (Math.abs(diff) > 40) diff > 0 ? prevSlide() : nextSlide();
-                isDragging = false;
-                startAutoPlay();
-            });
-        }
-        document.getElementById('prevBtn')?.addEventListener('click', () => { prevSlide(); resetAutoPlay(); });
-        document.getElementById('nextBtn')?.addEventListener('click', () => { nextSlide(); resetAutoPlay(); });
-
-        if (slidesContainer) {
-            currentIndex = 1;
-            updateTransform(false);
-            startAutoPlay();
-        }
-
-        window.showFallback = function(imgElement, title, desc, icon) {
-            if (imgElement.parentNode && !imgElement.parentNode.querySelector('.fallback-bg')) {
-                const fallbackDiv = document.createElement('div');
-                fallbackDiv.className = 'fallback-bg';
-                fallbackDiv.innerHTML = `<i class="fas ${icon}"></i><p>${title}</p><small style="font-size:0.7rem; opacity:0.9;">${desc}</small>`;
-                imgElement.style.display = 'none';
-                imgElement.parentNode.appendChild(fallbackDiv);
-            }
-        };
-
-        // ========== AUTHENTICATION (with immediate fallback) ==========
-        let credentials = [];
-
-        // Add demo credentials immediately (will be overridden by CSV if successful)
-        credentials.push({ username: 'hhr_user', password: 'hhr123', access: 'REGISTER' });
-        credentials.push({ username: 'hhd_user', password: 'hhd123', access: 'DISTRIBUTION' });
-        credentials.push({ username: 'admin', password: 'admin123', access: 'ALL' });
-
-        async function loadCredentials() {
-            try {
-                const response = await fetch('Keys.csv');
-                if (!response.ok) throw new Error('CSV not found');
-                const csvText = await response.text();
-                const lines = csvText.trim().split(/\r?\n/);
-                if (lines.length < 2) return;
-                const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-                const usernameIdx = headers.indexOf('username');
-                const passwordIdx = headers.indexOf('password');
-                const accessIdx = headers.indexOf('access');
-                if (usernameIdx === -1 || passwordIdx === -1) return;
-                const newCreds = [];
-                for (let i = 1; i < lines.length; i++) {
-                    const values = lines[i].split(',').map(v => v.trim());
-                    if (values.length < 2) continue;
-                    const username = values[usernameIdx];
-                    const password = values[passwordIdx];
-                    const access = accessIdx !== -1 ? values[accessIdx].toUpperCase() : 'ALL';
-                    newCreds.push({ username, password, access });
-                }
-                if (newCreds.length > 0) {
-                    credentials = newCreds;
-                    console.log('CSV loaded:', credentials);
-                    showToast('✅ Credentials loaded from Keys.csv', true);
-                }
-            } catch (err) {
-                console.warn('Using demo credentials because Keys.csv not found:', err);
-                showToast('⚠️ Using demo credentials: hhr_user/hhr123 for REGISTER', false);
-            }
-        }
-
-        function showToast(message, isSuccess = true) {
-            const toast = document.createElement('div');
-            toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; font-weight:500; z-index:999; display:flex; align-items:center; gap:10px; box-shadow:0 12px 24px -10px black; font-family:'Poppins',sans-serif;`;
-            toast.innerHTML = `<i class="fas ${isSuccess ? 'fa-check-circle' : 'fa-exclamation-triangle'}"></i> ${message}`;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.style.opacity = '0'; setTimeout(() => toast.remove(), 300); }, 2500);
-        }
-
-        // DOM elements
-        const modal = document.getElementById('loginModal');
-        const usernameInput = document.getElementById('loginUsername');
-        const passwordInput = document.getElementById('loginPassword');
-        const errorMsg = document.getElementById('loginError');
-        const cancelBtn = document.getElementById('cancelModalBtn');
-        const loginBtn = document.getElementById('loginBtn');
-        const iframeModal = document.getElementById('iframeModal');
-        const registrationFrame = document.getElementById('registrationFrame');
-        const closeIframeBtn = document.getElementById('closeIframeBtn');
-
-        let pendingAction = null;
-
-        function showModal(actionName) {
-            pendingAction = actionName;
-            usernameInput.value = '';
-            passwordInput.value = '';
-            errorMsg.style.display = 'none';
-            if (modal) modal.classList.add('active');
-        }
-
-        function hideModal() {
-            if (modal) modal.classList.remove('active');
-            // Do NOT clear pendingAction here! We need it after closing.
-        }
-
-        function openIframeRegistration() {
-            if (registrationFrame) registrationFrame.src = 'registration.html';
-            if (iframeModal) iframeModal.classList.add('active');
-        }
-
-        function closeIframe() {
-            if (iframeModal) iframeModal.classList.remove('active');
-            if (registrationFrame) registrationFrame.src = 'about:blank';
-        }
-
-        if (closeIframeBtn) closeIframeBtn.addEventListener('click', closeIframe);
-
-        function validateCredentials(username, password, requiredAccess) {
-            for (let cred of credentials) {
-                if (cred.username === username && cred.password === password) {
-                    if (cred.access === 'ALL' || cred.access === requiredAccess) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-
-        function getRequiredAccess(cardName) {
-            if (cardName === 'REGISTER (HHR)') return 'REGISTER';
-            if (cardName === 'DISTRIBUTION (HHD)') return 'DISTRIBUTION';
-            if (cardName === 'REGISTER QR (HHR)') return 'REGISTER_QR';
-            if (cardName === 'STOCK') return 'STOCK';
-            if (cardName === 'DASHBOARD') return 'DASHBOARD';
-            return 'ALL';
-        }
-
-        // Card click handlers
-        document.getElementById('newCardRegister')?.addEventListener('click', () => showModal('REGISTER (HHR)'));
-        document.getElementById('newCardDistribution')?.addEventListener('click', () => showModal('DISTRIBUTION (HHD)'));
-        document.getElementById('newCardRegisterQr')?.addEventListener('click', () => showModal('REGISTER QR (HHR)'));
-        document.getElementById('newCardStock')?.addEventListener('click', () => showModal('STOCK'));
-        document.getElementById('newCardDashboard')?.addEventListener('click', () => showModal('DASHBOARD'));
-
-        if (cancelBtn) cancelBtn.addEventListener('click', () => {
-            hideModal();
-            pendingAction = null; // clear only on cancel
-        });
-        if (modal) modal.addEventListener('click', (e) => { if (e.target === modal) { hideModal(); pendingAction = null; } });
-
-        if (loginBtn) {
-            loginBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-                const username = usernameInput.value.trim();
-                const password = passwordInput.value.trim();
-                if (!username || !password) {
-                    errorMsg.style.display = 'block';
-                    errorMsg.textContent = '❌ Please enter both username and password';
-                    return;
-                }
-                if (!pendingAction) {
-                    errorMsg.style.display = 'block';
-                    errorMsg.textContent = '⚠️ No action selected. Please try again.';
-                    return;
-                }
-                const required = getRequiredAccess(pendingAction);
-                const isValid = validateCredentials(username, password, required);
-                if (isValid) {
-                    // Save action before closing modal
-                    const action = pendingAction;
-                    hideModal();          // close modal but keep pendingAction? We'll clear after use.
-                    if (action === 'REGISTER (HHR)') {
-                        openIframeRegistration();
-                    } else {
-                        showToast(`✅ Access granted! ${action} unlocked.`, true);
-                    }
-                    pendingAction = null; // clear after successful login
-                } else {
-                    errorMsg.style.display = 'block';
-                    errorMsg.textContent = `❌ Invalid credentials or insufficient rights for ${pendingAction}.`;
-                }
-            });
-        }
-
-        // Load CSV on start
-        loadCredentials();
-
-        // Tap feedback for cards
-        document.querySelectorAll('.modern-card').forEach(card => {
-            card.addEventListener('touchstart', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
-            card.addEventListener('mousedown', function() { this.style.transform = 'scale(0.98)'; setTimeout(() => { if(this) this.style.transform = ''; }, 120); });
-        });
-    })();
+if(u==="admin" && p==="1234"){
+closeModal()
+if(action==="REGISTER"){
+document.getElementById('iframeBox').style.display='flex'
+}else{
+alert(action+" Access Granted")
+}
+}else{
+document.getElementById('error').innerText="Invalid login"
+}
+}
+function closeFrame(){
+document.getElementById('iframeBox').style.display='none'
+}
 </script>
+
 </body>
 </html>
