@@ -97,14 +97,36 @@
     letter-spacing: 0.5px;
   }
 
-  /* PARTNER GRID */
+  /* PARTNER GRID - Gold themed with centered heading */
+  .partner-section {
+    background: #f9fafc;
+    padding: 10px 14px 4px 14px;
+    border-bottom: 1px solid #e9edf2;
+  }
+  .partner-heading {
+    font-size: 12px;
+    font-weight: 800;
+    color: #D4AF37;  /* Premium Gold Color */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;  /* Centered horizontally */
+    gap: 8px;
+    text-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    text-align: center;
+    width: 100%;
+  }
+  .partner-heading i {
+    font-size: 13px;
+    color: #D4AF37;
+  }
   .partner-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
-    padding: 16px 14px;
-    background: #f9fafc;
-    border-bottom: 1px solid #e9edf2;
+    padding-bottom: 12px;
   }
   .partner-item {
     text-align: center;
@@ -125,9 +147,22 @@
   }
   .partner-item span {
     font-size: 9px;
-    font-weight: 600;
-    color: #1f2a44;
+    font-weight: 700;
+    color: #D4AF37;  /* Gold color for all partner names */
     display: block;
+    letter-spacing: 0.3px;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 2px rgba(212,175,55,0.2);
+  }
+  /* Fallback for browsers that don't support gradient text */
+  @supports not (background-clip: text) {
+    .partner-item span {
+      color: #D4AF37;
+      -webkit-text-fill-color: #D4AF37;
+    }
   }
 
   /* CAROUSEL */
@@ -225,7 +260,7 @@
     border-top-right-radius: 16px;
   }
 
-  /* MODAL STYLES (enhanced) */
+  /* MODAL STYLES */
   .modal {
     position: fixed;
     top: 0;
@@ -298,13 +333,13 @@
     background: #eef2ff;
     color: #334155;
   }
-  #error {
+  #loginErrorMessage {
     margin-top: 12px;
     font-size: 12px;
     font-weight: 500;
   }
 
-  /* IFRAME PANEL - fullscreen style inside phone */
+  /* IFRAME PANEL */
   .iframe-panel {
     position: absolute;
     top: 0;
@@ -345,21 +380,11 @@
     background: white;
   }
   
-  /* placeholder images simulation using SVG/gradient (no external resources) */
-  .partner-item img[src="usa.png"], 
-  .partner-item img[src="global_fund.png"],
-  .partner-item img[src="moh_logo.png"] {
-    background: linear-gradient(145deg, #e6edf4, #ffffff);
-    border-radius: 16px;
-    object-fit: scale-down;
-  }
-  
-  /* fallback style for all images - robust rendering */
+  /* fallback style for images */
   img {
     background-color: #f1f5f9;
   }
   
-  /* responsiveness */
   @media (max-width: 400px) {
     .card span { font-size: 14px; }
     .card { padding: 14px 18px;}
@@ -373,7 +398,7 @@
 
   <!-- SCROLLABLE MAIN AREA -->
   <div class="scroll-content">
-    <!-- HEADER with logo simulation (since images not provided, we use elegant icon/placeholder) -->
+    <!-- HEADER with logo -->
     <div class="header-section">
       <div class="logo-area">
         <div class="logo-placeholder">
@@ -389,18 +414,41 @@
       </div>
     </div>
 
-    <!-- PARTNER LOGOS (brand representation) -->
-    <div class="partner-grid"> 
-      <h2>IMPLEMENTING PARNERS</h2> 
-      <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%231e3a8a\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
-      <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%231e7920\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
-      <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%230b5ed7\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
-      <div class="partner-item"><img src="moh_logo.png" alt="NMCP" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%230b5ed7\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
-      <div class="partner-item"><img src="moh_logo.png" alt="PMI Evolve" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23f97316\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
-      <div class="partner-item"><img src="moh_logo.png" alt="MBSSE" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23226b3e\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div> 
+    <!-- PARTNER SECTION - GOLD THEME with CENTERED HEADING -->
+    <div class="partner-section">
+      <div class="partner-heading">
+        <i class="fas fa-handshake"></i> 
+        <span>IMPLEMENTING PARTNERS</span>
+      </div>
+      <div class="partner-grid">
+        <div class="partner-item">
+          <img src="usa.png" alt="United State Dep." onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
+          <span>United State Dep.</span>
+        </div>
+        <div class="partner-item">
+          <img src="global_fund.png" alt="Global Fund" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';">
+          <span>Global Fund</span>
+        </div>
+        <div class="partner-item">
+          <img src="moh_logo.png" alt="MOH" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';">
+          <span>MOH</span>
+        </div>
+        <div class="partner-item">
+          <img src="nmcp_logo.png" alt="NMCP" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';">
+          <span>NMCP</span>
+        </div>
+        <div class="partner-item">
+          <img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';">
+          <span>PMI Evolve</span>
+        </div>
+        <div class="partner-item">
+          <img src="mbsse_logo.png" alt="MBSSE" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
+          <span>MBSSE</span>
+        </div>
+      </div>
     </div>
 
-    <!-- CAROUSEL SLIDER (informative infographics) -->
+    <!-- CAROUSEL SLIDER -->
     <div class="carousel-container">
       <div class="carousel">
         <div class="slides" id="slides">
@@ -453,7 +501,7 @@
   </div>
 </div>
 
-<!-- IFRAME EMBED (Registration Form or other modules) -->
+<!-- IFRAME EMBED (Registration Form) -->
 <div id="iframePanel" class="iframe-panel">
   <div class="iframe-header">
     <span><i class="fas fa-edit"></i> Registration Portal (HHR)</span>
@@ -484,7 +532,7 @@
   // Auto slide every 5 seconds
   let autoInterval = setInterval(() => moveSlide(1), 5000);
   
-  // Pause auto-slide on hover (optional but good)
+  // Pause auto-slide on hover
   const carouselElement = document.querySelector('.carousel');
   if (carouselElement) {
     carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
@@ -508,7 +556,6 @@
   // Open login modal with specific action context
   function openActionModal(actionType) {
     pendingAction = actionType;
-    // Reset fields
     if (usernameField) usernameField.value = "";
     if (passwordField) passwordField.value = "";
     if (errorMsgSpan) errorMsgSpan.innerText = "";
@@ -521,13 +568,12 @@
     if (errorMsgSpan) errorMsgSpan.innerText = "";
   }
   
-  // Login validation (mock: admin/1234)
+  // Login validation (admin/1234)
   function performLogin() {
     const username = usernameField ? usernameField.value.trim() : "";
     const password = passwordField ? passwordField.value : "";
     
     if (username === "admin" && password === "1234") {
-      // Login success
       closeLoginModal();
       handleAuthorizedAction(pendingAction);
     } else {
@@ -538,22 +584,19 @@
   // After successful login, route to respective module
   function handleAuthorizedAction(action) {
     if (action === "REGISTER") {
-      // Show iframe with registration.html
-      // We'll also build a fallback registration demo if registration.html not available
       dynamicIframe.src = "registration.html";
-      // Fallback: if registration.html fails to load, inject a complete registration form via srcdoc
       dynamicIframe.onerror = function() {
         dynamicIframe.srcdoc = getFallbackRegistrationForm();
       };
-      // Additional safety: after timeout check if iframe is empty
       setTimeout(() => {
         try {
-          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
+          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
+              dynamicIframe.contentDocument.body && 
+              dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
             dynamicIframe.srcdoc = getFallbackRegistrationForm();
           }
         } catch(e) {}
       }, 500);
-      
       iframePanel.style.display = 'flex';
     } 
     else if (action === "DISTRIBUTION") {
@@ -571,29 +614,37 @@
     pendingAction = "";
   }
   
-  // Fallback registration form if registration.html is missing
+  // Enhanced Fallback registration form
   function getFallbackRegistrationForm() {
     return `<!DOCTYPE html>
     <html>
-    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title><style>
-      body{font-family:'Inter',sans-serif;background:#f4f9ff;padding:20px;margin:0;}
-      .reg-card{background:white;border-radius:32px;padding:24px;box-shadow:0 8px 20px rgba(0,0,0,0.05);}
-      h2{color:#0b5ed7;font-size:22px;}
-      input, select{width:100%;padding:14px;margin:10px 0;border:1px solid #ccc;border-radius:60px;font-size:14px;}
-      button{background:#0b5ed7;color:white;border:none;padding:14px;width:100%;border-radius:60px;font-weight:bold;font-size:16px;}
-      .success{color:#15803d;margin-top:10px;font-weight:bold;}
+    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration - ITN Campaign</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #eef2ff 0%, #ffffff 100%);padding:24px 20px;margin:0;min-height:100vh;}
+      .reg-card{background:white;border-radius:40px;padding:28px 24px;box-shadow:0 20px 35px -12px rgba(0,0,0,0.15);max-width:400px;margin:0 auto;}
+      h2{color:#0b5ed7;font-size:26px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+      .sub{color:#4b5563;font-size:13px;margin-bottom:24px;border-left:3px solid #0b5ed7;padding-left:12px;}
+      input, select{width:100%;padding:14px 18px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:60px;font-size:14px;font-family:inherit;transition:0.2s;}
+      input:focus{outline:none;border-color:#0b5ed7;box-shadow:0 0 0 3px rgba(11,94,215,0.1);}
+      button{background:#0b5ed7;color:white;border:none;padding:14px;width:100%;border-radius:60px;font-weight:700;font-size:16px;cursor:pointer;margin-top:8px;transition:0.2s;}
+      button:hover{background:#1e3a8a;transform:scale(0.98);}
+      .success{background:#e8f5e9;color:#15803d;padding:12px;border-radius:20px;margin-top:20px;font-size:12px;font-weight:600;text-align:center;}
+      .fa-bed{color:#0b5ed7;}
     </style>
     </head>
     <body>
     <div class="reg-card">
       <h2><i class="fas fa-bed"></i> HHR Registration</h2>
-      <p>Household Registration for ITN Distribution</p>
-      <input type="text" placeholder="Full name" id="fullname">
-      <input type="text" placeholder="Household ID / NHIS">
+      <div class="sub">Household Registration for ITN Mass Campaign 2026</div>
+      <input type="text" placeholder="Full name (Household Head)" id="fullname">
+      <input type="text" placeholder="Household ID / NHIS Number">
       <input type="text" placeholder="District / Chiefdom">
       <input type="number" placeholder="Number of household members">
-      <button onclick="alert('Demo: Registration data saved (mock). In production, backend sync.')">Submit Registration</button>
-      <div class="success">✅ ITN campaign 2026: household targeting active</div>
+      <input type="text" placeholder="Phone number (optional)">
+      <button onclick="alert('✅ Demo: Registration data saved successfully. In production, data syncs with national database.')">Submit Registration</button>
+      <div class="success"><i class="fas fa-check-circle"></i> ITN campaign 2026: household targeting active</div>
     </div>
     </body>
     </html>`;
@@ -601,11 +652,11 @@
   
   function closeIframePanel() {
     iframePanel.style.display = 'none';
-    dynamicIframe.src = "registration.html"; // reset
+    dynamicIframe.src = "registration.html";
     dynamicIframe.onerror = null;
   }
   
-  // Close modal if clicking outside the modal box
+  // Close modal when clicking outside
   window.onclick = function(event) {
     if (event.target === loginModal) {
       closeLoginModal();
@@ -615,21 +666,21 @@
     }
   };
   
-  // Preload partner images to avoid missing icons (display consistency)
+  // Ensure all partner images have fallback
   const allImgs = document.querySelectorAll('.partner-item img');
   allImgs.forEach(img => {
     img.onerror = function() {
       if (!img.dataset.fallbackSet) {
         img.dataset.fallbackSet = 'true';
-        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%230b5ed7\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3Ctext x=\'12\' y=\'16\' font-size=\'8\' fill=\'white\' text-anchor=\'middle\'%3EP%3C/text%3E%3C/svg%3E';
+        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'6\'/%3E%3Ctext x=\'12\' y=\'16\' font-size=\'9\' fill=\'white\' text-anchor=\'middle\' font-weight=\'bold\'%3EP%3C/text%3E%3C/svg%3E';
       }
-    }
+    };
   });
   
-  // Initialize carousel position
+  // Initialize carousel
   updateCarousel();
   
-  console.log("ICF-SL ITN Campaign interface ready | Login: admin / 1234");
+  console.log("ICF-SL ITN Campaign | Gold theme applied - IMPLEMENTING PARTNERS centered");
 </script>
 </body>
 </html>
