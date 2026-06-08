@@ -97,22 +97,22 @@
     letter-spacing: 0.5px;
   }
 
-  /* PARTNER GRID - Gold themed with centered heading */
+  /* PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID */
   .partner-section {
     background: #f9fafc;
-    padding: 10px 14px 4px 14px;
+    padding: 10px 14px 12px 14px;
     border-bottom: 1px solid #e9edf2;
   }
   .partner-heading {
     font-size: 12px;
     font-weight: 800;
-    color: #D4AF37;  /* Premium Gold Color */
+    color: #D4AF37;
     text-transform: uppercase;
     letter-spacing: 1px;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
-    justify-content: center;  /* Centered horizontally */
+    justify-content: center;
     gap: 8px;
     text-shadow: 0 1px 1px rgba(0,0,0,0.05);
     text-align: center;
@@ -122,25 +122,30 @@
     font-size: 13px;
     color: #D4AF37;
   }
-  .partner-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+  /* Partners container - FLEX WRAP (no grid) */
+  .partners-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
     gap: 12px;
-    padding-bottom: 12px;
+    padding-bottom: 4px;
   }
   .partner-item {
     text-align: center;
     background: white;
     border-radius: 20px;
-    padding: 8px 4px;
+    padding: 8px 12px;
+    min-width: 90px;
+    flex: 0 0 auto;
     box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     transition: all 0.2s;
     border: 1px solid #eef2f8;
   }
   .partner-item img {
     width: 100%;
-    max-width: 52px;
-    height: 48px;
+    max-width: 48px;
+    height: 44px;
     object-fit: contain;
     margin-bottom: 6px;
     filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
@@ -148,7 +153,7 @@
   .partner-item span {
     font-size: 9px;
     font-weight: 700;
-    color: #D4AF37;  /* Gold color for all partner names */
+    color: #D4AF37;
     display: block;
     letter-spacing: 0.3px;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
@@ -389,6 +394,8 @@
     .card span { font-size: 14px; }
     .card { padding: 14px 18px;}
     .slide { height: 150px; }
+    .partner-item { min-width: 80px; padding: 6px 8px; }
+    .partner-item img { max-width: 40px; height: 38px; }
   }
 </style>
 </head>
@@ -414,13 +421,13 @@
       </div>
     </div>
 
-    <!-- PARTNER SECTION - GOLD THEME with CENTERED HEADING -->
+    <!-- PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID (Flex layout) -->
     <div class="partner-section">
       <div class="partner-heading">
         <i class="fas fa-handshake"></i> 
         <span>IMPLEMENTING PARTNERS</span>
       </div>
-      <div class="partner-grid">
+      <div class="partners-container">
         <div class="partner-item">
           <img src="usa.png" alt="United State Dep." onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
           <span>United State Dep.</span>
@@ -680,7 +687,7 @@
   // Initialize carousel
   updateCarousel();
   
-  console.log("ICF-SL ITN Campaign | Gold theme applied - IMPLEMENTING PARTNERS centered");
+  console.log("ICF-SL ITN Campaign | Gold theme - Partners displayed with flexible wrap layout (grid removed)");
 </script>
 </body>
 </html>
