@@ -23,7 +23,7 @@
     padding: 0;
   }
 
-  /* AUTO-FIT SCREEN - Responsive container */
+  /* PHONE VIEW - Optimized for mobile */
   .phone {
     width: 100%;
     max-width: 100%;
@@ -95,19 +95,6 @@
     border-radius: 12px;
     padding: 5px;
   }
-  .logo-placeholder {
-    background: white;
-    width: 50px;
-    height: 50px;
-    border-radius: 12px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: 800;
-    font-size: 18px;
-    color: #0b5ed7;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
-  }
   .header-title {
     text-align: left;
   }
@@ -165,30 +152,32 @@
   .partners-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 4px;
-    row-gap: 6px;
+    gap: 8px;
+    row-gap: 10px;
   }
   .partner-item {
     text-align: center;
-    padding: 4px 2px;
+    padding: 6px 4px;
   }
   .partner-item img {
     width: 100%;
-    max-width: 44px;
-    height: 40px;
+    max-width: 50px;
+    height: 46px;
     object-fit: contain;
-    margin-bottom: 3px;
+    margin-bottom: 6px;
   }
   .partner-item span {
-    font-size: 7.5px;
+    font-size: 8px;
     font-weight: 700;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    display: block;
+    line-height: 1.3;
   }
 
-  /* CAROUSEL */
+  /* CAROUSEL - INFINITE LOOP */
   .carousel-container {
     padding: 10px 14px 0px;
   }
@@ -199,45 +188,55 @@
     box-shadow: 0 6px 14px rgba(0,0,0,0.1);
     background: #f0f2f5;
   }
+  .slides-wrapper {
+    overflow: hidden;
+    width: 100%;
+  }
   .slides {
     display: flex;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform;
   }
   .slide {
     min-width: 100%;
-    height: 180px;
+    flex-shrink: 0;
   }
   .slide img {
     width: 100%;
-    height: 100%;
+    height: auto;
+    aspect-ratio: 16 / 9;
     object-fit: cover;
+    display: block;
     background: #cbd5e1;
   }
-  .btn {
+  
+  /* Navigation Arrows */
+  .carousel-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(3px);
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(4px);
     color: white;
     border: none;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    font-weight: bold;
     font-size: 16px;
-    transition: 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .prev { left: 8px; }
-  .next { right: 8px; }
-  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
+  .carousel-btn:active {
+    transform: translateY(-50%) scale(0.95);
+  }
+  .btn-prev { left: 8px; }
+  .btn-next { right: 8px; }
   
-  /* Dots for slider */
+  /* Dots Indicators */
   .dots-container {
     display: flex;
     justify-content: center;
@@ -261,7 +260,7 @@
     background: #0b5ed7;
   }
 
-  /* ACTION CARDS */
+  /* ACTION CARDS - Abbreviation directly under main text */
   .actions {
     padding: 14px 16px 12px;
     display: flex;
@@ -283,13 +282,43 @@
   .card:active {
     transform: scale(0.97);
   }
-  .card span {
+  .card-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card-main-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-main-row i {
+    font-size: 18px;
+    width: 22px;
+  }
+  .card-main-text {
     font-weight: 700;
-    font-size: 13px;
+    font-size: 14px;
     letter-spacing: -0.2px;
   }
-  .card i {
+  .card-abbr {
+    font-size: 9px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 3px;
+    margin-left: 32px;
+    letter-spacing: 0.3px;
+  }
+  .card-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-right i {
     font-size: 18px;
+  }
+  .lock-icon {
+    font-size: 16px;
   }
   .register { background: linear-gradient(105deg, #1e3a8a, #3b82f6); }
   .distribution { background: linear-gradient(105deg, #0f5b2e, #2e9a5e); }
@@ -297,7 +326,7 @@
   .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
 
-  /* FOOTER - Informatics Consultancy Firm-SL and 2026 in straight line with copyright */
+  /* FOOTER */
   .footer {
     text-align: center;
     background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
@@ -479,65 +508,130 @@
         <i class="fas fa-handshake"></i> 
         <span>IMPLEMENTING PARTNERS</span>
       </div>
-      <div class="partners-container"> 
-        <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
-        <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
-        <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
-        <div class="partner-item"><img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
-        <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
-        <div class="partner-item"><img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div>
+      <div class="partners-container">
+        <div class="partner-item">
+          <img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
+          <span>United State Dep.</span>
+        </div>
+        <div class="partner-item">
+          <img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';">
+          <span>Global Fund</span>
+        </div>
+        <div class="partner-item">
+          <img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';">
+          <span>MOH</span>
+        </div>
+        <div class="partner-item">
+          <img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';">
+          <span>NMCP</span>
+        </div>
+        <div class="partner-item">
+          <img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';">
+          <span>PMI Evolve</span>
+        </div>
+        <div class="partner-item">
+          <img src="mbsse_logo.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
+          <span>MBSSE</span>
+        </div>
       </div>
     </div>
 
-    <!-- CAROUSEL SLIDER -->
+    <!-- CAROUSEL SLIDER - INFINITE LOOP -->
     <div class="carousel-container">
       <div class="carousel">
-        <div class="slides" id="slides">
-          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
-          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
-          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
+        <div class="slides-wrapper">
+          <div class="slides" id="slides">
+            <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
+            <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
+            <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
+          </div>
         </div>
-        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
-        <button class="btn next" onclick="moveSlide(1)">❯</button>
+        <button class="carousel-btn btn-prev" id="prevBtn">❮</button>
+        <button class="carousel-btn btn-next" id="nextBtn">❯</button>
       </div>
       <div class="dots-container" id="dotsContainer"></div>
     </div>
 
-    <!-- ACTION CARDS -->
+    <!-- ACTION CARDS - Abbreviation directly under main text -->
     <div class="actions">
       <!-- REGISTER (HHR) -->
       <div class="card register" onclick="openActionModal('REGISTER')">
-        <span><i class="fas fa-home" style="margin-right: 10px;"></i> REGISTER (HHR)</span>
-        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-arrow-right"></i></div>
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-home"></i>
+            <span class="card-main-text">REGISTER</span>
+          </div>
+          <div class="card-abbr">(HHR)</div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-arrow-right"></i>
+        </div>
       </div>
       
       <!-- DISTRIBUTION (HHD) -->
       <div class="card distribution" onclick="openActionModal('DISTRIBUTION')">
-        <span><i class="fas fa-users" style="margin-right: 10px;"></i> DISTRIBUTION (HHD)</span>
-        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-hand-holding-heart"></i></div>
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-users"></i>
+            <span class="card-main-text">DISTRIBUTION</span>
+          </div>
+          <div class="card-abbr">(HHD)</div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-hand-holding-heart"></i>
+        </div>
       </div>
       
       <!-- REGISTER QR (HHR) -->
       <div class="card registerqr" onclick="openActionModal('REGISTER_QR')">
-        <span><i class="fas fa-qrcode" style="margin-right: 10px;"></i> REGISTER QR (HHR)</span>
-        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-camera"></i></div>
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-qrcode"></i>
+            <span class="card-main-text">REGISTER QR</span>
+          </div>
+          <div class="card-abbr">(HHR)</div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-camera"></i>
+        </div>
       </div>
       
-      <!-- STOCK -->
+      <!-- STOCK (No abbreviation) -->
       <div class="card stock" onclick="openActionModal('STOCK')">
-        <span><i class="fas fa-box" style="margin-right: 10px;"></i> STOCK</span>
-        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-chart-simple"></i></div>
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-box"></i>
+            <span class="card-main-text">STOCK</span>
+          </div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-chart-simple"></i>
+        </div>
       </div>
       
-      <!-- DASHBOARD -->
+      <!-- DASHBOARD (No abbreviation) -->
       <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
-        <span><i class="fas fa-chart-line" style="margin-right: 10px;"></i> DASHBOARD</span>
-        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-eye"></i></div>
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-chart-line"></i>
+            <span class="card-main-text">DASHBOARD</span>
+          </div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-eye"></i>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER - "Developed by" on first line, then "Informatics Consultancy Firm-SL © 2026" in straight line -->
+  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-line1">Developed by</div>
     <div class="footer-line2">
@@ -570,15 +664,26 @@
 </div>
 
 <script>
-  // ---------- CAROUSEL LOGIC WITH DOTS ----------
-  let currentIndex = 0;
+  // ---------- INFINITE LOOP CAROUSEL WITH CLONE TECHNIQUE ----------
   const slidesContainer = document.getElementById('slides');
-  const slides = document.querySelectorAll('.slide');
-  const totalSlides = slides.length;
+  const originalSlides = Array.from(document.querySelectorAll('.slide'));
+  const totalSlides = originalSlides.length;
   const dotsContainer = document.getElementById('dotsContainer');
-  let autoInterval;
+  const prevButton = document.getElementById('prevBtn');
+  const nextButton = document.getElementById('nextBtn');
   
-  // Create dots
+  let currentIndex = 1;
+  let autoInterval;
+  let isTransitioning = false;
+  
+  function setupInfiniteLoop() {
+    const firstClone = originalSlides[0].cloneNode(true);
+    const lastClone = originalSlides[totalSlides - 1].cloneNode(true);
+    slidesContainer.appendChild(firstClone);
+    slidesContainer.insertBefore(lastClone, originalSlides[0]);
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+  }
+  
   function createDots() {
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalSlides; i++) {
@@ -586,18 +691,21 @@
       dot.classList.add('dot');
       if (i === 0) dot.classList.add('active');
       dot.addEventListener('click', () => {
-        goToSlide(i);
+        if (isTransitioning) return;
+        goToRealSlide(i);
         resetAutoSlide();
       });
       dotsContainer.appendChild(dot);
     }
   }
   
-  // Update active dot
   function updateDots() {
+    let realIndex = currentIndex - 1;
+    if (realIndex < 0) realIndex = totalSlides - 1;
+    if (realIndex >= totalSlides) realIndex = 0;
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, idx) => {
-      if (idx === currentIndex) {
+      if (idx === realIndex) {
         dot.classList.add('active');
       } else {
         dot.classList.remove('active');
@@ -605,33 +713,85 @@
     });
   }
   
-  // Move to specific slide
-  function goToSlide(index) {
-    currentIndex = index;
-    if (currentIndex < 0) currentIndex = 0;
-    if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
+  function goToRealSlide(index) {
+    if (isTransitioning) return;
+    const targetPosition = index + 1;
+    currentIndex = targetPosition;
+    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
+    
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        setTimeout(() => {
+          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 20);
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        setTimeout(() => {
+          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 20);
+      }
+    }, 500);
   }
   
-  // Move function for buttons
-  function moveSlide(direction) {
-    let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = 0;
-    if (newIndex >= totalSlides) newIndex = totalSlides - 1;
-    goToSlide(newIndex);
-    resetAutoSlide();
+  function nextSlide() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex++;
+    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    
+    setTimeout(() => {
+      isTransitioning = false;
+      if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        setTimeout(() => {
+          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 20);
+      }
+    }, 500);
   }
   
-  // Auto slide
+  function prevSlide() {
+    if (isTransitioning) return;
+    isTransitioning = true;
+    currentIndex--;
+    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    
+    setTimeout(() => {
+      isTransitioning = false;
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        setTimeout(() => {
+          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+        }, 20);
+      }
+    }, 500);
+  }
+  
   function startAutoSlide() {
     if (autoInterval) clearInterval(autoInterval);
     autoInterval = setInterval(() => {
-      let nextIndex = currentIndex + 1;
-      if (nextIndex >= totalSlides) {
-        nextIndex = 0;
+      if (!isTransitioning) {
+        nextSlide();
       }
-      goToSlide(nextIndex);
     }, 5000);
   }
   
@@ -639,21 +799,26 @@
     startAutoSlide();
   }
   
-  // Pause on hover
-  const carouselElement = document.querySelector('.carousel');
-  if (carouselElement) {
-    carouselElement.addEventListener('mouseenter', () => {
-      if (autoInterval) clearInterval(autoInterval);
-    });
-    carouselElement.addEventListener('mouseleave', () => {
-      startAutoSlide();
-    });
-  }
-  
-  // Initialize carousel
+  setupInfiniteLoop();
   createDots();
   startAutoSlide();
-  window.moveSlide = moveSlide;
+  
+  prevButton.addEventListener('click', () => {
+    prevSlide();
+    resetAutoSlide();
+  });
+  nextButton.addEventListener('click', () => {
+    nextSlide();
+    resetAutoSlide();
+  });
+  
+  const carouselElement = document.querySelector('.carousel');
+  carouselElement.addEventListener('mouseenter', () => {
+    if (autoInterval) clearInterval(autoInterval);
+  });
+  carouselElement.addEventListener('mouseleave', () => {
+    startAutoSlide();
+  });
   
   // ---------- MODAL & IFRAME FLOW ----------
   let pendingAction = "";
