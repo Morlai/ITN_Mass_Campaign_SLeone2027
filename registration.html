@@ -1,4 +1,4 @@
-<!DOCTYPE html>  
+<!DOCTYPE html>
 <html lang="en"> 
 <head>
 <meta charset="UTF-8">
@@ -342,6 +342,11 @@ button {
     flex: 1;
 }
 
+.review-gps {
+    margin-top: 4px;
+    font-size: 0.7rem;
+}
+
 @media (max-width: 400px) {
     .steps {
         margin: 20px 12px 12px 12px;
@@ -428,7 +433,7 @@ button {
 </div>
 </div>
 
-<!-- SECTION 3 - REVIEW -->
+<!-- SECTION 3 - REVIEW (with separate GPS display) -->
 <div class="section" id="sec3">
 <div class="review-box">
 <div class="review-title">🏠 Household Summary</div>
@@ -958,9 +963,6 @@ function goReview() {
     // Get GPS values from separate fields
     const latitude = document.getElementById('latitude')?.value || "";
     const longitude = document.getElementById('longitude')?.value || "";
-    const gpsString = (latitude && longitude && latitude !== "Unavailable" && longitude !== "Unavailable") 
-        ? `${latitude}, ${longitude}` 
-        : "—";
 
     // Build household name for filename
     const surname = document.getElementById('surname')?.value || "";
@@ -995,7 +997,10 @@ Total Members: ${totalMembers}
 Pregnant Women: ${pregnant}
 Under-Five Children: ${under5}
 HHR Name: ${document.getElementById('registerName')?.value || "-"}
-GPS: ${gpsString}
+
+📍 GPS Coordinates
+Latitude: ${latitude}
+Longitude: ${longitude}
 
 🎟️ Token: ${token}
 🦟 ITNs to be Received: ${itn}
