@@ -97,9 +97,9 @@
     letter-spacing: 0.5px;
   }
 
-  /* PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID */
+  /* PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID, NO BACKGROUND */
   .partner-section {
-    background: #f9fafc;
+    background: transparent;  /* Removed background color */
     padding: 10px 14px 12px 14px;
     border-bottom: 1px solid #e9edf2;
   }
@@ -122,33 +122,33 @@
     font-size: 13px;
     color: #D4AF37;
   }
-  /* Partners container - FLEX WRAP (no grid) */
+  /* Partners container - FLEX WRAP (no grid) - NO BACKGROUND */
   .partners-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
     padding-bottom: 4px;
   }
   .partner-item {
     text-align: center;
-    background: white;
-    border-radius: 20px;
-    padding: 8px 12px;
-    min-width: 90px;
+    background: transparent;  /* Removed background color - plain image */
+    border-radius: 0px;       /* Removed border radius */
+    padding: 4px 8px;
+    min-width: 80px;
     flex: 0 0 auto;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.03);
     transition: all 0.2s;
-    border: 1px solid #eef2f8;
+    border: none;             /* Removed border */
+    box-shadow: none;         /* Removed shadow */
   }
   .partner-item img {
     width: 100%;
-    max-width: 48px;
-    height: 44px;
+    max-width: 55px;
+    height: 50px;
     object-fit: contain;
     margin-bottom: 6px;
-    filter: drop-shadow(0 2px 2px rgba(0,0,0,0.05));
+    filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
   }
   .partner-item span {
     font-size: 9px;
@@ -160,7 +160,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 2px rgba(212,175,55,0.2);
+    text-shadow: none;
   }
   /* Fallback for browsers that don't support gradient text */
   @supports not (background-clip: text) {
@@ -387,15 +387,15 @@
   
   /* fallback style for images */
   img {
-    background-color: #f1f5f9;
+    background-color: transparent;
   }
   
   @media (max-width: 400px) {
     .card span { font-size: 14px; }
     .card { padding: 14px 18px;}
     .slide { height: 150px; }
-    .partner-item { min-width: 80px; padding: 6px 8px; }
-    .partner-item img { max-width: 40px; height: 38px; }
+    .partner-item { min-width: 70px; padding: 4px 6px; }
+    .partner-item img { max-width: 45px; height: 42px; }
   }
 </style>
 </head>
@@ -421,7 +421,7 @@
       </div>
     </div>
 
-    <!-- PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID (Flex layout) -->
+    <!-- PARTNER SECTION - GOLD THEME with CENTERED HEADING - NO GRID, NO BACKGROUND (plain images) -->
     <div class="partner-section">
       <div class="partner-heading">
         <i class="fas fa-handshake"></i> 
@@ -679,7 +679,7 @@
     img.onerror = function() {
       if (!img.dataset.fallbackSet) {
         img.dataset.fallbackSet = 'true';
-        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'6\'/%3E%3Ctext x=\'12\' y=\'16\' font-size=\'9\' fill=\'white\' text-anchor=\'middle\' font-weight=\'bold\'%3EP%3C/text%3E%3C/svg%3E';
+        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3Ctext x=\'12\' y=\'16\' font-size=\'8\' fill=\'white\' text-anchor=\'middle\'%3E%3C/text%3E%3C/svg%3E';
       }
     };
   });
@@ -687,7 +687,7 @@
   // Initialize carousel
   updateCarousel();
   
-  console.log("ICF-SL ITN Campaign | Gold theme - Partners displayed with flexible wrap layout (grid removed)");
+  console.log("ICF-SL ITN Campaign | Partner section: background removed, plain images only");
 </script>
 </body>
 </html>
