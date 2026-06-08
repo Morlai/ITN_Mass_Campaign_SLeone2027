@@ -23,7 +23,7 @@
     padding: 0;
   }
 
-  /* AUTO-FIT SCREEN - Responsive container that fits any screen */
+  /* AUTO-FIT SCREEN - Responsive container */
   .phone {
     width: 100%;
     max-width: 100%;
@@ -70,178 +70,184 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* HEADER - Responsive */
+  /* HEADER */
   .header-section {
     background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
     color: white;
     text-align: center;
-    padding: clamp(8px, 3vw, 14px) clamp(6px, 2vw, 12px) clamp(8px, 3vw, 12px);
-    border-bottom-left-radius: clamp(16px, 4vw, 24px);
-    border-bottom-right-radius: clamp(16px, 4vw, 24px);
+    padding: 12px 10px 14px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
     box-shadow: 0 3px 8px rgba(0,0,0,0.08);
   }
   .logo-area {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(6px, 2vw, 10px);
-    margin-bottom: clamp(4px, 1.5vw, 8px);
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 5px;
   }
   .logo-placeholder {
     background: white;
-    width: clamp(32px, 8vw, 44px);
-    height: clamp(32px, 8vw, 44px);
-    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: 800;
-    font-size: clamp(16px, 4vw, 20px);
+    font-size: 18px;
     color: #0b5ed7;
     box-shadow: 0 2px 6px rgba(0,0,0,0.15);
   }
-  .header-section h2 {
-    font-size: clamp(11px, 3.5vw, 15px);
-    font-weight: 700;
-    letter-spacing: -0.2px;
+  .header-title {
+    text-align: left;
   }
-  .header-section p {
-    font-size: clamp(7px, 2vw, 10px);
-    opacity: 0.85;
+  .header-title h2 {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .header-title p {
+    font-size: 8px;
+    opacity: 0.9;
     margin-top: 2px;
+    line-height: 1.2;
   }
   .campaign-badge {
     background: #ffcd3c;
     color: #1e3a8a;
-    padding: clamp(3px, 1.5vw, 6px) clamp(8px, 3vw, 14px);
+    padding: 6px 12px;
     border-radius: 30px;
-    font-size: clamp(7px, 2.5vw, 10px);
+    font-size: 8px;
     font-weight: 800;
     display: inline-block;
-    margin-top: clamp(4px, 1.5vw, 8px);
+    margin-top: 8px;
     letter-spacing: 0.3px;
+    line-height: 1.3;
+  }
+  .survey-text {
+    font-size: 7px;
+    margin-top: 6px;
+    opacity: 0.85;
+    font-weight: 500;
   }
 
-  /* PARTNER SECTION - Responsive */
+  /* PARTNER SECTION */
   .partner-section {
     background: transparent;
-    padding: clamp(8px, 2.5vw, 14px) clamp(10px, 3vw, 18px) clamp(6px, 2vw, 10px);
+    padding: 10px 14px 8px 14px;
     border-bottom: 1px solid #eef2f8;
   }
   .partner-heading {
-    font-size: clamp(9px, 2.8vw, 12px);
+    font-size: 11px;
     font-weight: 800;
     color: #D4AF37;
     text-transform: uppercase;
     letter-spacing: 0.8px;
-    margin-bottom: clamp(6px, 2vw, 12px);
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: clamp(5px, 1.5vw, 8px);
+    gap: 6px;
   }
   .partner-heading i {
-    font-size: clamp(10px, 2.8vw, 13px);
+    font-size: 11px;
   }
   .partners-container {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: clamp(3px, 1.5vw, 8px);
-    row-gap: clamp(4px, 2vw, 10px);
+    gap: 4px;
+    row-gap: 6px;
   }
   .partner-item {
     text-align: center;
-    padding: clamp(2px, 1vw, 5px);
+    padding: 4px 2px;
   }
   .partner-item img {
     width: 100%;
-    max-width: clamp(35px, 12vw, 55px);
-    height: auto;
-    min-height: clamp(30px, 10vw, 48px);
+    max-width: 44px;
+    height: 40px;
     object-fit: contain;
-    margin-bottom: clamp(2px, 1vw, 5px);
+    margin-bottom: 3px;
   }
   .partner-item span {
-    font-size: clamp(6.5px, 2.2vw, 9px);
+    font-size: 7.5px;
     font-weight: 700;
     background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    display: block;
-    line-height: 1.3;
   }
 
-  /* CAROUSEL - Responsive, full width */
+  /* CAROUSEL */
   .carousel-container {
-    padding: clamp(6px, 2vw, 12px) clamp(10px, 3vw, 18px) 0;
+    padding: 10px 14px 0px;
   }
   .carousel {
     position: relative;
     overflow: hidden;
-    border-radius: clamp(16px, 4vw, 28px);
+    border-radius: 24px;
     box-shadow: 0 6px 14px rgba(0,0,0,0.1);
     background: #f0f2f5;
   }
-  .slides-wrapper {
-    overflow: hidden;
-    width: 100%;
-  }
   .slides {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
+    transition: transform 0.4s ease;
   }
   .slide {
     min-width: 100%;
-    flex-shrink: 0;
+    height: 180px;
   }
   .slide img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
-    display: block;
     background: #cbd5e1;
   }
-  
-  /* Navigation Arrows - Responsive */
-  .carousel-btn {
+  .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
     color: white;
     border: none;
-    width: clamp(26px, 7vw, 36px);
-    height: clamp(26px, 7vw, 36px);
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: clamp(12px, 3.5vw, 18px);
-    transition: all 0.2s ease;
-    z-index: 10;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .carousel-btn:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-  .btn-prev { left: clamp(6px, 2vw, 12px); }
-  .btn-next { right: clamp(6px, 2vw, 12px); }
+  .prev { left: 8px; }
+  .next { right: 8px; }
+  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
   
-  /* Dots Indicators - Responsive */
+  /* Dots for slider */
   .dots-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: clamp(5px, 1.8vw, 8px);
-    padding: clamp(8px, 2.5vw, 14px) 0 clamp(6px, 2vw, 10px);
+    gap: 8px;
+    padding: 12px 0 8px;
   }
   .dot {
-    width: clamp(6px, 2vw, 8px);
-    height: clamp(6px, 2vw, 8px);
+    width: 7px;
+    height: 7px;
     border-radius: 50%;
     background: #cbd5e1;
     cursor: pointer;
@@ -250,21 +256,21 @@
     padding: 0;
   }
   .dot.active {
-    width: clamp(16px, 5vw, 24px);
+    width: 22px;
     border-radius: 10px;
     background: #0b5ed7;
   }
 
-  /* ACTION CARDS - Responsive */
+  /* ACTION CARDS */
   .actions {
-    padding: clamp(10px, 3vw, 18px) clamp(10px, 3vw, 18px) clamp(10px, 3vw, 16px);
+    padding: 14px 16px 12px;
     display: flex;
     flex-direction: column;
-    gap: clamp(8px, 2.5vw, 14px);
+    gap: 10px;
   }
   .card {
-    border-radius: clamp(20px, 5vw, 32px);
-    padding: clamp(10px, 3vw, 18px) clamp(14px, 4vw, 24px);
+    border-radius: 26px;
+    padding: 14px 20px;
     color: white;
     display: flex;
     justify-content: space-between;
@@ -279,30 +285,50 @@
   }
   .card span {
     font-weight: 700;
-    font-size: clamp(12px, 3.5vw, 16px);
+    font-size: 13px;
     letter-spacing: -0.2px;
   }
   .card i {
-    font-size: clamp(18px, 5vw, 26px);
+    font-size: 18px;
   }
   .register { background: linear-gradient(105deg, #1e3a8a, #3b82f6); }
   .distribution { background: linear-gradient(105deg, #0f5b2e, #2e9a5e); }
+  .registerqr { background: linear-gradient(105deg, #7c3aed, #a855f7); }
   .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
 
-  /* FOOTER - Responsive */
+  /* FOOTER - Informatics Consultancy Firm-SL and 2026 in straight line with copyright */
   .footer {
     text-align: center;
-    background: #0a2540;
-    color: #b0d4ff;
-    font-size: clamp(7px, 2vw, 9px);
-    padding: clamp(6px, 2vw, 12px) 5px;
+    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
+    color: white;
+    font-size: 9px;
+    padding: 10px 8px;
     font-weight: 500;
-    border-top-left-radius: clamp(12px, 3vw, 20px);
-    border-top-right-radius: clamp(12px, 3vw, 20px);
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    line-height: 1.4;
+  }
+  .footer-line1 {
+    font-size: 8px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .footer-line2 {
+    font-weight: 600;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .copyright-symbol {
+    font-size: 9px;
   }
 
-  /* MODAL STYLES - Responsive */
+  /* MODAL */
   .modal {
     position: fixed;
     top: 0;
@@ -318,10 +344,10 @@
   }
   .modal-box {
     background: #ffffff;
-    padding: clamp(18px, 5vw, 28px) clamp(16px, 4vw, 24px);
-    border-radius: clamp(28px, 7vw, 44px);
+    padding: 24px 20px;
+    border-radius: 36px;
     width: 85%;
-    max-width: 320px;
+    max-width: 300px;
     text-align: center;
     box-shadow: 0 20px 30px rgba(0,0,0,0.3);
     animation: fadeSlideUp 0.2s ease;
@@ -331,18 +357,18 @@
     to { opacity: 1; transform: translateY(0);}
   }
   .modal-box h3 {
-    font-size: clamp(18px, 5vw, 24px);
+    font-size: 22px;
     font-weight: 800;
-    margin-bottom: clamp(12px, 3vw, 18px);
+    margin-bottom: 16px;
     color: #0b5ed7;
   }
   .modal input {
     width: 100%;
-    padding: clamp(10px, 3vw, 14px) clamp(12px, 3.5vw, 16px);
-    margin: clamp(6px, 2vw, 10px) 0;
+    padding: 12px 14px;
+    margin: 8px 0;
     border-radius: 50px;
     border: 1.5px solid #e2e8f0;
-    font-size: clamp(12px, 3.5vw, 15px);
+    font-size: 14px;
     background: #f8fafc;
   }
   .modal input:focus {
@@ -354,16 +380,16 @@
     display: flex;
     justify-content: space-between;
     gap: 10px;
-    margin-top: clamp(12px, 3vw, 18px);
+    margin-top: 16px;
   }
   .modal button {
-    padding: clamp(8px, 2.5vw, 12px) 0;
+    padding: 10px 0;
     width: 48%;
     border: none;
     border-radius: 50px;
     font-weight: 700;
     cursor: pointer;
-    font-size: clamp(12px, 3.5vw, 15px);
+    font-size: 14px;
   }
   .login {
     background: #0b5ed7;
@@ -375,7 +401,7 @@
   }
   #loginErrorMessage {
     margin-top: 10px;
-    font-size: clamp(10px, 3vw, 12px);
+    font-size: 11px;
     font-weight: 500;
   }
 
@@ -396,20 +422,20 @@
   .iframe-header {
     background: #0b5ed7;
     color: white;
-    padding: clamp(12px, 4vw, 18px) clamp(14px, 4vw, 20px);
+    padding: 14px 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     font-weight: 700;
-    font-size: clamp(14px, 4vw, 18px);
+    font-size: 16px;
   }
   .iframe-header button {
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
-    font-size: clamp(16px, 5vw, 22px);
-    width: clamp(28px, 8vw, 36px);
-    height: clamp(28px, 8vw, 36px);
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
     cursor: pointer;
   }
@@ -433,16 +459,17 @@
     <!-- HEADER -->
     <div class="header-section">
       <div class="logo-area">
-        <div class="logo-placeholder">
-          <i class="fas fa-chart-line" style="font-size: clamp(14px, 4vw, 20px);"></i>
-        </div>
-        <div>
-          <h2>Informatics Consultancy Firm-SL</h2>
-          <p>Driving Data-Driven Solutions</p>
+        <img src="ICF-SL Logo.png" alt="ICF-SL Logo" class="logo-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%230b5ed7\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF-SL%3C/text%3E%3C/svg%3E';">
+        <div class="header-title">
+          <h2>Informatics Consultancy Firm-SL (ICF-SL)</h2>
+          <p>Driving Data-Driven Solutions for Health and Development</p>
         </div>
       </div>
       <div class="campaign-badge">
-        <i class="fas fa-bed" style="margin-right: 3px;"></i> ITN DISTRIBUTION CAMPAIGN 2026
+        <i class="fas fa-bed" style="margin-right: 3px;"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
+      </div>
+      <div class="survey-text">
+        <i class="fas fa-clipboard-list"></i> Insecticide-Treated Nets Distribution Survey - Sierra Leone
       </div>
     </div>
 
@@ -462,45 +489,60 @@
       </div>
     </div>
 
-    <!-- CAROUSEL SLIDER - Full width, continuous loop, with dots -->
+    <!-- CAROUSEL SLIDER -->
     <div class="carousel-container">
       <div class="carousel">
-        <div class="slides-wrapper">
-          <div class="slides" id="slides">
-            <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/800x450/0b5ed7/white?text=ITN+Coverage+2026'"></div>
-            <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/800x450/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
-            <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/800x450/c2410c/white?text=Campaign+Milestones'"></div>
-          </div>
+        <div class="slides" id="slides">
+          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
+          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
+          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
         </div>
-        <button class="carousel-btn btn-prev" id="prevBtn">❮</button>
-        <button class="carousel-btn btn-next" id="nextBtn">❯</button>
+        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
+        <button class="btn next" onclick="moveSlide(1)">❯</button>
       </div>
       <div class="dots-container" id="dotsContainer"></div>
     </div>
 
-    <!-- ACTION BUTTONS -->
+    <!-- ACTION CARDS -->
     <div class="actions">
+      <!-- REGISTER (HHR) -->
       <div class="card register" onclick="openActionModal('REGISTER')">
-        <span><i class="fas fa-home" style="margin-right: 8px;"></i> REGISTER (HHR)</span>
-        <i class="fas fa-arrow-right"></i>
+        <span><i class="fas fa-home" style="margin-right: 10px;"></i> REGISTER (HHR)</span>
+        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-arrow-right"></i></div>
       </div>
+      
+      <!-- DISTRIBUTION (HHD) -->
       <div class="card distribution" onclick="openActionModal('DISTRIBUTION')">
-        <span><i class="fas fa-users" style="margin-right: 8px;"></i> DISTRIBUTION (HHD)</span>
-        <i class="fas fa-hand-holding-heart"></i>
+        <span><i class="fas fa-users" style="margin-right: 10px;"></i> DISTRIBUTION (HHD)</span>
+        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-hand-holding-heart"></i></div>
       </div>
+      
+      <!-- REGISTER QR (HHR) -->
+      <div class="card registerqr" onclick="openActionModal('REGISTER_QR')">
+        <span><i class="fas fa-qrcode" style="margin-right: 10px;"></i> REGISTER QR (HHR)</span>
+        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-camera"></i></div>
+      </div>
+      
+      <!-- STOCK -->
       <div class="card stock" onclick="openActionModal('STOCK')">
-        <span><i class="fas fa-boxes" style="margin-right: 8px;"></i> STOCK MANAGEMENT</span>
-        <i class="fas fa-chart-simple"></i>
+        <span><i class="fas fa-box" style="margin-right: 10px;"></i> STOCK</span>
+        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-chart-simple"></i></div>
       </div>
+      
+      <!-- DASHBOARD -->
       <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
-        <span><i class="fas fa-chart-line" style="margin-right: 8px;"></i> DASHBOARD</span>
-        <i class="fas fa-eye"></i>
+        <span><i class="fas fa-chart-line" style="margin-right: 10px;"></i> DASHBOARD</span>
+        <div><i class="fas fa-lock" style="margin-right: 8px;"></i> <i class="fas fa-eye"></i></div>
       </div>
     </div>
   </div>
 
+  <!-- FOOTER - "Developed by" on first line, then "Informatics Consultancy Firm-SL © 2026" in straight line -->
   <div class="footer">
-    <i class="fas fa-chart-pie"></i> Developed By ICF-SL | Data for Impact ©2026
+    <div class="footer-line1">Developed by</div>
+    <div class="footer-line2">
+      Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026
+    </div>
   </div>
 </div>
 
@@ -521,34 +563,20 @@
 <!-- IFRAME EMBED -->
 <div id="iframePanel" class="iframe-panel">
   <div class="iframe-header">
-    <span><i class="fas fa-edit"></i> Registration Portal (HHR)</span>
+    <span><i class="fas fa-edit"></i> Registration Portal</span>
     <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
   </div>
   <iframe id="dynamicIframe" src="registration.html" title="ICF module"></iframe>
 </div>
 
 <script>
-  // ---------- ENHANCED CAROUSEL: CONTINUOUS LOOP WITH DOTS ----------
-  const slidesContainer = document.getElementById('slides');
-  const slides = Array.from(document.querySelectorAll('.slide'));
-  const prevButton = document.getElementById('prevBtn');
-  const nextButton = document.getElementById('nextBtn');
-  const dotsContainer = document.getElementById('dotsContainer');
-  
+  // ---------- CAROUSEL LOGIC WITH DOTS ----------
   let currentIndex = 0;
-  let autoInterval;
+  const slidesContainer = document.getElementById('slides');
+  const slides = document.querySelectorAll('.slide');
   const totalSlides = slides.length;
-  let isTransitioning = false;
-  
-  // Clone first and last slides for seamless infinite loop
-  function setupInfiniteLoop() {
-    const firstClone = slides[0].cloneNode(true);
-    const lastClone = slides[totalSlides - 1].cloneNode(true);
-    slidesContainer.appendChild(firstClone);
-    slidesContainer.insertBefore(lastClone, slides[0]);
-    currentIndex = 1;
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-  }
+  const dotsContainer = document.getElementById('dotsContainer');
+  let autoInterval;
   
   // Create dots
   function createDots() {
@@ -558,7 +586,6 @@
       dot.classList.add('dot');
       if (i === 0) dot.classList.add('active');
       dot.addEventListener('click', () => {
-        if (isTransitioning) return;
         goToSlide(i);
         resetAutoSlide();
       });
@@ -566,13 +593,11 @@
     }
   }
   
+  // Update active dot
   function updateDots() {
-    let realIndex = currentIndex - 1;
-    if (realIndex < 0) realIndex = totalSlides - 1;
-    if (realIndex >= totalSlides) realIndex = 0;
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, idx) => {
-      if (idx === realIndex) {
+      if (idx === currentIndex) {
         dot.classList.add('active');
       } else {
         dot.classList.remove('active');
@@ -580,63 +605,33 @@
     });
   }
   
-  function goToSlide(index, instant = false) {
-    if (isTransitioning && !instant) return;
-    isTransitioning = true;
-    let newPosition = index + 1;
-    currentIndex = newPosition;
-    slidesContainer.style.transition = instant ? 'none' : 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+  // Move to specific slide
+  function goToSlide(index) {
+    currentIndex = index;
+    if (currentIndex < 0) currentIndex = 0;
+    if (currentIndex >= totalSlides) currentIndex = totalSlides - 1;
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
-    
-    const onTransitionEnd = () => {
-      slidesContainer.removeEventListener('transitionend', onTransitionEnd);
-      isTransitioning = false;
-      
-      if (currentIndex === 0) {
-        currentIndex = totalSlides;
-        slidesContainer.style.transition = 'none';
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
-      } else if (currentIndex === totalSlides + 1) {
-        currentIndex = 1;
-        slidesContainer.style.transition = 'none';
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
-      }
-      
-      setTimeout(() => {
-        slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-      }, 20);
-    };
-    
-    slidesContainer.addEventListener('transitionend', onTransitionEnd);
-    if (instant) onTransitionEnd();
   }
   
-  function nextSlide() {
-    if (isTransitioning) return;
-    let real = getRealIndex();
-    goToSlide(real + 1);
+  // Move function for buttons
+  function moveSlide(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex >= totalSlides) newIndex = totalSlides - 1;
+    goToSlide(newIndex);
+    resetAutoSlide();
   }
   
-  function prevSlide() {
-    if (isTransitioning) return;
-    let real = getRealIndex();
-    goToSlide(real - 1);
-  }
-  
-  function getRealIndex() {
-    let real = currentIndex - 1;
-    if (real < 0) real = totalSlides - 1;
-    if (real >= totalSlides) real = 0;
-    return real;
-  }
-  
+  // Auto slide
   function startAutoSlide() {
     if (autoInterval) clearInterval(autoInterval);
     autoInterval = setInterval(() => {
-      if (!isTransitioning) nextSlide();
+      let nextIndex = currentIndex + 1;
+      if (nextIndex >= totalSlides) {
+        nextIndex = 0;
+      }
+      goToSlide(nextIndex);
     }, 5000);
   }
   
@@ -644,21 +639,9 @@
     startAutoSlide();
   }
   
-  function initCarousel() {
-    setupInfiniteLoop();
-    createDots();
-    startAutoSlide();
-    
-    prevButton.addEventListener('click', () => {
-      prevSlide();
-      resetAutoSlide();
-    });
-    nextButton.addEventListener('click', () => {
-      nextSlide();
-      resetAutoSlide();
-    });
-    
-    const carouselElement = document.querySelector('.carousel');
+  // Pause on hover
+  const carouselElement = document.querySelector('.carousel');
+  if (carouselElement) {
     carouselElement.addEventListener('mouseenter', () => {
       if (autoInterval) clearInterval(autoInterval);
     });
@@ -667,7 +650,10 @@
     });
   }
   
-  initCarousel();
+  // Initialize carousel
+  createDots();
+  startAutoSlide();
+  window.moveSlide = moveSlide;
   
   // ---------- MODAL & IFRAME FLOW ----------
   let pendingAction = "";
@@ -708,19 +694,35 @@
     if (action === "REGISTER") {
       dynamicIframe.src = "registration.html";
       dynamicIframe.onerror = function() {
-        dynamicIframe.srcdoc = getFallbackRegistrationForm();
+        dynamicIframe.srcdoc = getFallbackRegistrationForm("Standard Registration");
       };
       setTimeout(() => {
         try {
           if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
               dynamicIframe.contentDocument.body && 
               dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
-            dynamicIframe.srcdoc = getFallbackRegistrationForm();
+            dynamicIframe.srcdoc = getFallbackRegistrationForm("Standard Registration");
           }
         } catch(e) {}
       }, 500);
       iframePanel.style.display = 'flex';
     } 
+    else if (action === "REGISTER_QR") {
+      dynamicIframe.src = "registration.html";
+      dynamicIframe.onerror = function() {
+        dynamicIframe.srcdoc = getFallbackRegistrationForm("QR Code Registration");
+      };
+      setTimeout(() => {
+        try {
+          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
+              dynamicIframe.contentDocument.body && 
+              dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
+            dynamicIframe.srcdoc = getFallbackRegistrationForm("QR Code Registration");
+          }
+        } catch(e) {}
+      }, 500);
+      iframePanel.style.display = 'flex';
+    }
     else if (action === "DISTRIBUTION") {
       alert("✅ DISTRIBUTION (HHD) Module: Access Granted.\nYou can now view household distribution dashboards & logistics.");
     }
@@ -736,7 +738,7 @@
     pendingAction = "";
   }
   
-  function getFallbackRegistrationForm() {
+  function getFallbackRegistrationForm(type) {
     return `<!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title>
@@ -750,17 +752,20 @@
       input{width:100%;padding:12px 14px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:13px;}
       button{background:#0b5ed7;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;}
       .success{background:#e8f5e9;color:#15803d;padding:10px;border-radius:16px;margin-top:16px;font-size:11px;text-align:center;}
+      .qr-badge{background:#f3e8ff;color:#7c3aed;padding:8px;border-radius:20px;text-align:center;font-size:12px;margin-bottom:16px;}
     </style>
     </head>
     <body>
     <div class="reg-card">
-      <h2><i class="fas fa-bed"></i> HHR Registration</h2>
+      <h2><i class="fas fa-bed"></i> ${type === "QR Code Registration" ? '<i class="fas fa-qrcode"></i> QR Registration' : '<i class="fas fa-home"></i> HHR Registration'}</h2>
       <div class="sub">Household Registration for ITN Campaign 2026</div>
+      ${type === "QR Code Registration" ? '<div class="qr-badge"><i class="fas fa-qrcode"></i> Scan Household QR Code or Enter Manually</div>' : ''}
       <input type="text" placeholder="Full name (Household Head)">
       <input type="text" placeholder="Household ID / NHIS Number">
       <input type="text" placeholder="District / Chiefdom">
       <input type="number" placeholder="Number of household members">
-      <button onclick="alert('✅ Demo: Registration data saved successfully.')">Submit Registration</button>
+      ${type === "QR Code Registration" ? '<input type="text" placeholder="Scan QR Code or Enter Code">' : ''}
+      <button onclick="alert('✅ Registration data saved successfully.')">Submit Registration</button>
       <div class="success"><i class="fas fa-check-circle"></i> ITN campaign 2026 active</div>
     </div>
     </body>
