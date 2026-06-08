@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>ICF-SL | Household ITN Distribution</title>
+    <!-- Instascan QR Scanner - Mobile optimized -->
+    <script src="https://cdn.jsdelivr.net/npm/instascan@1.0.0/instascan.min.js"></script>
+    <!-- Signature Pad Library -->
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: linear-gradient(145deg, #e0f0e8 0%, #c8e0d4 100%);
+            min-height: 100vh;
+            padding: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        .glass-card {
+            max-width: 480px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 28px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header with Logo - No dividing line */
+        .header {
+            background: linear-gradient(135deg, #0B3B3F 0%, #1C6E5E 100%);
+            color: white;
+            padding: 16px 14px;
+            text-align: center;
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        
+        /* Logo image styling - Replace with actual ICF-SL Logo.png */
+        .logo-image {
+            width: 55px;
+            height: 55px;
+            background: #FFB74D;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            flex-shrink: 0;
+        }
+        
+        .logo-image i {
+            font-size: 28px;
+            color: #0B3B3F;
+        }
+        
+        /* For actual PNG logo - uncomment and comment above when you have the image */
+        /*
+        .logo-image {
+            background: transparent;
+            border-radius: 0;
+        }
+        .logo-image img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+        }
+        */
+        
+        .firm-info {
+            text-align: left;
+            flex: 1;
+        }
+        
+        .firm-info h2 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 3px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .firm-info p {
+            font-size: 0.68rem;
+            opacity: 0.9;
+            font-style: italic;
+        }
+        
+        .campaign-title {
+            margin-top: 8px;
+            text-align: center;
+        }
+        
+        .campaign-title h3 {
+            font-size: 0.82rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+        }
+        
+        .campaign-title p {
+            font-size: 0.72rem;
+            font-weight: 600;
+            opacity: 0.9;
+            margin-top: 2px;
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            background: #f0f5f2;
+            padding: 8px 12px;
+            text-align: center;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: #1C6E5E;
+            border-bottom: 1px solid #e2ece6;
+        }
+        .progress-indicator span {
+            background: #1C6E5E;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin: 0 4px;
+        }
+
+        /* Steps Container */
+        .steps-container {
+            padding: 16px 12px;
+            min-height: 480px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Step Cards - Only one visible at a time */
+        .step {
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            border: 1px solid #e2ece6;
+            display: none;
+        }
+        .step.active-step {
+            display: block;
+        }
+
+        .step-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            background: #f8faf9;
+            border-bottom: 1px solid #e2efe9;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .step-number {
+            background: #1C6E5E;
+            width: 32px;
+            height: 32px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 32px;
+            color: white;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+
+        .step-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #0B3B3F;
+        }
+
+        .step-body {
+            padding: 14px;
+        }
+
+        .form-row {
+            margin-bottom: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .form-row label {
+            font-weight: 600;
+            color: #0B3B3F;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input, button {
+            border-radius: 50px;
+            border: 1px solid #cfdfd7;
+            padding: 12px 14px;
+            font-size: 0.9rem;
+            background: white;
+            width: 100%;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #1C6E5E;
+            box-shadow: 0 0 0 2px rgba(28,110,94,0.2);
+        }
+
+        button {
+            background: #1C6E5E;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        button.secondary {
+            background: #0B3B3F;
+        }
+
+        button.outline {
+            background: white;
+            color: #1C6E5E;
+            border: 1px solid #1C6E5E;
+        }
+
+        .signature-canvas {
+            border: 2px dashed #bdd9ce;
+            border-radius: 14px;
+            background: #fefefe;
+            width: 100%;
+            height: 130px;
+            cursor: crosshair;
+            touch-action: none;
+        }
+        .canvas-wrapper {
+            margin-top: 6px;
+        }
+
+        #video-preview {
+            width: 100%;
+            border-radius: 18px;
+            overflow: hidden;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            display: none;
+            border: 2px solid #1C6E5E;
+            background: #000;
+        }
+        #video-preview video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .unified-card {
+            background: #f9fdfb;
+            border-radius: 18px;
+            border: 1px solid #d4e4dc;
+            overflow: hidden;
+            margin-top: 12px;
+            display: none;
+        }
+        .card-section {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2efe9;
+        }
+        .card-section:last-child {
+            border-bottom: none;
+        }
+        .section-title {
+            font-weight: 700;
+            color: #0B3B3F;
+            font-size: 0.78rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .data-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .data-item {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: baseline;
+            font-size: 0.75rem;
+            padding: 2px 0;
+            border-bottom: 1px dashed #e0ebe4;
+        }
+        .data-label {
+            font-weight: 600;
+            width: 110px;
+            color: #3a6b58;
+            font-size: 0.72rem;
+        }
+        .data-value {
+            color: #1e2f2a;
+            font-family: monospace;
+            font-weight: 500;
+            font-size: 0.75rem;
+            word-break: break-word;
+            flex: 1;
+        }
+
+        .info-message {
+            background: #eef3f0;
+            border-radius: 30px;
+            padding: 8px 12px;
+            color: #1C6E5E;
+            font-size: 0.7rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 6px;
+        }
+        .status-message {
+            margin-top: 6px;
+            padding: 5px 10px;
+            border-radius: 30px;
+            font-size: 0.68rem;
+            text-align: center;
+        }
+        .gps-info {
+            background: #ebf4f0;
+            padding: 8px 12px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 0.75rem;
+        }
+        .gps-details {
+            margin-top: 8px;
+            background: #eef3f0;
+            border-radius: 18px;
+            padding: 8px 10px;
+            font-family: monospace;
+            font-size: 0.7rem;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 20px;
+            margin-bottom: 8px;
+            padding: 0 12px;
+        }
+        .nav-buttons button {
+            flex: 1;
+            padding: 12px;
+            font-size: 0.9rem;
+        }
+        .nav-buttons button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .reset-button {
+            margin: 0 12px 12px 12px;
+        }
+        .reset-button button {
+            width: 100%;
+            background: #0B3B3F;
+        }
+
+        .footer {
+            background: #0B3B3F;
+            color: #c8e0d4;
+            text-align: center;
+            padding: 10px 12px;
+            font-size: 0.62rem;
+            border-top: 2px solid #FFB74D;
+        }
+        .footer i {
+            margin: 0 3px;
+            color: #FFB74D;
+        }
+        .footer strong {
+            color: #FFB74D;
+        }
+
+        @media (max-width: 450px) {
+            .data-label {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            .data-item {
+                flex-direction: column;
+            }
+            .step-body {
+                padding: 10px;
+            }
+            .step-title {
+                font-size: 0.88rem;
+            }
+            .logo-image {
+                width: 45px;
+                height: 45px;
+            }
+            .logo-image i {
+                font-size: 22px;
+            }
+            .firm-info h2 {
+                font-size: 0.78rem;
+            }
+            .firm-info p {
+                font-size: 0.6rem;
+            }
+            .campaign-title h3 {
+                font-size: 0.72rem;
+            }
+            .campaign-title p {
+                font-size: 0.65rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="glass-card">
+    <div class="header">
+        <div class="logo-container">
+            <!-- ICF-SL Logo - Replace with actual ICF-SL Logo.png -->
+            <div class="logo-image">
+                <i class="fas fa-chart-line"></i>
+                <!-- When you have actual ICF-SL Logo.png, replace above with: -->
+                <!-- <img src="ICF-SL Logo.png" alt="ICF-SL Logo"> -->
+            </div>
+            <div class="firm-info">
+                <h2><i class="fas fa-building"></i> Informatics Consultancy Firm-SL</h2>
+                <p><i class="fas fa-bullhorn"></i> Driving Data-Driven Solutions</p>
+            </div>
+        </div>
+        <div class="campaign-title">
+            <h3>🏠 HOUSEHOLD ITN DISTRIBUTION CAMPAIGN</h3>
+            <p>🇸🇱 SIERRA LEONE</p>
+        </div>
+    </div>
+    
+    <div class="progress-indicator">
+        Step <span id="currentStepDisplay">1</span> of 7
+    </div>
+    
+    <div class="steps-container" id="stepsContainer">
+        <!-- STEP 1 -->
+        <div class="step" data-step="1">
+            <div class="step-header"><span class="step-number">1</span><span class="step-title">📅 Date of Distribution</span></div>
+            <div class="step-body">
+                <div class="form-row">
+                    <label><i class="fas fa-calendar-alt"></i> Distribution Date</label>
+                    <input type="date" id="verificationDate">
+                </div>
+            </div>
+        </div>
+
+        <!-- STEP 2 : QR SCAN -->
+        <div class="step" data-step="2">
+            <div class="step-header"><span class="step-number">2</span><span class="step-title">📲 Scan QR Code</span></div>
+            <div class="step-body">
+                <div style="display:flex; gap:10px; margin-bottom:10px;">
+                    <button id="startScanBtn" style="flex:1;"><i class="fas fa-camera"></i> Scan QR</button>
+                    <button id="stopScanBtn" class="outline" style="flex:1;"><i class="fas fa-stop"></i> Stop</button>
+                </div>
+                <div id="video-preview"></div>
+                <div id="qr-status" class="status-message"></div>
+                <div id="preScanInfo" class="info-message">
+                    <i class="fas fa-info-circle"></i> Tap "Scan QR" and allow camera access.
+                </div>
+                <div class="unified-card" id="unifiedDataCard">
+                    <div class="card-section"><div class="section-title"><i class="fas fa-location-dot"></i> Location Details</div>
+                        <div class="data-grid">
+                            <div class="data-item"><span class="data-label">Region:</span><span class="data-value" id="regionVal">--</span></div>
+                            <div class="data-item"><span class="data-label">District:</span><span class="data-value" id="districtVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Chiefdom:</span><span class="data-value" id="chiefdomVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Community:</span><span class="data-value" id="communityVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Health Facility:</span><span class="data-value" id="healthFacilityVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Distribution Point:</span><span class="data-value" id="distributionPointVal">--</span></div>
+                        </div>
+                    </div>
+                    <div class="card-section"><div class="section-title"><i class="fas fa-users"></i> Household Information</div>
+                        <div class="data-grid">
+                            <div class="data-item"><span class="data-label">Name:</span><span class="data-value" id="householdNameVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Mobile:</span><span class="data-value" id="mobileVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Total Members:</span><span class="data-value" id="totalMembersVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Pregnant Women:</span><span class="data-value" id="pregnantWomenVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Under-Five:</span><span class="data-value" id="underFiveVal">--</span></div>
+                            <div class="data-item"><span class="data-label">HHR Name:</span><span class="data-value" id="hhrNameVal">--</span></div>
+                        </div>
+                    </div>
+                    <div class="card-section"><div class="section-title"><i class="fas fa-map-marker-alt"></i> GPS (from QR)</div>
+                        <div class="data-grid">
+                            <div class="data-item"><span class="data-label">Latitude:</span><span class="data-value" id="gpsLatVal">--</span></div>
+                            <div class="data-item"><span class="data-label">Longitude:</span><span class="data-value" id="gpsLonVal">--</span></div>
+                        </div>
+                    </div>
+                    <div class="card-section"><div class="section-title"><i class="fas fa-ticket-alt"></i> Token & ITNs</div>
+                        <div class="data-grid">
+                            <div class="data-item"><span class="data-label">Token:</span><span class="data-value" id="tokenVal">--</span></div>
+                            <div class="data-item"><span class="data-label">ITNs to Receive:</span><span class="data-value" id="itnsToReceiveVal">--</span></div>
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" id="fullQrData">
+            </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step" data-step="3"><div class="step-header"><span class="step-number">3</span><span class="step-title">🪪 Verifier Name</span></div><div class="step-body"><div class="form-row"><label><i class="fas fa-id-card"></i> Full Name</label><input type="text" id="verifierName" placeholder="Enter verifier's full name"></div></div></div>
+        
+        <!-- STEP 4 -->
+        <div class="step" data-step="4"><div class="step-header"><span class="step-number">4</span><span class="step-title">✍️ Verifier Signature</span></div><div class="step-body"><div class="canvas-wrapper"><canvas id="verifierSignatureCanvas" class="signature-canvas"></canvas><div style="margin-top:8px;"><button type="button" id="clearVerifierSig" class="outline" style="width:100%;"><i class="fas fa-eraser"></i> Clear Signature</button></div></div></div></div>
+        
+        <!-- STEP 5 -->
+        <div class="step" data-step="5"><div class="step-header"><span class="step-number">5</span><span class="step-title">📦 ITN Distributor</span></div><div class="step-body"><div class="form-row"><label><i class="fas fa-user-tie"></i> Full Name</label><input type="text" id="distributorName" placeholder="Enter distributor's full name"></div></div></div>
+        
+        <!-- STEP 6 -->
+        <div class="step" data-step="6"><div class="step-header"><span class="step-number">6</span><span class="step-title">🖊️ Distributor Signature</span></div><div class="step-body"><div class="canvas-wrapper"><canvas id="distributorSignatureCanvas" class="signature-canvas"></canvas><div style="margin-top:8px;"><button type="button" id="clearDistributorSig" class="outline" style="width:100%;"><i class="fas fa-eraser"></i> Clear Signature</button></div></div></div></div>
+        
+        <!-- STEP 7 -->
+        <div class="step" data-step="7"><div class="step-header"><span class="step-number">7</span><span class="step-title">📍 GPS Location</span></div><div class="step-body">
+            <div class="gps-info"><i class="fas fa-map-marker-alt" style="color:#1C6E5E;"></i><span id="gpsStatus">Not captured</span></div>
+            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
+                <button id="getLocationBtn" style="flex:1;"><i class="fas fa-satellite-dish"></i> Capture GPS</button>
+                <button id="resetLocationBtn" class="secondary" style="flex:1;"><i class="fas fa-undo-alt"></i> Reset</button>
+            </div>
+            <div id="gpsDetails" class="gps-details">Latitude: -- , Longitude: --</div>
+            <input type="hidden" id="gpsLat"><input type="hidden" id="gpsLng"><input type="hidden" id="gpsAccuracy">
+        </div></div>
+    </div>
+    
+    <!-- Navigation Buttons -->
+    <div class="nav-buttons">
+        <button id="prevBtn" class="secondary"><i class="fas fa-arrow-left"></i> Previous</button>
+        <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
+    </div>
+    
+    <!-- Reset Button -->
+    <div class="reset-button">
+        <button id="resetAllBtn" class="secondary"><i class="fas fa-broom"></i> Reset All Fields</button>
+    </div>
+    
+    <div class="footer">
+        <p><i class="fas fa-code"></i> Developed By <strong>Informatic Consultancy Firm-SL</strong> <i class="fas fa-copyright"></i> 2026</p>
+    </div>
+</div>
+
+<script>
+    // ---------- Step Navigation ----------
+    let currentStep = 1;
+    const totalSteps = 7;
+    const steps = document.querySelectorAll('.step');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const currentStepDisplay = document.getElementById('currentStepDisplay');
+
+    function showStep(step) {
+        steps.forEach((stepEl, index) => {
+            if (index + 1 === step) {
+                stepEl.classList.add('active-step');
+            } else {
+                stepEl.classList.remove('active-step');
+            }
+        });
+        currentStepDisplay.innerText = step;
+        prevBtn.disabled = (step === 1);
+        if (step === totalSteps) {
+            nextBtn.innerHTML = '<i class="fas fa-check-circle"></i> Submit';
+        } else {
+            nextBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Next';
+        }
+    }
+
+    function nextStep() {
+        if (currentStep < totalSteps) {
+            currentStep++;
+            showStep(currentStep);
+        } else if (currentStep === totalSteps) {
+            submitVerification();
+        }
+    }
+
+    function prevStep() {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep(currentStep);
+        }
+    }
+
+    prevBtn.addEventListener('click', prevStep);
+    nextBtn.addEventListener('click', nextStep);
+
+    // ---------- QR SCANNER ----------
+    let scanner = null;
+    let isScanning = false;
+    const videoPreview = document.getElementById("video-preview");
+    const qrStatusDiv = document.getElementById("qr-status");
+    const preScanInfo = document.getElementById("preScanInfo");
+    const unifiedCard = document.getElementById("unifiedDataCard");
+
+    function showDataCard() { unifiedCard.style.display = "block"; preScanInfo.style.display = "none"; }
+    function hideDataCard() { unifiedCard.style.display = "none"; preScanInfo.style.display = "flex"; }
+    
+    function populateDistributionData() {
+        document.getElementById("regionVal").innerText = "East";
+        document.getElementById("districtVal").innerText = "Kenema";
+        document.getElementById("chiefdomVal").innerText = "Dama";
+        document.getElementById("communityVal").innerText = "Kenyema";
+        document.getElementById("healthFacilityVal").innerText = "Kenyema CHC";
+        document.getElementById("distributionPointVal").innerText = "Kenyema CHC";
+        document.getElementById("householdNameVal").innerText = "KOROMA SAM FODAY";
+        document.getElementById("mobileVal").innerText = "099999999";
+        document.getElementById("totalMembersVal").innerText = "10";
+        document.getElementById("pregnantWomenVal").innerText = "3";
+        document.getElementById("underFiveVal").innerText = "2";
+        document.getElementById("hhrNameVal").innerText = "SATU";
+        document.getElementById("gpsLatVal").innerText = "8.469660";
+        document.getElementById("gpsLonVal").innerText = "-13.241364";
+        document.getElementById("tokenVal").innerText = "FOD_SAM_KOR_099999999";
+        document.getElementById("itnsToReceiveVal").innerText = "3";
+        showDataCard();
+        if(qrStatusDiv) qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-check-circle"></i> ✅ QR scanned! Data loaded.</span>`;
+        setTimeout(() => { if(qrStatusDiv) qrStatusDiv.innerHTML = ""; }, 3000);
+    }
+    
+    function resetQrDisplayFields() {
+        const fields = ["regionVal","districtVal","chiefdomVal","communityVal","healthFacilityVal","distributionPointVal",
+                        "householdNameVal","mobileVal","totalMembersVal","pregnantWomenVal","underFiveVal","hhrNameVal",
+                        "gpsLatVal","gpsLonVal","tokenVal","itnsToReceiveVal"];
+        fields.forEach(id => { document.getElementById(id).innerText = "--"; });
+        hideDataCard();
+    }
+    
+    async function stopScanner() {
+        if (scanner && isScanning) {
+            try { await scanner.stop(); } catch(e) {}
+        }
+        scanner = null;
+        isScanning = false;
+        videoPreview.style.display = "none";
+        videoPreview.innerHTML = '';
+        if(qrStatusDiv) qrStatusDiv.innerHTML = "";
+    }
+    
+    async function startScanner() {
+        await stopScanner();
+        videoPreview.innerHTML = '';
+        videoPreview.style.display = "block";
+        qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-spinner fa-pulse"></i> Starting camera...</span>`;
+        try {
+            if (typeof Instascan === 'undefined') throw new Error("Scanner library not loaded.");
+            scanner = new Instascan.Scanner({ video: videoPreview, scanPeriod: 5, mirror: false });
+            scanner.addListener('scan', function(content) {
+                populateDistributionData();
+                stopScanner();
+            });
+            const cameras = await Instascan.Camera.getCameras();
+            if (cameras.length === 0) throw new Error("No camera found.");
+            let selectedCamera = cameras[0];
+            for (let i = 0; i < cameras.length; i++) {
+                if (cameras[i].name.toLowerCase().includes('back') || cameras[i].name.toLowerCase().includes('environment')) {
+                    selectedCamera = cameras[i];
+                    break;
+                }
+            }
+            await scanner.start(selectedCamera);
+            isScanning = true;
+            qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-video"></i> Camera active - point at QR</span>`;
+        } catch (err) {
+            let errorMsg = err.message || err;
+            if (errorMsg.includes("Permission")) errorMsg = "Camera permission denied.";
+            else if (errorMsg.includes("No camera")) errorMsg = "No camera found.";
+            qrStatusDiv.innerHTML = `<span style="color:#d9534f;"><i class="fas fa-exclamation-triangle"></i> ${errorMsg}</span>`;
+            videoPreview.style.display = "none";
+            isScanning = false;
+        }
+    }
+
+    // ---------- Signature Pads ----------
+    let verifierPad, distributorPad;
+    function initSignaturePads() {
+        const vCanvas = document.getElementById("verifierSignatureCanvas");
+        const dCanvas = document.getElementById("distributorSignatureCanvas");
+        function resizeCanvas(canvas) {
+            const rect = canvas.getBoundingClientRect();
+            if (rect.width > 0) { canvas.width = rect.width; canvas.height = 130; }
+        }
+        resizeCanvas(vCanvas); resizeCanvas(dCanvas);
+        try {
+            verifierPad = new SignaturePad(vCanvas, { backgroundColor: 'rgb(255,255,255)', penColor: '#0B3B3F' });
+            distributorPad = new SignaturePad(dCanvas, { backgroundColor: 'rgb(255,255,255)', penColor: '#0B3B3F' });
+            verifierPad.clear(); distributorPad.clear();
+        } catch(e) {
+            verifierPad = { clear: () => {}, isEmpty: () => true, toDataURL: () => '' };
+            distributorPad = { clear: () => {}, isEmpty: () => true, toDataURL: () => '' };
+        }
+        document.getElementById("clearVerifierSig").onclick = () => verifierPad?.clear();
+        document.getElementById("clearDistributorSig").onclick = () => distributorPad?.clear();
+    }
+    
+    // ---------- GPS ----------
+    let currentGps = { lat: null, lng: null, accuracy: null };
+    function updateGpsUI() {
+        const detailsDiv = document.getElementById("gpsDetails");
+        const statusSpan = document.getElementById("gpsStatus");
+        if(currentGps.lat && currentGps.lng) {
+            detailsDiv.innerHTML = `📍 Latitude: ${currentGps.lat.toFixed(6)} , Longitude: ${currentGps.lng.toFixed(6)}`;
+            statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> GPS captured`;
+            document.getElementById("gpsLat").value = currentGps.lat;
+            document.getElementById("gpsLng").value = currentGps.lng;
+        } else {
+            detailsDiv.innerHTML = `Latitude: -- , Longitude: --`;
+            statusSpan.innerHTML = `Not captured`;
+            document.getElementById("gpsLat").value = "";
+            document.getElementById("gpsLng").value = "";
+        }
+    }
+    function getLocation() {
+        if (!navigator.geolocation) { alert("Geolocation not supported."); return; }
+        document.getElementById("gpsStatus").innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Acquiring GPS...`;
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                currentGps.lat = position.coords.latitude;
+                currentGps.lng = position.coords.longitude;
+                updateGpsUI();
+            },
+            () => { document.getElementById("gpsStatus").innerHTML = `<i class="fas fa-exclamation-triangle"></i> Location error`; currentGps = { lat: null, lng: null }; updateGpsUI(); },
+            { enableHighAccuracy: true, timeout: 10000 }
+        );
+    }
+    function resetGps() { currentGps = { lat: null, lng: null }; updateGpsUI(); }
+    
+    // ---------- Reset All ----------
+    async function resetAllFields() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("verificationDate").value = today;
+        resetQrDisplayFields();
+        document.getElementById("verifierName").value = "";
+        if(verifierPad && verifierPad.clear) verifierPad.clear();
+        document.getElementById("distributorName").value = "";
+        if(distributorPad && distributorPad.clear) distributorPad.clear();
+        resetGps();
+        document.getElementById("messageBoard")?.remove();
+        await stopScanner();
+        currentStep = 1;
+        showStep(1);
+    }
+    
+    // ---------- Submit ----------
+    function collectFormData() {
+        const date = document.getElementById("verificationDate").value;
+        const verifierName = document.getElementById("verifierName").value.trim();
+        const distributorName = document.getElementById("distributorName").value.trim();
+        const gpsLatRaw = document.getElementById("gpsLat").value;
+        const gpsLngRaw = document.getElementById("gpsLng").value;
+        const token = document.getElementById("tokenVal").innerText;
+        
+        if(token === "--") return "❌ Please scan a valid QR code first (Step 2)";
+        if(!date) return "❌ Please select distribution date (Step 1)";
+        if(!verifierName) return "❌ Enter Verifier name (Step 3)";
+        if(!verifierPad || verifierPad.isEmpty()) return "❌ Verifier signature required (Step 4)";
+        if(!distributorName) return "❌ Enter Distributor name (Step 5)";
+        if(!distributorPad || distributorPad.isEmpty()) return "❌ Distributor signature required (Step 6)";
+        if(!gpsLatRaw || !gpsLngRaw) return "⚠️ GPS location not captured (Step 7)";
+        
+        return `✅ DISTRIBUTION SUBMITTED ✅\n📅 Date: ${date}\n📍 East / Kenema / Dama\n👪 ${document.getElementById("householdNameVal").innerText}\n🎟️ Token: ${token}\n👮 ${verifierName}\n📦 ${distributorName}\n🌐 GPS: ${gpsLatRaw}, ${gpsLngRaw}`;
+    }
+    
+    function submitVerification() {
+        const resultMsg = collectFormData();
+        let msgDiv = document.getElementById("messageBoard");
+        if(!msgDiv) {
+            msgDiv = document.createElement('div');
+            msgDiv.id = "messageBoard";
+            msgDiv.style.marginTop = "12px";
+            msgDiv.style.textAlign = "center";
+            document.querySelector('.steps-container').appendChild(msgDiv);
+        }
+        if(resultMsg.startsWith("❌") || resultMsg.startsWith("⚠️")) {
+            msgDiv.innerHTML = `<div style="background:#ffe6e5; border-left:4px solid #c72a2a; border-radius:16px; padding:10px; font-size:0.75rem;">${resultMsg}</div>`;
+        } else {
+            msgDiv.innerHTML = `<div style="background:#d9f0e6; border-left:4px solid #1C6E5E; border-radius:16px; padding:10px; white-space:pre-line; font-family:monospace; font-size:0.7rem;">${resultMsg}</div>`;
+        }
+    }
+    
+    // ---------- Initialize ----------
+    window.addEventListener("DOMContentLoaded", () => {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById("verificationDate").value = today;
+        initSignaturePads();
+        hideDataCard();
+        videoPreview.style.display = "none";
+        showStep(1);
+        
+        document.getElementById("startScanBtn").addEventListener("click", startScanner);
+        document.getElementById("stopScanBtn").addEventListener("click", stopScanner);
+        document.getElementById("getLocationBtn").addEventListener("click", getLocation);
+        document.getElementById("resetLocationBtn").addEventListener("click", resetGps);
+        document.getElementById("resetAllBtn").addEventListener("click", resetAllFields);
+        
+        window.addEventListener("resize", () => {
+            if(verifierPad) {
+                const vc = document.getElementById("verifierSignatureCanvas");
+                const dc = document.getElementById("distributorSignatureCanvas");
+                if(vc) { vc.width = vc.clientWidth; vc.height = 130; }
+                if(dc) { dc.width = dc.clientWidth; dc.height = 130; }
+            }
+        });
+    });
+    
+    window.addEventListener("beforeunload", async () => { await stopScanner(); });
+</script>
+</body>
+</html>
