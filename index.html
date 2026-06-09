@@ -24,7 +24,7 @@ body {
     min-height: 100vh;
 }
 
-/* Phone container - flex column, no absolute overlapping */
+/* Phone container */
 .container {
     width: 360px;
     max-width: 100%;
@@ -40,7 +40,7 @@ body {
     flex-direction: column;
 }
 
-/* Background image (optional) */
+/* Background image */
 .bg {
     position: absolute;
     top: 0;
@@ -57,7 +57,7 @@ body {
     background: rgba(0,0,0,0.45);
 }
 
-/* Main content - scrollable if needed */
+/* Main content */
 .content {
     position: relative;
     z-index: 2;
@@ -94,7 +94,7 @@ body {
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 40px;
-    font-size: 16px; /* prevents zoom on iOS */
+    font-size: 16px;
     background: #fff;
 }
 
@@ -168,7 +168,7 @@ body {
 .verify { background: #8E44AD; }
 .language { background: #16A085; }
 
-/* Curve and footer as normal flow elements (no absolute) */
+/* Curve and footer */
 .curve-wrapper {
     position: relative;
     z-index: 2;
@@ -246,9 +246,24 @@ body {
     }
 }
 
-/* Hidden utility */
 .hidden {
     display: none;
+}
+
+/* Loading indicator */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.7);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    color: white;
+    font-size: 18px;
 }
 </style>
 </head>
@@ -290,7 +305,7 @@ body {
         </div>
     </div>
 
-    <!-- Curve + Footer as normal elements -->
+    <!-- Curve + Footer -->
     <div class="curve-wrapper">
         <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
             <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
@@ -310,54 +325,40 @@ body {
 
 <script>
 // ============================================================
-// USER ROLE MAPPING (Based on Username + Password)
-// ============================================================
-// Defines which tabs are visible for each role when mscreen.html loads
-// The mscreen.html must support URL parameter "viewMode" or postMessage to control tabs
-// Since we cannot modify mscreen.html directly, we will inject a script into the iframe
-// to dynamically show/hide tabs based on role. This ensures compatibility.
+// ROLE-BASED CARD VISIBILITY CONFIGURATION for mscreen.html
+// Cards to hide per role: DISTRIBUTION, MONITORING, STOCK, DASHBOARD, ATTENDANCE, DEVICE TRACKING
 // ============================================================
 
 let isEnglish = true;
 let html5QrCode;
-let userCredentials = []; // Store loaded from Keys.csv
+let userCredentials = [];
 
-// Role definitions with tab permissions
+// Role definitions with which cards to HIDE in mscreen.html
+// All cards visible by default for ADMIN
 const ROLE_CONFIG = {
     ADMIN: {
         name: "ADMIN",
-        allowedTabs: ["ALL"], // Special flag: show all tabs (Register, Distribution, Monitoring, Dashboard)
-        redirectPage: "mscreen.html",
-        tabVisibility: { register: true, distribution: true, monitoring: true, dashboard: true }
+        // ADMIN sees ALL cards - nothing hidden
+        hiddenCards: []
     },
     HHR: {
         name: "HHR",
-        allowedTabs: ["REGISTER"],
-        redirectPage: "mscreen.html",
-        tabVisibility: { register: true, distribution: false, monitoring: false, dashboard: false }
+        // Hide: DISTRIBUTION, MONITORING, STOCK, DASHBOARD, ATTENDANCE, DEVICE TRACKING
+        hiddenCards: ["DISTRIBUTION", "MONITORING", "STOCK", "DASHBOARD", "ATTENDANCE", "DEVICE TRACKING"]
     },
     HHD: {
         name: "HHD",
-        allowedTabs: ["DISTRIBUTION"],
-        redirectPage: "mscreen.html",
-        tabVisibility: { register: false, distribution: true, monitoring: false, dashboard: false }
+        // Hide: REGISTER, MONITORING, STOCK, DASHBOARD, ATTENDANCE, DEVICE TRACKING
+        hiddenCards: ["REGISTER", "MONITORING", "STOCK", "DASHBOARD", "ATTENDANCE", "DEVICE TRACKING"]
     },
     NATSUP: {
         name: "NATSUP",
-        allowedTabs: ["MONITORING", "DASHBOARD"],
-        redirectPage: "mscreen.html",
-        tabVisibility: { register: false, distribution: false, monitoring: true, dashboard: true }
+        // Hide: DISTRIBUTION, STOCK, ATTENDANCE, DEVICE TRACKING
+        hiddenCards: ["DISTRIBUTION", "STOCK", "ATTENDANCE", "DEVICE TRACKING"]
     }
 };
 
-// Expected credentials mapping (Username, Password) -> Role
-// This will be populated from Keys.csv but we define fallback based on requirements
-// Requirement: 
-// Admin / 123 -> ADMIN (All tabs)
-// HHR2026 / 123455 -> HHR (only Register Tab)
-// HHD2026 / 123456 -> HHD (only DISTRIBUTION Tab)
-// NATSUP2026 / 123200 -> NATSUP (MONITORING and DASHBOARD tabs)
-
+// Mapping from username/password to role (loaded from Keys.csv)
 async function loadKeysFromCSV() {
     try {
         const response = await fetch("Keys.csv");
@@ -378,13 +379,13 @@ async function loadKeysFromCSV() {
                 const password = parts[1].trim();
                 let role = parts.length >= 3 ? parts[2].trim().toUpperCase() : "";
                 
-                // Determine role based on username pattern if not specified in CSV third column
+                // Determine role based on username pattern if not specified
                 if (!role) {
                     if (username === "Admin" || username === "admin") role = "ADMIN";
                     else if (username === "HHR2026") role = "HHR";
                     else if (username === "HHD2026") role = "HHD";
                     else if (username === "NATSUP2026") role = "NATSUP";
-                    else role = "ADMIN"; // default
+                    else role = "ADMIN";
                 }
                 
                 if (username && password) {
@@ -407,7 +408,7 @@ async function loadKeysFromCSV() {
         console.log("Loaded credentials:", userCredentials.map(c => ({user: c.username, role: c.role})));
         
     } catch (err) {
-        console.warn("Error loading Keys.csv, using default required users:", err);
+        console.warn("Error loading Keys.csv, using default users:", err);
         userCredentials = [
             { username: "Admin", password: "123", role: "ADMIN" },
             { username: "HHR2026", password: "123455", role: "HHR" },
@@ -417,7 +418,6 @@ async function loadKeysFromCSV() {
     }
 }
 
-// Get role for username/password combination
 function authenticateUser(username, password) {
     const matched = userCredentials.find(cred => 
         cred.username === username && cred.password === password
@@ -428,12 +428,16 @@ function authenticateUser(username, password) {
     return null;
 }
 
-// Function to load mscreen.html with tab restrictions using iframe + postMessage / URL hash
-// Since we control the iframe loading, we can inject a script that waits for mscreen to load
-// and then sends a message to hide/show tabs. Also we can use a special URL parameter.
+// Function to load mscreen.html and apply card visibility rules
 function loadMscreenWithRole(roleConfig, username) {
     const container = document.getElementById("appContainer");
     if (!container) return;
+    
+    // Show loading indicator
+    const loadingDiv = document.createElement("div");
+    loadingDiv.className = "loading-overlay";
+    loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse"></i> Loading dashboard...';
+    document.body.appendChild(loadingDiv);
     
     // Create iframe wrapper
     const iframeWrapper = document.createElement("div");
@@ -445,57 +449,60 @@ function loadMscreenWithRole(roleConfig, username) {
     iframeWrapper.style.overflow = "hidden";
     
     const iframe = document.createElement("iframe");
-    // Append role and tab visibility as hash parameter so mscreen.html can read it if it supports
-    // But to be safe: we will communicate via postMessage after load
-    const tabConfig = roleConfig.tabVisibility;
-    const modeParam = `?role=${roleConfig.name}&register=${tabConfig.register}&distribution=${tabConfig.distribution}&monitoring=${tabConfig.monitoring}&dashboard=${tabConfig.dashboard}`;
-    iframe.src = `mscreen.html${modeParam}`;
+    // Pass role info via URL parameter for mscreen.html to read
+    const hiddenCardsParam = encodeURIComponent(roleConfig.hiddenCards.join(","));
+    iframe.src = `mscreen.html?role=${roleConfig.name}&hiddenCards=${hiddenCardsParam}`;
     iframe.style.width = "100%";
     iframe.style.height = "100%";
     iframe.style.border = "none";
     iframe.style.display = "block";
     
-    // When iframe loads, send postMessage to control tab visibility
+    let loadAttempted = false;
+    
+    // When iframe loads, apply visibility rules directly
     iframe.onload = () => {
-        // Wait a bit for mscreen's scripts to initialize
+        loadAttempted = true;
         setTimeout(() => {
-            try {
-                const message = {
-                    type: "SET_TAB_VISIBILITY",
-                    role: roleConfig.name,
-                    tabs: {
-                        showRegister: tabConfig.register,
-                        showDistribution: tabConfig.distribution,
-                        showMonitoring: tabConfig.monitoring,
-                        showDashboard: tabConfig.dashboard
-                    }
-                };
-                iframe.contentWindow.postMessage(message, "*");
-            } catch(e) { console.warn("PostMessage error", e); }
-            
-            // Also if mscreen expects a different mechanism, we try to modify DOM from parent? Not possible cross-origin but same origin works.
-            // Since same origin, we can attempt to directly modify iframe's internal styles/tabs if accessible.
             try {
                 const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
                 if (iframeDoc) {
-                    applyTabVisibilityDirectly(iframeDoc, tabConfig);
+                    applyCardVisibilityInIframe(iframeDoc, roleConfig.hiddenCards);
                 }
-            } catch(e) { /* cross-origin or same-origin fine */ }
-        }, 500);
+                // Also send postMessage for additional safety
+                try {
+                    iframe.contentWindow.postMessage({
+                        type: "SET_CARD_VISIBILITY",
+                        role: roleConfig.name,
+                        hiddenCards: roleConfig.hiddenCards
+                    }, "*");
+                } catch(e) {}
+            } catch(e) { console.warn("Cannot access iframe DOM", e); }
+            
+            // Remove loading overlay
+            if (loadingDiv) loadingDiv.remove();
+        }, 600);
+    };
+    
+    // Iframe error handling
+    iframe.onerror = () => {
+        if (loadingDiv) loadingDiv.remove();
+        if (!loadAttempted) {
+            showFallbackDashboard(roleConfig, username);
+        }
     };
     
     iframeWrapper.appendChild(iframe);
     
-    // Replace container
+    // Replace container content
     container.innerHTML = "";
     container.style.maxHeight = "100vh";
     container.style.height = "100vh";
     container.style.borderRadius = "0";
     container.appendChild(iframeWrapper);
     
-    // Also add a logout button overlay at top right (optional but user friendly)
+    // Add logout button overlay
     const logoutBtn = document.createElement("button");
-    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i>';
+    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
     logoutBtn.style.position = "absolute";
     logoutBtn.style.top = "15px";
     logoutBtn.style.right = "20px";
@@ -509,90 +516,103 @@ function loadMscreenWithRole(roleConfig, username) {
     logoutBtn.style.fontSize = "14px";
     logoutBtn.style.cursor = "pointer";
     logoutBtn.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
-    logoutBtn.innerText = "Logout";
     logoutBtn.style.display = "flex";
     logoutBtn.style.alignItems = "center";
     logoutBtn.style.gap = "6px";
-    logoutBtn.onclick = () => location.reload();
+    logoutBtn.onclick = () => {
+        if (html5QrCode && html5QrCode.isScanning) {
+            html5QrCode.stop().catch(() => {});
+        }
+        location.reload();
+    };
     iframeWrapper.style.position = "relative";
     iframeWrapper.appendChild(logoutBtn);
+    
+    // Timeout fallback
+    setTimeout(() => {
+        if (loadingDiv && loadingDiv.parentNode) {
+            loadingDiv.remove();
+        }
+    }, 5000);
 }
 
-// Direct DOM manipulation in mscreen.html to enforce tab visibility (ensures compatibility)
-function applyTabVisibilityDirectly(doc, tabConfig) {
+// Apply card visibility by hiding specific card elements in mscreen.html
+function applyCardVisibilityInIframe(doc, hiddenCards) {
     if (!doc) return;
-    // Common selectors for tabs in mscreen.html (based on typical tab implementations)
-    // Try to find tab buttons or containers with IDs or classes like 'register-tab', 'dist-tab', etc.
-    const selectors = {
-        register: ['#registerTab', '#register-tab', '.register-tab', '[data-tab="register"]', 'a[href="#register"]', 'button:contains("Register")'],
-        distribution: ['#distributionTab', '#dist-tab', '.distribution-tab', '[data-tab="distribution"]', 'a[href="#distribution"]'],
-        monitoring: ['#monitoringTab', '#monitor-tab', '.monitoring-tab', '[data-tab="monitoring"]'],
-        dashboard: ['#dashboardTab', '#dashboard-tab', '.dashboard-tab', '[data-tab="dashboard"]']
+    
+    // Comprehensive selectors for each card type in mscreen.html
+    // Cards likely have IDs or classes like: .card-distribution, #distributionCard, [data-card="distribution"], etc.
+    const cardSelectors = {
+        "REGISTER": ['#registerCard', '#register-card', '.register-card', '[data-card="register"]', '.card-register', 'div:contains("REGISTER")'],
+        "DISTRIBUTION": ['#distributionCard', '#distribution-card', '.distribution-card', '[data-card="distribution"]', '.card-distribution'],
+        "MONITORING": ['#monitoringCard', '#monitoring-card', '.monitoring-card', '[data-card="monitoring"]', '.card-monitoring'],
+        "STOCK": ['#stockCard', '#stock-card', '.stock-card', '[data-card="stock"]', '.card-stock'],
+        "DASHBOARD": ['#dashboardCard', '#dashboard-card', '.dashboard-card', '[data-card="dashboard"]', '.card-dashboard'],
+        "ATTENDANCE": ['#attendanceCard', '#attendance-card', '.attendance-card', '[data-card="attendance"]', '.card-attendance'],
+        "DEVICE TRACKING": ['#deviceTrackingCard', '#device-tracking-card', '.device-tracking-card', '[data-card="device-tracking"]', '.card-device', '#deviceCard']
     };
     
-    function hideElement(selector) {
-        const el = doc.querySelector(selector);
-        if (el) el.style.display = 'none';
+    // Also try to find any element containing the card title text
+    function hideByText(doc, text) {
+        const allElements = doc.querySelectorAll('.card, [class*="card"], [class*="Card"], .dashboard-card, .menu-item');
+        allElements.forEach(el => {
+            if (el.innerText && el.innerText.toUpperCase().includes(text.toUpperCase())) {
+                el.style.display = 'none';
+                el.style.visibility = 'hidden';
+                // Also hide parent if needed
+                const parentCard = el.closest('.card, [class*="card-item"], .grid-item');
+                if (parentCard && parentCard !== el) parentCard.style.display = 'none';
+            }
+        });
     }
     
-    function showElement(selector) {
-        const el = doc.querySelector(selector);
-        if (el) el.style.display = '';
-    }
+    // For each card type that should be hidden, try all selectors
+    hiddenCards.forEach(cardName => {
+        const selectors = cardSelectors[cardName] || [];
+        selectors.forEach(selector => {
+            try {
+                const elements = doc.querySelectorAll(selector);
+                elements.forEach(el => {
+                    el.style.display = 'none';
+                    el.style.visibility = 'hidden';
+                });
+            } catch(e) {}
+        });
+        // Also try text-based hiding as fallback
+        const friendlyName = cardName.replace(/_/g, ' ');
+        hideByText(doc, friendlyName);
+    });
     
-    // Hide tabs based on config
-    if (!tabConfig.register) {
-        selectors.register.forEach(sel => { hideElement(sel); });
-        // Also hide content panels
-        const registerPanel = doc.querySelector('#registerPanel, .register-content, #register-section');
-        if (registerPanel) registerPanel.style.display = 'none';
-    }
-    if (!tabConfig.distribution) {
-        selectors.distribution.forEach(sel => { hideElement(sel); });
-        const distPanel = doc.querySelector('#distributionPanel, .distribution-content, #distribution-section');
-        if (distPanel) distPanel.style.display = 'none';
-    }
-    if (!tabConfig.monitoring) {
-        selectors.monitoring.forEach(sel => { hideElement(sel); });
-        const monPanel = doc.querySelector('#monitoringPanel, .monitoring-content, #monitoring-section');
-        if (monPanel) monPanel.style.display = 'none';
-    }
-    if (!tabConfig.dashboard) {
-        selectors.dashboard.forEach(sel => { hideElement(sel); });
-        const dashPanel = doc.querySelector('#dashboardPanel, .dashboard-content, #dashboard-section');
-        if (dashPanel) dashPanel.style.display = 'none';
-    }
+    // Additionally, hide any navigation tabs or menu items related to these cards
+    hiddenCards.forEach(cardName => {
+        const tabSelectors = {
+            "REGISTER": ['a[href*="register"]', 'button[data-tab="register"]', '.nav-register', '#register-tab'],
+            "DISTRIBUTION": ['a[href*="distribution"]', 'button[data-tab="distribution"]', '.nav-distribution', '#distribution-tab'],
+            "MONITORING": ['a[href*="monitoring"]', 'button[data-tab="monitoring"]', '.nav-monitoring', '#monitoring-tab'],
+            "STOCK": ['a[href*="stock"]', 'button[data-tab="stock"]', '.nav-stock', '#stock-tab'],
+            "DASHBOARD": ['a[href*="dashboard"]', 'button[data-tab="dashboard"]', '.nav-dashboard', '#dashboard-tab'],
+            "ATTENDANCE": ['a[href*="attendance"]', 'button[data-tab="attendance"]', '.nav-attendance', '#attendance-tab'],
+            "DEVICE TRACKING": ['a[href*="device"]', 'button[data-tab="device"]', '.nav-device', '#device-tab', 'a[href*="tracking"]']
+        };
+        const tabList = tabSelectors[cardName] || [];
+        tabList.forEach(selector => {
+            try {
+                const tabs = doc.querySelectorAll(selector);
+                tabs.forEach(tab => { tab.style.display = 'none'; });
+            } catch(e) {}
+        });
+    });
     
-    // If ALL tabs are visible, do nothing extra. Also automatically activate first visible tab.
-    const visibleTabs = [];
-    if (tabConfig.register) visibleTabs.push('register');
-    if (tabConfig.distribution) visibleTabs.push('distribution');
-    if (tabConfig.monitoring) visibleTabs.push('monitoring');
-    if (tabConfig.dashboard) visibleTabs.push('dashboard');
-    
-    // Try to click on first visible tab to set active state
-    if (visibleTabs.length > 0) {
-        const firstTab = visibleTabs[0];
-        let firstTabSelector = '';
-        if (firstTab === 'register') firstTabSelector = selectors.register[0];
-        else if (firstTab === 'distribution') firstTabSelector = selectors.distribution[0];
-        else if (firstTab === 'monitoring') firstTabSelector = selectors.monitoring[0];
-        else if (firstTab === 'dashboard') firstTabSelector = selectors.dashboard[0];
-        
-        if (firstTabSelector) {
-            const tabBtn = doc.querySelector(firstTabSelector);
-            if (tabBtn && tabBtn.click) tabBtn.click();
-        }
-    }
+    console.log(`Applied visibility: hidden cards = ${hiddenCards.join(", ")}`);
 }
 
-// Fallback: If mscreen.html does not exist, show a friendly dashboard with tabs simulation
+// Fallback dashboard if mscreen.html doesn't exist
 function showFallbackDashboard(roleConfig, username) {
     const container = document.getElementById("appContainer");
     if (!container) return;
     
+    const hiddenList = roleConfig.hiddenCards.join(", ");
     const fallbackDiv = document.createElement("div");
-    fallbackDiv.className = "dashboard-placeholder";
     fallbackDiv.style.background = "linear-gradient(145deg, #e9f5f0 0%, #c8e6df 100%)";
     fallbackDiv.style.width = "100%";
     fallbackDiv.style.height = "100vh";
@@ -602,22 +622,18 @@ function showFallbackDashboard(roleConfig, username) {
     fallbackDiv.style.justifyContent = "center";
     fallbackDiv.style.textAlign = "center";
     fallbackDiv.style.padding = "20px";
-    
-    const allowedTabsList = Object.entries(roleConfig.tabVisibility).filter(([_, vis]) => vis).map(([tab]) => tab.toUpperCase()).join(", ");
+    fallbackDiv.style.overflowY = "auto";
     
     fallbackDiv.innerHTML = `
         <div style="background: white; border-radius: 32px; padding: 30px 20px; max-width: 320px; box-shadow: 0 20px 35px rgba(0,0,0,0.2);">
             <i class="fa-solid fa-chalkboard-user" style="font-size: 60px; color: #1E8449; margin-bottom: 20px;"></i>
             <h1 style="color: #2E86C1;">Welcome, ${username}!</h1>
             <p style="font-size: 16px; margin: 15px 0;">Role: <strong>${roleConfig.name}</strong></p>
-            <p style="background: #eef2f3; padding: 12px; border-radius: 40px; font-size: 14px;">
-                <i class="fa-regular fa-eye"></i> Accessible Tabs: ${allowedTabsList}
+            <p style="background: #eef2f3; padding: 12px; border-radius: 40px; font-size: 13px;">
+                <i class="fa-regular fa-eye-slash"></i> Hidden Cards: ${hiddenList || "None (Full Access)"}
             </p>
-            <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
-                ${roleConfig.tabVisibility.register ? '<span class="badge" style="background:#2E86C1; padding:6px 12px; border-radius:20px;">📋 Register</span>' : ''}
-                ${roleConfig.tabVisibility.distribution ? '<span class="badge" style="background:#1E8449; padding:6px 12px; border-radius:20px;">📦 Distribution</span>' : ''}
-                ${roleConfig.tabVisibility.monitoring ? '<span class="badge" style="background:#D35400; padding:6px 12px; border-radius:20px;">📊 Monitoring</span>' : ''}
-                ${roleConfig.tabVisibility.dashboard ? '<span class="badge" style="background:#8E44AD; padding:6px 12px; border-radius:20px;">📈 Dashboard</span>' : ''}
+            <div style="margin-top: 20px;">
+                <p style="font-size: 13px; color: #555;">mscreen.html not found. Please ensure the file exists.</p>
             </div>
             <button id="logoutFallbackBtn" style="margin-top: 25px; background: #e74c3c; color: white; border: none; padding: 10px 30px; border-radius: 40px; font-weight: bold; cursor: pointer;">LOGOUT</button>
         </div>
@@ -629,7 +645,7 @@ function showFallbackDashboard(roleConfig, username) {
     document.getElementById("logoutFallbackBtn")?.addEventListener("click", () => location.reload());
 }
 
-// Login handler using Keys.csv authentication
+// Login handler
 async function handleLogin() {
     const usernameInput = document.getElementById("username").value.trim();
     const passwordInput = document.getElementById("password").value.trim();
@@ -639,7 +655,6 @@ async function handleLogin() {
         return;
     }
     
-    // Wait for credentials to be loaded if not already
     if (userCredentials.length === 0) {
         await loadKeysFromCSV();
     }
@@ -647,11 +662,8 @@ async function handleLogin() {
     const roleConfig = authenticateUser(usernameInput, passwordInput);
     
     if (roleConfig) {
-        // Load mscreen.html with tab restrictions
-        // Since mscreen.html might not support URL parameters, we use iframe postMessage + direct manipulation
-        // We will try to load mscreen.html, if fails -> fallback
         try {
-            // Preflight: check if mscreen.html exists via fetch (optional)
+            // Check if mscreen.html exists
             const checkResponse = await fetch("mscreen.html", { method: "HEAD" });
             if (checkResponse.ok) {
                 loadMscreenWithRole(roleConfig, usernameInput);
@@ -679,7 +691,7 @@ function togglePassword() {
     }
 }
 
-// Language toggle (English / French) - updates UI
+// Language toggle
 function toggleLanguage() {
     isEnglish = !isEnglish;
     const usernameField = document.getElementById("username");
@@ -715,7 +727,7 @@ function toggleLanguage() {
     }
 }
 
-// QR Scanner functions (unchanged but robust)
+// QR Scanner
 function startScanner() {
     const modal = document.getElementById("scannerModal");
     modal.style.display = "flex";
@@ -742,16 +754,16 @@ function stopScanner() {
     }
 }
 
-// Card events
+// Card event handlers for login page
 function attachCardEvents() {
     document.getElementById("networkCard")?.addEventListener("click", () => {
-        alert(isEnglish ? (navigator.onLine ? "Network online." : "No internet") : (navigator.onLine ? "Réseau en ligne." : "Pas d'internet"));
+        alert(isEnglish ? (navigator.onLine ? "Network connected." : "No internet connection") : (navigator.onLine ? "Réseau connecté." : "Pas de connexion internet"));
     });
     document.getElementById("exportCard")?.addEventListener("click", () => {
-        alert(isEnglish ? "Export Campaign Logs (demo)" : "Exporter les journaux (démo)");
+        alert(isEnglish ? "Export Campaign Logs feature will be available after login." : "L'exportation des journaux de campagne sera disponible après connexion.");
     });
     document.getElementById("verifyCard")?.addEventListener("click", () => {
-        alert(isEnglish ? "Verify Beneficiary: Use badge scanner" : "Vérifier bénéficiaire: Utiliser scanner");
+        alert(isEnglish ? "Verify Beneficiary: Please login and use badge scanner." : "Vérifier bénéficiaire: Veuillez vous connecter et utiliser le scanner.");
     });
 }
 
@@ -759,6 +771,7 @@ function attachCardEvents() {
 async function init() {
     await loadKeysFromCSV();
     attachCardEvents();
+    
     const loginBtn = document.getElementById("loginBtn");
     const newLoginBtn = loginBtn.cloneNode(true);
     loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
@@ -768,7 +781,6 @@ async function init() {
         if (e.key === "Enter") handleLogin();
     });
     
-    // Reattach scan button handler
     const scanButton = document.getElementById("scanBtn");
     if (scanButton) {
         const newScanBtn = scanButton.cloneNode(true);
