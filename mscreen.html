@@ -23,7 +23,7 @@
     padding: 0;
   }
 
-  /* PHONE VIEW - Optimized for mobile */
+  /* PHONE VIEW - Original screen size */
   .phone {
     width: 100%;
     max-width: 100%;
@@ -177,7 +177,7 @@
     line-height: 1.3;
   }
 
-  /* CAROUSEL - INFINITE LOOP */
+  /* CAROUSEL - ORIGINAL SCREEN SIZE */
   .carousel-container {
     padding: 10px 14px 0px;
   }
@@ -188,55 +188,45 @@
     box-shadow: 0 6px 14px rgba(0,0,0,0.1);
     background: #f0f2f5;
   }
-  .slides-wrapper {
-    overflow: hidden;
-    width: 100%;
-  }
   .slides {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    will-change: transform;
+    transition: transform 0.4s ease;
   }
   .slide {
     min-width: 100%;
-    flex-shrink: 0;
+    height: 180px;
   }
   .slide img {
     width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 9;
+    height: 100%;
     object-fit: cover;
-    display: block;
     background: #cbd5e1;
   }
-  
-  /* Navigation Arrows */
-  .carousel-btn {
+  .btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.5);
-    backdrop-filter: blur(4px);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
     color: white;
     border: none;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
+    font-weight: bold;
     font-size: 16px;
-    transition: all 0.2s ease;
-    z-index: 10;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
     display: flex;
     align-items: center;
     justify-content: center;
   }
-  .carousel-btn:active {
-    transform: translateY(-50%) scale(0.95);
-  }
-  .btn-prev { left: 8px; }
-  .btn-next { right: 8px; }
+  .prev { left: 8px; }
+  .next { right: 8px; }
+  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
   
-  /* Dots Indicators */
+  /* Dots for slider */
   .dots-container {
     display: flex;
     justify-content: center;
@@ -260,7 +250,7 @@
     background: #0b5ed7;
   }
 
-  /* ACTION CARDS - Abbreviation directly under main text */
+  /* ACTION CARDS */
   .actions {
     padding: 14px 16px 12px;
     display: flex;
@@ -536,23 +526,21 @@
       </div>
     </div>
 
-    <!-- CAROUSEL SLIDER - INFINITE LOOP -->
+    <!-- CAROUSEL SLIDER - ORIGINAL SCREEN SIZE WITH INFINITE LOOP -->
     <div class="carousel-container">
       <div class="carousel">
-        <div class="slides-wrapper">
-          <div class="slides" id="slides">
-            <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
-            <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
-            <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
-          </div>
+        <div class="slides" id="slides">
+          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
+          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
+          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
         </div>
-        <button class="carousel-btn btn-prev" id="prevBtn">❮</button>
-        <button class="carousel-btn btn-next" id="nextBtn">❯</button>
+        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
+        <button class="btn next" onclick="moveSlide(1)">❯</button>
       </div>
       <div class="dots-container" id="dotsContainer"></div>
     </div>
 
-    <!-- ACTION CARDS - Abbreviation directly under main text -->
+    <!-- ACTION CARDS -->
     <div class="actions">
       <!-- REGISTER (HHR) -->
       <div class="card register" onclick="openActionModal('REGISTER')">
@@ -599,7 +587,7 @@
         </div>
       </div>
       
-      <!-- STOCK (No abbreviation) -->
+      <!-- STOCK -->
       <div class="card stock" onclick="openActionModal('STOCK')">
         <div class="card-left">
           <div class="card-main-row">
@@ -614,7 +602,7 @@
         </div>
       </div>
       
-      <!-- DASHBOARD (No abbreviation) -->
+      <!-- DASHBOARD -->
       <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
         <div class="card-left">
           <div class="card-main-row">
@@ -664,26 +652,25 @@
 </div>
 
 <script>
-  // ---------- INFINITE LOOP CAROUSEL WITH CLONE TECHNIQUE ----------
+  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP & DOTS ----------
+  let currentIndex = 0;
   const slidesContainer = document.getElementById('slides');
-  const originalSlides = Array.from(document.querySelectorAll('.slide'));
-  const totalSlides = originalSlides.length;
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
   const dotsContainer = document.getElementById('dotsContainer');
-  const prevButton = document.getElementById('prevBtn');
-  const nextButton = document.getElementById('nextBtn');
-  
-  let currentIndex = 1;
   let autoInterval;
-  let isTransitioning = false;
   
+  // Clone slides for infinite loop
   function setupInfiniteLoop() {
-    const firstClone = originalSlides[0].cloneNode(true);
-    const lastClone = originalSlides[totalSlides - 1].cloneNode(true);
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[totalSlides - 1].cloneNode(true);
     slidesContainer.appendChild(firstClone);
-    slidesContainer.insertBefore(lastClone, originalSlides[0]);
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    slidesContainer.insertBefore(lastClone, slides[0]);
+    slidesContainer.style.transform = `translateX(-${1 * 100}%)`;
+    currentIndex = 1;
   }
   
+  // Create dots
   function createDots() {
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalSlides; i++) {
@@ -691,14 +678,14 @@
       dot.classList.add('dot');
       if (i === 0) dot.classList.add('active');
       dot.addEventListener('click', () => {
-        if (isTransitioning) return;
-        goToRealSlide(i);
+        goToSlide(i);
         resetAutoSlide();
       });
       dotsContainer.appendChild(dot);
     }
   }
   
+  // Update active dot based on real slide index
   function updateDots() {
     let realIndex = currentIndex - 1;
     if (realIndex < 0) realIndex = totalSlides - 1;
@@ -713,85 +700,64 @@
     });
   }
   
-  function goToRealSlide(index) {
-    if (isTransitioning) return;
+  // Go to specific real slide
+  function goToSlide(index) {
     const targetPosition = index + 1;
     currentIndex = targetPosition;
-    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+    slidesContainer.style.transition = 'transform 0.4s ease';
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
     
+    // Handle infinite loop edge cases after transition
     setTimeout(() => {
       if (currentIndex === 0) {
         slidesContainer.style.transition = 'none';
         currentIndex = totalSlides;
         slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
         updateDots();
-        setTimeout(() => {
-          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }, 20);
       } else if (currentIndex === totalSlides + 1) {
         slidesContainer.style.transition = 'none';
         currentIndex = 1;
         slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
         updateDots();
-        setTimeout(() => {
-          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }, 20);
       }
-    }, 500);
+    }, 400);
   }
   
-  function nextSlide() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    currentIndex++;
-    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
+  // Move function for buttons
+  function moveSlide(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex > totalSlides + 1) newIndex = totalSlides + 1;
+    
+    currentIndex = newIndex;
+    slidesContainer.style.transition = 'transform 0.4s ease';
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
     
+    // Handle infinite loop edge cases
     setTimeout(() => {
-      isTransitioning = false;
-      if (currentIndex === totalSlides + 1) {
-        slidesContainer.style.transition = 'none';
-        currentIndex = 1;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
-        setTimeout(() => {
-          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }, 20);
-      }
-    }, 500);
-  }
-  
-  function prevSlide() {
-    if (isTransitioning) return;
-    isTransitioning = true;
-    currentIndex--;
-    slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateDots();
-    
-    setTimeout(() => {
-      isTransitioning = false;
       if (currentIndex === 0) {
         slidesContainer.style.transition = 'none';
         currentIndex = totalSlides;
         slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
         updateDots();
-        setTimeout(() => {
-          slidesContainer.style.transition = 'transform 0.5s cubic-bezier(0.4, 0, 0.2, 1)';
-        }, 20);
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
       }
-    }, 500);
+    }, 400);
   }
   
+  // Auto slide
   function startAutoSlide() {
     if (autoInterval) clearInterval(autoInterval);
     autoInterval = setInterval(() => {
-      if (!isTransitioning) {
-        nextSlide();
-      }
+      let nextIndex = currentIndex + 1;
+      if (nextIndex > totalSlides + 1) nextIndex = 1;
+      moveSlide(1);
     }, 5000);
   }
   
@@ -799,26 +765,24 @@
     startAutoSlide();
   }
   
+  // Initialize carousel
   setupInfiniteLoop();
   createDots();
   startAutoSlide();
   
-  prevButton.addEventListener('click', () => {
-    prevSlide();
-    resetAutoSlide();
-  });
-  nextButton.addEventListener('click', () => {
-    nextSlide();
-    resetAutoSlide();
-  });
+  // Make moveSlide available globally for button onclick
+  window.moveSlide = moveSlide;
   
+  // Pause on hover
   const carouselElement = document.querySelector('.carousel');
-  carouselElement.addEventListener('mouseenter', () => {
-    if (autoInterval) clearInterval(autoInterval);
-  });
-  carouselElement.addEventListener('mouseleave', () => {
-    startAutoSlide();
-  });
+  if (carouselElement) {
+    carouselElement.addEventListener('mouseenter', () => {
+      if (autoInterval) clearInterval(autoInterval);
+    });
+    carouselElement.addEventListener('mouseleave', () => {
+      startAutoSlide();
+    });
+  }
   
   // ---------- MODAL & IFRAME FLOW ----------
   let pendingAction = "";
