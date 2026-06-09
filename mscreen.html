@@ -304,7 +304,7 @@
   }
   .register { background: linear-gradient(105deg, #1e3a8a, #3b82f6); }
   .distribution { background: linear-gradient(105deg, #0f5b2e, #2e9a5e); }
-  .registerqr { background: linear-gradient(105deg, #7c3aed, #a855f7); }
+  .monitoring { background: linear-gradient(105deg, #7c3aed, #a855f7); }
   .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
 
@@ -523,12 +523,13 @@
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-hand-holding-heart"></i></div>
       </div>
-      <div class="card registerqr" onclick="openActionModal('REGISTER_QR')">
+      <!-- MONITORING (Nat. Sup) - Changed from REGISTER QR -->
+      <div class="card monitoring" onclick="openActionModal('MONITORING')">
         <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-qrcode"></i><span class="card-main-text">REGISTER QR</span></div>
-          <div class="card-abbr">(HHR)</div>
+          <div class="card-main-row"><i class="fas fa-chart-simple"></i><span class="card-main-text">MONITORING</span></div>
+          <div class="card-abbr">(Nat. Sup)</div>
         </div>
-        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-camera"></i></div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-eye"></i></div>
       </div>
       <div class="card stock" onclick="openActionModal('STOCK')">
         <div class="card-left">
@@ -750,8 +751,8 @@
     
     if (validateCredentials(username, password)) {
       closeLoginModal();
-      // Open registration.html in iframe for REGISTER and REGISTER_QR actions
-      if (pendingAction === "REGISTER" || pendingAction === "REGISTER_QR") {
+      // Open registration.html in iframe for REGISTER action only
+      if (pendingAction === "REGISTER") {
         dynamicIframe.src = "registration.html";
         dynamicIframe.onerror = function() {
           dynamicIframe.srcdoc = getFallbackRegistrationForm();
@@ -766,6 +767,8 @@
           } catch(e) {}
         }, 500);
         iframePanel.style.display = 'flex';
+      } else if (pendingAction === "MONITORING") {
+        alert("📊 MONITORING (Nat. Sup) Module: Access Granted.\nYou can now view national supervision and monitoring dashboards.");
       } else if (pendingAction === "DISTRIBUTION") {
         alert("✅ DISTRIBUTION (HHD) Module: Access Granted.\nYou can now view household distribution dashboards & logistics.");
       } else if (pendingAction === "STOCK") {
