@@ -23,7 +23,6 @@
     padding: 0;
   }
 
-  /* PHONE VIEW - Original screen size */
   .phone {
     width: 100%;
     max-width: 100%;
@@ -38,7 +37,6 @@
     box-shadow: none;
   }
 
-  /* For larger screens, add a nice container effect */
   @media (min-width: 500px) {
     body {
       padding: 16px;
@@ -61,7 +59,6 @@
     }
   }
 
-  /* Custom scroll for content */
   .scroll-content {
     flex: 1;
     overflow-y: auto;
@@ -70,7 +67,6 @@
     -webkit-overflow-scrolling: touch;
   }
 
-  /* HEADER */
   .header-section {
     background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
     color: white;
@@ -128,7 +124,6 @@
     font-weight: 500;
   }
 
-  /* PARTNER SECTION */
   .partner-section {
     background: transparent;
     padding: 10px 14px 8px 14px;
@@ -177,7 +172,6 @@
     line-height: 1.3;
   }
 
-  /* CAROUSEL - ORIGINAL SCREEN SIZE */
   .carousel-container {
     padding: 10px 14px 0px;
   }
@@ -226,7 +220,6 @@
   .next { right: 8px; }
   .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
   
-  /* Dots for slider */
   .dots-container {
     display: flex;
     justify-content: center;
@@ -250,7 +243,6 @@
     background: #0b5ed7;
   }
 
-  /* ACTION CARDS */
   .actions {
     padding: 14px 16px 12px;
     display: flex;
@@ -316,7 +308,6 @@
   .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
 
-  /* FOOTER */
   .footer {
     text-align: center;
     background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
@@ -347,7 +338,6 @@
     font-size: 9px;
   }
 
-  /* MODAL */
   .modal {
     position: fixed;
     top: 0;
@@ -424,7 +414,6 @@
     font-weight: 500;
   }
 
-  /* IFRAME PANEL */
   .iframe-panel {
     position: absolute;
     top: 0;
@@ -475,7 +464,6 @@
 <div class="phone">
 
   <div class="scroll-content">
-    <!-- HEADER -->
     <div class="header-section">
       <div class="logo-area">
         <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" class="logo-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%230b5ed7\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF-SL%3C/text%3E%3C/svg%3E';">
@@ -492,41 +480,21 @@
       </div>
     </div>
 
-    <!-- PARTNER SECTION -->
     <div class="partner-section">
       <div class="partner-heading">
         <i class="fas fa-handshake"></i> 
         <span>IMPLEMENTING PARTNERS</span>
       </div>
       <div class="partners-container">
-        <div class="partner-item">
-          <img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
-          <span>United State Dep.</span>
-        </div>
-        <div class="partner-item">
-          <img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';">
-          <span>Global Fund</span>
-        </div>
-        <div class="partner-item">
-          <img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';">
-          <span>MOH</span>
-        </div>
-        <div class="partner-item">
-          <img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';">
-          <span>NMCP</span>
-        </div>
-        <div class="partner-item">
-          <img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';">
-          <span>PMI Evolve</span>
-        </div>
-        <div class="partner-item">
-          <img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';">
-          <span>MBSSE</span>
-        </div>
+        <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
+        <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
+        <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
+        <div class="partner-item"><img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
+        <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
+        <div class="partner-item"><img src="mbsse_logo.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div>
       </div>
-    </div> 
+    </div>
 
-    <!-- CAROUSEL SLIDER - ORIGINAL SCREEN SIZE WITH INFINITE LOOP -->
     <div class="carousel-container">
       <div class="carousel">
         <div class="slides" id="slides">
@@ -540,100 +508,56 @@
       <div class="dots-container" id="dotsContainer"></div>
     </div>
 
-    <!-- ACTION CARDS -->
     <div class="actions">
-      <!-- REGISTER (HHR) -->
       <div class="card register" onclick="openActionModal('REGISTER')">
         <div class="card-left">
-          <div class="card-main-row">
-            <i class="fas fa-home"></i>
-            <span class="card-main-text">REGISTER</span>
-          </div>
+          <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
           <div class="card-abbr">(HHR)</div>
         </div>
-        <div class="card-right">
-          <i class="fas fa-lock lock-icon"></i>
-          <i class="fas fa-arrow-right"></i>
-        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-arrow-right"></i></div>
       </div>
-      
-      <!-- DISTRIBUTION (HHD) -->
       <div class="card distribution" onclick="openActionModal('DISTRIBUTION')">
         <div class="card-left">
-          <div class="card-main-row">
-            <i class="fas fa-users"></i>
-            <span class="card-main-text">DISTRIBUTION</span>
-          </div>
+          <div class="card-main-row"><i class="fas fa-users"></i><span class="card-main-text">DISTRIBUTION</span></div>
           <div class="card-abbr">(HHD)</div>
         </div>
-        <div class="card-right">
-          <i class="fas fa-lock lock-icon"></i>
-          <i class="fas fa-hand-holding-heart"></i>
-        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-hand-holding-heart"></i></div>
       </div>
-      
-      <!-- REGISTER QR (HHR) -->
       <div class="card registerqr" onclick="openActionModal('REGISTER_QR')">
         <div class="card-left">
-          <div class="card-main-row">
-            <i class="fas fa-qrcode"></i>
-            <span class="card-main-text">REGISTER QR</span>
-          </div>
+          <div class="card-main-row"><i class="fas fa-qrcode"></i><span class="card-main-text">REGISTER QR</span></div>
           <div class="card-abbr">(HHR)</div>
         </div>
-        <div class="card-right">
-          <i class="fas fa-lock lock-icon"></i>
-          <i class="fas fa-camera"></i>
-        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-camera"></i></div>
       </div>
-      
-      <!-- STOCK -->
       <div class="card stock" onclick="openActionModal('STOCK')">
         <div class="card-left">
-          <div class="card-main-row">
-            <i class="fas fa-box"></i>
-            <span class="card-main-text">STOCK</span>
-          </div>
+          <div class="card-main-row"><i class="fas fa-box"></i><span class="card-main-text">STOCK</span></div>
           <div class="card-abbr"></div>
         </div>
-        <div class="card-right">
-          <i class="fas fa-lock lock-icon"></i>
-          <i class="fas fa-chart-simple"></i>
-        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-chart-simple"></i></div>
       </div>
-      
-      <!-- DASHBOARD -->
       <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
         <div class="card-left">
-          <div class="card-main-row">
-            <i class="fas fa-chart-line"></i>
-            <span class="card-main-text">DASHBOARD</span>
-          </div>
+          <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
           <div class="card-abbr"></div>
         </div>
-        <div class="card-right">
-          <i class="fas fa-lock lock-icon"></i>
-          <i class="fas fa-eye"></i>
-        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-eye"></i></div>
       </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
   <div class="footer">
     <div class="footer-line1">Developed by</div>
-    <div class="footer-line2">
-      Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026
-    </div>
+    <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
   </div>
 </div>
 
-<!-- LOGIN MODAL -->
 <div id="loginModal" class="modal">
   <div class="modal-box">
     <h3><i class="fas fa-lock"></i> Secure Access</h3>
-    <input type="text" id="usernameInput" placeholder="Username (admin)" autocomplete="off">
-    <input type="password" id="passwordInput" placeholder="Password (1234)">
+    <input type="text" id="usernameInput" placeholder="Username" autocomplete="off">
+    <input type="password" id="passwordInput" placeholder="Password">
     <div class="modal-buttons">
       <button class="cancel" onclick="closeLoginModal()">Cancel</button>
       <button class="login" onclick="performLogin()">Login</button>
@@ -642,7 +566,6 @@
   </div>
 </div>
 
-<!-- IFRAME EMBED -->
 <div id="iframePanel" class="iframe-panel">
   <div class="iframe-header">
     <span><i class="fas fa-edit"></i> Registration Portal</span>
@@ -652,7 +575,7 @@
 </div>
 
 <script>
-  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP & DOTS ----------
+  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP ----------
   let currentIndex = 0;
   const slidesContainer = document.getElementById('slides');
   const slides = document.querySelectorAll('.slide');
@@ -660,7 +583,6 @@
   const dotsContainer = document.getElementById('dotsContainer');
   let autoInterval;
   
-  // Clone slides for infinite loop
   function setupInfiniteLoop() {
     const firstClone = slides[0].cloneNode(true);
     const lastClone = slides[totalSlides - 1].cloneNode(true);
@@ -670,45 +592,34 @@
     currentIndex = 1;
   }
   
-  // Create dots
   function createDots() {
     dotsContainer.innerHTML = '';
     for (let i = 0; i < totalSlides; i++) {
       const dot = document.createElement('button');
       dot.classList.add('dot');
       if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => {
-        goToSlide(i);
-        resetAutoSlide();
-      });
+      dot.addEventListener('click', () => { goToSlide(i); resetAutoSlide(); });
       dotsContainer.appendChild(dot);
     }
   }
   
-  // Update active dot based on real slide index
   function updateDots() {
     let realIndex = currentIndex - 1;
     if (realIndex < 0) realIndex = totalSlides - 1;
     if (realIndex >= totalSlides) realIndex = 0;
     const dots = document.querySelectorAll('.dot');
     dots.forEach((dot, idx) => {
-      if (idx === realIndex) {
-        dot.classList.add('active');
-      } else {
-        dot.classList.remove('active');
-      }
+      if (idx === realIndex) dot.classList.add('active');
+      else dot.classList.remove('active');
     });
   }
   
-  // Go to specific real slide
   function goToSlide(index) {
     const targetPosition = index + 1;
     currentIndex = targetPosition;
     slidesContainer.style.transition = 'transform 0.4s ease';
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
-    
-    // Handle infinite loop edge cases after transition
     setTimeout(() => {
       if (currentIndex === 0) {
         slidesContainer.style.transition = 'none';
@@ -724,18 +635,14 @@
     }, 400);
   }
   
-  // Move function for buttons
   function moveSlide(direction) {
     let newIndex = currentIndex + direction;
     if (newIndex < 0) newIndex = 0;
     if (newIndex > totalSlides + 1) newIndex = totalSlides + 1;
-    
     currentIndex = newIndex;
     slidesContainer.style.transition = 'transform 0.4s ease';
     slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
     updateDots();
-    
-    // Handle infinite loop edge cases
     setTimeout(() => {
       if (currentIndex === 0) {
         slidesContainer.style.transition = 'none';
@@ -751,37 +658,67 @@
     }, 400);
   }
   
-  // Auto slide
   function startAutoSlide() {
     if (autoInterval) clearInterval(autoInterval);
-    autoInterval = setInterval(() => {
-      let nextIndex = currentIndex + 1;
-      if (nextIndex > totalSlides + 1) nextIndex = 1;
-      moveSlide(1);
-    }, 5000);
+    autoInterval = setInterval(() => moveSlide(1), 5000);
   }
   
-  function resetAutoSlide() {
-    startAutoSlide();
-  }
+  function resetAutoSlide() { startAutoSlide(); }
   
-  // Initialize carousel
   setupInfiniteLoop();
   createDots();
   startAutoSlide();
-  
-  // Make moveSlide available globally for button onclick
   window.moveSlide = moveSlide;
   
-  // Pause on hover
   const carouselElement = document.querySelector('.carousel');
   if (carouselElement) {
-    carouselElement.addEventListener('mouseenter', () => {
-      if (autoInterval) clearInterval(autoInterval);
-    });
-    carouselElement.addEventListener('mouseleave', () => {
-      startAutoSlide();
-    });
+    carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
+    carouselElement.addEventListener('mouseleave', () => startAutoSlide());
+  }
+  
+  // ---------- CSV LOGIN VALIDATION ----------
+  let validCredentials = []; // Store {username, password} from CSV
+  
+  // Load and parse CSV file
+  async function loadCredentials() {
+    try {
+      const response = await fetch('Keys.csv');
+      if (!response.ok) {
+        console.warn('Keys.csv not found. Using default admin/1234');
+        validCredentials = [{ username: 'admin', password: '1234' }];
+        return;
+      }
+      const csvText = await response.text();
+      const lines = csvText.trim().split('\n');
+      // Skip header if exists (assuming first line is header)
+      const startIndex = lines[0].toLowerCase().includes('username') ? 1 : 0;
+      for (let i = startIndex; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+        const parts = line.split(',');
+        if (parts.length >= 2) {
+          validCredentials.push({
+            username: parts[0].trim(),
+            password: parts[1].trim()
+          });
+        }
+      }
+      // If no credentials loaded, add default
+      if (validCredentials.length === 0) {
+        validCredentials.push({ username: 'admin', password: '1234' });
+      }
+      console.log('Credentials loaded:', validCredentials.length);
+    } catch (error) {
+      console.error('Error loading CSV:', error);
+      validCredentials = [{ username: 'admin', password: '1234' }];
+    }
+  }
+  
+  // Validate credentials against loaded CSV data
+  function validateCredentials(username, password) {
+    return validCredentials.some(cred => 
+      cred.username === username && cred.password === password
+    );
   }
   
   // ---------- MODAL & IFRAME FLOW ----------
@@ -811,63 +748,40 @@
     const username = usernameField ? usernameField.value.trim() : "";
     const password = passwordField ? passwordField.value : "";
     
-    if (username === "admin" && password === "1234") {
+    if (validateCredentials(username, password)) {
       closeLoginModal();
-      handleAuthorizedAction(pendingAction);
+      // Open registration.html in iframe for REGISTER and REGISTER_QR actions
+      if (pendingAction === "REGISTER" || pendingAction === "REGISTER_QR") {
+        dynamicIframe.src = "registration.html";
+        dynamicIframe.onerror = function() {
+          dynamicIframe.srcdoc = getFallbackRegistrationForm();
+        };
+        setTimeout(() => {
+          try {
+            if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
+                dynamicIframe.contentDocument.body && 
+                dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
+              dynamicIframe.srcdoc = getFallbackRegistrationForm();
+            }
+          } catch(e) {}
+        }, 500);
+        iframePanel.style.display = 'flex';
+      } else if (pendingAction === "DISTRIBUTION") {
+        alert("✅ DISTRIBUTION (HHD) Module: Access Granted.\nYou can now view household distribution dashboards & logistics.");
+      } else if (pendingAction === "STOCK") {
+        alert("📦 STOCK Module: Inventory monitoring & supply chain analytics. Access granted.");
+      } else if (pendingAction === "DASHBOARD") {
+        alert("📊 DASHBOARD: Real-time ITN coverage, performance metrics, and district comparisons. Access granted.");
+      } else {
+        alert(`Access granted for ${pendingAction} module.`);
+      }
+      pendingAction = "";
     } else {
-      if (errorMsgSpan) errorMsgSpan.innerText = "❌ Invalid credentials. Use admin / 1234";
+      if (errorMsgSpan) errorMsgSpan.innerText = "❌ Invalid credentials. Please check username and password.";
     }
   }
   
-  function handleAuthorizedAction(action) {
-    if (action === "REGISTER") {
-      dynamicIframe.src = "registration.html";
-      dynamicIframe.onerror = function() {
-        dynamicIframe.srcdoc = getFallbackRegistrationForm("Standard Registration");
-      };
-      setTimeout(() => {
-        try {
-          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
-              dynamicIframe.contentDocument.body && 
-              dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
-            dynamicIframe.srcdoc = getFallbackRegistrationForm("Standard Registration");
-          }
-        } catch(e) {}
-      }, 500);
-      iframePanel.style.display = 'flex';
-    } 
-    else if (action === "REGISTER_QR") {
-      dynamicIframe.src = "registration.html";
-      dynamicIframe.onerror = function() {
-        dynamicIframe.srcdoc = getFallbackRegistrationForm("QR Code Registration");
-      };
-      setTimeout(() => {
-        try {
-          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
-              dynamicIframe.contentDocument.body && 
-              dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
-            dynamicIframe.srcdoc = getFallbackRegistrationForm("QR Code Registration");
-          }
-        } catch(e) {}
-      }, 500);
-      iframePanel.style.display = 'flex';
-    }
-    else if (action === "DISTRIBUTION") {
-      alert("✅ DISTRIBUTION (HHD) Module: Access Granted.\nYou can now view household distribution dashboards & logistics.");
-    }
-    else if (action === "STOCK") {
-      alert("📦 STOCK Module: Inventory monitoring & supply chain analytics. Access granted.");
-    }
-    else if (action === "DASHBOARD") {
-      alert("📊 DASHBOARD: Real-time ITN coverage, performance metrics, and district comparisons. Access granted.");
-    }
-    else {
-      alert(`Access granted for ${action} module.`);
-    }
-    pendingAction = "";
-  }
-  
-  function getFallbackRegistrationForm(type) {
+  function getFallbackRegistrationForm() {
     return `<!DOCTYPE html>
     <html>
     <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title>
@@ -881,19 +795,16 @@
       input{width:100%;padding:12px 14px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:13px;}
       button{background:#0b5ed7;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;}
       .success{background:#e8f5e9;color:#15803d;padding:10px;border-radius:16px;margin-top:16px;font-size:11px;text-align:center;}
-      .qr-badge{background:#f3e8ff;color:#7c3aed;padding:8px;border-radius:20px;text-align:center;font-size:12px;margin-bottom:16px;}
     </style>
     </head>
     <body>
     <div class="reg-card">
-      <h2><i class="fas fa-bed"></i> ${type === "QR Code Registration" ? '<i class="fas fa-qrcode"></i> QR Registration' : '<i class="fas fa-home"></i> HHR Registration'}</h2>
+      <h2><i class="fas fa-bed"></i> HHR Registration</h2>
       <div class="sub">Household Registration for ITN Campaign 2026</div>
-      ${type === "QR Code Registration" ? '<div class="qr-badge"><i class="fas fa-qrcode"></i> Scan Household QR Code or Enter Manually</div>' : ''}
       <input type="text" placeholder="Full name (Household Head)">
       <input type="text" placeholder="Household ID / NHIS Number">
       <input type="text" placeholder="District / Chiefdom">
       <input type="number" placeholder="Number of household members">
-      ${type === "QR Code Registration" ? '<input type="text" placeholder="Scan QR Code or Enter Code">' : ''}
       <button onclick="alert('✅ Registration data saved successfully.')">Submit Registration</button>
       <div class="success"><i class="fas fa-check-circle"></i> ITN campaign 2026 active</div>
     </div>
@@ -920,6 +831,9 @@
       }
     };
   });
+  
+  // Load credentials when page loads
+  loadCredentials();
 </script>
 </body>
 </html>
