@@ -245,16 +245,21 @@ body {
         font-size: 22px;
     }
 }
+
+/* Hidden utility */
+.hidden {
+    display: none;
+}
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="appContainer">
     <div class="bg"></div>
     <div class="content">
         <div class="login-card">
             <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='https://placehold.co/200x200/2E86C1/white?text=ICF-SL'">
             </div>
             <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
             <div class="password-wrapper">
@@ -285,7 +290,7 @@ body {
         </div>
     </div>
 
-    <!-- Curve + Footer as normal elements (no absolute positioning) -->
+    <!-- Curve + Footer as normal elements -->
     <div class="curve-wrapper">
         <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
             <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
@@ -304,47 +309,362 @@ body {
 </div>
 
 <script>
+// ============================================================
+// USER ROLE MAPPING (Based on Username + Password)
+// ============================================================
+// Defines which tabs are visible for each role when mscreen.html loads
+// The mscreen.html must support URL parameter "viewMode" or postMessage to control tabs
+// Since we cannot modify mscreen.html directly, we will inject a script into the iframe
+// to dynamically show/hide tabs based on role. This ensures compatibility.
+// ============================================================
+
 let isEnglish = true;
 let html5QrCode;
-let users = [];
+let userCredentials = []; // Store loaded from Keys.csv
 
-// Load CSV credentials
-async function loadCSV() {
+// Role definitions with tab permissions
+const ROLE_CONFIG = {
+    ADMIN: {
+        name: "ADMIN",
+        allowedTabs: ["ALL"], // Special flag: show all tabs (Register, Distribution, Monitoring, Dashboard)
+        redirectPage: "mscreen.html",
+        tabVisibility: { register: true, distribution: true, monitoring: true, dashboard: true }
+    },
+    HHR: {
+        name: "HHR",
+        allowedTabs: ["REGISTER"],
+        redirectPage: "mscreen.html",
+        tabVisibility: { register: true, distribution: false, monitoring: false, dashboard: false }
+    },
+    HHD: {
+        name: "HHD",
+        allowedTabs: ["DISTRIBUTION"],
+        redirectPage: "mscreen.html",
+        tabVisibility: { register: false, distribution: true, monitoring: false, dashboard: false }
+    },
+    NATSUP: {
+        name: "NATSUP",
+        allowedTabs: ["MONITORING", "DASHBOARD"],
+        redirectPage: "mscreen.html",
+        tabVisibility: { register: false, distribution: false, monitoring: true, dashboard: true }
+    }
+};
+
+// Expected credentials mapping (Username, Password) -> Role
+// This will be populated from Keys.csv but we define fallback based on requirements
+// Requirement: 
+// Admin / 123 -> ADMIN (All tabs)
+// HHR2026 / 123455 -> HHR (only Register Tab)
+// HHD2026 / 123456 -> HHD (only DISTRIBUTION Tab)
+// NATSUP2026 / 123200 -> NATSUP (MONITORING and DASHBOARD tabs)
+
+async function loadKeysFromCSV() {
     try {
-        const response = await fetch("Passwords.csv");
+        const response = await fetch("Keys.csv");
+        if (!response.ok) throw new Error("Keys.csv not found");
         const data = await response.text();
-        const rows = data.split("\n").slice(1);
-        users = rows.map(row => {
-            const [username, password] = row.split(",");
-            return {
-                username: username?.trim(),
-                password: password?.trim()
-            };
-        }).filter(u => u.username && u.password);
+        const rows = data.split(/\r?\n/);
+        const credentials = [];
+        
+        for (let i = 0; i < rows.length; i++) {
+            const line = rows[i].trim();
+            if (line === "") continue;
+            // Skip header if present
+            if (i === 0 && (line.toLowerCase().includes("username") || line.toLowerCase().includes("password"))) continue;
+            
+            const parts = line.split(",");
+            if (parts.length >= 2) {
+                const username = parts[0].trim();
+                const password = parts[1].trim();
+                let role = parts.length >= 3 ? parts[2].trim().toUpperCase() : "";
+                
+                // Determine role based on username pattern if not specified in CSV third column
+                if (!role) {
+                    if (username === "Admin" || username === "admin") role = "ADMIN";
+                    else if (username === "HHR2026") role = "HHR";
+                    else if (username === "HHD2026") role = "HHD";
+                    else if (username === "NATSUP2026") role = "NATSUP";
+                    else role = "ADMIN"; // default
+                }
+                
+                if (username && password) {
+                    credentials.push({ username, password, role });
+                }
+            }
+        }
+        
+        if (credentials.length === 0) {
+            // Fallback as per requirement
+            credentials.push(
+                { username: "Admin", password: "123", role: "ADMIN" },
+                { username: "HHR2026", password: "123455", role: "HHR" },
+                { username: "HHD2026", password: "123456", role: "HHD" },
+                { username: "NATSUP2026", password: "123200", role: "NATSUP" }
+            );
+        }
+        
+        userCredentials = credentials;
+        console.log("Loaded credentials:", userCredentials.map(c => ({user: c.username, role: c.role})));
+        
     } catch (err) {
-        console.warn("CSV not found, using demo users");
-        users = [
-            { username: "admin", password: "admin123" },
-            { username: "user", password: "pass123" }
+        console.warn("Error loading Keys.csv, using default required users:", err);
+        userCredentials = [
+            { username: "Admin", password: "123", role: "ADMIN" },
+            { username: "HHR2026", password: "123455", role: "HHR" },
+            { username: "HHD2026", password: "123456", role: "HHD" },
+            { username: "NATSUP2026", password: "123200", role: "NATSUP" }
         ];
     }
 }
-loadCSV();
 
-// Login handler
-document.getElementById("loginBtn").addEventListener("click", function () {
-    const u = document.getElementById("username").value.trim();
-    const p = document.getElementById("password").value.trim();
-
-    const valid = users.find(user => user.username === u && user.password === p);
-
-    if (valid) {
-        // Replace current page with mscreen.html
-        document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
-    } else {
-        alert("Invalid Username or Password");
+// Get role for username/password combination
+function authenticateUser(username, password) {
+    const matched = userCredentials.find(cred => 
+        cred.username === username && cred.password === password
+    );
+    if (matched) {
+        return ROLE_CONFIG[matched.role] || ROLE_CONFIG.ADMIN;
     }
-});
+    return null;
+}
+
+// Function to load mscreen.html with tab restrictions using iframe + postMessage / URL hash
+// Since we control the iframe loading, we can inject a script that waits for mscreen to load
+// and then sends a message to hide/show tabs. Also we can use a special URL parameter.
+function loadMscreenWithRole(roleConfig, username) {
+    const container = document.getElementById("appContainer");
+    if (!container) return;
+    
+    // Create iframe wrapper
+    const iframeWrapper = document.createElement("div");
+    iframeWrapper.style.width = "100%";
+    iframeWrapper.style.height = "100vh";
+    iframeWrapper.style.position = "relative";
+    iframeWrapper.style.background = "#f4f6f9";
+    iframeWrapper.style.borderRadius = "30px";
+    iframeWrapper.style.overflow = "hidden";
+    
+    const iframe = document.createElement("iframe");
+    // Append role and tab visibility as hash parameter so mscreen.html can read it if it supports
+    // But to be safe: we will communicate via postMessage after load
+    const tabConfig = roleConfig.tabVisibility;
+    const modeParam = `?role=${roleConfig.name}&register=${tabConfig.register}&distribution=${tabConfig.distribution}&monitoring=${tabConfig.monitoring}&dashboard=${tabConfig.dashboard}`;
+    iframe.src = `mscreen.html${modeParam}`;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.style.display = "block";
+    
+    // When iframe loads, send postMessage to control tab visibility
+    iframe.onload = () => {
+        // Wait a bit for mscreen's scripts to initialize
+        setTimeout(() => {
+            try {
+                const message = {
+                    type: "SET_TAB_VISIBILITY",
+                    role: roleConfig.name,
+                    tabs: {
+                        showRegister: tabConfig.register,
+                        showDistribution: tabConfig.distribution,
+                        showMonitoring: tabConfig.monitoring,
+                        showDashboard: tabConfig.dashboard
+                    }
+                };
+                iframe.contentWindow.postMessage(message, "*");
+            } catch(e) { console.warn("PostMessage error", e); }
+            
+            // Also if mscreen expects a different mechanism, we try to modify DOM from parent? Not possible cross-origin but same origin works.
+            // Since same origin, we can attempt to directly modify iframe's internal styles/tabs if accessible.
+            try {
+                const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                if (iframeDoc) {
+                    applyTabVisibilityDirectly(iframeDoc, tabConfig);
+                }
+            } catch(e) { /* cross-origin or same-origin fine */ }
+        }, 500);
+    };
+    
+    iframeWrapper.appendChild(iframe);
+    
+    // Replace container
+    container.innerHTML = "";
+    container.style.maxHeight = "100vh";
+    container.style.height = "100vh";
+    container.style.borderRadius = "0";
+    container.appendChild(iframeWrapper);
+    
+    // Also add a logout button overlay at top right (optional but user friendly)
+    const logoutBtn = document.createElement("button");
+    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i>';
+    logoutBtn.style.position = "absolute";
+    logoutBtn.style.top = "15px";
+    logoutBtn.style.right = "20px";
+    logoutBtn.style.zIndex = "9999";
+    logoutBtn.style.backgroundColor = "#e74c3c";
+    logoutBtn.style.color = "white";
+    logoutBtn.style.border = "none";
+    logoutBtn.style.borderRadius = "30px";
+    logoutBtn.style.padding = "8px 14px";
+    logoutBtn.style.fontWeight = "bold";
+    logoutBtn.style.fontSize = "14px";
+    logoutBtn.style.cursor = "pointer";
+    logoutBtn.style.boxShadow = "0 2px 8px rgba(0,0,0,0.2)";
+    logoutBtn.innerText = "Logout";
+    logoutBtn.style.display = "flex";
+    logoutBtn.style.alignItems = "center";
+    logoutBtn.style.gap = "6px";
+    logoutBtn.onclick = () => location.reload();
+    iframeWrapper.style.position = "relative";
+    iframeWrapper.appendChild(logoutBtn);
+}
+
+// Direct DOM manipulation in mscreen.html to enforce tab visibility (ensures compatibility)
+function applyTabVisibilityDirectly(doc, tabConfig) {
+    if (!doc) return;
+    // Common selectors for tabs in mscreen.html (based on typical tab implementations)
+    // Try to find tab buttons or containers with IDs or classes like 'register-tab', 'dist-tab', etc.
+    const selectors = {
+        register: ['#registerTab', '#register-tab', '.register-tab', '[data-tab="register"]', 'a[href="#register"]', 'button:contains("Register")'],
+        distribution: ['#distributionTab', '#dist-tab', '.distribution-tab', '[data-tab="distribution"]', 'a[href="#distribution"]'],
+        monitoring: ['#monitoringTab', '#monitor-tab', '.monitoring-tab', '[data-tab="monitoring"]'],
+        dashboard: ['#dashboardTab', '#dashboard-tab', '.dashboard-tab', '[data-tab="dashboard"]']
+    };
+    
+    function hideElement(selector) {
+        const el = doc.querySelector(selector);
+        if (el) el.style.display = 'none';
+    }
+    
+    function showElement(selector) {
+        const el = doc.querySelector(selector);
+        if (el) el.style.display = '';
+    }
+    
+    // Hide tabs based on config
+    if (!tabConfig.register) {
+        selectors.register.forEach(sel => { hideElement(sel); });
+        // Also hide content panels
+        const registerPanel = doc.querySelector('#registerPanel, .register-content, #register-section');
+        if (registerPanel) registerPanel.style.display = 'none';
+    }
+    if (!tabConfig.distribution) {
+        selectors.distribution.forEach(sel => { hideElement(sel); });
+        const distPanel = doc.querySelector('#distributionPanel, .distribution-content, #distribution-section');
+        if (distPanel) distPanel.style.display = 'none';
+    }
+    if (!tabConfig.monitoring) {
+        selectors.monitoring.forEach(sel => { hideElement(sel); });
+        const monPanel = doc.querySelector('#monitoringPanel, .monitoring-content, #monitoring-section');
+        if (monPanel) monPanel.style.display = 'none';
+    }
+    if (!tabConfig.dashboard) {
+        selectors.dashboard.forEach(sel => { hideElement(sel); });
+        const dashPanel = doc.querySelector('#dashboardPanel, .dashboard-content, #dashboard-section');
+        if (dashPanel) dashPanel.style.display = 'none';
+    }
+    
+    // If ALL tabs are visible, do nothing extra. Also automatically activate first visible tab.
+    const visibleTabs = [];
+    if (tabConfig.register) visibleTabs.push('register');
+    if (tabConfig.distribution) visibleTabs.push('distribution');
+    if (tabConfig.monitoring) visibleTabs.push('monitoring');
+    if (tabConfig.dashboard) visibleTabs.push('dashboard');
+    
+    // Try to click on first visible tab to set active state
+    if (visibleTabs.length > 0) {
+        const firstTab = visibleTabs[0];
+        let firstTabSelector = '';
+        if (firstTab === 'register') firstTabSelector = selectors.register[0];
+        else if (firstTab === 'distribution') firstTabSelector = selectors.distribution[0];
+        else if (firstTab === 'monitoring') firstTabSelector = selectors.monitoring[0];
+        else if (firstTab === 'dashboard') firstTabSelector = selectors.dashboard[0];
+        
+        if (firstTabSelector) {
+            const tabBtn = doc.querySelector(firstTabSelector);
+            if (tabBtn && tabBtn.click) tabBtn.click();
+        }
+    }
+}
+
+// Fallback: If mscreen.html does not exist, show a friendly dashboard with tabs simulation
+function showFallbackDashboard(roleConfig, username) {
+    const container = document.getElementById("appContainer");
+    if (!container) return;
+    
+    const fallbackDiv = document.createElement("div");
+    fallbackDiv.className = "dashboard-placeholder";
+    fallbackDiv.style.background = "linear-gradient(145deg, #e9f5f0 0%, #c8e6df 100%)";
+    fallbackDiv.style.width = "100%";
+    fallbackDiv.style.height = "100vh";
+    fallbackDiv.style.display = "flex";
+    fallbackDiv.style.flexDirection = "column";
+    fallbackDiv.style.alignItems = "center";
+    fallbackDiv.style.justifyContent = "center";
+    fallbackDiv.style.textAlign = "center";
+    fallbackDiv.style.padding = "20px";
+    
+    const allowedTabsList = Object.entries(roleConfig.tabVisibility).filter(([_, vis]) => vis).map(([tab]) => tab.toUpperCase()).join(", ");
+    
+    fallbackDiv.innerHTML = `
+        <div style="background: white; border-radius: 32px; padding: 30px 20px; max-width: 320px; box-shadow: 0 20px 35px rgba(0,0,0,0.2);">
+            <i class="fa-solid fa-chalkboard-user" style="font-size: 60px; color: #1E8449; margin-bottom: 20px;"></i>
+            <h1 style="color: #2E86C1;">Welcome, ${username}!</h1>
+            <p style="font-size: 16px; margin: 15px 0;">Role: <strong>${roleConfig.name}</strong></p>
+            <p style="background: #eef2f3; padding: 12px; border-radius: 40px; font-size: 14px;">
+                <i class="fa-regular fa-eye"></i> Accessible Tabs: ${allowedTabsList}
+            </p>
+            <div style="margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;">
+                ${roleConfig.tabVisibility.register ? '<span class="badge" style="background:#2E86C1; padding:6px 12px; border-radius:20px;">📋 Register</span>' : ''}
+                ${roleConfig.tabVisibility.distribution ? '<span class="badge" style="background:#1E8449; padding:6px 12px; border-radius:20px;">📦 Distribution</span>' : ''}
+                ${roleConfig.tabVisibility.monitoring ? '<span class="badge" style="background:#D35400; padding:6px 12px; border-radius:20px;">📊 Monitoring</span>' : ''}
+                ${roleConfig.tabVisibility.dashboard ? '<span class="badge" style="background:#8E44AD; padding:6px 12px; border-radius:20px;">📈 Dashboard</span>' : ''}
+            </div>
+            <button id="logoutFallbackBtn" style="margin-top: 25px; background: #e74c3c; color: white; border: none; padding: 10px 30px; border-radius: 40px; font-weight: bold; cursor: pointer;">LOGOUT</button>
+        </div>
+    `;
+    container.innerHTML = "";
+    container.style.height = "100vh";
+    container.style.maxHeight = "100vh";
+    container.appendChild(fallbackDiv);
+    document.getElementById("logoutFallbackBtn")?.addEventListener("click", () => location.reload());
+}
+
+// Login handler using Keys.csv authentication
+async function handleLogin() {
+    const usernameInput = document.getElementById("username").value.trim();
+    const passwordInput = document.getElementById("password").value.trim();
+    
+    if (!usernameInput || !passwordInput) {
+        alert(isEnglish ? "Please enter username and password" : "Veuillez entrer le nom d'utilisateur et le mot de passe");
+        return;
+    }
+    
+    // Wait for credentials to be loaded if not already
+    if (userCredentials.length === 0) {
+        await loadKeysFromCSV();
+    }
+    
+    const roleConfig = authenticateUser(usernameInput, passwordInput);
+    
+    if (roleConfig) {
+        // Load mscreen.html with tab restrictions
+        // Since mscreen.html might not support URL parameters, we use iframe postMessage + direct manipulation
+        // We will try to load mscreen.html, if fails -> fallback
+        try {
+            // Preflight: check if mscreen.html exists via fetch (optional)
+            const checkResponse = await fetch("mscreen.html", { method: "HEAD" });
+            if (checkResponse.ok) {
+                loadMscreenWithRole(roleConfig, usernameInput);
+            } else {
+                showFallbackDashboard(roleConfig, usernameInput);
+            }
+        } catch (err) {
+            showFallbackDashboard(roleConfig, usernameInput);
+        }
+    } else {
+        alert(isEnglish ? "Invalid Username or Password" : "Nom d'utilisateur ou mot de passe incorrect");
+    }
+}
 
 // Toggle password visibility
 function togglePassword() {
@@ -359,7 +679,7 @@ function togglePassword() {
     }
 }
 
-// Language toggle (English / French)
+// Language toggle (English / French) - updates UI
 function toggleLanguage() {
     isEnglish = !isEnglish;
     const usernameField = document.getElementById("username");
@@ -395,7 +715,7 @@ function toggleLanguage() {
     }
 }
 
-// QR Scanner
+// QR Scanner functions (unchanged but robust)
 function startScanner() {
     const modal = document.getElementById("scannerModal");
     modal.style.display = "flex";
@@ -404,14 +724,14 @@ function startScanner() {
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qr => {
-            alert("Scanned: " + qr);
+            alert(isEnglish ? "Scanned: " + qr : "Scanné: " + qr);
             stopScanner();
         }
     ).catch(err => console.error("Scanner error", err));
 }
 
 function stopScanner() {
-    if (html5QrCode) {
+    if (html5QrCode && html5QrCode.isScanning) {
         html5QrCode.stop().then(() => {
             document.getElementById("scannerModal").style.display = "none";
         }).catch(() => {
@@ -421,6 +741,43 @@ function stopScanner() {
         document.getElementById("scannerModal").style.display = "none";
     }
 }
+
+// Card events
+function attachCardEvents() {
+    document.getElementById("networkCard")?.addEventListener("click", () => {
+        alert(isEnglish ? (navigator.onLine ? "Network online." : "No internet") : (navigator.onLine ? "Réseau en ligne." : "Pas d'internet"));
+    });
+    document.getElementById("exportCard")?.addEventListener("click", () => {
+        alert(isEnglish ? "Export Campaign Logs (demo)" : "Exporter les journaux (démo)");
+    });
+    document.getElementById("verifyCard")?.addEventListener("click", () => {
+        alert(isEnglish ? "Verify Beneficiary: Use badge scanner" : "Vérifier bénéficiaire: Utiliser scanner");
+    });
+}
+
+// Initialize app
+async function init() {
+    await loadKeysFromCSV();
+    attachCardEvents();
+    const loginBtn = document.getElementById("loginBtn");
+    const newLoginBtn = loginBtn.cloneNode(true);
+    loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
+    newLoginBtn.addEventListener("click", handleLogin);
+    
+    document.getElementById("password").addEventListener("keypress", (e) => {
+        if (e.key === "Enter") handleLogin();
+    });
+    
+    // Reattach scan button handler
+    const scanButton = document.getElementById("scanBtn");
+    if (scanButton) {
+        const newScanBtn = scanButton.cloneNode(true);
+        scanButton.parentNode.replaceChild(newScanBtn, scanButton);
+        newScanBtn.onclick = startScanner;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", init);
 </script>
 </body>
 </html>
