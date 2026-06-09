@@ -307,6 +307,8 @@
   .monitoring { background: linear-gradient(105deg, #7c3aed, #a855f7); }
   .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
+  .attendance { background: linear-gradient(105deg, #059669, #10b981); }
+  .device-tracking { background: linear-gradient(105deg, #dc2626, #ef4444); }
 
   .footer {
     text-align: center;
@@ -509,6 +511,7 @@
     </div>
 
     <div class="actions">
+      <!-- REGISTER (HHR) -->
       <div class="card register" onclick="openActionModal('REGISTER')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
@@ -516,6 +519,8 @@
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-arrow-right"></i></div>
       </div>
+      
+      <!-- DISTRIBUTION (HHD) -->
       <div class="card distribution" onclick="openActionModal('DISTRIBUTION')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-users"></i><span class="card-main-text">DISTRIBUTION</span></div>
@@ -523,7 +528,8 @@
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-hand-holding-heart"></i></div>
       </div>
-      <!-- MONITORING (Nat. Sup) - Changed from REGISTER QR -->
+      
+      <!-- MONITORING (Nat. Sup) -->
       <div class="card monitoring" onclick="openActionModal('MONITORING')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-simple"></i><span class="card-main-text">MONITORING</span></div>
@@ -531,6 +537,8 @@
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-eye"></i></div>
       </div>
+      
+      <!-- STOCK -->
       <div class="card stock" onclick="openActionModal('STOCK')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-box"></i><span class="card-main-text">STOCK</span></div>
@@ -538,12 +546,32 @@
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-chart-simple"></i></div>
       </div>
+      
+      <!-- DASHBOARD -->
       <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
           <div class="card-abbr"></div>
         </div>
         <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-eye"></i></div>
+      </div>
+      
+      <!-- ATTENDANCE - New Card -->
+      <div class="card attendance" onclick="openActionModal('ATTENDANCE')">
+        <div class="card-left">
+          <div class="card-main-row"><i class="fas fa-calendar-check"></i><span class="card-main-text">ATTENDANCE</span></div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-user-check"></i></div>
+      </div>
+      
+      <!-- DEVICE TRACKING - New Card -->
+      <div class="card device-tracking" onclick="openActionModal('DEVICE_TRACKING')">
+        <div class="card-left">
+          <div class="card-main-row"><i class="fas fa-mobile-alt"></i><span class="card-main-text">DEVICE TRACKING</span></div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-map-marker-alt"></i></div>
       </div>
     </div>
   </div>
@@ -678,9 +706,8 @@
   }
   
   // ---------- CSV LOGIN VALIDATION ----------
-  let validCredentials = []; // Store {username, password} from CSV
+  let validCredentials = [];
   
-  // Load and parse CSV file
   async function loadCredentials() {
     try {
       const response = await fetch('Keys.csv');
@@ -691,7 +718,6 @@
       }
       const csvText = await response.text();
       const lines = csvText.trim().split('\n');
-      // Skip header if exists (assuming first line is header)
       const startIndex = lines[0].toLowerCase().includes('username') ? 1 : 0;
       for (let i = startIndex; i < lines.length; i++) {
         const line = lines[i].trim();
@@ -704,7 +730,6 @@
           });
         }
       }
-      // If no credentials loaded, add default
       if (validCredentials.length === 0) {
         validCredentials.push({ username: 'admin', password: '1234' });
       }
@@ -715,7 +740,6 @@
     }
   }
   
-  // Validate credentials against loaded CSV data
   function validateCredentials(username, password) {
     return validCredentials.some(cred => 
       cred.username === username && cred.password === password
@@ -751,7 +775,7 @@
     
     if (validateCredentials(username, password)) {
       closeLoginModal();
-      // Open registration.html in iframe for REGISTER action only
+      
       if (pendingAction === "REGISTER") {
         dynamicIframe.src = "registration.html";
         dynamicIframe.onerror = function() {
@@ -775,6 +799,10 @@
         alert("📦 STOCK Module: Inventory monitoring & supply chain analytics. Access granted.");
       } else if (pendingAction === "DASHBOARD") {
         alert("📊 DASHBOARD: Real-time ITN coverage, performance metrics, and district comparisons. Access granted.");
+      } else if (pendingAction === "ATTENDANCE") {
+        alert("📋 ATTENDANCE Module: Access Granted.\nYou can now track staff and field worker attendance.");
+      } else if (pendingAction === "DEVICE_TRACKING") {
+        alert("📍 DEVICE TRACKING Module: Access Granted.\nYou can now monitor device locations and track field movements.");
       } else {
         alert(`Access granted for ${pendingAction} module.`);
       }
@@ -835,7 +863,6 @@
     };
   });
   
-  // Load credentials when page loads
   loadCredentials();
 </script>
 </body>
