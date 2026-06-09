@@ -1,5 +1,5 @@
-<!DOCTYPE html> 
-<html lang="en"> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -24,7 +24,7 @@ body {
     min-height: 100vh;
 }
 
-/* Phone container */
+/* Phone container - flex column, no absolute overlapping */
 .container {
     width: 360px;
     max-width: 100%;
@@ -40,7 +40,7 @@ body {
     flex-direction: column;
 }
 
-/* Background image */
+/* Background image (optional) */
 .bg {
     position: absolute;
     top: 0;
@@ -57,7 +57,7 @@ body {
     background: rgba(0,0,0,0.45);
 }
 
-/* Main content */
+/* Main content - scrollable if needed */
 .content {
     position: relative;
     z-index: 2;
@@ -94,7 +94,7 @@ body {
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 40px;
-    font-size: 16px;
+    font-size: 16px; /* prevents zoom on iOS */
     background: #fff;
 }
 
@@ -168,7 +168,7 @@ body {
 .verify { background: #8E44AD; }
 .language { background: #16A085; }
 
-/* Curve and footer */
+/* Curve and footer as normal flow elements (no absolute) */
 .curve-wrapper {
     position: relative;
     z-index: 2;
@@ -224,38 +224,6 @@ body {
     cursor: pointer;
 }
 
-/* Loading overlay */
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    flex-direction: column;
-}
-.loading-spinner {
-    width: 50px;
-    height: 50px;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #2E86C1;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-.loading-text {
-    color: white;
-    margin-top: 15px;
-    font-size: 14px;
-}
-@keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-
 /* Mobile responsive */
 @media (max-width: 380px) {
     .container {
@@ -286,7 +254,7 @@ body {
     <div class="content">
         <div class="login-card">
             <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%232E86C1\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF%3C/text%3E%3C/svg%3E'">
+                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
             </div>
             <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
             <div class="password-wrapper">
@@ -317,7 +285,7 @@ body {
         </div>
     </div>
 
-    <!-- Curve + Footer -->
+    <!-- Curve + Footer as normal elements (no absolute positioning) -->
     <div class="curve-wrapper">
         <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
             <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
@@ -335,163 +303,46 @@ body {
     <button class="close-btn" onclick="stopScanner()">Close</button>
 </div>
 
-<!-- Loading Overlay -->
-<div id="loadingOverlay" class="loading-overlay">
-    <div class="loading-spinner"></div>
-    <div class="loading-text">Authenticating...</div>
-</div>
-
 <script>
-// Global variables
 let isEnglish = true;
 let html5QrCode;
 let users = [];
 
-// Show/Hide loading overlay
-function showLoading() {
-    document.getElementById('loadingOverlay').style.display = 'flex';
-}
-function hideLoading() {
-    document.getElementById('loadingOverlay').style.display = 'none';
-}
-
-// Load CSV credentials from Keys.csv
+// Load CSV credentials
 async function loadCSV() {
     try {
-        const response = await fetch("Keys.csv");
-        if (!response.ok) {
-            console.warn('Keys.csv not found. Using default demo users');
-            users = [
-                { username: "admin", password: "1234", role: "admin", page: "mscreen.html" },
-                { username: "HHR2026", password: "123455", role: "hhr", page: "mregistration.html" },
-                { username: "HHD2026", password: "123456", role: "hhd", page: "distribution.html" },
-                { username: "monitor", password: "monitor123", role: "monitor", page: "monitoring.html" }
-            ];
-            return;
-        }
-        const csvText = await response.text();
-        const lines = csvText.trim().split('\n');
-        
-        // Check if first line is header
-        const firstLine = lines[0].toLowerCase();
-        const hasHeader = firstLine.includes('username') || firstLine.includes('user');
-        const startIndex = hasHeader ? 1 : 0;
-        
-        for (let i = startIndex; i < lines.length; i++) {
-            const line = lines[i].trim();
-            if (line === '') continue;
-            
-            // Parse CSV line (supports comma separated)
-            const parts = line.split(',');
-            if (parts.length >= 2) {
-                users.push({
-                    username: parts[0].trim(),
-                    password: parts[1].trim(),
-                    role: parts[2] ? parts[2].trim() : 'user',
-                    page: parts[3] ? parts[3].trim() : getDefaultPage(parts[0].trim())
-                });
-            }
-        }
-        
-        // If no users loaded, add default
-        if (users.length === 0) {
-            users = [
-                { username: "admin", password: "1234", role: "admin", page: "mscreen.html" },
-                { username: "HHR2026", password: "123455", role: "hhr", page: "mregistration.html" }
-            ];
-        }
-        
-        console.log('Credentials loaded:', users.length);
-    } catch (error) {
-        console.error('Error loading CSV:', error);
+        const response = await fetch("Passwords.csv");
+        const data = await response.text();
+        const rows = data.split("\n").slice(1);
+        users = rows.map(row => {
+            const [username, password] = row.split(",");
+            return {
+                username: username?.trim(),
+                password: password?.trim()
+            };
+        }).filter(u => u.username && u.password);
+    } catch (err) {
+        console.warn("CSV not found, using demo users");
         users = [
-            { username: "admin", password: "1234", role: "admin", page: "mscreen.html" },
-            { username: "HHR2026", password: "123455", role: "hhr", page: "mregistration.html" }
+            { username: "admin", password: "admin123" },
+            { username: "user", password: "pass123" }
         ];
     }
 }
-
-// Determine default page based on username pattern
-function getDefaultPage(username) {
-    const upperUser = username.toUpperCase();
-    if (upperUser.includes('HHR')) {
-        return 'mregistration.html';
-    } else if (upperUser.includes('HHD')) {
-        return 'distribution.html';
-    } else if (upperUser.includes('ADMIN')) {
-        return 'mscreen.html';
-    } else if (upperUser.includes('MONITOR')) {
-        return 'monitoring.html';
-    } else {
-        return 'mscreen.html';
-    }
-}
-
-// Validate credentials
-function validateCredentials(username, password) {
-    return users.find(user => 
-        user.username === username && user.password === password
-    );
-}
+loadCSV();
 
 // Login handler
-document.getElementById("loginBtn").addEventListener("click", async function() {
-    const username = document.getElementById("username").value.trim();
-    const password = document.getElementById("password").value.trim();
-    
-    if (!username || !password) {
-        alert("Please enter both username and password");
-        return;
-    }
-    
-    showLoading();
-    
-    // Ensure CSV is loaded
-    if (users.length === 0) {
-        await loadCSV();
-    }
-    
-    // Simulate slight delay for better UX
-    setTimeout(() => {
-        const user = validateCredentials(username, password);
-        
-        if (user) {
-            // Determine which page to load based on user role/username
-            let targetPage = user.page || getDefaultPage(username);
-            
-            // If username contains HHR (case insensitive), go to registration page
-            if (username.toUpperCase().includes('HHR')) {
-                targetPage = 'mregistration.html';
-            }
-            // If username contains HHD, go to distribution page
-            else if (username.toUpperCase().includes('HHD')) {
-                targetPage = 'distribution.html';
-            }
-            // If username is admin or contains ADMIN, go to main screen
-            else if (username.toLowerCase() === 'admin' || username.toUpperCase().includes('ADMIN')) {
-                targetPage = 'mscreen.html';
-            }
-            
-            console.log(`User ${username} redirected to: ${targetPage}`);
-            
-            // Redirect to the appropriate page
-            document.body.innerHTML = `<iframe src="${targetPage}" style="width:100%;height:100vh;border:none;"></iframe>`;
-        } else {
-            hideLoading();
-            alert("Invalid Username or Password. Please check your credentials.");
-        }
-    }, 800);
-});
+document.getElementById("loginBtn").addEventListener("click", function () {
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value.trim();
 
-// Also handle Enter key press
-document.getElementById("password").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        document.getElementById("loginBtn").click();
-    }
-});
-document.getElementById("username").addEventListener("keypress", function(e) {
-    if (e.key === "Enter") {
-        document.getElementById("loginBtn").click();
+    const valid = users.find(user => user.username === u && user.password === p);
+
+    if (valid) {
+        // Replace current page with mscreen.html
+        document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
+    } else {
+        alert("Invalid Username or Password");
     }
 });
 
@@ -553,9 +404,7 @@ function startScanner() {
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qr => {
-            alert("Scanned Badge: " + qr);
-            // Optional: Auto-fill username with scanned value
-            document.getElementById("username").value = qr;
+            alert("Scanned: " + qr);
             stopScanner();
         }
     ).catch(err => console.error("Scanner error", err));
@@ -572,28 +421,6 @@ function stopScanner() {
         document.getElementById("scannerModal").style.display = "none";
     }
 }
-
-// Card click handlers
-document.getElementById("networkCard").addEventListener("click", function() {
-    alert("Network Status: Connected\nSignal Strength: Good\nServer: Online");
-});
-
-document.getElementById("exportCard").addEventListener("click", function() {
-    alert("Export Campaign Logs\nThis feature will export all campaign data to CSV format.");
-});
-
-document.getElementById("verifyCard").addEventListener("click", function() {
-    alert("Verify Beneficiary\nPlease scan beneficiary fingerprint or enter ID to verify.");
-});
-
-// Load CSV when page loads
-loadCSV();
-
-// Add sample CSV data instruction in console
-console.log("Login System Ready!");
-console.log("Sample credentials: HHR2026 / 123455 -> redirects to mregistration.html");
-console.log("Sample credentials: admin / 1234 -> redirects to mscreen.html");
-console.log("To use your own credentials, create Keys.csv file with format: username,password,role,page");
 </script>
 </body>
 </html>
