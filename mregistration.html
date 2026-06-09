@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>Phone View | Three Action Cards</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background: #f0f2f5;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      line-height: 1.3;
+    }
+
+    /* ===== HEADER with color #0a59c6 ===== */
+    .app-header {
+      background-color: #0a59c6;
+      color: white;
+      padding: 0.65rem 1rem;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    }
+
+    .header-container {
+      max-width: 100%;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .brand-icons {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem;
+    }
+
+    .icon-reg {
+      font-size: 1.2rem;
+      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
+    }
+
+    .brand h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      background: rgba(255,255,255,0.15);
+      padding: 0.15rem 0.7rem;
+      border-radius: 40px;
+      backdrop-filter: blur(2px);
+    }
+
+    /* ===== MAIN CONTENT - PHONE FIRST, REDUCED CARDS ===== */
+    .main-content {
+      flex: 1;
+      width: 100%;
+      max-width: 420px;
+      margin: 0.8rem auto;
+      padding: 0 0.9rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* Cards container - vertical stack */
+    .cards-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+    }
+
+    /* Action Card - smaller, compact */
+    .action-card {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 6px 14px -4px rgba(0, 0, 0, 0.08);
+      width: 100%;
+      max-width: 340px;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .action-card:active {
+      transform: scale(0.98);
+    }
+
+    /* Card 1: Manual Entry - Orange/Amber gradient */
+    .card-manual .card-header {
+      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
+    }
+
+    /* Card 2: Scan QR - Teal/Green gradient */
+    .card-scan .card-header {
+      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
+    }
+
+    /* Card 3: RECORDS - Purple/Violet gradient */
+    .card-records .card-header {
+      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
+    }
+
+    /* Card header - reduced padding */
+    .card-header {
+      padding: 0.65rem 0.9rem;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.55rem;
+      text-align: center;
+    }
+
+    .card-icon {
+      font-size: 1.3rem;
+      background: rgba(255,255,255,0.2);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 40px;
+      backdrop-filter: blur(4px);
+      flex-shrink: 0;
+    }
+
+    .card-header h2 {
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    /* Card body - compact */
+    .card-body {
+      padding: 0.8rem 0.8rem 0.95rem 0.8rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+    }
+
+    .card-description {
+      color: #1e2a3e;
+      font-size: 0.7rem;
+      line-height: 1.4;
+      font-weight: 500;
+      background: #f8fafc;
+      padding: 0.7rem 0.65rem;
+      border-radius: 16px;
+      text-align: left;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Different border colors for each card matching their headers */
+    .card-manual .card-description {
+      border-left: 3px solid #f97316;
+    }
+    .card-scan .card-description {
+      border-left: 3px solid #14b8a6;
+    }
+    .card-records .card-description {
+      border-left: 3px solid #a855f7;
+    }
+
+    .demographic-title {
+      font-weight: 700;
+      margin-bottom: 4px;
+      font-size: 0.7rem;
+      display: block;
+    }
+
+    .hierarchy-path {
+      font-family: monospace;
+      font-size: 0.6rem;
+      background: #fff3e6;
+      padding: 0.4rem;
+      border-radius: 10px;
+      color: #ea580c;
+      font-weight: 600;
+      margin-top: 0.4rem;
+      text-align: center;
+      word-break: break-word;
+    }
+
+    .qr-feature-badge {
+      background: #e6f7f5;
+      color: #0d9488;
+      padding: 0.35rem 0.5rem;
+      border-radius: 28px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.4rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .records-badge {
+      background: #f3e8ff;
+      color: #7c3aed;
+      padding: 0.35rem 0.5rem;
+      border-radius: 28px;
+      font-size: 0.6rem;
+      font-weight: 600;
+      display: inline-block;
+      margin-top: 0.4rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .divider-light {
+      height: 1px;
+      background: #e2e8f0;
+      margin: 0.1rem 0;
+    }
+
+    /* ===== FOOTER ===== */
+    .app-footer {
+      background-color: #0a59c6;
+      color: white;
+      margin-top: 0;
+      padding: 0.7rem 1rem;
+      font-size: 0.7rem;
+    }
+
+    .footer-container {
+      width: 100%;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.15rem;
+      text-align: center;
+    }
+
+    .footer-main {
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .footer-sub {
+      font-size: 0.65rem;
+      opacity: 0.9;
+    }
+
+    /* ===== EXTRA SMALL PHONES (<= 380px) - EVEN MORE COMPACT ===== */
+    @media (max-width: 400px) {
+      .main-content {
+        padding: 0 0.7rem;
+        margin: 0.6rem auto;
+      }
+      
+      .cards-container {
+        gap: 0.7rem;
+      }
+      
+      .action-card {
+        max-width: 300px;
+        border-radius: 18px;
+      }
+      
+      .card-header {
+        padding: 0.55rem 0.7rem;
+      }
+      
+      .card-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+      }
+      
+      .card-header h2 {
+        font-size: 0.85rem;
+      }
+      
+      .card-body {
+        padding: 0.65rem 0.65rem 0.8rem;
+        gap: 0.5rem;
+      }
+      
+      .card-description {
+        font-size: 0.65rem;
+        padding: 0.6rem 0.55rem;
+      }
+      
+      .demographic-title {
+        font-size: 0.65rem;
+      }
+      
+      .hierarchy-path {
+        font-size: 0.55rem;
+        padding: 0.35rem;
+      }
+      
+      .qr-feature-badge,
+      .records-badge {
+        font-size: 0.55rem;
+        padding: 0.3rem 0.4rem;
+      }
+      
+      .brand h1 {
+        font-size: 0.9rem;
+      }
+      
+      .icon-reg {
+        font-size: 1.1rem;
+      }
+      
+      .app-header {
+        padding: 0.5rem 0.8rem;
+      }
+    }
+
+    /* For larger phones (401px - 480px) */
+    @media (min-width: 401px) and (max-width: 480px) {
+      .action-card {
+        max-width: 340px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER with color #0a59c6 -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="brand">
+        <div class="brand-icons">
+          <span class="icon-reg">📝</span>
+          <span class="icon-reg">✅</span>
+          <span class="icon-reg">👥</span>
+        </div>
+        <h1>REGISTRATION</h1>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT: THREE ACTION CARDS - DIFFERENT COLORS, REDUCED SIZE, STACKED FOR PHONE -->
+  <main class="main-content">
+    <div class="cards-container">
+      
+      <!-- ACTION CARD 1: MANUAL ENTRY (Orange/Amber themed) -->
+      <div class="action-card card-manual">
+        <div class="card-header">
+          <div class="card-icon">✍️</div>
+          <h2>MANUAL ENTRY</h2>
+        </div>
+        <div class="card-body">
+          <div class="card-description">
+            <span class="demographic-title">📊 Demographic Info</span>
+            Region » District » Chiefdom » PHU » Community » Distribution Point
+            <div class="hierarchy-path">
+              Complete each level for accurate registration
+            </div>
+          </div>
+          <div class="divider-light"></div>
+        </div>
+      </div>
+
+      <!-- ACTION CARD 2: SCAN QR (Teal/Green themed) -->
+      <div class="action-card card-scan">
+        <div class="card-header">
+          <div class="card-icon">📷</div>
+          <h2>SCAN QR</h2>
+        </div>
+        <div class="card-body">
+          <div class="card-description">
+            <span class="demographic-title">⚡ Instant Auto-Fill</span>
+            Camera scans QR and auto-fills all fields instantly
+            <div class="qr-feature-badge">
+              Full hierarchy + recipient details
+            </div>
+          </div>
+          <div class="divider-light"></div>
+        </div>
+      </div>
+
+      <!-- ACTION CARD 3: RECORDS (Purple/Violet themed) -->
+      <div class="action-card card-records">
+        <div class="card-header">
+          <div class="card-icon">📋</div>
+          <h2>RECORDS</h2>
+        </div>
+        <div class="card-body">
+          <div class="card-description">
+            <span class="demographic-title">📁 View & Manage</span>
+            Access submitted registrations, filter by hierarchy or date
+            <div class="records-badge">
+              Search · Export · History
+            </div>
+          </div>
+          <div class="divider-light"></div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER with required text -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-line footer-main">
+        Developed by Informatics Consultancy Firm-SL
+      </div>
+      <div class="footer-line footer-sub">
+        © 2026
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
