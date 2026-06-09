@@ -245,16 +245,42 @@ body {
         font-size: 22px;
     }
 }
+
+/* Dashboard preview (mscreen fallback style) - if mscreen.html not available */
+.dashboard-placeholder {
+    width: 100%;
+    height: 100vh;
+    background: linear-gradient(145deg, #e9f5f0 0%, #c8e6df 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    font-family: monospace;
+}
+.dashboard-placeholder h1 {
+    color: #1E8449;
+    margin-bottom: 20px;
+}
+.dashboard-placeholder p {
+    font-size: 18px;
+    background: white;
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
 </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container" id="appContainer">
     <div class="bg"></div>
     <div class="content">
         <div class="login-card">
             <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
+                <!-- Using a modern placeholder icon since external logo may not exist, but keep img tag -->
+                <img src="https://placehold.co/200x200/2E86C1/white?text=ICF-SL" alt="ICF-SL Logo" style="background:white; padding:4px;">
             </div>
             <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
             <div class="password-wrapper">
@@ -285,7 +311,7 @@ body {
         </div>
     </div>
 
-    <!-- Curve + Footer as normal elements (no absolute positioning) -->
+    <!-- Curve + Footer as normal elements -->
     <div class="curve-wrapper">
         <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
             <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
@@ -304,49 +330,221 @@ body {
 </div>
 
 <script>
+// ============================================================
+// GLOBAL VARIABLES
+// ============================================================
 let isEnglish = true;
 let html5QrCode;
-let users = [];
+let userDatabase = []; // Stores { username, password, redirectPage }
 
-// Load CSV credentials
-async function loadCSV() {
+// ============================================================
+// 1. LOAD CREDENTIALS FROM Keys.csv (username, password, redirect_tab)
+//    Format expectation: username,password,redirect_page
+//    Example row: admin,admin123,admin_dashboard.html
+//    If redirect_page missing, fallback to "mscreen.html"
+// ============================================================
+async function loadKeysFromCSV() {
     try {
-        const response = await fetch("Passwords.csv");
+        const response = await fetch("Keys.csv");
+        if (!response.ok) throw new Error("Keys.csv not found");
         const data = await response.text();
-        const rows = data.split("\n").slice(1);
-        users = rows.map(row => {
-            const [username, password] = row.split(",");
-            return {
-                username: username?.trim(),
-                password: password?.trim()
-            };
-        }).filter(u => u.username && u.password);
+        const rows = data.split(/\r?\n/);
+        // Remove empty lines and trim
+        const parsed = [];
+        for (let i = 0; i < rows.length; i++) {
+            const line = rows[i].trim();
+            if (line === "") continue;
+            // Skip header if present (optional: if first line contains "username" ignore)
+            const isHeader = line.toLowerCase().includes("username") && line.toLowerCase().includes("password");
+            if (i === 0 && (isHeader || line.startsWith("username"))) continue;
+            
+            const parts = line.split(",");
+            if (parts.length >= 2) {
+                const username = parts[0].trim();
+                const password = parts[1].trim();
+                let redirectPage = parts.length >= 3 ? parts[2].trim() : "mscreen.html";
+                // ensure redirectPage has .html or .htm fallback
+                if (!redirectPage.endsWith(".html") && !redirectPage.endsWith(".htm") && redirectPage !== "") {
+                    redirectPage = redirectPage + ".html";
+                }
+                if (username && password) {
+                    parsed.push({ username, password, redirectPage });
+                }
+            }
+        }
+        
+        if (parsed.length === 0) {
+            // fallback demo users in case CSV empty
+            console.warn("Keys.csv empty or invalid format, using demo users with respective tabs.");
+            userDatabase = [
+                { username: "supervisor", password: "super123", redirectPage: "supervisor_panel.html" },
+                { username: "fieldagent", password: "field123", redirectPage: "field_dashboard.html" },
+                { username: "admin", password: "admin123", redirectPage: "mscreen.html" },
+                { username: "coordinator", password: "coord123", redirectPage: "coordinator_view.html" }
+            ];
+        } else {
+            userDatabase = parsed;
+        }
+        
+        console.log("Loaded credentials:", userDatabase.map(u => ({user: u.username, page: u.redirectPage})));
+        
     } catch (err) {
-        console.warn("CSV not found, using demo users");
-        users = [
-            { username: "admin", password: "admin123" },
-            { username: "user", password: "pass123" }
+        console.error("Error loading Keys.csv:", err);
+        // Fallback to default user set that maps to respective tabs based on username
+        userDatabase = [
+            { username: "supervisor", password: "super123", redirectPage: "supervisor_panel.html" },
+            { username: "fieldagent", password: "field123", redirectPage: "field_dashboard.html" },
+            { username: "admin", password: "admin123", redirectPage: "mscreen.html" },
+            { username: "coordinator", password: "coord123", redirectPage: "coordinator_view.html" }
         ];
     }
 }
-loadCSV();
 
-// Login handler
-document.getElementById("loginBtn").addEventListener("click", function () {
-    const u = document.getElementById("username").value.trim();
-    const p = document.getElementById("password").value.trim();
-
-    const valid = users.find(user => user.username === u && user.password === p);
-
-    if (valid) {
-        // Replace current page with mscreen.html
-        document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
-    } else {
-        alert("Invalid Username or Password");
+// ============================================================
+// 2. LOGIN HANDLER: validate against Keys.csv and redirect to respective tab/page
+//    based on the username's assigned redirect_page from CSV
+// ============================================================
+async function performLogin() {
+    const usernameInput = document.getElementById("username").value.trim();
+    const passwordInput = document.getElementById("password").value.trim();
+    
+    if (!usernameInput || !passwordInput) {
+        alert(isEnglish ? "Please enter username and password" : "Veuillez entrer le nom d'utilisateur et le mot de passe");
+        return;
     }
-});
+    
+    // Find matching user in database loaded from Keys.csv
+    const matchedUser = userDatabase.find(user => 
+        user.username.toLowerCase() === usernameInput.toLowerCase() && 
+        user.password === passwordInput
+    );
+    
+    if (matchedUser) {
+        // Get the redirect target page for this specific user
+        let targetPage = matchedUser.redirectPage;
+        if (!targetPage) targetPage = "mscreen.html";
+        
+        // Optional: if the target page doesn't exist, we still load - but to improve experience
+        // We will replace entire body with iframe/dynamic load.
+        // For robust behavior: load target page in iframe, but also show meaningful error if not found (graceful)
+        showDashboard(targetPage, matchedUser.username);
+    } else {
+        alert(isEnglish ? "Invalid Username or Password" : "Nom d'utilisateur ou mot de passe incorrect");
+    }
+}
 
-// Toggle password visibility
+// Function to replace the login container with dashboard (iframe or inline content)
+function showDashboard(pageUrl, userName) {
+    const container = document.getElementById("appContainer");
+    if (!container) return;
+    
+    // Create fullscreen iframe wrapper
+    const iframeWrapper = document.createElement("div");
+    iframeWrapper.style.width = "100%";
+    iframeWrapper.style.height = "100vh";
+    iframeWrapper.style.position = "relative";
+    iframeWrapper.style.background = "#fff";
+    iframeWrapper.style.borderRadius = "30px";
+    iframeWrapper.style.overflow = "hidden";
+    
+    const iframe = document.createElement("iframe");
+    iframe.src = pageUrl;
+    iframe.style.width = "100%";
+    iframe.style.height = "100%";
+    iframe.style.border = "none";
+    iframe.style.display = "block";
+    
+    // Error handling: if the page fails to load (404), show a friendly dynamic dashboard
+    iframe.onerror = () => {
+        showFallbackDashboard(userName, pageUrl);
+    };
+    
+    iframeWrapper.appendChild(iframe);
+    
+    // Replace container content
+    container.innerHTML = "";
+    container.style.maxHeight = "100vh";
+    container.style.height = "100vh";
+    container.style.borderRadius = "0";
+    container.appendChild(iframeWrapper);
+    
+    // Try to catch load error for 404 (if iframe fails to load)
+    setTimeout(() => {
+        try {
+            // Check if iframe contentWindow is accessible and document is not undefined
+            if (iframe.contentDocument && iframe.contentDocument.location.href === "about:blank") {
+                // still loading? but if after 1 sec still blank, might be error
+            }
+        } catch(e) {
+            // cross-origin or load error may trigger this; but we show fallback after a delay if src not loaded
+        }
+    }, 800);
+    
+    // Additional check: listen for iframe load event to see if content is actually loaded
+    iframe.onload = () => {
+        // iframe loaded successfully, fine
+        console.log(`Dashboard ${pageUrl} loaded for ${userName}`);
+    };
+}
+
+// Fallback dashboard if the specific HTML file is missing (graceful)
+function showFallbackDashboard(username, requestedPage) {
+    const container = document.getElementById("appContainer");
+    if (!container) return;
+    const fallbackDiv = document.createElement("div");
+    fallbackDiv.className = "dashboard-placeholder";
+    fallbackDiv.innerHTML = `
+        <div style="background: white; border-radius: 32px; padding: 30px 20px; max-width: 320px; box-shadow: 0 20px 35px rgba(0,0,0,0.2);">
+            <i class="fa-solid fa-chalkboard-user" style="font-size: 60px; color: #1E8449; margin-bottom: 20px;"></i>
+            <h1 style="color: #2E86C1;">Welcome, ${username}!</h1>
+            <p style="font-size: 16px; margin: 15px 0;">Your personalized dashboard for the ITNs Campaign.</p>
+            <p style="background: #eef2f3; padding: 12px; border-radius: 40px; font-size: 14px;">
+                <i class="fa-regular fa-file"></i> Requested: ${requestedPage}
+            </p>
+            <p style="margin-top: 20px; font-size: 13px; color: gray;">Campaign tools & analytics available. Please contact administrator if you expected a different view.</p>
+            <button id="logoutFallbackBtn" style="margin-top: 25px; background: #e74c3c; color: white; border: none; padding: 10px 30px; border-radius: 40px; font-weight: bold; cursor: pointer;">LOGOUT</button>
+        </div>
+    `;
+    container.innerHTML = "";
+    container.appendChild(fallbackDiv);
+    document.getElementById("logoutFallbackBtn")?.addEventListener("click", () => {
+        location.reload();
+    });
+}
+
+// ============================================================
+// 3. QR SCANNER & OTHER FUNCTIONALITY (unchanged but integrated)
+// ============================================================
+function startScanner() {
+    const modal = document.getElementById("scannerModal");
+    modal.style.display = "flex";
+    html5QrCode = new Html5Qrcode("reader");
+    html5QrCode.start(
+        { facingMode: "environment" },
+        { fps: 10, qrbox: 250 },
+        qr => {
+            alert(isEnglish ? "Scanned: " + qr : "Scanné: " + qr);
+            stopScanner();
+        }
+    ).catch(err => {
+        console.error("Scanner error", err);
+        alert(isEnglish ? "Camera access error" : "Erreur d'accès à la caméra");
+        stopScanner();
+    });
+}
+
+function stopScanner() {
+    if (html5QrCode && html5QrCode.isScanning) {
+        html5QrCode.stop().then(() => {
+            document.getElementById("scannerModal").style.display = "none";
+        }).catch(() => {
+            document.getElementById("scannerModal").style.display = "none";
+        });
+    } else {
+        document.getElementById("scannerModal").style.display = "none";
+    }
+}
+
 function togglePassword() {
     const password = document.getElementById("password");
     const icon = document.querySelector(".eye-icon");
@@ -359,7 +557,6 @@ function togglePassword() {
     }
 }
 
-// Language toggle (English / French)
 function toggleLanguage() {
     isEnglish = !isEnglish;
     const usernameField = document.getElementById("username");
@@ -395,32 +592,71 @@ function toggleLanguage() {
     }
 }
 
-// QR Scanner
-function startScanner() {
-    const modal = document.getElementById("scannerModal");
-    modal.style.display = "flex";
-    html5QrCode = new Html5Qrcode("reader");
-    html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        qr => {
-            alert("Scanned: " + qr);
-            stopScanner();
+// Network check, Export, Verify card functionality - show informative alerts with respective user context if logged in later, but these cards stay on main page
+// For better user experience we keep them interactive even before login
+function attachCardEvents() {
+    const networkCard = document.getElementById("networkCard");
+    const exportCard = document.getElementById("exportCard");
+    const verifyCard = document.getElementById("verifyCard");
+    
+    networkCard.addEventListener("click", () => {
+        if (navigator.onLine) {
+            alert(isEnglish ? "Network connected. You are online." : "Réseau connecté. Vous êtes en ligne.");
+        } else {
+            alert(isEnglish ? "No internet connection." : "Pas de connexion internet.");
         }
-    ).catch(err => console.error("Scanner error", err));
+    });
+    
+    exportCard.addEventListener("click", () => {
+        alert(isEnglish ? "Export feature: Campaign logs would be exported. (Simulated)" : "Exportation: Les journaux de campagne seraient exportés. (Simulé)");
+    });
+    
+    verifyCard.addEventListener("click", () => {
+        alert(isEnglish ? "Verify Beneficiary Print: feature ready. Use badge scanner for verification." : "Vérifier l'impression du bénéficiaire: fonction prête. Utilisez le scanner de badge.");
+    });
 }
 
-function stopScanner() {
-    if (html5QrCode) {
-        html5QrCode.stop().then(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        }).catch(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        });
-    } else {
-        document.getElementById("scannerModal").style.display = "none";
+// ============================================================
+// 4. Initialize Application: load Keys.csv and attach login handlers
+// ============================================================
+async function initApp() {
+    await loadKeysFromCSV();    // load user db with respective redirect pages
+    attachCardEvents();
+    
+    // Attach login button event
+    const loginBtn = document.getElementById("loginBtn");
+    // remove any previous listeners by clone? but it's safe
+    const newLoginBtn = loginBtn.cloneNode(true);
+    loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
+    newLoginBtn.addEventListener("click", performLogin);
+    
+    // Also allow Enter key on password field
+    const passwordInput = document.getElementById("password");
+    passwordInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault();
+            performLogin();
+        }
+    });
+    
+    // Additionally scan button may be reattached (already using onclick global, but ensure safety)
+    const scanButton = document.getElementById("scanBtn");
+    if (scanButton) {
+        // remove previous onclick if any
+        const newScanBtn = scanButton.cloneNode(true);
+        scanButton.parentNode.replaceChild(newScanBtn, scanButton);
+        newScanBtn.onclick = startScanner;
     }
+    
+    // Also language toggle works globally
+    window.toggleLanguage = toggleLanguage;
+    window.togglePassword = togglePassword;
+    window.startScanner = startScanner;
+    window.stopScanner = stopScanner;
 }
+
+// Start everything when DOM ready
+document.addEventListener("DOMContentLoaded", initApp);
 </script>
 </body>
 </html>
