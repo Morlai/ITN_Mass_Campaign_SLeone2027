@@ -484,7 +484,7 @@
       <div class="dots-container" id="dotsContainer"></div>
     </div>
 
-    <!-- ACTIONS SECTION: ONLY REGISTER CARD - No Login Required -->
+    <!-- ACTIONS SECTION: ONLY REGISTER CARD - No Login Required, Direct Access -->
     <div class="actions">
       <div class="card register" onclick="openRegistration()">
         <div class="card-left">
@@ -613,19 +613,22 @@
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
   
-  // IFRAME FUNCTIONS - No login required, direct access
+  // IFRAME FUNCTIONS - Direct access, no login required
   const iframePanel = document.getElementById('iframePanel');
   const dynamicIframe = document.getElementById('dynamicIframe');
   
   function getFallbackRegistrationForm() {
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg,#eef2ff,#fff);padding:20px;min-height:100vh;display:flex;align-items:center;justify-content:center;}.reg-card{background:white;border-radius:36px;padding:28px 24px;box-shadow:0 20px 35px -10px rgba(0,0,0,0.15);max-width:400px;width:100%;margin:20px auto;}h2{color:#0b5ed7;font-size:26px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}.sub{color:#4b5563;font-size:13px;margin-bottom:24px;border-left:3px solid #0b5ed7;padding-left:14px;}input{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:60px;font-size:14px;transition:0.2s;}input:focus{outline:none;border-color:#0b5ed7;box-shadow:0 0 0 3px rgba(11,94,215,0.1);}button{background:#0b5ed7;color:white;border:none;padding:14px;width:100%;border-radius:60px;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px;transition:0.1s;}button:active{transform:scale(0.97);background:#0a4d9e;}.success{background:#e8f5e9;color:#15803d;padding:12px;border-radius:24px;margin-top:20px;text-align:center;font-size:13px;}</style></head><body><div class="reg-card"><h2><i class="fas fa-bed"></i> HHR Registration</h2><div class="sub">Household Registration for ITN Campaign 2026</div><input type="text" id="hhName" placeholder="Full name (Household Head)"><input type="text" id="hhId" placeholder="Household ID / NHIS Number"><input type="text" id="district" placeholder="District / Chiefdom"><input type="number" id="members" placeholder="Number of household members"><button onclick="registerHousehold()"><i class="fas fa-save"></i> Register Household</button><div id="successMsg" class="success" style="display:none;"><i class="fas fa-check-circle"></i> Registration saved successfully!</div></div><script>function registerHousehold(){var name=document.getElementById('hhName').value;var id=document.getElementById('hhId').value;var district=document.getElementById('district').value;var members=document.getElementById('members').value;if(!name||!id||!district||!members){alert('Please fill in all fields.');return;}var msgDiv=document.getElementById('successMsg');msgDiv.style.display='block';setTimeout(function(){msgDiv.style.display='none';},3000);document.getElementById('hhName').value='';document.getElementById('hhId').value='';document.getElementById('district').value='';document.getElementById('members').value='';alert('✅ Registration completed for '+name);}<\/script></body></html>`;
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg,#eef2ff,#fff);padding:20px;min-height:100vh;display:flex;align-items:center;justify-content:center;}.reg-card{background:white;border-radius:36px;padding:28px 24px;box-shadow:0 20px 35px -10px rgba(0,0,0,0.15);max-width:400px;width:100%;margin:20px auto;}h2{color:#0b5ed7;font-size:26px;display:flex;align-items:center;gap:12px;margin-bottom:12px;}.sub{color:#4b5563;font-size:13px;margin-bottom:24px;border-left:3px solid #0b5ed7;padding-left:14px;}input{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:60px;font-size:14px;transition:0.2s;}input:focus{outline:none;border-color:#0b5ed7;box-shadow:0 0 0 3px rgba(11,94,215,0.1);}button{background:#0b5ed7;color:white;border:none;padding:14px;width:100%;border-radius:60px;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px;transition:0.1s;}button:active{transform:scale(0.97);background:#0a4d9e;}.success{background:#e8f5e9;color:#15803d;padding:12px;border-radius:24px;margin-top:20px;text-align:center;font-size:13px;}</style></head><body><div class="reg-card"><h2><i class="fas fa-bed"></i> HHR Registration</h2><div class="sub">Household Registration for ITN Campaign 2026</div><input type="text" id="hhName" placeholder="Full name (Household Head)"><input type="text" id="hhId" placeholder="Household ID / NHIS Number"><input type="text" id="district" placeholder="District / Chiefdom"><input type="number" id="members" placeholder="Number of household members"><button onclick="registerHousehold()"><i class="fas fa-save"></i> Register Household</button><div id="successMsg" class="success" style="display:none;"><i class="fas fa-check-circle"></i> Registration saved successfully!</div></div><script>function registerHousehold(){var name=document.getElementById('hhName').value;var id=document.getElementById('hhId').value;var district=document.getElementById('district').value;var members=document.getElementById('members').value;if(!name||!id||!district||!members){alert('Please fill in all fields.');return;}var msgDiv=document.getElementById('successMsg');msgDiv.style.display='block';setTimeout(function(){msgDiv.style.display='none';},3000);document.getElementById('hhName').value='';document.getElementById('hhId').value='';document.getElementById('district').value='';document.getElementById('members').value='';alert('✅ Registration completed for ' + name);}<\/script></body></html>`;
   }
   
   function openRegistration() {
+    // Try to load registration.html first
     dynamicIframe.src = "registration.html";
     dynamicIframe.onerror = function() {
+      // If file doesn't exist, use the fallback form
       dynamicIframe.srcdoc = getFallbackRegistrationForm();
     };
+    // Also check after a short delay if the iframe content is empty
     setTimeout(function() {
       try {
         if (dynamicIframe.contentDocument && dynamicIframe.contentDocument.body && 
@@ -645,7 +648,15 @@
     dynamicIframe.onerror = null; 
   }
   
-  // Partner images fallback
+  // Close iframe panel when clicking on the overlay (outside the iframe header)
+  window.onclick = function(event) {
+    const iframePanelElem = document.getElementById('iframePanel');
+    if (event.target === iframePanelElem) {
+      closeIframePanel();
+    }
+  };
+  
+  // Partner images fallback handler
   document.querySelectorAll('.partner-item img').forEach(img => { 
     img.onerror = function() { 
       if (!img.dataset.fallbackSet) { 
