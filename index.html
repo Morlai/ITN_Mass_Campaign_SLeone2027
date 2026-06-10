@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ITNs Campaign Login - Role Specific Dashboards</title>
+<title>ITNs Campaign Login - Role Based Dashboards</title>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://unpkg.com/html5-qrcode"></script>
@@ -282,7 +282,7 @@ body {
             <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
             <div class="password-wrapper">
                 <input id="password" class="input" type="password" placeholder="PASSWORD">
-                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
+                <i class="fa-solid fa-eye eye-icon" id="togglePasswordIcon"></i>
             </div>
             <button id="loginBtn" class="btn login">LOGIN</button>
             <button id="scanBtn" class="btn scan">SCAN BADGE</button>
@@ -323,14 +323,14 @@ body {
 <!-- QR SCANNER MODAL -->
 <div id="scannerModal">
     <div id="reader"></div>
-    <button class="close-btn" onclick="stopScanner()">Close</button>
+    <button class="close-btn" id="closeScannerBtn">Close</button>
 </div>
 
 <script>
 // ============================================================
-// ROLE-BASED DASHBOARD MAPPING (based on username & CSV)
-// CSV format: username,password,dashboard_file
-// Default mappings:
+// ROLE-BASED DASHBOARD MAPPING (loaded from CSV or fallback)
+// CSV format expected: username,password,dashboard_file
+// Default mappings per requirements:
 // Admin,123,mscreen.html
 // HHR2026,123455,mscreenreg.html
 // HHD2026,123456,mscreendist.html
@@ -342,9 +342,9 @@ body {
 
 let isEnglish = true;
 let html5QrCode;
-let userDatabase = []; // Stores {username, password, dashboard}
+let userDatabase = []; // stores {username, password, dashboard}
 
-// Default fallback in case CSV fails to load (as per requirement)
+// Default fallback users as per requirement (in case CSV fails)
 const DEFAULT_USERS = [
     { username: "Admin", password: "123", dashboard: "mscreen.html" },
     { username: "HHR2026", password: "123455", dashboard: "mscreenreg.html" },
@@ -355,11 +355,11 @@ const DEFAULT_USERS = [
     { username: "PARTNERS2026", password: "123", dashboard: "mscreendash.html" }
 ];
 
-// Load Keys.csv and parse it. CSV columns: username,password,dashboard (optional)
+// Load Keys.csv file and parse credentials with dashboard mapping
 async function loadKeysFromCSV() {
     try {
         const response = await fetch("Keys.csv");
-        if (!response.ok) throw new Error("Keys.csv not found, using default user list");
+        if (!response.ok) throw new Error("Keys.csv not found, using default users");
         const data = await response.text();
         const rows = data.split(/\r?\n/);
         const credentials = [];
@@ -367,7 +367,7 @@ async function loadKeysFromCSV() {
         for (let i = 0; i < rows.length; i++) {
             const line = rows[i].trim();
             if (line === "") continue;
-            // Skip header if present
+            // Skip header row if present
             if (i === 0 && (line.toLowerCase().includes("username") || line.toLowerCase().includes("user"))) continue;
             
             const parts = line.split(",");
@@ -376,16 +376,18 @@ async function loadKeysFromCSV() {
                 const password = parts[1].trim();
                 let dashboard = parts.length >= 3 ? parts[2].trim() : "";
                 
-                // Assign dashboard based on username pattern if not specified in CSV (backward compatibility)
+                // If dashboard not specified in CSV, determine based on username pattern (requirement)
                 if (!dashboard) {
-                    if (username === "Admin" || username === "admin") dashboard = "mscreen.html";
-                    else if (username === "HHR2026") dashboard = "mscreenreg.html";
-                    else if (username === "HHD2026") dashboard = "mscreendist.html";
-                    else if (username === "NATSUP2026") dashboard = "mscreenmoni.html";
-                    else if (username === "CHISUP2026") dashboard = "mscreenatt.html";
-                    else if (username === "PHUSTAFF2026") dashboard = "mscreenstock.html";
-                    else if (username === "PARTNERS2026") dashboard = "mscreendash.html";
-                    else dashboard = "mscreen.html"; // default fallback
+                    const dashMap = {
+                        "Admin": "mscreen.html",
+                        "HHR2026": "mscreenreg.html",
+                        "HHD2026": "mscreendist.html",
+                        "NATSUP2026": "mscreenmoni.html",
+                        "CHISUP2026": "mscreenatt.html",
+                        "PHUSTAFF2026": "mscreenstock.html",
+                        "PARTNERS2026": "mscreendash.html"
+                    };
+                    dashboard = dashMap[username] || "mscreen.html";
                 }
                 
                 if (username && password) {
@@ -395,11 +397,11 @@ async function loadKeysFromCSV() {
         }
         
         if (credentials.length === 0) {
-            console.log("No valid entries in CSV, using default users");
+            console.log("No valid entries in CSV, using default user list");
             return [...DEFAULT_USERS];
         }
         
-        console.log("Loaded from CSV:", credentials.map(c => ({user: c.username, dash: c.dashboard})));
+        console.log("Loaded credentials from CSV:", credentials.map(c => ({user: c.username, dash: c.dashboard})));
         return credentials;
         
     } catch (err) {
@@ -408,29 +410,26 @@ async function loadKeysFromCSV() {
     }
 }
 
-// Authenticate user and return dashboard file name
-function authenticateAndGetDashboard(username, password, userList) {
+// Authenticate user and return dashboard filename
+function authenticateUser(username, password, userList) {
     const matched = userList.find(cred => 
         cred.username === username && cred.password === password
     );
-    if (matched) {
-        return matched.dashboard;
-    }
-    return null;
+    return matched ? matched.dashboard : null;
 }
 
-// Load dashboard inside iframe with proper styling and logout button
+// Load the dashboard inside iframe with logout capability
 function loadDashboardInIframe(dashboardFile, username) {
     const container = document.getElementById("appContainer");
     if (!container) return;
     
-    // Show loading indicator
+    // Show loading overlay
     const loadingDiv = document.createElement("div");
     loadingDiv.className = "loading-overlay";
     loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse fa-2x"></i><span>Loading dashboard...</span>';
     document.body.appendChild(loadingDiv);
     
-    // Create wrapper for iframe
+    // Create iframe wrapper
     const iframeWrapper = document.createElement("div");
     iframeWrapper.style.width = "100%";
     iframeWrapper.style.height = "100vh";
@@ -440,7 +439,7 @@ function loadDashboardInIframe(dashboardFile, username) {
     iframeWrapper.style.overflow = "hidden";
     
     const iframe = document.createElement("iframe");
-    // Add timestamp to avoid cache issues
+    // Add timestamp to prevent caching issues
     iframe.src = `${dashboardFile}?t=${Date.now()}`;
     iframe.style.width = "100%";
     iframe.style.height = "100%";
@@ -448,16 +447,17 @@ function loadDashboardInIframe(dashboardFile, username) {
     iframe.style.display = "block";
     
     let loadTimeout;
+    let loadSuccessful = false;
     
-    // Remove loading and handle errors
     const clearLoading = () => {
         if (loadingDiv && loadingDiv.parentNode) loadingDiv.remove();
         if (loadTimeout) clearTimeout(loadTimeout);
     };
     
     iframe.onload = () => {
+        loadSuccessful = true;
         clearLoading();
-        // Optional: send message to iframe for user info if needed
+        // Optional: send user info to iframe if needed
         try {
             if (iframe.contentWindow) {
                 iframe.contentWindow.postMessage({ type: "USER_LOGGED_IN", username: username, dashboard: dashboardFile }, "*");
@@ -467,14 +467,15 @@ function loadDashboardInIframe(dashboardFile, username) {
     
     iframe.onerror = () => {
         clearLoading();
-        showFallbackError(dashboardFile, username);
+        if (!loadSuccessful) {
+            showFallbackError(dashboardFile, username);
+        }
     };
     
-    // Fallback timeout
+    // Timeout fallback
     loadTimeout = setTimeout(() => {
-        if (loadingDiv && loadingDiv.parentNode) {
+        if (!loadSuccessful && loadingDiv && loadingDiv.parentNode) {
             clearLoading();
-            console.warn("Iframe load timeout");
             showFallbackError(dashboardFile, username);
         }
     }, 8000);
@@ -488,7 +489,7 @@ function loadDashboardInIframe(dashboardFile, username) {
     container.style.borderRadius = "0";
     container.appendChild(iframeWrapper);
     
-    // Add logout button on top (floating)
+    // Floating logout button
     const logoutBtn = document.createElement("button");
     logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
     logoutBtn.style.position = "absolute";
@@ -509,6 +510,7 @@ function loadDashboardInIframe(dashboardFile, username) {
     logoutBtn.style.gap = "6px";
     logoutBtn.style.backdropFilter = "blur(2px)";
     logoutBtn.onclick = () => {
+        // Stop scanner if active
         if (html5QrCode && html5QrCode.isScanning) {
             html5QrCode.stop().catch(() => {});
         }
@@ -518,7 +520,7 @@ function loadDashboardInIframe(dashboardFile, username) {
     iframeWrapper.appendChild(logoutBtn);
 }
 
-// Fallback error display if dashboard HTML not found
+// Show error if dashboard file not found
 function showFallbackError(dashboardFile, username) {
     const container = document.getElementById("appContainer");
     if (!container) return;
@@ -559,13 +561,12 @@ async function handleLogin() {
         return;
     }
     
-    // Load fresh credentials every login attempt (in case CSV updates)
+    // Load fresh credentials from CSV on each login attempt
     const userList = await loadKeysFromCSV();
-    
-    const dashboardFile = authenticateAndGetDashboard(usernameInput, passwordInput, userList);
+    const dashboardFile = authenticateUser(usernameInput, passwordInput, userList);
     
     if (dashboardFile) {
-        // Check if the dashboard file exists via HEAD request (optional)
+        // Verify if dashboard file exists (optional HEAD request)
         try {
             const checkResponse = await fetch(dashboardFile, { method: "HEAD" });
             if (checkResponse.ok) {
@@ -574,7 +575,8 @@ async function handleLogin() {
                 showFallbackError(dashboardFile, usernameInput);
             }
         } catch (err) {
-            console.warn("Fetch check failed, attempting to load anyway");
+            // If fetch fails (CORS or network), still attempt to load the iframe
+            console.warn("Fetch check failed, attempting to load iframe directly");
             loadDashboardInIframe(dashboardFile, usernameInput);
         }
     } else {
@@ -585,7 +587,7 @@ async function handleLogin() {
 // Toggle password visibility
 function togglePassword() {
     const password = document.getElementById("password");
-    const icon = document.querySelector(".eye-icon");
+    const icon = document.getElementById("togglePasswordIcon");
     if (password.type === "password") {
         password.type = "text";
         icon.classList.remove("fa-eye");
@@ -664,7 +666,7 @@ function stopScanner() {
     }
 }
 
-// Attach card event handlers on login page
+// Attach card event handlers for login page
 function attachCardEvents() {
     const networkCard = document.getElementById("networkCard");
     if (networkCard) {
@@ -690,22 +692,22 @@ function attachCardEvents() {
     }
 }
 
-// Initialize app
+// Initialize application
 async function init() {
-    // Preload credentials but not mandatory
-    await loadKeysFromCSV(); // just to warm up, but login will reload
+    // Preload CSV to warm up, but login will reload fresh
+    await loadKeysFromCSV();
     
     attachCardEvents();
     
-    // Fix event listeners for buttons after DOM ready
+    // Setup login button with fresh listener
     const loginBtn = document.getElementById("loginBtn");
     if (loginBtn) {
-        // Remove any existing listeners by cloning
         const newLoginBtn = loginBtn.cloneNode(true);
         loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
         newLoginBtn.addEventListener("click", handleLogin);
     }
     
+    // Password enter key
     const passwordField = document.getElementById("password");
     if (passwordField) {
         passwordField.addEventListener("keypress", (e) => {
@@ -713,6 +715,7 @@ async function init() {
         });
     }
     
+    // Scan button
     const scanButton = document.getElementById("scanBtn");
     if (scanButton) {
         const newScanBtn = scanButton.cloneNode(true);
@@ -720,11 +723,21 @@ async function init() {
         newScanBtn.addEventListener("click", startScanner);
     }
     
-    // Language card already attached via attachCardEvents
+    // Password eye toggle
+    const eyeIcon = document.getElementById("togglePasswordIcon");
+    if (eyeIcon) {
+        eyeIcon.addEventListener("click", togglePassword);
+    }
+    
+    // Close scanner button
+    const closeScanner = document.getElementById("closeScannerBtn");
+    if (closeScanner) {
+        closeScanner.addEventListener("click", stopScanner);
+    }
 }
 
-// Start everything when DOM ready
+// Start when DOM ready
 document.addEventListener("DOMContentLoaded", init);
 </script>
-</body> 
+</body>
 </html>
