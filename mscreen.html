@@ -528,7 +528,7 @@
     <span><i class="fas fa-edit"></i> Registration Portal</span>
     <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
   </div>
-  <iframe id="dynamicIframe" src="subregistration.html" title="ICF module"></iframe>
+  <iframe id="dynamicIframe" src="registration.html" title="ICF module"></iframe>
 </div>
 
 <script>
@@ -640,7 +640,7 @@
   function handleCardAction(actionType) {
     if (actionType === "REGISTER") {
       // Open registration form in iframe panel
-      dynamicIframe.src = "subregistration.html";
+      dynamicIframe.src = "registration.html";
       dynamicIframe.onerror = function() {
         dynamicIframe.srcdoc = getFallbackRegistrationForm();
       };
@@ -708,7 +708,7 @@
   
   function closeIframePanel() {
     iframePanel.style.display = 'none';
-    dynamicIframe.src = "subregistration.html";
+    dynamicIframe.src = "registration.html";
     dynamicIframe.onerror = null;
   }
   
