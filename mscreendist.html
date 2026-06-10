@@ -2,31 +2,29 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
 <title>ICF-SL | ITN Distribution Hub</title>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{background:#eef2f7;display:flex;justify-content:center;align-items:center;height:100vh;font-family:'Inter',sans-serif;}
-
-.phone{
-  width:100%;
-  max-width:420px;
-  height:95vh;
-  background:#fff;
-  border-radius:30px;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-  box-shadow:0 20px 40px rgba(0,0,0,0.2);
+body {
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#eef2f7;
 }
 
-.scroll-content{flex:1;overflow-y:auto;}
+.phone {
+  width:100%;
+  max-width:420px;
+  margin:auto;
+  background:#fff;
+  min-height:100vh;
+}
 
-.header-section{
+/* HEADER */
+.header-section {
   background:linear-gradient(135deg,#0a4d9e,#0b5ed7);
   color:white;
   text-align:center;
@@ -35,79 +33,60 @@ body{background:#eef2f7;display:flex;justify-content:center;align-items:center;h
   border-bottom-right-radius:20px;
 }
 
-.logo-area{display:flex;align-items:center;justify-content:center;gap:10px;}
-.logo-img{width:50px;height:50px;background:white;border-radius:10px;padding:5px;}
-.header-title h2{font-size:11px;}
-.header-title p{font-size:8px;}
+.logo-area {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+}
 
-.campaign-badge{
+.logo-img {
+  width:50px;
+  height:50px;
+  background:white;
+  border-radius:10px;
+  padding:5px;
+}
+
+.header-title h2 {
+  font-size:11px;
+  font-weight:700;
+  margin:0;
+}
+
+.header-title p {
+  font-size:8px;
+  margin:0;
+}
+
+.campaign-badge {
+  margin-top:8px;
   background:#ffcd3c;
   color:#1e3a8a;
-  padding:6px;
+  padding:6px 10px;
   border-radius:20px;
-  font-size:8px;
+  font-size:9px;
+  font-weight:800;
+}
+
+.survey-text {
   margin-top:6px;
+  font-size:8px;
 }
 
-.partner-section{padding:10px;}
-.partner-heading{text-align:center;font-size:10px;font-weight:800;color:#D4AF37;margin-bottom:8px;}
-.partners-container{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
-.partner-item{text-align:center;font-size:8px;}
-
-.carousel{margin:10px;border-radius:20px;overflow:hidden;}
-.slide img{width:100%;height:150px;object-fit:cover;}
-
-.distribution-single{
-  padding:20px;
-  display:flex;
-  justify-content:center;
+/* CONTENT */
+.section {
+  padding:14px;
 }
 
-.card{
-  width:100%;
-  background:linear-gradient(135deg,#0f5b2e,#2e9a5e);
-  color:white;
-  border-radius:30px;
-  padding:20px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  cursor:pointer;
+.card {
+  background:#fff;
+  border-radius:12px;
+  padding:14px;
+  margin-bottom:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,0.08);
 }
 
-.card-main-text{font-size:18px;font-weight:800;}
-.card-abbr{font-size:10px;margin-top:4px;}
-
-.footer{
-  text-align:center;
-  background:#0b5ed7;
-  color:white;
-  font-size:10px;
-  padding:8px;
-}
-
-/* IFRAME PANEL */
-.iframe-panel{
-  position:absolute;
-  top:0;
-  left:0;
-  width:100%;
-  height:100%;
-  background:white;
-  display:none;
-  flex-direction:column;
-}
-
-.iframe-header{
-  background:#0b5ed7;
-  color:white;
-  padding:12px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-}
-
-iframe{flex:1;border:none;}
 </style>
 </head>
 
@@ -115,81 +94,49 @@ iframe{flex:1;border:none;}
 
 <div class="phone">
 
-<div class="scroll-content">
-
-<!-- HEADER -->
-<div class="header-section">
-  <div class="logo-area">
-    <img src="ICF-SL Logo.jpg" class="logo-img">
-    <div class="header-title">
-      <h2>Informatics Consultancy Firm-SL</h2>
-      <p>Data-Driven Solutions</p>
+  <!-- HEADER -->
+  <div class="header-section">
+    
+    <div class="logo-area">
+      <img src="ICF-SL Logo.jpg" class="logo-img">
+      
+      <div class="header-title">
+        <h2>Informatics Consultancy Firm-SL (ICF-SL)</h2>
+        <p>Driving Data-Driven Solutions</p>
+      </div>
     </div>
-  </div>
 
-  <div class="campaign-badge">
-    ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
-  </div>
-</div>
-
-<!-- PARTNERS -->
-<div class="partner-section">
-  <div class="partner-heading">IMPLEMENTING PARTNERS</div>
-  <div class="partners-container">
-    <div class="partner-item">USA</div>
-    <div class="partner-item">Global Fund</div>
-    <div class="partner-item">MOH</div>
-    <div class="partner-item">NMCP</div>
-    <div class="partner-item">PMI</div>
-    <div class="partner-item">MBSSE</div>
-  </div>
-</div>
-
-<!-- CAROUSEL -->
-<div class="carousel">
-  <div class="slide">
-    <img src="https://placehold.co/600x200/0b5ed7/white?text=ITN+Campaign">
-  </div>
-</div>
-
-<!-- DISTRIBUTION CARD -->
-<div class="distribution-single">
-  <div class="card" onclick="openDistribution()">
-    <div>
-      <div class="card-main-text">DISTRIBUTION</div>
-      <div class="card-abbr">(HHD)</div>
+    <div class="campaign-badge">
+      HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
     </div>
-    <i class="fas fa-hand-holding-heart"></i>
+
+    <div class="survey-text">
+      Insecticide-Treated Nets Distribution Survey - Sierra Leone
+    </div>
+
   </div>
-</div>
 
-</div>
+  <!-- MAIN CONTENT -->
+  <div class="section">
 
-<!-- FOOTER -->
-<div class="footer">
-  Informatics Consultancy Firm-SL © 2026
-</div>
+    <div class="card">
+      <h3>Registration</h3>
+      <p>Access household registration module.</p>
+    </div>
 
-</div>
+    <div class="card">
+      <h3>Distribution</h3>
+      <p>Manage ITN distribution.</p>
+    </div>
 
-<!-- IFRAME PANEL -->
-<div id="iframePanel" class="iframe-panel">
-  <div class="iframe-header">
-    <span>Household Distribution (HHD)</span>
-    <button onclick="closeIframe()">✕</button>
+    <div class="card">
+      <h3>Monitoring</h3>
+      <p>Track field activities.</p>
+    </div>
+
   </div>
-  <iframe id="frame" src="distribution.html"></iframe>
+
 </div>
-
-<script>
-function openDistribution(){
-  document.getElementById("iframePanel").style.display="flex";
-}
-
-function closeIframe(){
-  document.getElementById("iframePanel").style.display="none";
-}
-</script>
 
 </body>
 </html>
