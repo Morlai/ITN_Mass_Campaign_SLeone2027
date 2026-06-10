@@ -24,6 +24,7 @@ body {
     min-height: 100vh;
 }
 
+/* Phone container - flex column, no absolute overlapping */
 .container {
     width: 360px;
     max-width: 100%;
@@ -39,6 +40,7 @@ body {
     flex-direction: column;
 }
 
+/* Background image (optional) */
 .bg {
     position: absolute;
     top: 0;
@@ -55,6 +57,7 @@ body {
     background: rgba(0,0,0,0.45);
 }
 
+/* Main content - scrollable if needed */
 .content {
     position: relative;
     z-index: 2;
@@ -91,7 +94,7 @@ body {
     margin: 8px 0;
     border: 1px solid #ccc;
     border-radius: 40px;
-    font-size: 16px;
+    font-size: 16px; /* prevents zoom on iOS */
     background: #fff;
 }
 
@@ -165,6 +168,7 @@ body {
 .verify { background: #8E44AD; }
 .language { background: #16A085; }
 
+/* Curve and footer as normal flow elements (no absolute) */
 .curve-wrapper {
     position: relative;
     z-index: 2;
@@ -193,6 +197,7 @@ body {
     margin-top: 4px;
 }
 
+/* Scanner modal */
 #scannerModal {
     position: fixed;
     inset: 0;
@@ -219,6 +224,7 @@ body {
     cursor: pointer;
 }
 
+/* Mobile responsive */
 @media (max-width: 380px) {
     .container {
         width: 100%;
@@ -239,41 +245,24 @@ body {
         font-size: 22px;
     }
 }
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    color: white;
-    font-size: 18px;
-    gap: 12px;
-    backdrop-filter: blur(3px);
-}
 </style>
 </head>
 <body>
 
-<div class="container" id="appContainer">
+<div class="container">
     <div class="bg"></div>
     <div class="content">
         <div class="login-card">
             <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='https://placehold.co/200x200/2E86C1/white?text=ICF-SL'">
+                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo">
             </div>
             <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
             <div class="password-wrapper">
                 <input id="password" class="input" type="password" placeholder="PASSWORD">
-                <i class="fa-solid fa-eye eye-icon" id="toggleEye"></i>
+                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
             </div>
             <button id="loginBtn" class="btn login">LOGIN</button>
-            <button id="scanBtn" class="btn scan">SCAN BADGE</button>
+            <button id="scanBtn" class="btn scan" onclick="startScanner()">SCAN BADGE</button>
         </div>
 
         <div class="cards">
@@ -289,13 +278,14 @@ body {
                 <i class="fa-solid fa-fingerprint"></i>
                 <span>VERIFY BENEFICIARY PRINT</span>
             </div>
-            <div class="card language" id="languageCard">
+            <div class="card language" onclick="toggleLanguage()">
                 <i class="fa-solid fa-language"></i>
                 <span id="langText">ENGLISH</span>
             </div>
         </div>
     </div>
 
+    <!-- Curve + Footer as normal elements (no absolute positioning) -->
     <div class="curve-wrapper">
         <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
             <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
@@ -307,280 +297,69 @@ body {
     </div>
 </div>
 
+<!-- QR SCANNER MODAL -->
 <div id="scannerModal">
     <div id="reader"></div>
-    <button class="close-btn" id="closeScannerBtn">Close</button>
+    <button class="close-btn" onclick="stopScanner()">Close</button>
 </div>
 
 <script>
 let isEnglish = true;
 let html5QrCode;
+let users = [];
 
-// Username to Dashboard HTML file mapping (per your requirements)
-const USER_DASHBOARD_MAP = {
-    "Admin": "mscreen.html",
-    "HHR2026": "mscreenreg.html",
-    "HHD2026": "mscreendist.html",
-    "NATSUP2026": "mscreenmoni.html",
-    "CHISUP2026": "mscreenatt.html",
-    "PHUSTAFF2026": "mscreenstock.html",
-    "PARTNERS2026": "mscreendash.html"
-};
-
-// Store valid users from CSV
-let validUsers = [];
-
-// Load Keys.csv file (your format: USERNAME,PASSWORD,REGISTER,DISTRIBUTION,...)
-async function loadKeysFromCSV() {
+// Load CSV credentials
+async function loadCSV() {
     try {
-        console.log("Attempting to load Keys.csv...");
-        const response = await fetch("Keys.csv");
-        if (!response.ok) {
-            throw new Error("Keys.csv not found");
-        }
-        
+        const response = await fetch("Passwords.csv");
         const data = await response.text();
-        console.log("CSV loaded successfully");
-        
-        const rows = data.split(/\r?\n/);
-        const users = [];
-        
-        for (let i = 0; i < rows.length; i++) {
-            const line = rows[i].trim();
-            if (line === "") continue;
-            
-            const parts = line.split(",");
-            if (parts.length >= 2) {
-                const username = parts[0].trim();
-                const password = parts[1].trim();
-                
-                // Skip header row
-                if (username.toUpperCase() === "USERNAME") continue;
-                
-                if (username && password) {
-                    users.push({ username, password });
-                    console.log(`Loaded user: ${username}`);
-                }
-            }
-        }
-        
-        if (users.length > 0) {
-            validUsers = users;
-            console.log(`Total ${validUsers.length} users loaded from CSV`);
-        } else {
-            console.log("No users found in CSV, using fallback");
-            validUsers = [
-                { username: "Admin", password: "123" },
-                { username: "HHR2026", password: "123455" },
-                { username: "HHD2026", password: "123456" },
-                { username: "NATSUP2026", password: "123200" },
-                { username: "CHISUP2026", password: "123100" },
-                { username: "PHUSTAFF2026", password: "123300" },
-                { username: "PARTNERS2026", password: "123" }
-            ];
-        }
-        
+        const rows = data.split("\n").slice(1);
+        users = rows.map(row => {
+            const [username, password] = row.split(",");
+            return {
+                username: username?.trim(),
+                password: password?.trim()
+            };
+        }).filter(u => u.username && u.password);
     } catch (err) {
-        console.warn("Error loading Keys.csv, using fallback users:", err);
-        validUsers = [
-            { username: "Admin", password: "123" },
-            { username: "HHR2026", password: "123455" },
-            { username: "HHD2026", password: "123456" },
-            { username: "NATSUP2026", password: "123200" },
-            { username: "CHISUP2026", password: "123100" },
-            { username: "PHUSTAFF2026", password: "123300" },
-            { username: "PARTNERS2026", password: "123" }
+        console.warn("CSV not found, using demo users");
+        users = [
+            { username: "admin", password: "admin123" },
+            { username: "user", password: "pass123" }
         ];
     }
 }
+loadCSV();
 
-// Authenticate user and return dashboard file
-function authenticateUser(username, password) {
-    // Check if credentials match any in CSV
-    const matched = validUsers.find(user => 
-        user.username === username && user.password === password
-    );
-    
-    if (matched) {
-        // Return the corresponding dashboard HTML file
-        const dashboard = USER_DASHBOARD_MAP[username];
-        if (dashboard) {
-            console.log(`User ${username} authenticated, loading ${dashboard}`);
-            return dashboard;
-        } else {
-            console.log(`User ${username} authenticated but no dashboard mapping found`);
-            return "mscreen.html";
-        }
-    }
-    console.log(`Authentication failed for ${username}`);
-    return null;
-}
+// Login handler
+document.getElementById("loginBtn").addEventListener("click", function () {
+    const u = document.getElementById("username").value.trim();
+    const p = document.getElementById("password").value.trim();
 
-function loadDashboardInIframe(dashboardFile, username) {
-    const container = document.getElementById("appContainer");
-    if (!container) return;
-    
-    const loadingDiv = document.createElement("div");
-    loadingDiv.className = "loading-overlay";
-    loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse fa-2x"></i><span>Loading ' + dashboardFile + '...</span>';
-    document.body.appendChild(loadingDiv);
-    
-    const iframeWrapper = document.createElement("div");
-    iframeWrapper.style.width = "100%";
-    iframeWrapper.style.height = "100vh";
-    iframeWrapper.style.position = "relative";
-    iframeWrapper.style.background = "#f4f6f9";
-    iframeWrapper.style.borderRadius = "30px";
-    iframeWrapper.style.overflow = "hidden";
-    
-    const iframe = document.createElement("iframe");
-    iframe.src = `${dashboardFile}?t=${Date.now()}`;
-    iframe.style.width = "100%";
-    iframe.style.height = "100%";
-    iframe.style.border = "none";
-    iframe.style.display = "block";
-    
-    let loadTimeout;
-    let loadSuccessful = false;
-    
-    const clearLoading = () => {
-        if (loadingDiv && loadingDiv.parentNode) loadingDiv.remove();
-        if (loadTimeout) clearTimeout(loadTimeout);
-    };
-    
-    iframe.onload = () => {
-        loadSuccessful = true;
-        clearLoading();
-        console.log(`Successfully loaded ${dashboardFile}`);
-    };
-    
-    iframe.onerror = () => {
-        clearLoading();
-        if (!loadSuccessful) {
-            showFallbackError(dashboardFile, username);
-        }
-    };
-    
-    loadTimeout = setTimeout(() => {
-        if (!loadSuccessful && loadingDiv && loadingDiv.parentNode) {
-            clearLoading();
-            showFallbackError(dashboardFile, username);
-        }
-    }, 10000);
-    
-    iframeWrapper.appendChild(iframe);
-    
-    container.innerHTML = "";
-    container.style.maxHeight = "100vh";
-    container.style.height = "100vh";
-    container.style.borderRadius = "0";
-    container.appendChild(iframeWrapper);
-    
-    const logoutBtn = document.createElement("button");
-    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
-    logoutBtn.style.position = "absolute";
-    logoutBtn.style.top = "15px";
-    logoutBtn.style.right = "20px";
-    logoutBtn.style.zIndex = "9999";
-    logoutBtn.style.backgroundColor = "#e74c3c";
-    logoutBtn.style.color = "white";
-    logoutBtn.style.border = "none";
-    logoutBtn.style.borderRadius = "30px";
-    logoutBtn.style.padding = "8px 14px";
-    logoutBtn.style.fontWeight = "bold";
-    logoutBtn.style.fontSize = "14px";
-    logoutBtn.style.cursor = "pointer";
-    logoutBtn.style.boxShadow = "0 2px 8px rgba(0,0,0,0.3)";
-    logoutBtn.style.display = "flex";
-    logoutBtn.style.alignItems = "center";
-    logoutBtn.style.gap = "6px";
-    logoutBtn.onclick = () => {
-        if (html5QrCode && html5QrCode.isScanning) {
-            html5QrCode.stop().catch(() => {});
-        }
-        location.reload();
-    };
-    iframeWrapper.style.position = "relative";
-    iframeWrapper.appendChild(logoutBtn);
-}
+    const valid = users.find(user => user.username === u && user.password === p);
 
-function showFallbackError(dashboardFile, username) {
-    const container = document.getElementById("appContainer");
-    if (!container) return;
-    
-    const errorDiv = document.createElement("div");
-    errorDiv.style.background = "linear-gradient(145deg, #fff5f5 0%, #ffe0e0 100%)";
-    errorDiv.style.width = "100%";
-    errorDiv.style.height = "100vh";
-    errorDiv.style.display = "flex";
-    errorDiv.style.flexDirection = "column";
-    errorDiv.style.alignItems = "center";
-    errorDiv.style.justifyContent = "center";
-    errorDiv.style.textAlign = "center";
-    errorDiv.style.padding = "20px";
-    
-    errorDiv.innerHTML = `
-        <div style="background: white; border-radius: 32px; padding: 30px 20px; max-width: 320px; box-shadow: 0 20px 35px rgba(0,0,0,0.2);">
-            <i class="fa-solid fa-triangle-exclamation" style="font-size: 60px; color: #e67e22; margin-bottom: 20px;"></i>
-            <h2 style="color: #c0392b;">File Not Found</h2>
-            <p style="margin: 15px 0; font-size: 14px;">Could not load <strong>${dashboardFile}</strong></p>
-            <p style="background: #f2f2f2; padding: 10px; border-radius: 30px; font-size: 12px;">Please ensure the file exists in the same directory.</p>
-            <p style="margin-top: 10px; font-size: 12px; color: #666;">Required files:<br>
-            mscreen.html, mscreenreg.html, mscreendist.html, mscreenmoni.html,<br>
-            mscreenatt.html, mscreenstock.html, mscreendash.html</p>
-            <button id="retryLoginBtn" style="margin-top: 25px; background: #2E86C1; color: white; border: none; padding: 10px 30px; border-radius: 40px; font-weight: bold; cursor: pointer;">BACK TO LOGIN</button>
-        </div>
-    `;
-    container.innerHTML = "";
-    container.style.height = "100vh";
-    container.appendChild(errorDiv);
-    document.getElementById("retryLoginBtn")?.addEventListener("click", () => location.reload());
-}
-
-async function handleLogin() {
-    const usernameInput = document.getElementById("username").value.trim();
-    const passwordInput = document.getElementById("password").value.trim();
-    
-    if (!usernameInput || !passwordInput) {
-        alert(isEnglish ? "Please enter username and password" : "Veuillez entrer le nom d'utilisateur et le mot de passe");
-        return;
-    }
-    
-    const dashboardFile = authenticateUser(usernameInput, passwordInput);
-    
-    if (dashboardFile) {
-        // Verify file exists before loading
-        try {
-            const checkResponse = await fetch(dashboardFile, { method: "HEAD" });
-            if (checkResponse.ok) {
-                loadDashboardInIframe(dashboardFile, usernameInput);
-            } else {
-                showFallbackError(dashboardFile, usernameInput);
-            }
-        } catch (err) {
-            // If fetch fails (CORS), still attempt to load
-            console.warn("Could not verify file existence, attempting to load anyway");
-            loadDashboardInIframe(dashboardFile, usernameInput);
-        }
+    if (valid) {
+        // Replace current page with mscreen.html
+        document.body.innerHTML = `<iframe src="mscreen.html" style="width:100%;height:100vh;border:none;"></iframe>`;
     } else {
-        alert(isEnglish ? "Invalid Username or Password" : "Nom d'utilisateur ou mot de passe incorrect");
+        alert("Invalid Username or Password");
     }
-}
+});
 
+// Toggle password visibility
 function togglePassword() {
     const password = document.getElementById("password");
-    const icon = document.getElementById("toggleEye");
+    const icon = document.querySelector(".eye-icon");
     if (password.type === "password") {
         password.type = "text";
-        icon.classList.remove("fa-eye");
-        icon.classList.add("fa-eye-slash");
+        icon.classList.replace("fa-eye", "fa-eye-slash");
     } else {
         password.type = "password";
-        icon.classList.remove("fa-eye-slash");
-        icon.classList.add("fa-eye");
+        icon.classList.replace("fa-eye-slash", "fa-eye");
     }
 }
 
+// Language toggle (English / French)
 function toggleLanguage() {
     isEnglish = !isEnglish;
     const usernameField = document.getElementById("username");
@@ -616,6 +395,7 @@ function toggleLanguage() {
     }
 }
 
+// QR Scanner
 function startScanner() {
     const modal = document.getElementById("scannerModal");
     modal.style.display = "flex";
@@ -624,18 +404,14 @@ function startScanner() {
         { facingMode: "environment" },
         { fps: 10, qrbox: 250 },
         qr => {
-            alert(isEnglish ? "Scanned: " + qr : "Scanné: " + qr);
+            alert("Scanned: " + qr);
             stopScanner();
         }
-    ).catch(err => {
-        console.error("Scanner error", err);
-        alert(isEnglish ? "Camera error: Unable to start scanner" : "Erreur de caméra");
-        stopScanner();
-    });
+    ).catch(err => console.error("Scanner error", err));
 }
 
 function stopScanner() {
-    if (html5QrCode && html5QrCode.isScanning) {
+    if (html5QrCode) {
         html5QrCode.stop().then(() => {
             document.getElementById("scannerModal").style.display = "none";
         }).catch(() => {
@@ -645,45 +421,6 @@ function stopScanner() {
         document.getElementById("scannerModal").style.display = "none";
     }
 }
-
-function attachCardEvents() {
-    document.getElementById("networkCard")?.addEventListener("click", () => {
-        alert(isEnglish ? (navigator.onLine ? "Network connected." : "No internet connection") : (navigator.onLine ? "Réseau connecté." : "Pas de connexion internet"));
-    });
-    document.getElementById("exportCard")?.addEventListener("click", () => {
-        alert(isEnglish ? "Export Campaign Logs feature will be available after login." : "L'exportation des journaux de campagne sera disponible après connexion.");
-    });
-    document.getElementById("verifyCard")?.addEventListener("click", () => {
-        alert(isEnglish ? "Verify Beneficiary: Please login and use badge scanner." : "Vérifier bénéficiaire: Veuillez vous connecter et utiliser le scanner.");
-    });
-    document.getElementById("languageCard")?.addEventListener("click", toggleLanguage);
-}
-
-async function init() {
-    await loadKeysFromCSV();
-    attachCardEvents();
-    
-    const loginBtn = document.getElementById("loginBtn");
-    const newLoginBtn = loginBtn.cloneNode(true);
-    loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
-    newLoginBtn.addEventListener("click", handleLogin);
-    
-    document.getElementById("password").addEventListener("keypress", (e) => {
-        if (e.key === "Enter") handleLogin();
-    });
-    
-    const scanButton = document.getElementById("scanBtn");
-    if (scanButton) {
-        const newScanBtn = scanButton.cloneNode(true);
-        scanButton.parentNode.replaceChild(newScanBtn, scanButton);
-        newScanBtn.addEventListener("click", startScanner);
-    }
-    
-    document.getElementById("toggleEye")?.addEventListener("click", togglePassword);
-    document.getElementById("closeScannerBtn")?.addEventListener("click", stopScanner);
-}
-
-document.addEventListener("DOMContentLoaded", init);
 </script>
 </body>
 </html>
