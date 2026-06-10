@@ -1,842 +1,804 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>ICF-SL | Household ITN Distribution</title>
-    <!-- Instascan QR Scanner - Mobile optimized -->
-    <script src="https://cdn.jsdelivr.net/npm/instascan@1.0.0/instascan.min.js"></script>
-    <!-- Signature Pad Library -->
-    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.1.7/dist/signature_pad.umd.min.js"></script>
-    <!-- Font Awesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>ICF-SL | ITN Distribution Hub</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
-        body {
-            background: linear-gradient(145deg, #e0f0e8 0%, #c8e0d4 100%);
-            min-height: 100vh;
-            padding: 8px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-        }
+  body {
+    background: #eef2f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+  }
 
-        .glass-card {
-            max-width: 480px;
-            width: 100%;
-            background: rgba(255, 255, 255, 0.98);
-            border-radius: 28px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
+  .phone {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0;
+    box-shadow: none;
+  }
 
-        /* Header with Logo - No dividing line */
-        .header {
-            background: linear-gradient(135deg, #0B3B3F 0%, #1C6E5E 100%);
-            color: white;
-            padding: 16px 14px;
-            text-align: center;
-        }
-        
-        .logo-container {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 12px;
-        }
-        
-        /* Logo image styling - Replace with actual ICF-SL Logo.png */
-        .logo-image {
-            width: 55px;
-            height: 55px;
-            background: #FFB74D;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-            flex-shrink: 0;
-        }
-        
-        .logo-image i {
-            font-size: 28px;
-            color: #0B3B3F;
-        }
-        
-        /* For actual PNG logo - uncomment and comment above when you have the image */
-        /*
-        .logo-image {
-            background: transparent;
-            border-radius: 0;
-        }
-        .logo-image img {
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-        }
-        */
-        
-        .firm-info {
-            text-align: left;
-            flex: 1;
-        }
-        
-        .firm-info h2 {
-            font-size: 0.9rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-            margin-bottom: 3px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .firm-info p {
-            font-size: 0.68rem;
-            opacity: 0.9;
-            font-style: italic;
-        }
-        
-        .campaign-title {
-            margin-top: 8px;
-            text-align: center;
-        }
-        
-        .campaign-title h3 {
-            font-size: 0.82rem;
-            font-weight: 700;
-            letter-spacing: 0.3px;
-        }
-        
-        .campaign-title p {
-            font-size: 0.72rem;
-            font-weight: 600;
-            opacity: 0.9;
-            margin-top: 2px;
-        }
+  @media (min-width: 500px) {
+    body {
+      padding: 16px;
+      background: #eef2f7;
+    }
+    .phone {
+      max-width: 400px;
+      height: 90vh;
+      max-height: 800px;
+      border-radius: 40px;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.35);
+    }
+  }
 
-        /* Progress Indicator */
-        .progress-indicator {
-            background: #f0f5f2;
-            padding: 8px 12px;
-            text-align: center;
-            font-size: 0.7rem;
-            font-weight: 600;
-            color: #1C6E5E;
-            border-bottom: 1px solid #e2ece6;
-        }
-        .progress-indicator span {
-            background: #1C6E5E;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 20px;
-            margin: 0 4px;
-        }
+  @media (min-width: 768px) {
+    .phone {
+      max-width: 420px;
+      height: 85vh;
+      max-height: 750px;
+    }
+  }
 
-        /* Steps Container */
-        .steps-container {
-            padding: 16px 12px;
-            min-height: 480px;
-            display: flex;
-            flex-direction: column;
-        }
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
 
-        /* Step Cards - Only one visible at a time */
-        .step {
-            background: #ffffff;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-            border: 1px solid #e2ece6;
-            display: none;
-        }
-        .step.active-step {
-            display: block;
-        }
+  .header-section {
+    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
+    color: white;
+    text-align: center;
+    padding: 12px 10px 14px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  }
+  .logo-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 5px;
+  }
+  .header-title {
+    text-align: left;
+  }
+  .header-title h2 {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .header-title p {
+    font-size: 8px;
+    opacity: 0.9;
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+  .campaign-badge {
+    background: #ffcd3c;
+    color: #1e3a8a;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 8px;
+    font-weight: 800;
+    display: inline-block;
+    margin-top: 8px;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+  }
+  .survey-text {
+    font-size: 7px;
+    margin-top: 6px;
+    opacity: 0.85;
+    font-weight: 500;
+  }
 
-        .step-header {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 14px;
-            background: #f8faf9;
-            border-bottom: 1px solid #e2efe9;
-            border-radius: 20px 20px 0 0;
-        }
+  .partner-section {
+    background: transparent;
+    padding: 10px 14px 8px 14px;
+    border-bottom: 1px solid #eef2f8;
+  }
+  .partner-heading {
+    font-size: 11px;
+    font-weight: 800;
+    color: #D4AF37;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .partner-heading i {
+    font-size: 11px;
+  }
+  .partners-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    row-gap: 10px;
+  }
+  .partner-item {
+    text-align: center;
+    padding: 6px 4px;
+  }
+  .partner-item img {
+    width: 100%;
+    max-width: 50px;
+    height: 46px;
+    object-fit: contain;
+    margin-bottom: 6px;
+  }
+  .partner-item span {
+    font-size: 8px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    line-height: 1.3;
+  }
 
-        .step-number {
-            background: #1C6E5E;
-            width: 32px;
-            height: 32px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 32px;
-            color: white;
-            font-weight: bold;
-            font-size: 0.85rem;
-        }
+  .carousel-container {
+    padding: 10px 14px 0px;
+  }
+  .carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    background: #f0f2f5;
+  }
+  .slides {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+  .slide {
+    min-width: 100%;
+    height: 180px;
+  }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #cbd5e1;
+  }
+  .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prev { left: 8px; }
+  .next { right: 8px; }
+  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
+  
+  .dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0 8px;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    padding: 0;
+  }
+  .dot.active {
+    width: 22px;
+    border-radius: 10px;
+    background: #0b5ed7;
+  }
 
-        .step-title {
-            font-weight: 700;
-            font-size: 0.95rem;
-            color: #0B3B3F;
-        }
+  /* SINGLE CARD SECTION - DISTRIBUTION HIGHLIGHT */
+  .distribution-single {
+    padding: 20px 16px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .card {
+    width: 100%;
+    max-width: 320px;
+    border-radius: 32px;
+    padding: 22px 20px;
+    background: linear-gradient(105deg, #0f5b2e, #2e9a5e);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 12px 20px -8px rgba(0,0,0,0.25);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .card:active {
+    transform: scale(0.97);
+  }
+  .card-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card-main-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-main-row i {
+    font-size: 26px;
+    width: 32px;
+  }
+  .card-main-text {
+    font-weight: 800;
+    font-size: 20px;
+    letter-spacing: -0.3px;
+  }
+  .card-abbr {
+    font-size: 11px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 6px;
+    margin-left: 44px;
+    letter-spacing: 0.4px;
+  }
+  .card-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .card-right i {
+    font-size: 24px;
+  }
+  .lock-icon {
+    font-size: 18px;
+  }
 
-        .step-body {
-            padding: 14px;
-        }
+  .footer {
+    text-align: center;
+    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
+    color: white;
+    font-size: 9px;
+    padding: 10px 8px;
+    font-weight: 500;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    line-height: 1.4;
+  }
+  .footer-line1 {
+    font-size: 8px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .footer-line2 {
+    font-weight: 600;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .copyright-symbol {
+    font-size: 9px;
+  }
 
-        .form-row {
-            margin-bottom: 12px;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  .modal-box {
+    background: #ffffff;
+    padding: 24px 20px;
+    border-radius: 36px;
+    width: 85%;
+    max-width: 300px;
+    text-align: center;
+    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
+    animation: fadeSlideUp 0.2s ease;
+  }
+  @keyframes fadeSlideUp {
+    from { opacity: 0; transform: translateY(20px);}
+    to { opacity: 1; transform: translateY(0);}
+  }
+  .modal-box h3 {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 16px;
+    color: #0b5ed7;
+  }
+  .modal input {
+    width: 100%;
+    padding: 12px 14px;
+    margin: 8px 0;
+    border-radius: 50px;
+    border: 1.5px solid #e2e8f0;
+    font-size: 14px;
+    background: #f8fafc;
+  }
+  .modal input:focus {
+    outline: none;
+    border-color: #0b5ed7;
+    background: white;
+  }
+  .modal-buttons {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .modal button {
+    padding: 10px 0;
+    width: 48%;
+    border: none;
+    border-radius: 50px;
+    font-weight: 700;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .login {
+    background: #0b5ed7;
+    color: white;
+  }
+  .cancel {
+    background: #eef2ff;
+    color: #334155;
+  }
+  #loginErrorMessage {
+    margin-top: 10px;
+    font-size: 11px;
+    font-weight: 500;
+  }
 
-        .form-row label {
-            font-weight: 600;
-            color: #0B3B3F;
-            font-size: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        input, button {
-            border-radius: 50px;
-            border: 1px solid #cfdfd7;
-            padding: 12px 14px;
-            font-size: 0.9rem;
-            background: white;
-            width: 100%;
-        }
-
-        input:focus {
-            outline: none;
-            border-color: #1C6E5E;
-            box-shadow: 0 0 0 2px rgba(28,110,94,0.2);
-        }
-
-        button {
-            background: #1C6E5E;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        button.secondary {
-            background: #0B3B3F;
-        }
-
-        button.outline {
-            background: white;
-            color: #1C6E5E;
-            border: 1px solid #1C6E5E;
-        }
-
-        .signature-canvas {
-            border: 2px dashed #bdd9ce;
-            border-radius: 14px;
-            background: #fefefe;
-            width: 100%;
-            height: 130px;
-            cursor: crosshair;
-            touch-action: none;
-        }
-        .canvas-wrapper {
-            margin-top: 6px;
-        }
-
-        #video-preview {
-            width: 100%;
-            border-radius: 18px;
-            overflow: hidden;
-            margin-top: 10px;
-            margin-bottom: 10px;
-            display: none;
-            border: 2px solid #1C6E5E;
-            background: #000;
-        }
-        #video-preview video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .unified-card {
-            background: #f9fdfb;
-            border-radius: 18px;
-            border: 1px solid #d4e4dc;
-            overflow: hidden;
-            margin-top: 12px;
-            display: none;
-        }
-        .card-section {
-            padding: 8px 10px;
-            border-bottom: 1px solid #e2efe9;
-        }
-        .card-section:last-child {
-            border-bottom: none;
-        }
-        .section-title {
-            font-weight: 700;
-            color: #0B3B3F;
-            font-size: 0.78rem;
-            margin-bottom: 6px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .data-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-        .data-item {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: baseline;
-            font-size: 0.75rem;
-            padding: 2px 0;
-            border-bottom: 1px dashed #e0ebe4;
-        }
-        .data-label {
-            font-weight: 600;
-            width: 110px;
-            color: #3a6b58;
-            font-size: 0.72rem;
-        }
-        .data-value {
-            color: #1e2f2a;
-            font-family: monospace;
-            font-weight: 500;
-            font-size: 0.75rem;
-            word-break: break-word;
-            flex: 1;
-        }
-
-        .info-message {
-            background: #eef3f0;
-            border-radius: 30px;
-            padding: 8px 12px;
-            color: #1C6E5E;
-            font-size: 0.7rem;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .status-message {
-            margin-top: 6px;
-            padding: 5px 10px;
-            border-radius: 30px;
-            font-size: 0.68rem;
-            text-align: center;
-        }
-        .gps-info {
-            background: #ebf4f0;
-            padding: 8px 12px;
-            border-radius: 30px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            flex-wrap: wrap;
-            font-size: 0.75rem;
-        }
-        .gps-details {
-            margin-top: 8px;
-            background: #eef3f0;
-            border-radius: 18px;
-            padding: 8px 10px;
-            font-family: monospace;
-            font-size: 0.7rem;
-        }
-
-        /* Navigation Buttons */
-        .nav-buttons {
-            display: flex;
-            gap: 12px;
-            margin-top: 20px;
-            margin-bottom: 8px;
-            padding: 0 12px;
-        }
-        .nav-buttons button {
-            flex: 1;
-            padding: 12px;
-            font-size: 0.9rem;
-        }
-        .nav-buttons button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .reset-button {
-            margin: 0 12px 12px 12px;
-        }
-        .reset-button button {
-            width: 100%;
-            background: #0B3B3F;
-        }
-
-        .footer {
-            background: #0B3B3F;
-            color: #c8e0d4;
-            text-align: center;
-            padding: 10px 12px;
-            font-size: 0.62rem;
-            border-top: 2px solid #FFB74D;
-        }
-        .footer i {
-            margin: 0 3px;
-            color: #FFB74D;
-        }
-        .footer strong {
-            color: #FFB74D;
-        }
-
-        @media (max-width: 450px) {
-            .data-label {
-                width: 100%;
-                margin-bottom: 2px;
-            }
-            .data-item {
-                flex-direction: column;
-            }
-            .step-body {
-                padding: 10px;
-            }
-            .step-title {
-                font-size: 0.88rem;
-            }
-            .logo-image {
-                width: 45px;
-                height: 45px;
-            }
-            .logo-image i {
-                font-size: 22px;
-            }
-            .firm-info h2 {
-                font-size: 0.78rem;
-            }
-            .firm-info p {
-                font-size: 0.6rem;
-            }
-            .campaign-title h3 {
-                font-size: 0.72rem;
-            }
-            .campaign-title p {
-                font-size: 0.65rem;
-            }
-        }
-    </style>
+  .iframe-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fefefe;
+    display: none;
+    flex-direction: column;
+    z-index: 1100;
+    border-radius: inherit;
+    overflow: hidden;
+  }
+  .iframe-header {
+    background: #0b5ed7;
+    color: white;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .iframe-header button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    background: white;
+  }
+  
+  img {
+    background-color: transparent;
+  }
+</style>
 </head>
 <body>
-<div class="glass-card">
-    <div class="header">
-        <div class="logo-container">
-            <!-- ICF-SL Logo - Replace with actual ICF-SL Logo.png -->
-            <div class="logo-image">
-                <i class="fas fa-chart-line"></i>
-                <!-- When you have actual ICF-SL Logo.png, replace above with: -->
-                <!-- <img src="ICF-SL Logo.png" alt="ICF-SL Logo"> -->
-            </div>
-            <div class="firm-info">
-                <h2><i class="fas fa-building"></i> Informatics Consultancy Firm-SL</h2>
-                <p><i class="fas fa-bullhorn"></i> Driving Data-Driven Solutions</p>
-            </div>
-        </div>
-        <div class="campaign-title">
-            <h3>🏠 HOUSEHOLD ITN DISTRIBUTION CAMPAIGN</h3>
-            <p>🇸🇱 SIERRA LEONE</p>
-        </div>
-    </div>
-    
-    <div class="progress-indicator">
-        Step <span id="currentStepDisplay">1</span> of 7
-    </div>
-    
-    <div class="steps-container" id="stepsContainer">
-        <!-- STEP 1 -->
-        <div class="step" data-step="1">
-            <div class="step-header"><span class="step-number">1</span><span class="step-title">📅 Date of Distribution</span></div>
-            <div class="step-body">
-                <div class="form-row">
-                    <label><i class="fas fa-calendar-alt"></i> Distribution Date</label>
-                    <input type="date" id="verificationDate">
-                </div>
-            </div>
-        </div>
 
-        <!-- STEP 2 : QR SCAN -->
-        <div class="step" data-step="2">
-            <div class="step-header"><span class="step-number">2</span><span class="step-title">📲 Scan QR Code</span></div>
-            <div class="step-body">
-                <div style="display:flex; gap:10px; margin-bottom:10px;">
-                    <button id="startScanBtn" style="flex:1;"><i class="fas fa-camera"></i> Scan QR</button>
-                    <button id="stopScanBtn" class="outline" style="flex:1;"><i class="fas fa-stop"></i> Stop</button>
-                </div>
-                <div id="video-preview"></div>
-                <div id="qr-status" class="status-message"></div>
-                <div id="preScanInfo" class="info-message">
-                    <i class="fas fa-info-circle"></i> Tap "Scan QR" and allow camera access.
-                </div>
-                <div class="unified-card" id="unifiedDataCard">
-                    <div class="card-section"><div class="section-title"><i class="fas fa-location-dot"></i> Location Details</div>
-                        <div class="data-grid">
-                            <div class="data-item"><span class="data-label">Region:</span><span class="data-value" id="regionVal">--</span></div>
-                            <div class="data-item"><span class="data-label">District:</span><span class="data-value" id="districtVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Chiefdom:</span><span class="data-value" id="chiefdomVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Community:</span><span class="data-value" id="communityVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Health Facility:</span><span class="data-value" id="healthFacilityVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Distribution Point:</span><span class="data-value" id="distributionPointVal">--</span></div>
-                        </div>
-                    </div>
-                    <div class="card-section"><div class="section-title"><i class="fas fa-users"></i> Household Information</div>
-                        <div class="data-grid">
-                            <div class="data-item"><span class="data-label">Name:</span><span class="data-value" id="householdNameVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Mobile:</span><span class="data-value" id="mobileVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Total Members:</span><span class="data-value" id="totalMembersVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Pregnant Women:</span><span class="data-value" id="pregnantWomenVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Under-Five:</span><span class="data-value" id="underFiveVal">--</span></div>
-                            <div class="data-item"><span class="data-label">HHR Name:</span><span class="data-value" id="hhrNameVal">--</span></div>
-                        </div>
-                    </div>
-                    <div class="card-section"><div class="section-title"><i class="fas fa-map-marker-alt"></i> GPS (from QR)</div>
-                        <div class="data-grid">
-                            <div class="data-item"><span class="data-label">Latitude:</span><span class="data-value" id="gpsLatVal">--</span></div>
-                            <div class="data-item"><span class="data-label">Longitude:</span><span class="data-value" id="gpsLonVal">--</span></div>
-                        </div>
-                    </div>
-                    <div class="card-section"><div class="section-title"><i class="fas fa-ticket-alt"></i> Token & ITNs</div>
-                        <div class="data-grid">
-                            <div class="data-item"><span class="data-label">Token:</span><span class="data-value" id="tokenVal">--</span></div>
-                            <div class="data-item"><span class="data-label">ITNs to Receive:</span><span class="data-value" id="itnsToReceiveVal">--</span></div>
-                        </div>
-                    </div>
-                </div>
-                <input type="hidden" id="fullQrData">
-            </div>
-        </div>
+<div class="phone">
 
-        <!-- STEP 3 -->
-        <div class="step" data-step="3"><div class="step-header"><span class="step-number">3</span><span class="step-title">🪪 Verifier Name</span></div><div class="step-body"><div class="form-row"><label><i class="fas fa-id-card"></i> Full Name</label><input type="text" id="verifierName" placeholder="Enter verifier's full name"></div></div></div>
-        
-        <!-- STEP 4 -->
-        <div class="step" data-step="4"><div class="step-header"><span class="step-number">4</span><span class="step-title">✍️ Verifier Signature</span></div><div class="step-body"><div class="canvas-wrapper"><canvas id="verifierSignatureCanvas" class="signature-canvas"></canvas><div style="margin-top:8px;"><button type="button" id="clearVerifierSig" class="outline" style="width:100%;"><i class="fas fa-eraser"></i> Clear Signature</button></div></div></div></div>
-        
-        <!-- STEP 5 -->
-        <div class="step" data-step="5"><div class="step-header"><span class="step-number">5</span><span class="step-title">📦 ITN Distributor</span></div><div class="step-body"><div class="form-row"><label><i class="fas fa-user-tie"></i> Full Name</label><input type="text" id="distributorName" placeholder="Enter distributor's full name"></div></div></div>
-        
-        <!-- STEP 6 -->
-        <div class="step" data-step="6"><div class="step-header"><span class="step-number">6</span><span class="step-title">🖊️ Distributor Signature</span></div><div class="step-body"><div class="canvas-wrapper"><canvas id="distributorSignatureCanvas" class="signature-canvas"></canvas><div style="margin-top:8px;"><button type="button" id="clearDistributorSig" class="outline" style="width:100%;"><i class="fas fa-eraser"></i> Clear Signature</button></div></div></div></div>
-        
-        <!-- STEP 7 -->
-        <div class="step" data-step="7"><div class="step-header"><span class="step-number">7</span><span class="step-title">📍 GPS Location</span></div><div class="step-body">
-            <div class="gps-info"><i class="fas fa-map-marker-alt" style="color:#1C6E5E;"></i><span id="gpsStatus">Not captured</span></div>
-            <div style="margin-top:10px; display:flex; gap:8px; flex-wrap:wrap;">
-                <button id="getLocationBtn" style="flex:1;"><i class="fas fa-satellite-dish"></i> Capture GPS</button>
-                <button id="resetLocationBtn" class="secondary" style="flex:1;"><i class="fas fa-undo-alt"></i> Reset</button>
-            </div>
-            <div id="gpsDetails" class="gps-details">Latitude: -- , Longitude: --</div>
-            <input type="hidden" id="gpsLat"><input type="hidden" id="gpsLng"><input type="hidden" id="gpsAccuracy">
-        </div></div>
+  <div class="scroll-content">
+    <div class="header-section">
+      <div class="logo-area">
+        <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" class="logo-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%230b5ed7\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF-SL%3C/text%3E%3C/svg%3E';">
+        <div class="header-title">
+          <h2>Informatics Consultancy Firm-SL (ICF-SL)</h2>
+          <p>Driving Data-Driven Solutions for Health and Development</p>
+        </div>
+      </div>
+      <div class="campaign-badge">
+        <i class="fas fa-bed" style="margin-right: 3px;"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
+      </div>
+      <div class="survey-text">
+        <i class="fas fa-clipboard-list"></i> Insecticide-Treated Nets Distribution Survey - Sierra Leone
+      </div>
     </div>
-    
-    <!-- Navigation Buttons -->
-    <div class="nav-buttons">
-        <button id="prevBtn" class="secondary"><i class="fas fa-arrow-left"></i> Previous</button>
-        <button id="nextBtn"><i class="fas fa-arrow-right"></i> Next</button>
+
+    <div class="partner-section">
+      <div class="partner-heading">
+        <i class="fas fa-handshake"></i> 
+        <span>IMPLEMENTING PARTNERS</span>
+      </div>
+      <div class="partners-container">
+        <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
+        <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
+        <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
+        <div class="partner-item"><img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
+        <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
+        <div class="partner-item"><img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div>
+      </div>
     </div>
-    
-    <!-- Reset Button -->
-    <div class="reset-button">
-        <button id="resetAllBtn" class="secondary"><i class="fas fa-broom"></i> Reset All Fields</button>
+
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="slides" id="slides">
+          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
+          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
+          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
+        </div>
+        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
+        <button class="btn next" onclick="moveSlide(1)">❯</button>
+      </div>
+      <div class="dots-container" id="dotsContainer"></div>
     </div>
-    
-    <div class="footer">
-        <p><i class="fas fa-code"></i> Developed By <strong>Informatic Consultancy Firm-SL</strong> <i class="fas fa-copyright"></i> 2026</p>
+
+    <!-- ONLY DISTRIBUTION CARD (HHD) - Removed "Household Distribution" text, kept only (HHD) -->
+    <div class="distribution-single">
+      <div class="card" onclick="openActionModal('DISTRIBUTION')">
+        <div class="card-left">
+          <div class="card-main-row">
+            <i class="fas fa-users"></i>
+            <span class="card-main-text">DISTRIBUTION</span>
+          </div>
+          <div class="card-abbr">(HHD)</div>
+        </div>
+        <div class="card-right">
+          <i class="fas fa-lock lock-icon"></i>
+          <i class="fas fa-hand-holding-heart"></i>
+        </div>
+      </div>
     </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-line1">Developed by</div>
+    <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
+  </div>
+</div>
+
+<div id="loginModal" class="modal">
+  <div class="modal-box">
+    <h3><i class="fas fa-lock"></i> Secure Access</h3>
+    <input type="text" id="usernameInput" placeholder="Username" autocomplete="off">
+    <input type="password" id="passwordInput" placeholder="Password">
+    <div class="modal-buttons">
+      <button class="cancel" onclick="closeLoginModal()">Cancel</button>
+      <button class="login" onclick="performLogin()">Login</button>
+    </div>
+    <p id="loginErrorMessage" style="color:#d32f2f; margin-top:10px;"></p>
+  </div>
+</div>
+
+<div id="iframePanel" class="iframe-panel">
+  <div class="iframe-header">
+    <span><i class="fas fa-hand-holding-heart"></i> Household Distribution Portal (HHD)</span>
+    <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
+  </div>
+  <iframe id="dynamicIframe" src="distribution.html" title="Distribution Module"></iframe>
 </div>
 
 <script>
-    // ---------- Step Navigation ----------
-    let currentStep = 1;
-    const totalSteps = 7;
-    const steps = document.querySelectorAll('.step');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const currentStepDisplay = document.getElementById('currentStepDisplay');
-
-    function showStep(step) {
-        steps.forEach((stepEl, index) => {
-            if (index + 1 === step) {
-                stepEl.classList.add('active-step');
-            } else {
-                stepEl.classList.remove('active-step');
-            }
-        });
-        currentStepDisplay.innerText = step;
-        prevBtn.disabled = (step === 1);
-        if (step === totalSteps) {
-            nextBtn.innerHTML = '<i class="fas fa-check-circle"></i> Submit';
-        } else {
-            nextBtn.innerHTML = '<i class="fas fa-arrow-right"></i> Next';
-        }
+  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP ----------
+  let currentIndex = 0;
+  const slidesContainer = document.getElementById('slides');
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const dotsContainer = document.getElementById('dotsContainer');
+  let autoInterval;
+  
+  function setupInfiniteLoop() {
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[totalSlides - 1].cloneNode(true);
+    slidesContainer.appendChild(firstClone);
+    slidesContainer.insertBefore(lastClone, slides[0]);
+    slidesContainer.style.transform = `translateX(-${1 * 100}%)`;
+    currentIndex = 1;
+  }
+  
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => { goToSlide(i); resetAutoSlide(); });
+      dotsContainer.appendChild(dot);
     }
-
-    function nextStep() {
-        if (currentStep < totalSteps) {
-            currentStep++;
-            showStep(currentStep);
-        } else if (currentStep === totalSteps) {
-            submitVerification();
-        }
-    }
-
-    function prevStep() {
-        if (currentStep > 1) {
-            currentStep--;
-            showStep(currentStep);
-        }
-    }
-
-    prevBtn.addEventListener('click', prevStep);
-    nextBtn.addEventListener('click', nextStep);
-
-    // ---------- QR SCANNER ----------
-    let scanner = null;
-    let isScanning = false;
-    const videoPreview = document.getElementById("video-preview");
-    const qrStatusDiv = document.getElementById("qr-status");
-    const preScanInfo = document.getElementById("preScanInfo");
-    const unifiedCard = document.getElementById("unifiedDataCard");
-
-    function showDataCard() { unifiedCard.style.display = "block"; preScanInfo.style.display = "none"; }
-    function hideDataCard() { unifiedCard.style.display = "none"; preScanInfo.style.display = "flex"; }
-    
-    function populateDistributionData() {
-        document.getElementById("regionVal").innerText = "East";
-        document.getElementById("districtVal").innerText = "Kenema";
-        document.getElementById("chiefdomVal").innerText = "Dama";
-        document.getElementById("communityVal").innerText = "Kenyema";
-        document.getElementById("healthFacilityVal").innerText = "Kenyema CHC";
-        document.getElementById("distributionPointVal").innerText = "Kenyema CHC";
-        document.getElementById("householdNameVal").innerText = "KOROMA SAM FODAY";
-        document.getElementById("mobileVal").innerText = "099999999";
-        document.getElementById("totalMembersVal").innerText = "10";
-        document.getElementById("pregnantWomenVal").innerText = "3";
-        document.getElementById("underFiveVal").innerText = "2";
-        document.getElementById("hhrNameVal").innerText = "SATU";
-        document.getElementById("gpsLatVal").innerText = "8.469660";
-        document.getElementById("gpsLonVal").innerText = "-13.241364";
-        document.getElementById("tokenVal").innerText = "FOD_SAM_KOR_099999999";
-        document.getElementById("itnsToReceiveVal").innerText = "3";
-        showDataCard();
-        if(qrStatusDiv) qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-check-circle"></i> ✅ QR scanned! Data loaded.</span>`;
-        setTimeout(() => { if(qrStatusDiv) qrStatusDiv.innerHTML = ""; }, 3000);
-    }
-    
-    function resetQrDisplayFields() {
-        const fields = ["regionVal","districtVal","chiefdomVal","communityVal","healthFacilityVal","distributionPointVal",
-                        "householdNameVal","mobileVal","totalMembersVal","pregnantWomenVal","underFiveVal","hhrNameVal",
-                        "gpsLatVal","gpsLonVal","tokenVal","itnsToReceiveVal"];
-        fields.forEach(id => { document.getElementById(id).innerText = "--"; });
-        hideDataCard();
-    }
-    
-    async function stopScanner() {
-        if (scanner && isScanning) {
-            try { await scanner.stop(); } catch(e) {}
-        }
-        scanner = null;
-        isScanning = false;
-        videoPreview.style.display = "none";
-        videoPreview.innerHTML = '';
-        if(qrStatusDiv) qrStatusDiv.innerHTML = "";
-    }
-    
-    async function startScanner() {
-        await stopScanner();
-        videoPreview.innerHTML = '';
-        videoPreview.style.display = "block";
-        qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-spinner fa-pulse"></i> Starting camera...</span>`;
-        try {
-            if (typeof Instascan === 'undefined') throw new Error("Scanner library not loaded.");
-            scanner = new Instascan.Scanner({ video: videoPreview, scanPeriod: 5, mirror: false });
-            scanner.addListener('scan', function(content) {
-                populateDistributionData();
-                stopScanner();
-            });
-            const cameras = await Instascan.Camera.getCameras();
-            if (cameras.length === 0) throw new Error("No camera found.");
-            let selectedCamera = cameras[0];
-            for (let i = 0; i < cameras.length; i++) {
-                if (cameras[i].name.toLowerCase().includes('back') || cameras[i].name.toLowerCase().includes('environment')) {
-                    selectedCamera = cameras[i];
-                    break;
-                }
-            }
-            await scanner.start(selectedCamera);
-            isScanning = true;
-            qrStatusDiv.innerHTML = `<span style="color:#1C6E5E;"><i class="fas fa-video"></i> Camera active - point at QR</span>`;
-        } catch (err) {
-            let errorMsg = err.message || err;
-            if (errorMsg.includes("Permission")) errorMsg = "Camera permission denied.";
-            else if (errorMsg.includes("No camera")) errorMsg = "No camera found.";
-            qrStatusDiv.innerHTML = `<span style="color:#d9534f;"><i class="fas fa-exclamation-triangle"></i> ${errorMsg}</span>`;
-            videoPreview.style.display = "none";
-            isScanning = false;
-        }
-    }
-
-    // ---------- Signature Pads ----------
-    let verifierPad, distributorPad;
-    function initSignaturePads() {
-        const vCanvas = document.getElementById("verifierSignatureCanvas");
-        const dCanvas = document.getElementById("distributorSignatureCanvas");
-        function resizeCanvas(canvas) {
-            const rect = canvas.getBoundingClientRect();
-            if (rect.width > 0) { canvas.width = rect.width; canvas.height = 130; }
-        }
-        resizeCanvas(vCanvas); resizeCanvas(dCanvas);
-        try {
-            verifierPad = new SignaturePad(vCanvas, { backgroundColor: 'rgb(255,255,255)', penColor: '#0B3B3F' });
-            distributorPad = new SignaturePad(dCanvas, { backgroundColor: 'rgb(255,255,255)', penColor: '#0B3B3F' });
-            verifierPad.clear(); distributorPad.clear();
-        } catch(e) {
-            verifierPad = { clear: () => {}, isEmpty: () => true, toDataURL: () => '' };
-            distributorPad = { clear: () => {}, isEmpty: () => true, toDataURL: () => '' };
-        }
-        document.getElementById("clearVerifierSig").onclick = () => verifierPad?.clear();
-        document.getElementById("clearDistributorSig").onclick = () => distributorPad?.clear();
-    }
-    
-    // ---------- GPS ----------
-    let currentGps = { lat: null, lng: null, accuracy: null };
-    function updateGpsUI() {
-        const detailsDiv = document.getElementById("gpsDetails");
-        const statusSpan = document.getElementById("gpsStatus");
-        if(currentGps.lat && currentGps.lng) {
-            detailsDiv.innerHTML = `📍 Latitude: ${currentGps.lat.toFixed(6)} , Longitude: ${currentGps.lng.toFixed(6)}`;
-            statusSpan.innerHTML = `<i class="fas fa-check-circle"></i> GPS captured`;
-            document.getElementById("gpsLat").value = currentGps.lat;
-            document.getElementById("gpsLng").value = currentGps.lng;
-        } else {
-            detailsDiv.innerHTML = `Latitude: -- , Longitude: --`;
-            statusSpan.innerHTML = `Not captured`;
-            document.getElementById("gpsLat").value = "";
-            document.getElementById("gpsLng").value = "";
-        }
-    }
-    function getLocation() {
-        if (!navigator.geolocation) { alert("Geolocation not supported."); return; }
-        document.getElementById("gpsStatus").innerHTML = `<i class="fas fa-spinner fa-pulse"></i> Acquiring GPS...`;
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                currentGps.lat = position.coords.latitude;
-                currentGps.lng = position.coords.longitude;
-                updateGpsUI();
-            },
-            () => { document.getElementById("gpsStatus").innerHTML = `<i class="fas fa-exclamation-triangle"></i> Location error`; currentGps = { lat: null, lng: null }; updateGpsUI(); },
-            { enableHighAccuracy: true, timeout: 10000 }
-        );
-    }
-    function resetGps() { currentGps = { lat: null, lng: null }; updateGpsUI(); }
-    
-    // ---------- Reset All ----------
-    async function resetAllFields() {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById("verificationDate").value = today;
-        resetQrDisplayFields();
-        document.getElementById("verifierName").value = "";
-        if(verifierPad && verifierPad.clear) verifierPad.clear();
-        document.getElementById("distributorName").value = "";
-        if(distributorPad && distributorPad.clear) distributorPad.clear();
-        resetGps();
-        document.getElementById("messageBoard")?.remove();
-        await stopScanner();
-        currentStep = 1;
-        showStep(1);
-    }
-    
-    // ---------- Submit ----------
-    function collectFormData() {
-        const date = document.getElementById("verificationDate").value;
-        const verifierName = document.getElementById("verifierName").value.trim();
-        const distributorName = document.getElementById("distributorName").value.trim();
-        const gpsLatRaw = document.getElementById("gpsLat").value;
-        const gpsLngRaw = document.getElementById("gpsLng").value;
-        const token = document.getElementById("tokenVal").innerText;
-        
-        if(token === "--") return "❌ Please scan a valid QR code first (Step 2)";
-        if(!date) return "❌ Please select distribution date (Step 1)";
-        if(!verifierName) return "❌ Enter Verifier name (Step 3)";
-        if(!verifierPad || verifierPad.isEmpty()) return "❌ Verifier signature required (Step 4)";
-        if(!distributorName) return "❌ Enter Distributor name (Step 5)";
-        if(!distributorPad || distributorPad.isEmpty()) return "❌ Distributor signature required (Step 6)";
-        if(!gpsLatRaw || !gpsLngRaw) return "⚠️ GPS location not captured (Step 7)";
-        
-        return `✅ DISTRIBUTION SUBMITTED ✅\n📅 Date: ${date}\n📍 East / Kenema / Dama\n👪 ${document.getElementById("householdNameVal").innerText}\n🎟️ Token: ${token}\n👮 ${verifierName}\n📦 ${distributorName}\n🌐 GPS: ${gpsLatRaw}, ${gpsLngRaw}`;
-    }
-    
-    function submitVerification() {
-        const resultMsg = collectFormData();
-        let msgDiv = document.getElementById("messageBoard");
-        if(!msgDiv) {
-            msgDiv = document.createElement('div');
-            msgDiv.id = "messageBoard";
-            msgDiv.style.marginTop = "12px";
-            msgDiv.style.textAlign = "center";
-            document.querySelector('.steps-container').appendChild(msgDiv);
-        }
-        if(resultMsg.startsWith("❌") || resultMsg.startsWith("⚠️")) {
-            msgDiv.innerHTML = `<div style="background:#ffe6e5; border-left:4px solid #c72a2a; border-radius:16px; padding:10px; font-size:0.75rem;">${resultMsg}</div>`;
-        } else {
-            msgDiv.innerHTML = `<div style="background:#d9f0e6; border-left:4px solid #1C6E5E; border-radius:16px; padding:10px; white-space:pre-line; font-family:monospace; font-size:0.7rem;">${resultMsg}</div>`;
-        }
-    }
-    
-    // ---------- Initialize ----------
-    window.addEventListener("DOMContentLoaded", () => {
-        const today = new Date().toISOString().split('T')[0];
-        document.getElementById("verificationDate").value = today;
-        initSignaturePads();
-        hideDataCard();
-        videoPreview.style.display = "none";
-        showStep(1);
-        
-        document.getElementById("startScanBtn").addEventListener("click", startScanner);
-        document.getElementById("stopScanBtn").addEventListener("click", stopScanner);
-        document.getElementById("getLocationBtn").addEventListener("click", getLocation);
-        document.getElementById("resetLocationBtn").addEventListener("click", resetGps);
-        document.getElementById("resetAllBtn").addEventListener("click", resetAllFields);
-        
-        window.addEventListener("resize", () => {
-            if(verifierPad) {
-                const vc = document.getElementById("verifierSignatureCanvas");
-                const dc = document.getElementById("distributorSignatureCanvas");
-                if(vc) { vc.width = vc.clientWidth; vc.height = 130; }
-                if(dc) { dc.width = dc.clientWidth; dc.height = 130; }
-            }
-        });
+  }
+  
+  function updateDots() {
+    let realIndex = currentIndex - 1;
+    if (realIndex < 0) realIndex = totalSlides - 1;
+    if (realIndex >= totalSlides) realIndex = 0;
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, idx) => {
+      if (idx === realIndex) dot.classList.add('active');
+      else dot.classList.remove('active');
     });
+  }
+  
+  function goToSlide(index) {
+    const targetPosition = index + 1;
+    currentIndex = targetPosition;
+    slidesContainer.style.transition = 'transform 0.4s ease';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      }
+    }, 400);
+  }
+  
+  function moveSlide(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex > totalSlides + 1) newIndex = totalSlides + 1;
+    currentIndex = newIndex;
+    slidesContainer.style.transition = 'transform 0.4s ease';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      }
+    }, 400);
+  }
+  
+  function startAutoSlide() {
+    if (autoInterval) clearInterval(autoInterval);
+    autoInterval = setInterval(() => moveSlide(1), 5000);
+  }
+  
+  function resetAutoSlide() { startAutoSlide(); }
+  
+  setupInfiniteLoop();
+  createDots();
+  startAutoSlide();
+  window.moveSlide = moveSlide;
+  
+  const carouselElement = document.querySelector('.carousel');
+  if (carouselElement) {
+    carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
+    carouselElement.addEventListener('mouseleave', () => startAutoSlide());
+  }
+  
+  // ---------- CSV LOGIN VALIDATION ----------
+  let validCredentials = [];
+  
+  async function loadCredentials() {
+    try {
+      const response = await fetch('Keys.csv');
+      if (!response.ok) {
+        console.warn('Keys.csv not found. Using default distribution officer credentials.');
+        validCredentials = [{ username: 'distributor', password: 'itn2026' }];
+        return;
+      }
+      const csvText = await response.text();
+      const lines = csvText.trim().split('\n');
+      const startIndex = lines[0].toLowerCase().includes('username') ? 1 : 0;
+      for (let i = startIndex; i < lines.length; i++) {
+        const line = lines[i].trim();
+        if (line === '') continue;
+        const parts = line.split(',');
+        if (parts.length >= 2) {
+          validCredentials.push({
+            username: parts[0].trim(),
+            password: parts[1].trim()
+          });
+        }
+      }
+      if (validCredentials.length === 0) {
+        validCredentials.push({ username: 'distributor', password: 'itn2026' });
+      }
+      console.log('Credentials loaded:', validCredentials.length);
+    } catch (error) {
+      console.error('Error loading CSV:', error);
+      validCredentials = [{ username: 'distributor', password: 'itn2026' }];
+    }
+  }
+  
+  function validateCredentials(username, password) {
+    return validCredentials.some(cred => 
+      cred.username === username && cred.password === password
+    );
+  }
+  
+  // ---------- MODAL & IFRAME FLOW (ONLY DISTRIBUTION) ----------
+  let pendingAction = "";
+  const loginModal = document.getElementById('loginModal');
+  const iframePanel = document.getElementById('iframePanel');
+  const dynamicIframe = document.getElementById('dynamicIframe');
+  const usernameField = document.getElementById('usernameInput');
+  const passwordField = document.getElementById('passwordInput');
+  const errorMsgSpan = document.getElementById('loginErrorMessage');
+  
+  function openActionModal(actionType) {
+    if (actionType !== 'DISTRIBUTION') return;
+    pendingAction = actionType;
+    if (usernameField) usernameField.value = "";
+    if (passwordField) passwordField.value = "";
+    if (errorMsgSpan) errorMsgSpan.innerText = "";
+    loginModal.style.display = 'flex';
+  }
+  
+  function closeLoginModal() {
+    loginModal.style.display = 'none';
+    pendingAction = "";
+    if (errorMsgSpan) errorMsgSpan.innerText = "";
+  }
+  
+  function getDistributionFallback() {
+    return `<!DOCTYPE html>
+    <html>
+    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHD Distribution Portal</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <style>
+      *{margin:0;padding:0;box-sizing:border-box;}
+      body{font-family:'Inter',sans-serif;background:#ecfdf5;padding:20px;min-height:100vh;}
+      .dist-card{background:white;border-radius:32px;padding:20px;box-shadow:0 12px 24px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}
+      h2{color:#0f5b2e;font-size:22px;margin-bottom:6px;display:flex;gap:8px;align-items:center;}
+      .desc{color:#2d6a4f;font-size:12px;margin-bottom:20px;border-left:3px solid #2e9a5e;padding-left:12px;}
+      input, select{width:100%;padding:12px;margin:8px 0;border:1.5px solid #d1d5db;border-radius:40px;font-size:13px;}
+      button{background:#0f5b2e;color:white;border:none;padding:12px;width:100%;border-radius:40px;font-weight:700;margin-top:12px;}
+      .success-badge{background:#e0f2e9;color:#0a5c2e;padding:12px;border-radius:20px;font-size:12px;margin-top:16px;text-align:center;}
+    </style>
+    </head>
+    <body>
+    <div class="dist-card">
+      <h2><i class="fas fa-hand-holding-heart"></i> Household Distribution</h2>
+      <div class="desc">ITN Campaign 2026 — Register net distribution per household</div>
+      <input type="text" placeholder="Household ID / Registration Code">
+      <input type="text" placeholder="Head of Household Name">
+      <input type="number" placeholder="Number of Nets Distributed">
+      <select><option>Select District</option><option>Western Area Urban</option><option>Bo</option><option>Kenema</option><option>Makeni</option></select>
+      <button onclick="alert('✅ Distribution recorded successfully. ITN delivery confirmed.')"><i class="fas fa-check-circle"></i> Confirm Distribution</button>
+      <div class="success-badge"><i class="fas fa-chart-line"></i> Today's distribution: 1,240 nets | Campaign target: 82%</div>
+    </div>
+    </body>
+    </html>`;
+  }
+  
+  function performLogin() {
+    const username = usernameField ? usernameField.value.trim() : "";
+    const password = passwordField ? passwordField.value : "";
     
-    window.addEventListener("beforeunload", async () => { await stopScanner(); });
+    if (validateCredentials(username, password)) {
+      closeLoginModal();
+      if (pendingAction === "DISTRIBUTION") {
+        dynamicIframe.src = "distribution.html";
+        dynamicIframe.onerror = function() {
+          dynamicIframe.srcdoc = getDistributionFallback();
+        };
+        setTimeout(() => {
+          try {
+            if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
+                dynamicIframe.contentDocument.body && 
+                dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
+              dynamicIframe.srcdoc = getDistributionFallback();
+            }
+          } catch(e) {}
+        }, 500);
+        iframePanel.style.display = 'flex';
+      }
+      pendingAction = "";
+    } else {
+      if (errorMsgSpan) errorMsgSpan.innerText = "❌ Invalid credentials. Please check username and password.";
+    }
+  }
+  
+  function closeIframePanel() {
+    iframePanel.style.display = 'none';
+    dynamicIframe.src = "distribution.html";
+    dynamicIframe.onerror = null;
+  }
+  
+  window.onclick = function(event) {
+    if (event.target === loginModal) closeLoginModal();
+    if (event.target === iframePanel) closeIframePanel();
+  };
+  
+  document.querySelectorAll('.partner-item img').forEach(img => {
+    img.onerror = function() {
+      if (!img.dataset.fallbackSet) {
+        img.dataset.fallbackSet = 'true';
+        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';
+      }
+    };
+  });
+  
+  loadCredentials();
 </script>
 </body>
 </html>
