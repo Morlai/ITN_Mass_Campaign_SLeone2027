@@ -1,426 +1,78 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
   <title>Phone View | Three Action Cards - Full Width Row</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: #f0f2f5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      line-height: 1.3;
-    }
-
-    /* ===== HEADER - REMOVED (no header section) ===== */
-
-    /* ===== MAIN BODY - FLEXIBLE GRID THAT FITS ON SCREEN ===== */
-    .main-content {
-      flex: 1;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 1rem 0.75rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Info banner that replaces header content */
-    .info-banner {
-      background: linear-gradient(135deg, #0a59c6 0%, #0b5ed7 100%);
-      color: white;
-      text-align: center;
-      padding: 12px 16px;
-      border-radius: 24px;
-      margin-bottom: 20px;
-      width: 100%;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    .info-banner .title {
-      font-size: 14px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      margin-bottom: 4px;
-    }
-    .info-banner .subtitle {
-      font-size: 10px;
-      opacity: 0.9;
-    }
-
-    /* Cards container - horizontal row that fits without overflow */
-    .cards-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 0.75rem;
-      justify-content: center;
-      align-items: stretch;
-      width: 100%;
-    }
-
-    /* Action Card - dynamically sized to fit screen properly */
-    .action-card {
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.12);
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
-    }
-
-    .action-card:active {
-      transform: scale(0.97);
-      transition: transform 0.05s;
-    }
-
-    /* Card 1: Manual Entry - Orange gradient */
-    .card-manual .card-header {
-      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-    }
-
-    /* Card 2: Scan QR - Teal gradient */
-    .card-scan .card-header {
-      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-    }
-
-    /* Card 3: RECORDS - Purple gradient */
-    .card-records .card-header {
-      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    }
-
-    /* Card header - compact but touch-friendly */
-    .card-header {
-      padding: 0.6rem 0.4rem;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      text-align: center;
-    }
-
-    .card-icon {
-      font-size: 1.3rem;
-      background: rgba(255,255,255,0.2);
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      backdrop-filter: blur(4px);
-      flex-shrink: 0;
-    }
-
-    .card-header h2 {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      line-height: 1.2;
-      word-break: keep-all;
-    }
-
-    /* Card body - compact to fit three columns */
-    .card-body {
-      padding: 0.6rem 0.5rem 0.75rem 0.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .card-description {
-      color: #1e293b;
-      font-size: 0.62rem;
-      line-height: 1.4;
-      font-weight: 500;
-      background: #f8fafc;
-      padding: 0.5rem 0.45rem;
-      border-radius: 14px;
-      text-align: left;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Left border accent matching each card */
-    .card-manual .card-description {
-      border-left: 3px solid #f97316;
-    }
-    .card-scan .card-description {
-      border-left: 3px solid #14b8a6;
-    }
-    .card-records .card-description {
-      border-left: 3px solid #a855f7;
-    }
-
-    .demographic-title {
-      font-weight: 700;
-      margin-bottom: 4px;
-      font-size: 0.62rem;
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Hierarchy path styling - ultra compact */
-    .hierarchy-path {
-      font-family: monospace;
-      font-size: 0.5rem;
-      background: #fff3e6;
-      padding: 0.3rem 0.2rem;
-      border-radius: 8px;
-      color: #ea580c;
-      font-weight: 600;
-      margin-top: 0.3rem;
-      text-align: center;
-      word-break: break-word;
-      line-height: 1.3;
-    }
-
-    .divider-light {
-      height: 1px;
-      background: #e2e8f0;
-      margin: 0.05rem 0;
-    }
-
-    /* ===== FOOTER ===== */
-    .app-footer {
-      background-color: #0a59c6;
-      color: white;
-      margin-top: auto;
-      padding: 0.6rem 1rem;
-      font-size: 0.7rem;
-      width: 100%;
-    }
-
-    .footer-container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.2rem;
-      text-align: center;
-    }
-
-    .footer-main {
-      font-weight: 600;
-      font-size: 0.7rem;
-      letter-spacing: 0.2px;
-    }
-
-    .footer-sub {
-      font-size: 0.6rem;
-      opacity: 0.92;
-    }
-
-    /* Iframe Panel Styles */
-    .iframe-panel {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      display: none;
-      flex-direction: column;
-      z-index: 2000;
-      overflow: hidden;
-      animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    .iframe-header {
-      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-      color: white;
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      font-size: 16px;
-    }
-    
-    .iframe-header button {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      font-size: 20px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    
-    .iframe-header button:active {
-      background: rgba(255,255,255,0.4);
-    }
-    
-    iframe {
-      flex: 1;
-      border: none;
-      width: 100%;
-      background: white;
-    }
-
-    /* ===== RESPONSIVE ADJUSTMENTS FOR DIFFERENT PHONE WIDTHS ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif; background: #f0f2f5; display: flex; flex-direction: column; min-height: 100vh; line-height: 1.3; }
+    .main-content { flex: 1; width: 100%; max-width: 480px; margin: 0 auto; padding: 1rem 0.75rem; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+    .cards-container { display: flex; flex-direction: row; flex-wrap: nowrap; gap: 0.75rem; justify-content: center; align-items: stretch; width: 100%; }
+    .action-card { background: white; border-radius: 20px; box-shadow: 0 8px 18px -6px rgba(0,0,0,0.12); flex: 1; min-width: 0; display: flex; flex-direction: column; overflow: hidden; cursor: pointer; transition: transform 0.15s ease, box-shadow 0.2s ease; }
+    .action-card:active { transform: scale(0.97); transition: transform 0.05s; }
+    .card-manual .card-header { background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); }
+    .card-scan .card-header { background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%); }
+    .card-records .card-header { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); }
+    .card-header { padding: 0.6rem 0.4rem; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; text-align: center; }
+    .card-icon { font-size: 1.3rem; background: rgba(255,255,255,0.2); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; backdrop-filter: blur(4px); flex-shrink: 0; }
+    .card-header h2 { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.3px; line-height: 1.2; word-break: keep-all; }
+    .card-body { padding: 0.6rem 0.5rem 0.75rem 0.5rem; flex: 1; display: flex; flex-direction: column; gap: 0.4rem; }
+    .card-description { color: #1e293b; font-size: 0.62rem; line-height: 1.4; font-weight: 500; background: #f8fafc; padding: 0.5rem 0.45rem; border-radius: 14px; text-align: left; flex: 1; display: flex; flex-direction: column; }
+    .card-manual .card-description { border-left: 3px solid #f97316; }
+    .card-scan .card-description { border-left: 3px solid #14b8a6; }
+    .card-records .card-description { border-left: 3px solid #a855f7; }
+    .demographic-title { font-weight: 700; margin-bottom: 4px; font-size: 0.62rem; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .hierarchy-path { font-family: monospace; font-size: 0.5rem; background: #fff3e6; padding: 0.3rem 0.2rem; border-radius: 8px; color: #ea580c; font-weight: 600; margin-top: 0.3rem; text-align: center; word-break: break-word; line-height: 1.3; }
+    .divider-light { height: 1px; background: #e2e8f0; margin: 0.05rem 0; }
+    .app-footer { background-color: #0a59c6; color: white; margin-top: auto; padding: 0.6rem 1rem; font-size: 0.7rem; width: 100%; }
+    .footer-container { width: 100%; max-width: 480px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.2rem; text-align: center; }
+    .footer-main { font-weight: 600; font-size: 0.7rem; letter-spacing: 0.2px; }
+    .footer-sub { font-size: 0.6rem; opacity: 0.92; }
+    .iframe-panel { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; display: none; flex-direction: column; z-index: 2000; overflow: hidden; animation: slideUp 0.3s ease; }
+    @keyframes slideUp { from { transform: translateY(100%); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .iframe-header { background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); color: white; padding: 14px 18px; display: flex; justify-content: space-between; align-items: center; font-weight: 700; font-size: 16px; }
+    .iframe-header button { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; transition: 0.2s; }
+    .iframe-header button:active { background: rgba(255,255,255,0.4); }
+    iframe { flex: 1; border: none; width: 100%; background: white; }
     @media (max-width: 360px) {
-      .main-content {
-        padding: 0.75rem 0.6rem;
-      }
-      
-      .cards-container {
-        gap: 0.5rem;
-      }
-      
-      .card-header {
-        padding: 0.5rem 0.3rem;
-      }
-      
-      .card-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 1.1rem;
-      }
-      
-      .card-header h2 {
-        font-size: 0.65rem;
-      }
-      
-      .card-body {
-        padding: 0.5rem 0.4rem 0.65rem 0.4rem;
-      }
-      
-      .card-description {
-        font-size: 0.55rem;
-        padding: 0.4rem 0.35rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.55rem;
-        white-space: normal;
-        word-break: keep-all;
-      }
-      
-      .hierarchy-path {
-        font-size: 0.45rem;
-        padding: 0.25rem 0.15rem;
-      }
-      
-      .info-banner {
-        padding: 10px 12px;
-        margin-bottom: 16px;
-      }
-      .info-banner .title {
-        font-size: 12px;
-      }
-      .info-banner .subtitle {
-        font-size: 9px;
-      }
+      .main-content { padding: 0.75rem 0.6rem; }
+      .cards-container { gap: 0.5rem; }
+      .card-header { padding: 0.5rem 0.3rem; }
+      .card-icon { width: 30px; height: 30px; font-size: 1.1rem; }
+      .card-header h2 { font-size: 0.65rem; }
+      .card-body { padding: 0.5rem 0.4rem 0.65rem 0.4rem; }
+      .card-description { font-size: 0.55rem; padding: 0.4rem 0.35rem; }
+      .demographic-title { font-size: 0.55rem; white-space: normal; word-break: keep-all; }
+      .hierarchy-path { font-size: 0.45rem; padding: 0.25rem 0.15rem; }
     }
-    
     @media (min-width: 361px) and (max-width: 400px) {
-      .card-header h2 {
-        font-size: 0.68rem;
-      }
-      
-      .card-description {
-        font-size: 0.58rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.58rem;
-      }
-      
-      .hierarchy-path {
-        font-size: 0.48rem;
-      }
+      .card-header h2 { font-size: 0.68rem; }
+      .card-description { font-size: 0.58rem; }
+      .demographic-title { font-size: 0.58rem; }
+      .hierarchy-path { font-size: 0.48rem; }
     }
-    
     @media (min-width: 401px) and (max-width: 480px) {
-      .card-header h2 {
-        font-size: 0.72rem;
-      }
-      
-      .card-description {
-        font-size: 0.6rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.6rem;
-      }
+      .card-header h2 { font-size: 0.72rem; }
+      .card-description { font-size: 0.6rem; }
+      .demographic-title { font-size: 0.6rem; }
     }
-    
     @media (min-width: 481px) and (max-width: 550px) {
-      .main-content {
-        max-width: 520px;
-      }
-      
-      .card-header h2 {
-        font-size: 0.78rem;
-      }
-      
-      .card-description {
-        font-size: 0.65rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.65rem;
-      }
+      .main-content { max-width: 520px; }
+      .card-header h2 { font-size: 0.78rem; }
+      .card-description { font-size: 0.65rem; }
+      .demographic-title { font-size: 0.65rem; }
     }
-
-    @media (hover: hover) {
-      .action-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.15);
-      }
-    }
-
-    .action-card:focus-visible {
-      outline: 2px solid #0a59c6;
-      outline-offset: 2px;
-    }
+    @media (hover: hover) { .action-card:hover { transform: translateY(-2px); box-shadow: 0 12px 22px -10px rgba(0,0,0,0.15); } }
+    .action-card:focus-visible { outline: 2px solid #0a59c6; outline-offset: 2px; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER COMPLETELY REMOVED - No app-header, no brand icons, no REGISTRATION text in header -->
-
-  <!-- MAIN BODY - Three action cards in a single row that fits on screen properly -->
   <main class="main-content">
-    <!-- Info banner that replaces previous header content (Household Registration info) -->
-    <div class="info-banner">
-      <div class="title">🏠 Household Registration</div>
-      <div class="subtitle">ITN Campaign 2026 - Sierra Leone</div>
-    </div>
-
     <div class="cards-container">
-      
-      <!-- ACTION CARD 1: MANUAL ENTRY - Opens registration.html in iframe -->
+
+      <!-- ACTION CARD 1: MANUAL ENTRY -->
       <div class="action-card card-manual" role="button" tabindex="0" aria-label="Manual entry form for demographic data">
         <div class="card-header">
           <div class="card-icon">✍️</div>
@@ -465,18 +117,14 @@
           <div class="divider-light"></div>
         </div>
       </div>
+
     </div>
   </main>
 
-  <!-- FOOTER - Required text -->
   <footer class="app-footer">
     <div class="footer-container">
-      <div class="footer-main">
-        Developed by Informatics Consultancy Firm-SL
-      </div>
-      <div class="footer-sub">
-        © 2026
-      </div>
+      <div class="footer-main">Developed by Informatics Consultancy Firm-SL</div>
+      <div class="footer-sub">© 2026</div>
     </div>
   </footer>
 
@@ -489,33 +137,25 @@
     <iframe id="registrationIframe" src="registration.html" title="Registration Form"></iframe>
   </div>
 
-  <!-- Font Awesome for iframe header icons -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
   <script>
     (function() {
-      // Get card elements
       const manualCard = document.querySelector('.card-manual');
       const scanCard = document.querySelector('.card-scan');
       const recordsCard = document.querySelector('.card-records');
       const iframePanel = document.getElementById('iframePanel');
       const registrationIframe = document.getElementById('registrationIframe');
-      
-      // Function to open registration.html in iframe
+
       function openRegistrationIframe() {
-        // Reload the iframe to ensure fresh content
         registrationIframe.src = "registration.html";
-        
-        // Handle iframe load error - provide fallback if registration.html doesn't exist
         registrationIframe.onerror = function() {
           registrationIframe.srcdoc = getFallbackRegistrationForm();
         };
-        
-        // Check if iframe loaded successfully after timeout
         setTimeout(() => {
           try {
-            if (registrationIframe.contentWindow && registrationIframe.contentDocument && 
-                registrationIframe.contentDocument.body && 
+            if (registrationIframe.contentWindow && registrationIframe.contentDocument &&
+                registrationIframe.contentDocument.body &&
                 registrationIframe.contentDocument.body.innerHTML.trim() === "") {
               registrationIframe.srcdoc = getFallbackRegistrationForm();
             }
@@ -523,18 +163,15 @@
             registrationIframe.srcdoc = getFallbackRegistrationForm();
           }
         }, 500);
-        
         iframePanel.style.display = 'flex';
       }
-      
-      // Close iframe panel
+
       function closeIframePanel() {
         iframePanel.style.display = 'none';
         registrationIframe.src = "registration.html";
         registrationIframe.onerror = null;
       }
-      
-      // Fallback registration form if registration.html is not found
+
       function getFallbackRegistrationForm() {
         return `<!DOCTYPE html>
         <html>
@@ -545,12 +182,12 @@
           <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
           <style>
             *{margin:0;padding:0;box-sizing:border-box;}
-            body{font-family:'Segoe UI', Arial, sans-serif;background:linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);padding:20px;margin:0;min-height:100vh;}
+            body{font-family:'Segoe UI',Arial,sans-serif;background:linear-gradient(145deg,#fff7ed 0%,#ffffff 100%);padding:20px;margin:0;min-height:100vh;}
             .form-card{background:white;border-radius:32px;padding:24px 22px;box-shadow:0 15px 35px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}
             h2{color:#ea580c;font-size:24px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
             .sub{color:#4b5563;font-size:13px;margin-bottom:22px;border-left:3px solid #f97316;padding-left:12px;}
-            input, select{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:14px;background:#f8fafc;}
-            input:focus, select:focus{outline:none;border-color:#f97316;background:white;}
+            input,select{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:14px;background:#f8fafc;}
+            input:focus,select:focus{outline:none;border-color:#f97316;background:white;}
             button{background:#ea580c;color:white;border:none;padding:14px;width:100%;border-radius:50px;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px;transition:0.2s;}
             button:active{transform:scale(0.97);}
             .success-badge{background:#e8f5e9;color:#15803d;padding:12px;border-radius:20px;margin-top:20px;font-size:12px;text-align:center;}
@@ -561,36 +198,15 @@
           <div class="form-card">
             <h2><i class="fas fa-pen-alt"></i> Manual Entry</h2>
             <div class="sub">Household Registration Form - ITN Campaign 2026</div>
-            <select id="region">
-              <option value="">Select Region</option>
-              <option>Western</option>
-              <option>Northern</option>
-              <option>Southern</option>
-              <option>Eastern</option>
-            </select>
-            <select id="district">
-              <option value="">Select District</option>
-              <option>Western Area Urban</option>
-              <option>Western Area Rural</option>
-              <option>Bo</option>
-              <option>Kenema</option>
-              <option>Makeni</option>
-              <option>Kono</option>
-            </select>
-            <select id="chiefdom">
-              <option value="">Select Chiefdom</option>
-              <option>Chiefdom A</option>
-              <option>Chiefdom B</option>
-              <option>Chiefdom C</option>
-            </select>
+            <select id="region"><option value="">Select Region</option><option>Western</option><option>Northern</option><option>Southern</option><option>Eastern</option></select>
+            <select id="district"><option value="">Select District</option><option>Western Area Urban</option><option>Western Area Rural</option><option>Bo</option><option>Kenema</option><option>Makeni</option><option>Kono</option></select>
+            <select id="chiefdom"><option value="">Select Chiefdom</option><option>Chiefdom A</option><option>Chiefdom B</option><option>Chiefdom C</option></select>
             <input type="text" id="phu" placeholder="PHU / Health Facility">
             <input type="text" id="community" placeholder="Community / Village">
             <input type="text" id="householdHead" placeholder="Household Head Name">
             <input type="number" id="members" placeholder="Number of Household Members">
             <button onclick="submitForm()"><i class="fas fa-save"></i> Submit Registration</button>
-            <div id="successMsg" class="success-badge" style="display: none;">
-              <i class="fas fa-check-circle"></i> Registration saved successfully!
-            </div>
+            <div id="successMsg" class="success-badge" style="display:none;"><i class="fas fa-check-circle"></i> Registration saved successfully!</div>
             <div class="info-badge"><i class="fas fa-info-circle"></i> ITN distribution campaign 2026 active</div>
           </div>
           <script>
@@ -602,21 +218,10 @@
               const community = document.getElementById('community').value.trim();
               const headName = document.getElementById('householdHead').value.trim();
               const members = document.getElementById('members').value;
-              
-              if (!region || !district || !chiefdom || !phu || !community || !headName || !members) {
-                alert('❌ Please fill in all required fields.');
-                return;
-              }
-              
-              if (parseInt(members) <= 0) {
-                alert('❌ Number of household members must be greater than 0.');
-                return;
-              }
-              
+              if (!region || !district || !chiefdom || !phu || !community || !headName || !members) { alert('❌ Please fill in all required fields.'); return; }
+              if (parseInt(members) <= 0) { alert('❌ Number of household members must be greater than 0.'); return; }
               const successMsg = document.getElementById('successMsg');
               successMsg.style.display = 'block';
-              
-              // Clear form fields after successful submission
               document.getElementById('region').value = '';
               document.getElementById('district').value = '';
               document.getElementById('chiefdom').value = '';
@@ -624,101 +229,30 @@
               document.getElementById('community').value = '';
               document.getElementById('householdHead').value = '';
               document.getElementById('members').value = '';
-              
-              setTimeout(() => {
-                successMsg.style.display = 'none';
-              }, 3000);
+              setTimeout(() => { successMsg.style.display = 'none'; }, 3000);
             }
           <\/script>
         </body>
         </html>`;
       }
-      
-      // Manual Entry Card - Opens iframe with registration.html
+
       if (manualCard) {
-        const handleManual = () => {
-          openRegistrationIframe();
-        };
-        manualCard.addEventListener('click', handleManual);
-        manualCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleManual();
-          }
-        });
+        manualCard.addEventListener('click', openRegistrationIframe);
+        manualCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openRegistrationIframe(); } });
       }
-
-      // Scan QR Card - Shows alert
       if (scanCard) {
-        const handleScan = () => {
-          alert('📷 SCAN QR CODE\n\nCamera will open. Scanning QR auto-fills all fields instantly.');
-        };
+        const handleScan = () => alert('📷 SCAN QR CODE\n\nCamera will open. Scanning QR auto-fills all fields instantly.');
         scanCard.addEventListener('click', handleScan);
-        scanCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleScan();
-          }
-        });
+        scanCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScan(); } });
+      }
+      if (recordsCard) {
+        const handleRecords = () => alert('📋 RECORDS\n\nView & manage submitted registrations. Filter by hierarchy or date.');
+        recordsCard.addEventListener('click', handleRecords);
+        recordsCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleRecords(); } });
       }
 
-      // RECORDS Card - Shows alert
-      if (recordsCard) {
-        const handleRecords = () => {
-          alert('📋 RECORDS\n\nView & manage submitted registrations. Filter by hierarchy or date.');
-        };
-        recordsCard.addEventListener('click', handleRecords);
-        recordsCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleRecords();
-          }
-        });
-      }
-      
-      // Close iframe panel when clicking on overlay
-      iframePanel.addEventListener('click', function(e) {
-        if (e.target === iframePanel) {
-          closeIframePanel();
-        }
-      });
-      
-      // Make close function globally accessible
+      iframePanel.addEventListener('click', e => { if (e.target === iframePanel) closeIframePanel(); });
       window.closeIframePanel = closeIframePanel;
-      
-      // Verification: ensure no forbidden text appears in the UI
-      const forbiddenPhrases = [
-        "Complete each level",
-        "Tap to open form",
-        "Full hierarchy + recipient details",
-        "Launch scanner",
-        "Search · Export · History",
-        "Browse entries",
-        "REGISTRATION",
-        "HUB"
-      ];
-      
-      let hasForbidden = false;
-      forbiddenPhrases.forEach(phrase => {
-        if (document.body.innerText.includes(phrase)) {
-          if (phrase === "REGISTRATION") {
-            // REGISTRATION text removed from header, but may appear elsewhere - fine
-            if (document.querySelector('.app-header')) {
-              console.warn(`⚠️ Header REGISTRATION found`);
-              hasForbidden = true;
-            }
-          } else if (document.body.innerText.includes(phrase)) {
-            console.warn(`⚠️ Forbidden phrase found: "${phrase}"`);
-            hasForbidden = true;
-          }
-        }
-      });
-      
-      if (!hasForbidden) {
-        console.log('✅ SUCCESS: Header removed. Info banner added in body with Household Registration. Three cards display in a single row.');
-      }
-      
-      console.log('📱 Phone view active | Header completely removed | Info banner now in body');
     })();
   </script>
 </body>
