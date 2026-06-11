@@ -294,12 +294,43 @@ body {
     height: 32px;
     border-radius: 50%;
     cursor: pointer;
+    transition: 0.2s;
+}
+.iframe-header button:hover {
+    background: rgba(255,255,255,0.4);
 }
 iframe {
     flex: 1;
     border: none;
     width: 100%;
     background: white;
+}
+
+.logout-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 2100;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: 0.2s;
+}
+.logout-btn:hover {
+    transform: scale(1.05);
+    background: #c0392b;
+}
+.logout-btn:active {
+    transform: scale(0.98);
 }
 </style>
 </head>
@@ -369,6 +400,7 @@ iframe {
 let isEnglish = true;
 let html5QrCode;
 let userCredentials = [];
+let currentUser = null;
 
 // User to page mapping based on CSV data
 const USER_PAGE_MAP = {
@@ -451,6 +483,47 @@ function getDashboardPageForUser(username) {
     return USER_PAGE_MAP[username] || "mscreen.html";
 }
 
+function getUserDisplayName(username) {
+    switch(username) {
+        case "Admin": return "Admin";
+        case "HHR2026": return "HHR (Household Registration)";
+        case "HHD2026": return "HHD (Household Distribution)";
+        case "NATSUP2026": return "NATSUP (National Supervision)";
+        case "CHISUP2026": return "CHISUP (Attendance & Device Tracking)";
+        case "PHUSTAFF2026": return "PHU Staff (Stock Management)";
+        case "PARTNERS2026": return "Partners (Dashboard & Analytics)";
+        default: return username;
+    }
+}
+
+function addLogoutButton() {
+    // Remove existing logout button if any
+    const existingBtn = document.getElementById("globalLogoutBtn");
+    if (existingBtn) existingBtn.remove();
+    
+    // Create logout button
+    const logoutBtn = document.createElement("button");
+    logoutBtn.id = "globalLogoutBtn";
+    logoutBtn.className = "logout-btn";
+    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
+    logoutBtn.onclick = () => {
+        if (confirm(isEnglish ? "Are you sure you want to logout?" : "Êtes-vous sûr de vouloir vous déconnecter?")) {
+            // Stop scanner if active
+            if (html5QrCode && html5QrCode.isScanning) {
+                html5QrCode.stop().catch(() => {});
+            }
+            // Reload the page to show login screen
+            location.reload();
+        }
+    };
+    document.body.appendChild(logoutBtn);
+}
+
+function removeLogoutButton() {
+    const existingBtn = document.getElementById("globalLogoutBtn");
+    if (existingBtn) existingBtn.remove();
+}
+
 function loadDashboardInIframe(username) {
     const container = document.getElementById("appContainer");
     const iframePanel = document.getElementById("iframePanel");
@@ -459,6 +532,8 @@ function loadDashboardInIframe(username) {
     
     if (!container || !iframePanel) return;
     
+    currentUser = username;
+    
     // Show loading indicator
     const loadingDiv = document.createElement("div");
     loadingDiv.className = "loading-overlay";
@@ -466,6 +541,7 @@ function loadDashboardInIframe(username) {
     document.body.appendChild(loadingDiv);
     
     const targetPage = getDashboardPageForUser(username);
+    const displayName = getUserDisplayName(username);
     
     // Set iframe source
     dashboardIframe.src = targetPage;
@@ -475,6 +551,7 @@ function loadDashboardInIframe(username) {
         if (loadingDiv) loadingDiv.remove();
         alert(`Dashboard page "${targetPage}" not found. Please ensure the file exists.`);
         iframePanel.style.display = "none";
+        removeLogoutButton();
     };
     
     // Handle successful load
@@ -485,18 +562,15 @@ function loadDashboardInIframe(username) {
     };
     
     // Update header text based on user role
-    let headerText = "";
-    switch(username) {
-        case "Admin": headerText = "Admin Dashboard"; break;
-        case "HHR2026": headerText = "Household Registration (HHR)"; break;
-        case "HHD2026": headerText = "Household Distribution (HHD)"; break;
-        case "NATSUP2026": headerText = "National Supervision (NATSUP)"; break;
-        case "CHISUP2026": headerText = "Attendance & Device Tracking (CHISUP)"; break;
-        case "PHUSTAFF2026": headerText = "Stock Management (PHU Staff)"; break;
-        case "PARTNERS2026": headerText = "Dashboard & Analytics (Partners)"; break;
-        default: headerText = "Dashboard";
-    }
-    if (iframeHeaderSpan) iframeHeaderSpan.innerHTML = `<i class="fas fa-chalkboard-user"></i> ${headerText}`;
+    let headerIcon = '<i class="fas fa-chalkboard-user"></i>';
+    if (username === "HHR2026") headerIcon = '<i class="fas fa-home"></i>';
+    else if (username === "HHD2026") headerIcon = '<i class="fas fa-hand-holding-heart"></i>';
+    else if (username === "NATSUP2026") headerIcon = '<i class="fas fa-chart-simple"></i>';
+    else if (username === "CHISUP2026") headerIcon = '<i class="fas fa-calendar-check"></i>';
+    else if (username === "PHUSTAFF2026") headerIcon = '<i class="fas fa-box"></i>';
+    else if (username === "PARTNERS2026") headerIcon = '<i class="fas fa-chart-line"></i>';
+    
+    if (iframeHeaderSpan) iframeHeaderSpan.innerHTML = `${headerIcon} ${displayName} Dashboard`;
     
     // Hide loading after timeout
     setTimeout(() => {
@@ -504,6 +578,9 @@ function loadDashboardInIframe(username) {
             loadingDiv.remove();
         }
     }, 5000);
+    
+    // Add logout button
+    addLogoutButton();
     
     // Show iframe panel
     iframePanel.style.display = "flex";
@@ -514,6 +591,8 @@ function closeIframePanel() {
     const dashboardIframe = document.getElementById("dashboardIframe");
     if (iframePanel) iframePanel.style.display = "none";
     if (dashboardIframe) dashboardIframe.src = "about:blank";
+    removeLogoutButton();
+    currentUser = null;
 }
 
 async function handleLogin() {
@@ -661,6 +740,16 @@ async function init() {
         const newScanBtn = scanButton.cloneNode(true);
         scanButton.parentNode.replaceChild(newScanBtn, scanButton);
         newScanBtn.onclick = startScanner;
+    }
+    
+    // Close iframe panel when clicking on overlay
+    const iframePanel = document.getElementById("iframePanel");
+    if (iframePanel) {
+        iframePanel.addEventListener("click", function(e) {
+            if (e.target === iframePanel) {
+                closeIframePanel();
+            }
+        });
     }
 }
 
