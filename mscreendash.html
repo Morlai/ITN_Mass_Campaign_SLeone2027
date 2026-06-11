@@ -527,19 +527,6 @@
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
   
-  // ---------- DIRECT CARD ACTION HANDLER (NO LOGIN REQUIRED) ----------
-  function handleCardAction(actionType) {
-    if (actionType === "DASHBOARD") {
-      alert("📊 DASHBOARD MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nReal-time ITN Campaign Analytics:\n\n✓ Coverage by district & chiefdom\n✓ Performance metrics & KPIs\n✓ Household registration trends\n✓ Distribution progress tracking\n✓ Stock utilization rates\n✓ Supervisor performance dashboards\n✓ Real-time data synchronization\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Export reports & drill down by region\n🔄 Auto-refresh every 30 seconds");
-    } else if (actionType === "RECONCILIATION") {
-      alert("🔄 RECONCILIATION MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nData Verification & Audit Tools:\n\n✓ Match distribution vs registration records\n✓ Identify discrepancies in real-time\n✓ Generate reconciliation reports\n✓ Verify household counts vs nets distributed\n✓ Flag anomalies for investigation\n✓ Complete audit trail tracking\n✓ Batch validation processing\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Ensure data integrity across all levels\n✓ Export discrepancy reports");
-    } else if (actionType === "WASTE_MANAGEMENT") {
-      alert("♻️ WASTE MANAGEMENT MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDamaged & Expired Net Tracking:\n\n✓ Record damaged nets by location\n✓ Track disposal & recycling processes\n✓ Monitor waste collection points\n✓ Environmental compliance reporting\n✓ Generate waste reduction metrics\n✓ Schedule collection activities\n✓ Inventory of expired stock\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Support sustainable campaign practices\n✓ Real-time waste tracking dashboard");
-    } else {
-      alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
-    }
-  }
-  
   // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
     img.onerror = function() {
