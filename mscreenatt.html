@@ -515,19 +515,6 @@
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
   
-  // ---------- CARD ACTION HANDLER (Only ATTENDANCE and DEVICE TRACKING) ----------
-  function handleCardAction(actionType) {
-    if (actionType === "ATTENDANCE") {
-      // Detailed attendance tracking alert
-      alert("📋 ATTENDANCE MODULE\n\nStaff and Field Worker Attendance Tracking\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✓ Daily check-in / check-out\n✓ Training attendance logs\n✓ Supervision visit tracking\n✓ Real-time attendance dashboard\n✓ Generate attendance reports\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Features:\n• Biometric verification ready\n• GPS location tagging\n• Offline mode support\n• Supervisor approval workflow");
-    } else if (actionType === "DEVICE_TRACKING") {
-      // Detailed device tracking alert
-      alert("📍 DEVICE TRACKING MODULE\n\nField Device & Asset Monitoring\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✓ Real-time GPS location tracking\n✓ Device status monitoring (Active/Offline)\n✓ Field movement history\n✓ Battery level & health checks\n✓ Geofence alerts\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Features:\n• Live map view\n• Device assignment tracking\n• Movement pattern analysis\n• Lost/stolen device reporting");
-    } else {
-      alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
-    }
-  }
-  
   // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
     img.onerror = function() {
