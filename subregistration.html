@@ -121,12 +121,12 @@
     
     /* Records Modal Styles */
     .records-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); display: none; z-index: 2100; overflow-y: auto; }
-    .records-container { background: white; margin: 20px; border-radius: 28px; max-width: 500px; margin: 20px auto; overflow: hidden; animation: slideUp 0.3s ease; }
+    .records-container { background: white; margin: 20px; border-radius: 28px; max-width: 95%; margin: 20px auto; overflow: hidden; animation: slideUp 0.3s ease; }
     .records-header { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); color: white; padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; }
     .records-header h3 { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .records-header button { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
-    .records-content { padding: 16px; max-height: 70vh; overflow-y: auto; }
-    .records-table { width: 100%; border-collapse: collapse; font-size: 11px; }
+    .records-content { padding: 16px; max-height: 70vh; overflow-x: auto; overflow-y: auto; }
+    .records-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 800px; }
     .records-table th, .records-table td { border: 1px solid #e2e8f0; padding: 8px 6px; text-align: left; vertical-align: top; }
     .records-table th { background: #f1f5f9; font-weight: 700; position: sticky; top: 0; font-size: 10px; }
     .records-table td { font-size: 10px; word-break: break-word; }
@@ -260,7 +260,7 @@
 
   <script>
     (function() {
-      // -------------------- DATA STORAGE - COMPLETELY EMPTY INITIAL STATE --------------------
+      // -------------------- DATA STORAGE --------------------
       let registrations = [];
       
       function loadData() {
@@ -284,6 +284,7 @@
         localStorage.setItem('itn_registrations', JSON.stringify(registrations));
       }
       
+      // Add registration from MANUAL ENTRY or SCAN QR
       function addRegistration(data) {
         const newRecord = {
           id: Date.now(),
@@ -291,15 +292,14 @@
           region: data.region,
           district: data.district,
           chiefdom: data.chiefdom,
-          phu: data.phu,
           community: data.community,
-          distributionPoint: data.distributionPoint,
-          householdHeadName: data.householdHeadName,
-          householdId: data.householdId,
-          totalMembers: parseInt(data.totalMembers) || 0,
-          underFives: parseInt(data.underFives) || 0,
+          nearestHealthFacility: data.nearestHealthFacility || data.phu,
+          name: data.name || data.householdHeadName || data.headName,
+          mobile: data.mobile || data.mobileNumber,
+          underFivesChildren: parseInt(data.underFivesChildren) || parseInt(data.underFives) || 0,
           pregnantWomen: parseInt(data.pregnantWomen) || 0,
-          mobileNumber: data.mobileNumber,
+          totalMembers: parseInt(data.totalMembers) || 0,
+          gpsCoordinates: data.gpsCoordinates || data.gps || "N/A",
           token: "ITN-" + new Date().getFullYear() + "-" + String(registrations.length + 1).padStart(3, '0'),
           itnReceived: data.itnReceived || Math.ceil((parseInt(data.totalMembers) || 2) / 2),
           timestamp: new Date().toISOString()
@@ -309,6 +309,7 @@
         return newRecord;
       }
       
+      // Display records with the required columns
       function displayRecords() {
         const content = document.getElementById('recordsContent');
         const recordCountSpan = document.getElementById('recordCount');
@@ -323,15 +324,16 @@
         
         if (recordCountSpan) recordCountSpan.textContent = registrations.length;
         
+        // Required columns as specified
         const columns = [
-          'Username', 'Region', 'District', 'Chiefdom', 'PHU', 
-          'Community', 'Distribution Point', 'Household Head', 'Household ID', 
-          'Total Members', 'Under-Fives', 'Pregnant Women', 'Mobile', 'Token', 'ITN Received'
+          'Username', 'Region', 'District', 'Chiefdom', 'Community', 
+          'Nearest Health Facility', 'Name', 'Mobile', 'Under-Fives Children', 
+          'Pregnant Women', 'Total Members', 'GPS Coordinates', 'Token', 'ITN Received'
         ];
         
         let tableHTML = `<table class="records-table"><thead><tr>`;
         columns.forEach(col => { tableHTML += `<th>${col}</th>`; });
-        tableHTML += `</tr></thead><tbody>`;
+        tableHTML += `<tr></thead><tbody>`;
         
         registrations.forEach(rec => {
           tableHTML += `<tr>
@@ -339,21 +341,20 @@
             <td>${escapeHtml(rec.region || '')}</td>
             <td>${escapeHtml(rec.district || '')}</td>
             <td>${escapeHtml(rec.chiefdom || '')}</td>
-            <td>${escapeHtml(rec.phu || '')}</td>
             <td>${escapeHtml(rec.community || '')}</td>
-            <td>${escapeHtml(rec.distributionPoint || '')}</td>
-            <td>${escapeHtml(rec.householdHeadName || '')}</td>
-            <td>${escapeHtml(rec.householdId || '')}</td>
-            <td>${rec.totalMembers || 0}</td>
-            <td>${rec.underFives || 0}</td>
+            <td>${escapeHtml(rec.nearestHealthFacility || '')}</td>
+            <td>${escapeHtml(rec.name || '')}</td>
+            <td>${escapeHtml(rec.mobile || '')}</td>
+            <td>${rec.underFivesChildren || 0}</td>
             <td>${rec.pregnantWomen || 0}</td>
-            <td>${escapeHtml(rec.mobileNumber || '')}</td>
+            <td>${rec.totalMembers || 0}</td>
+            <td style="font-size:9px;">${escapeHtml(rec.gpsCoordinates || 'N/A')}</td>
             <td>${escapeHtml(rec.token || '')}</td>
             <td>${rec.itnReceived || 0}</td>
           </tr>`;
         });
         
-        tableHTML += `</tbody><table>`;
+        tableHTML += `</tbody></table>`;
         content.innerHTML = tableHTML;
       }
       
@@ -386,17 +387,14 @@
       const iframePanel = document.getElementById('iframePanel');
       const registrationIframe = document.getElementById('registrationIframe');
       
-      // Open registration.html directly - no srcdoc, just load the external file
+      // Open registration.html directly
       function openRegistrationIframe() {
-        // Set iframe src to registration.html
         registrationIframe.src = "registration.html";
         
-        // Handle iframe load error - provide fallback if registration.html doesn't exist
         registrationIframe.onerror = function() {
           registrationIframe.srcdoc = getFallbackRegistrationForm();
         };
         
-        // Check if iframe loaded successfully after timeout
         setTimeout(() => {
           try {
             if (registrationIframe.contentWindow && registrationIframe.contentDocument && 
@@ -418,7 +416,7 @@
         registrationIframe.onerror = null;
       }
       
-      // Fallback registration form if registration.html is not found
+      // Fallback registration form that submits data with correct field names for RECORDS
       function getFallbackRegistrationForm() {
         return `<!DOCTYPE html>
         <html>
@@ -461,30 +459,28 @@
               
               <div class="row-2">
                 <div class="form-group"><label><i class="fas fa-landmark"></i> Chiefdom</label><input type="text" id="chiefdom" placeholder="Chiefdom"></div>
-                <div class="form-group"><label><i class="fas fa-hospital"></i> PHU</label><input type="text" id="phu" placeholder="Peripheral Health Unit"></div>
-              </div>
-              
-              <div class="row-2">
                 <div class="form-group"><label><i class="fas fa-home"></i> Community</label><input type="text" id="community" placeholder="Community/Village"></div>
-                <div class="form-group"><label><i class="fas fa-location-dot"></i> Distribution Point</label><input type="text" id="distributionPoint" placeholder="Distribution Point"></div>
               </div>
               
               <div class="row-2">
-                <div class="form-group"><label><i class="fas fa-user-circle"></i> Household Head</label><input type="text" id="headName" placeholder="Full name"></div>
-                <div class="form-group"><label><i class="fas fa-id-card"></i> Household ID</label><input type="text" id="householdId" placeholder="HH ID / NHIS Number"></div>
+                <div class="form-group"><label><i class="fas fa-hospital"></i> Nearest Health Facility</label><input type="text" id="healthFacility" placeholder="PHU / Hospital"></div>
+                <div class="form-group"><label><i class="fas fa-user-circle"></i> Name (Household Head)</label><input type="text" id="headName" placeholder="Full name"></div>
+              </div>
+              
+              <div class="row-2">
+                <div class="form-group"><label><i class="fas fa-phone"></i> Mobile</label><input type="tel" id="mobile" placeholder="+232XXXXXXXXX"></div>
+                <div class="form-group"><label><i class="fas fa-map-marker-alt"></i> GPS Coordinates</label><input type="text" id="gps" placeholder="e.g., 8.4844° N, 13.2344° W"></div>
+              </div>
+              
+              <div class="row-2">
+                <div class="form-group"><label><i class="fas fa-child"></i> Under-Fives Children</label><input type="number" id="underFives" min="0" value="0"></div>
+                <div class="form-group"><label><i class="fas fa-female"></i> Pregnant Women</label><input type="number" id="pregnantWomen" min="0" value="0"></div>
               </div>
               
               <div class="row-2">
                 <div class="form-group"><label><i class="fas fa-users"></i> Total Members</label><input type="number" id="totalMembers" min="1" value="1"></div>
-                <div class="form-group"><label><i class="fas fa-child"></i> Under-Fives</label><input type="number" id="underFives" min="0" value="0"></div>
+                <div class="form-group"><label><i class="fas fa-mosquito-net"></i> ITN Received</label><input type="number" id="itnReceived" min="0" value="2"></div>
               </div>
-              
-              <div class="row-2">
-                <div class="form-group"><label><i class="fas fa-female"></i> Pregnant Women</label><input type="number" id="pregnantWomen" min="0" value="0"></div>
-                <div class="form-group"><label><i class="fas fa-phone"></i> Mobile Number</label><input type="tel" id="mobile" placeholder="+232XXXXXXXXX"></div>
-              </div>
-              
-              <div class="form-group"><label><i class="fas fa-mosquito-net"></i> ITN Received</label><input type="number" id="itnReceived" min="0" value="2"></div>
               
               <button onclick="submitRegistration()"><i class="fas fa-save"></i> Submit Registration</button>
               <div id="successMsg" class="success-badge" style="display:none;"></div>
@@ -497,19 +493,18 @@
               const region = document.getElementById('region').value;
               const district = document.getElementById('district').value.trim();
               const chiefdom = document.getElementById('chiefdom').value.trim();
-              const phu = document.getElementById('phu').value.trim();
               const community = document.getElementById('community').value.trim();
-              const distributionPoint = document.getElementById('distributionPoint').value.trim();
+              const healthFacility = document.getElementById('healthFacility').value.trim();
               const headName = document.getElementById('headName').value.trim();
-              const householdId = document.getElementById('householdId').value.trim();
-              const totalMembers = parseInt(document.getElementById('totalMembers').value);
+              const mobile = document.getElementById('mobile').value.trim();
+              const gps = document.getElementById('gps').value.trim();
               const underFives = parseInt(document.getElementById('underFives').value) || 0;
               const pregnantWomen = parseInt(document.getElementById('pregnantWomen').value) || 0;
-              const mobile = document.getElementById('mobile').value.trim();
+              const totalMembers = parseInt(document.getElementById('totalMembers').value);
               const itnReceived = parseInt(document.getElementById('itnReceived').value) || 0;
               
-              if (!region || !district || !chiefdom || !phu || !community || !headName || !householdId || !totalMembers || totalMembers < 1) {
-                alert('❌ Please fill all required fields (Region, District, Chiefdom, PHU, Community, Household Head, Household ID, Total Members)');
+              if (!region || !district || !chiefdom || !community || !healthFacility || !headName || !totalMembers || totalMembers < 1) {
+                alert('❌ Please fill all required fields (Region, District, Chiefdom, Community, Health Facility, Name, Total Members)');
                 return;
               }
               
@@ -518,15 +513,14 @@
                 region: region,
                 district: district,
                 chiefdom: chiefdom,
-                phu: phu,
                 community: community,
-                distributionPoint: distributionPoint,
-                householdHeadName: headName,
-                householdId: householdId,
-                totalMembers: totalMembers,
-                underFives: underFives,
+                nearestHealthFacility: healthFacility,
+                name: headName,
+                mobile: mobile,
+                gpsCoordinates: gps || "N/A",
+                underFivesChildren: underFives,
                 pregnantWomen: pregnantWomen,
-                mobileNumber: mobile,
+                totalMembers: totalMembers,
                 itnReceived: itnReceived
               };
               
@@ -536,18 +530,18 @@
               successMsg.innerHTML = '<i class="fas fa-check-circle"></i> Registration saved successfully!';
               successMsg.style.display = 'block';
               
+              // Clear form
               document.getElementById('username').value = '';
               document.getElementById('district').value = '';
               document.getElementById('chiefdom').value = '';
-              document.getElementById('phu').value = '';
               document.getElementById('community').value = '';
-              document.getElementById('distributionPoint').value = '';
+              document.getElementById('healthFacility').value = '';
               document.getElementById('headName').value = '';
-              document.getElementById('householdId').value = '';
-              document.getElementById('totalMembers').value = '1';
+              document.getElementById('mobile').value = '';
+              document.getElementById('gps').value = '';
               document.getElementById('underFives').value = '0';
               document.getElementById('pregnantWomen').value = '0';
-              document.getElementById('mobile').value = '';
+              document.getElementById('totalMembers').value = '1';
               document.getElementById('itnReceived').value = '2';
               document.getElementById('region').value = '';
               
@@ -561,9 +555,44 @@
       window.addEventListener('message', function(event) {
         if (event.data && event.data.type === 'SAVE_REGISTRATION') {
           addRegistration(event.data.data);
-          alert('✅ Registration saved successfully! View it in View Records.');
+          alert('✅ Registration saved successfully! View it in RECORDS.');
         }
       });
+      
+      // SCAN QR - Simulate QR scan and add registration
+      function handleScanQR() {
+        // Simulated QR scan data
+        const qrData = prompt("📷 SCAN QR CODE\n\nPosition the QR code in the camera viewfinder.\n\nFor demo, enter registration data in JSON format or click Cancel to use sample:", '{"username":"qr_user","region":"Western","district":"Freetown","chiefdom":"Central","community":"Brookfields","nearestHealthFacility":"Community Health Center","name":"John Kamara","mobile":"+23276543210","gpsCoordinates":"8.4871° N, 13.2353° W","underFivesChildren":2,"pregnantWomen":1,"totalMembers":5,"itnReceived":3}');
+        
+        if (qrData) {
+          try {
+            const parsedData = JSON.parse(qrData);
+            addRegistration(parsedData);
+            alert('✅ QR registration saved successfully! View it in RECORDS.');
+          } catch(e) {
+            alert('❌ Invalid QR data format. Please enter valid JSON.');
+          }
+        } else if (qrData === "") {
+          // Default sample if user just presses OK with empty
+          const sampleData = {
+            username: "qr_scan_user",
+            region: "Western",
+            district: "Western Area Urban",
+            chiefdom: "Central",
+            community: "Freetown Central",
+            nearestHealthFacility: "Connaught Hospital",
+            name: "Mohamed Bangura",
+            mobile: "+23276889900",
+            gpsCoordinates: "8.4844° N, 13.2344° W",
+            underFivesChildren: 3,
+            pregnantWomen: 2,
+            totalMembers: 7,
+            itnReceived: 4
+          };
+          addRegistration(sampleData);
+          alert('✅ Sample QR registration saved! View it in RECORDS.');
+        }
+      }
       
       function showTargetInfo() {
         const totalRegistered = registrations.length;
@@ -595,9 +624,8 @@
       }
       
       if (scanCard) {
-        const handleScan = () => alert('📷 SCAN QR CODE\n\nCamera will open. Scanning QR auto-fills all fields instantly.\n\nFeature coming soon - QR scanning integration.');
-        scanCard.addEventListener('click', handleScan);
-        scanCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScan(); } });
+        scanCard.addEventListener('click', handleScanQR);
+        scanCard.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); handleScanQR(); } });
       }
       
       if (recordsCard) {
@@ -616,8 +644,8 @@
       
       loadData();
       
-      console.log('✅ MANUAL ENTRY card opens registration.html file directly');
-      console.log('📋 If registration.html is not found, fallback form will be used');
+      console.log('✅ RECORDS now displays columns: Username, Region, District, Chiefdom, Community, Nearest Health Facility, Name, Mobile, Under-Fives Children, Pregnant Women, Total Members, GPS Coordinates, Token, ITN Received');
+      console.log('✅ MANUAL ENTRY and SCAN QR both save data to RECORDS');
     })();
   </script>
 </body>
