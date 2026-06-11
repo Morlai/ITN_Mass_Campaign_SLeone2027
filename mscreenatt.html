@@ -1,1 +1,542 @@
+<!DOCTYPE html>    
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+<title>ICF-SL | ITN Campaign - Attendance & Device Tracking</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
 
+  body {
+    background: #eef2f7;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Inter', sans-serif;
+    padding: 0;
+  }
+
+  .phone {
+    width: 100%;
+    max-width: 100%;
+    height: 100vh;
+    max-height: 100vh;
+    background: #ffffff;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  @media (min-width: 500px) {
+    body {
+      padding: 16px;
+      background: #eef2f7;
+    }
+    .phone {
+      max-width: 400px;
+      height: 90vh;
+      max-height: 800px;
+      border-radius: 40px;
+      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.35);
+    }
+  }
+
+  @media (min-width: 768px) {
+    .phone {
+      max-width: 420px;
+      height: 85vh;
+      max-height: 750px;
+    }
+  }
+
+  .scroll-content {
+    flex: 1;
+    overflow-y: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .header-section {
+    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
+    color: white;
+    text-align: center;
+    padding: 12px 10px 14px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+  }
+  .logo-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .logo-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    background: white;
+    border-radius: 12px;
+    padding: 5px;
+  }
+  .header-title {
+    text-align: left;
+  }
+  .header-title h2 {
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+  .header-title p {
+    font-size: 8px;
+    opacity: 0.9;
+    margin-top: 2px;
+    line-height: 1.2;
+  }
+  .campaign-badge {
+    background: #ffcd3c;
+    color: #1e3a8a;
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 8px;
+    font-weight: 800;
+    display: inline-block;
+    margin-top: 8px;
+    letter-spacing: 0.3px;
+    line-height: 1.3;
+  }
+  .survey-text {
+    font-size: 7px;
+    margin-top: 6px;
+    opacity: 0.85;
+    font-weight: 500;
+  }
+
+  .partner-section {
+    background: transparent;
+    padding: 10px 14px 8px 14px;
+    border-bottom: 1px solid #eef2f8;
+  }
+  .partner-heading {
+    font-size: 11px;
+    font-weight: 800;
+    color: #D4AF37;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .partner-heading i {
+    font-size: 11px;
+  }
+  .partners-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    row-gap: 10px;
+  }
+  .partner-item {
+    text-align: center;
+    padding: 6px 4px;
+  }
+  .partner-item img {
+    width: 100%;
+    max-width: 50px;
+    height: 46px;
+    object-fit: contain;
+    margin-bottom: 6px;
+  }
+  .partner-item span {
+    font-size: 8px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    display: block;
+    line-height: 1.3;
+  }
+
+  .carousel-container {
+    padding: 10px 14px 0px;
+  }
+  .carousel {
+    position: relative;
+    overflow: hidden;
+    border-radius: 24px;
+    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+    background: #f0f2f5;
+  }
+  .slides {
+    display: flex;
+    transition: transform 0.4s ease;
+  }
+  .slide {
+    min-width: 100%;
+    height: 180px;
+  }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    background: #cbd5e1;
+  }
+  .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.55);
+    backdrop-filter: blur(3px);
+    color: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    transition: 0.2s;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .prev { left: 8px; }
+  .next { right: 8px; }
+  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
+  
+  .dots-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 0 8px;
+  }
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #cbd5e1;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+    padding: 0;
+  }
+  .dot.active {
+    width: 22px;
+    border-radius: 10px;
+    background: #0b5ed7;
+  }
+
+  .actions {
+    padding: 20px 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+  .card {
+    border-radius: 26px;
+    padding: 14px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  .card:active {
+    transform: scale(0.97);
+  }
+  .card-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .card-main-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-main-row i {
+    font-size: 18px;
+    width: 22px;
+  }
+  .card-main-text {
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.2px;
+  }
+  .card-abbr {
+    font-size: 9px;
+    font-weight: 500;
+    opacity: 0.85;
+    margin-top: 3px;
+    margin-left: 32px;
+    letter-spacing: 0.3px;
+  }
+  .card-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-right i {
+    font-size: 18px;
+  }
+  .attendance { background: linear-gradient(105deg, #059669, #10b981); }
+  .device-tracking { background: linear-gradient(105deg, #dc2626, #ef4444); }
+
+  .footer {
+    text-align: center;
+    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
+    color: white;
+    font-size: 9px;
+    padding: 10px 8px;
+    font-weight: 500;
+    border-top-left-radius: 16px;
+    border-top-right-radius: 16px;
+    line-height: 1.4;
+  }
+  .footer-line1 {
+    font-size: 8px;
+    opacity: 0.9;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+  }
+  .footer-line2 {
+    font-weight: 600;
+    font-size: 9px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .copyright-symbol {
+    font-size: 9px;
+  }
+  
+  img {
+    background-color: transparent;
+  }
+</style>
+</head>
+<body>
+
+<div class="phone">
+
+  <div class="scroll-content">
+    <div class="header-section">
+      <div class="logo-area">
+        <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" class="logo-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%230b5ed7\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF-SL%3C/text%3E%3C/svg%3E';">
+        <div class="header-title">
+          <h2>Informatics Consultancy Firm-SL (ICF-SL)</h2>
+          <p>Driving Data-Driven Solutions for Health and Development</p>
+        </div>
+      </div>
+      <div class="campaign-badge">
+        <i class="fas fa-bed" style="margin-right: 3px;"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
+      </div>
+      <div class="survey-text">
+        <i class="fas fa-clipboard-list"></i> Insecticide-Treated Nets Distribution Survey - Sierra Leone
+      </div>
+    </div>
+
+    <div class="partner-section">
+      <div class="partner-heading">
+        <i class="fas fa-handshake"></i> 
+        <span>IMPLEMENTING PARTNERS</span>
+      </div>
+      <div class="partners-container">
+        <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
+        <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
+        <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
+        <div class="partner-item"><img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
+        <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
+        <div class="partner-item"><img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div>
+      </div>
+    </div>
+
+    <div class="carousel-container">
+      <div class="carousel">
+        <div class="slides" id="slides">
+          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
+          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
+          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
+        </div>
+        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
+        <button class="btn next" onclick="moveSlide(1)">❯</button>
+      </div>
+      <div class="dots-container" id="dotsContainer"></div>
+    </div>
+
+    <div class="actions">
+      <!-- ATTENDANCE Card Only -->
+      <div class="card attendance" onclick="handleCardAction('ATTENDANCE')">
+        <div class="card-left">
+          <div class="card-main-row"><i class="fas fa-calendar-check"></i><span class="card-main-text">ATTENDANCE</span></div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right"><i class="fas fa-arrow-right"></i><i class="fas fa-user-check"></i></div>
+      </div>
+      
+      <!-- DEVICE TRACKING Card Only -->
+      <div class="card device-tracking" onclick="handleCardAction('DEVICE_TRACKING')">
+        <div class="card-left">
+          <div class="card-main-row"><i class="fas fa-mobile-alt"></i><span class="card-main-text">DEVICE TRACKING</span></div>
+          <div class="card-abbr"></div>
+        </div>
+        <div class="card-right"><i class="fas fa-arrow-right"></i><i class="fas fa-map-marker-alt"></i></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-line1">Developed by</div>
+    <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
+  </div>
+</div>
+
+<script>
+  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP ----------
+  let currentIndex = 0;
+  const slidesContainer = document.getElementById('slides');
+  const slides = document.querySelectorAll('.slide');
+  const totalSlides = slides.length;
+  const dotsContainer = document.getElementById('dotsContainer');
+  let autoInterval;
+  
+  function setupInfiniteLoop() {
+    const firstClone = slides[0].cloneNode(true);
+    const lastClone = slides[totalSlides - 1].cloneNode(true);
+    slidesContainer.appendChild(firstClone);
+    slidesContainer.insertBefore(lastClone, slides[0]);
+    slidesContainer.style.transform = `translateX(-${1 * 100}%)`;
+    currentIndex = 1;
+  }
+  
+  function createDots() {
+    dotsContainer.innerHTML = '';
+    for (let i = 0; i < totalSlides; i++) {
+      const dot = document.createElement('button');
+      dot.classList.add('dot');
+      if (i === 0) dot.classList.add('active');
+      dot.addEventListener('click', () => { goToSlide(i); resetAutoSlide(); });
+      dotsContainer.appendChild(dot);
+    }
+  }
+  
+  function updateDots() {
+    let realIndex = currentIndex - 1;
+    if (realIndex < 0) realIndex = totalSlides - 1;
+    if (realIndex >= totalSlides) realIndex = 0;
+    const dots = document.querySelectorAll('.dot');
+    dots.forEach((dot, idx) => {
+      if (idx === realIndex) dot.classList.add('active');
+      else dot.classList.remove('active');
+    });
+  }
+  
+  function goToSlide(index) {
+    const targetPosition = index + 1;
+    currentIndex = targetPosition;
+    slidesContainer.style.transition = 'transform 0.4s ease';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      }
+    }, 400);
+  }
+  
+  function moveSlide(direction) {
+    let newIndex = currentIndex + direction;
+    if (newIndex < 0) newIndex = 0;
+    if (newIndex > totalSlides + 1) newIndex = totalSlides + 1;
+    currentIndex = newIndex;
+    slidesContainer.style.transition = 'transform 0.4s ease';
+    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+    updateDots();
+    setTimeout(() => {
+      if (currentIndex === 0) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = totalSlides;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      } else if (currentIndex === totalSlides + 1) {
+        slidesContainer.style.transition = 'none';
+        currentIndex = 1;
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+      }
+    }, 400);
+  }
+  
+  function startAutoSlide() {
+    if (autoInterval) clearInterval(autoInterval);
+    autoInterval = setInterval(() => moveSlide(1), 5000);
+  }
+  
+  function resetAutoSlide() { startAutoSlide(); }
+  
+  setupInfiniteLoop();
+  createDots();
+  startAutoSlide();
+  window.moveSlide = moveSlide;
+  
+  const carouselElement = document.querySelector('.carousel');
+  if (carouselElement) {
+    carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
+    carouselElement.addEventListener('mouseleave', () => startAutoSlide());
+  }
+  
+  // ---------- CARD ACTION HANDLER (Only ATTENDANCE and DEVICE TRACKING) ----------
+  function handleCardAction(actionType) {
+    if (actionType === "ATTENDANCE") {
+      // Detailed attendance tracking alert
+      alert("📋 ATTENDANCE MODULE\n\nStaff and Field Worker Attendance Tracking\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✓ Daily check-in / check-out\n✓ Training attendance logs\n✓ Supervision visit tracking\n✓ Real-time attendance dashboard\n✓ Generate attendance reports\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Features:\n• Biometric verification ready\n• GPS location tagging\n• Offline mode support\n• Supervisor approval workflow");
+    } else if (actionType === "DEVICE_TRACKING") {
+      // Detailed device tracking alert
+      alert("📍 DEVICE TRACKING MODULE\n\nField Device & Asset Monitoring\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n✓ Real-time GPS location tracking\n✓ Device status monitoring (Active/Offline)\n✓ Field movement history\n✓ Battery level & health checks\n✓ Geofence alerts\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Features:\n• Live map view\n• Device assignment tracking\n• Movement pattern analysis\n• Lost/stolen device reporting");
+    } else {
+      alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
+    }
+  }
+  
+  // Fix partner images fallback
+  document.querySelectorAll('.partner-item img').forEach(img => {
+    img.onerror = function() {
+      if (!img.dataset.fallbackSet) {
+        img.dataset.fallbackSet = 'true';
+        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';
+      }
+    };
+  });
+</script>
+</body>
+</html>
