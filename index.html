@@ -413,71 +413,6 @@ const USER_PAGE_MAP = {
     "PARTNERS2026": "mscreendash.html"
 };
 
-// Function to inject CSS into iframe to hide HHR and Manual Entry Form
-function hideCardsInIframe(iframeDoc) {
-    if (!iframeDoc) return;
-    
-    // Create style element
-    const style = iframeDoc.createElement('style');
-    style.textContent = `
-        /* Hide REGISTER card */
-        .card.register,
-        .card-register,
-        .register-card,
-        [data-card="register"],
-        #registerCard,
-        .card:has(.card-main-text:contains("REGISTER")),
-        div:has(.card-main-text:contains("REGISTER")),
-        /* Hide MANUAL ENTRY card */
-        .card-manual,
-        .manual-card,
-        .action-card.card-manual,
-        [data-card="manual"],
-        /* Hide any card with REGISTER text */
-        .card:has(span:contains("REGISTER")),
-        .card-left:has(span:contains("REGISTER")),
-        /* Hide HHR badge */
-        .card-abbr:contains("(HHR)")
-    `;
-    
-    // Also add JavaScript to hide by text content
-    const script = iframeDoc.createElement('script');
-    script.textContent = `
-        (function() {
-            function hideByText(text) {
-                var allElements = document.querySelectorAll('.card, .action-card, [class*="card"]');
-                for (var i = 0; i < allElements.length; i++) {
-                    var el = allElements[i];
-                    if (el.innerText && el.innerText.toUpperCase().includes(text.toUpperCase())) {
-                        el.style.display = 'none';
-                        el.style.visibility = 'hidden';
-                    }
-                }
-            }
-            
-            // Hide REGISTER and MANUAL ENTRY cards
-            hideByText('REGISTER');
-            hideByText('MANUAL ENTRY');
-            hideByText('MANUAL');
-            hideByText('HHR');
-            
-            // Hide by specific class names
-            var selectors = ['.register', '.card-register', '.register-card', '#registerCard', '.card-manual', '.manual-card', '.action-card.card-manual'];
-            for (var s = 0; s < selectors.length; s++) {
-                var elements = document.querySelectorAll(selectors[s]);
-                for (var e = 0; e < elements.length; e++) {
-                    elements[e].style.display = 'none';
-                }
-            }
-            
-            console.log('HHR and Manual Entry cards hidden from dashboard');
-        })();
-    `;
-    
-    iframeDoc.head.appendChild(style);
-    iframeDoc.body.appendChild(script);
-}
-
 // Load credentials from Keys.csv
 async function loadKeysFromCSV() {
     try {
@@ -551,7 +486,7 @@ function getDashboardPageForUser(username) {
 function getUserDisplayName(username) {
     switch(username) {
         case "Admin": return "Admin";
-        case "HHR2026": return "HHD (Household Distribution)";
+        case "HHR2026": return "HHR (Household Registration)";
         case "HHD2026": return "HHD (Household Distribution)";
         case "NATSUP2026": return "NATSUP (National Supervision)";
         case "CHISUP2026": return "CHISUP (Attendance & Device Tracking)";
@@ -562,18 +497,22 @@ function getUserDisplayName(username) {
 }
 
 function addLogoutButton() {
+    // Remove existing logout button if any
     const existingBtn = document.getElementById("globalLogoutBtn");
     if (existingBtn) existingBtn.remove();
     
+    // Create logout button
     const logoutBtn = document.createElement("button");
     logoutBtn.id = "globalLogoutBtn";
     logoutBtn.className = "logout-btn";
     logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
     logoutBtn.onclick = () => {
         if (confirm(isEnglish ? "Are you sure you want to logout?" : "Êtes-vous sûr de vouloir vous déconnecter?")) {
+            // Stop scanner if active
             if (html5QrCode && html5QrCode.isScanning) {
                 html5QrCode.stop().catch(() => {});
             }
+            // Reload the page to show login screen
             location.reload();
         }
     };
@@ -595,21 +534,19 @@ function loadDashboardInIframe(username) {
     
     currentUser = username;
     
+    // Show loading indicator
     const loadingDiv = document.createElement("div");
     loadingDiv.className = "loading-overlay";
     loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse fa-2x"></i><span>Loading dashboard...</span>';
     document.body.appendChild(loadingDiv);
     
     const targetPage = getDashboardPageForUser(username);
-    let displayName = getUserDisplayName(username);
+    const displayName = getUserDisplayName(username);
     
-    // For HHR users, redirect to HHD dashboard (since we're hiding HHR cards)
-    if (username === "HHR2026") {
-        displayName = "HHD (Household Distribution)";
-    }
-    
+    // Set iframe source
     dashboardIframe.src = targetPage;
     
+    // Handle iframe load error
     dashboardIframe.onerror = function() {
         if (loadingDiv) loadingDiv.remove();
         alert(`Dashboard page "${targetPage}" not found. Please ensure the file exists.`);
@@ -617,23 +554,17 @@ function loadDashboardInIframe(username) {
         removeLogoutButton();
     };
     
+    // Handle successful load
     dashboardIframe.onload = function() {
         setTimeout(() => {
             if (loadingDiv) loadingDiv.remove();
-            // Inject hide cards script into iframe
-            try {
-                const iframeDoc = dashboardIframe.contentDocument || dashboardIframe.contentWindow.document;
-                if (iframeDoc) {
-                    hideCardsInIframe(iframeDoc);
-                }
-            } catch(e) {
-                console.warn("Cannot access iframe DOM to hide cards", e);
-            }
-        }, 800);
+        }, 500);
     };
     
+    // Update header text based on user role
     let headerIcon = '<i class="fas fa-chalkboard-user"></i>';
-    if (username === "HHD2026" || username === "HHR2026") headerIcon = '<i class="fas fa-hand-holding-heart"></i>';
+    if (username === "HHR2026") headerIcon = '<i class="fas fa-home"></i>';
+    else if (username === "HHD2026") headerIcon = '<i class="fas fa-hand-holding-heart"></i>';
     else if (username === "NATSUP2026") headerIcon = '<i class="fas fa-chart-simple"></i>';
     else if (username === "CHISUP2026") headerIcon = '<i class="fas fa-calendar-check"></i>';
     else if (username === "PHUSTAFF2026") headerIcon = '<i class="fas fa-box"></i>';
@@ -641,13 +572,17 @@ function loadDashboardInIframe(username) {
     
     if (iframeHeaderSpan) iframeHeaderSpan.innerHTML = `${headerIcon} ${displayName} Dashboard`;
     
+    // Hide loading after timeout
     setTimeout(() => {
         if (loadingDiv && loadingDiv.parentNode) {
             loadingDiv.remove();
         }
     }, 5000);
     
+    // Add logout button
     addLogoutButton();
+    
+    // Show iframe panel
     iframePanel.style.display = "flex";
 }
 
@@ -677,6 +612,7 @@ async function handleLogin() {
     
     if (user) {
         loadDashboardInIframe(user.username);
+        // Clear login fields
         document.getElementById("username").value = "";
         document.getElementById("password").value = "";
     } else {
@@ -806,6 +742,7 @@ async function init() {
         newScanBtn.onclick = startScanner;
     }
     
+    // Close iframe panel when clicking on overlay
     const iframePanel = document.getElementById("iframePanel");
     if (iframePanel) {
         iframePanel.addEventListener("click", function(e) {
