@@ -338,46 +338,6 @@
   .copyright-symbol {
     font-size: 9px;
   }
-
-  .iframe-panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fefefe;
-    display: none;
-    flex-direction: column;
-    z-index: 1100;
-    border-radius: inherit;
-    overflow: hidden;
-  }
-  .iframe-header {
-    background: #0b5ed7;
-    color: white;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .iframe-header button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    background: white;
-  }
   
   img {
     background-color: transparent;
@@ -434,7 +394,7 @@
     </div>
 
     <div class="actions">
-      <!-- REGISTER (HHR) - NO LOGIN -->
+      <!-- REGISTER (HHR) - Now shows simple alert (no iframe, no panel) -->
       <div class="card register" onclick="handleCardAction('REGISTER')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
@@ -443,7 +403,7 @@
         <div class="card-right"><i class="fas fa-arrow-right"></i></div>
       </div>
       
-      <!-- DISTRIBUTION (HHD) - NO LOGIN -->
+      <!-- DISTRIBUTION (HHD) -->
       <div class="card distribution" onclick="handleCardAction('DISTRIBUTION')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-users"></i><span class="card-main-text">DISTRIBUTION</span></div>
@@ -452,7 +412,7 @@
         <div class="card-right"><i class="fas fa-hand-holding-heart"></i></div>
       </div>
       
-      <!-- MONITORING (Nat. Sup) - NO LOGIN -->
+      <!-- MONITORING (Nat. Sup) -->
       <div class="card monitoring" onclick="handleCardAction('MONITORING')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-simple"></i><span class="card-main-text">MONITORING</span></div>
@@ -461,7 +421,7 @@
         <div class="card-right"><i class="fas fa-eye"></i></div>
       </div>
       
-      <!-- STOCK - NO LOGIN -->
+      <!-- STOCK -->
       <div class="card stock" onclick="handleCardAction('STOCK')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-box"></i><span class="card-main-text">STOCK</span></div>
@@ -470,7 +430,7 @@
         <div class="card-right"><i class="fas fa-chart-simple"></i></div>
       </div>
       
-      <!-- DASHBOARD - NO LOGIN -->
+      <!-- DASHBOARD -->
       <div class="card dashboard" onclick="handleCardAction('DASHBOARD')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
@@ -479,7 +439,7 @@
         <div class="card-right"><i class="fas fa-eye"></i></div>
       </div>
       
-      <!-- ATTENDANCE - NO LOGIN -->
+      <!-- ATTENDANCE -->
       <div class="card attendance" onclick="handleCardAction('ATTENDANCE')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-calendar-check"></i><span class="card-main-text">ATTENDANCE</span></div>
@@ -488,7 +448,7 @@
         <div class="card-right"><i class="fas fa-user-check"></i></div>
       </div>
       
-      <!-- DEVICE TRACKING - NO LOGIN -->
+      <!-- DEVICE TRACKING -->
       <div class="card device-tracking" onclick="handleCardAction('DEVICE_TRACKING')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-mobile-alt"></i><span class="card-main-text">DEVICE TRACKING</span></div>
@@ -497,7 +457,7 @@
         <div class="card-right"><i class="fas fa-map-marker-alt"></i></div>
       </div>
       
-      <!-- RECONCILIATION - NO LOGIN -->
+      <!-- RECONCILIATION -->
       <div class="card reconciliation" onclick="handleCardAction('RECONCILIATION')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-calculator"></i><span class="card-main-text">RECONCILIATION</span></div>
@@ -506,7 +466,7 @@
         <div class="card-right"><i class="fas fa-check-double"></i></div>
       </div>
       
-      <!-- WASTE MANAGEMENT - NO LOGIN -->
+      <!-- WASTE MANAGEMENT -->
       <div class="card waste-management" onclick="handleCardAction('WASTE_MANAGEMENT')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-trash-alt"></i><span class="card-main-text">WASTE MANAGEMENT</span></div>
@@ -521,14 +481,6 @@
     <div class="footer-line1">Developed by</div>
     <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
   </div>
-</div>
-
-<div id="iframePanel" class="iframe-panel">
-  <div class="iframe-header">
-    <span><i class="fas fa-edit"></i> Registration Portal</span>
-    <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
-  </div>
-  <iframe id="dynamicIframe" src="registration.html" title="ICF module"></iframe>
 </div>
 
 <script>
@@ -633,27 +585,10 @@
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
   
-  // ---------- DIRECT CARD ACTIONS (NO LOGIN REQUIRED) ----------
-  const iframePanel = document.getElementById('iframePanel');
-  const dynamicIframe = document.getElementById('dynamicIframe');
-  
+  // ---------- CARD ACTION HANDLER (Simple alerts for all cards, no iframe, no panel) ----------
   function handleCardAction(actionType) {
     if (actionType === "REGISTER") {
-      // Open registration form in iframe panel
-      dynamicIframe.src = "registration.html";
-      dynamicIframe.onerror = function() {
-        dynamicIframe.srcdoc = getFallbackRegistrationForm();
-      };
-      setTimeout(() => {
-        try {
-          if (dynamicIframe.contentWindow && dynamicIframe.contentDocument && 
-              dynamicIframe.contentDocument.body && 
-              dynamicIframe.contentDocument.body.innerHTML.trim() === "") {
-            dynamicIframe.srcdoc = getFallbackRegistrationForm();
-          }
-        } catch(e) {}
-      }, 500);
-      iframePanel.style.display = 'flex';
+      alert("📝 REGISTER (HHR) Module\n\nHousehold Registration for ITN Campaign 2026\n• Register new households\n• Capture demographic data\n• Generate household IDs\n• Track registration status");
     } else if (actionType === "MONITORING") {
       alert("📊 MONITORING (Nat. Sup) Module\n\nNational supervision and monitoring dashboards.\n• Real-time supervision data\n• District performance metrics\n• Quality assurance tracking");
     } else if (actionType === "DISTRIBUTION") {
@@ -674,47 +609,6 @@
       alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
     }
   }
-  
-  function getFallbackRegistrationForm() {
-    return `<!DOCTYPE html>
-    <html>
-    <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-    <style>
-      *{margin:0;padding:0;box-sizing:border-box;}
-      body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #eef2ff 0%, #ffffff 100%);padding:20px;margin:0;min-height:100vh;}
-      .reg-card{background:white;border-radius:32px;padding:20px;box-shadow:0 10px 25px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}
-      h2{color:#0b5ed7;font-size:22px;margin-bottom:6px;display:flex;align-items:center;gap:8px;}
-      .sub{color:#4b5563;font-size:12px;margin-bottom:18px;border-left:3px solid #0b5ed7;padding-left:10px;}
-      input{width:100%;padding:12px 14px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:13px;}
-      button{background:#0b5ed7;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;font-size:14px;cursor:pointer;margin-top:8px;}
-      .success{background:#e8f5e9;color:#15803d;padding:10px;border-radius:16px;margin-top:16px;font-size:11px;text-align:center;}
-    </style>
-    </head>
-    <body>
-    <div class="reg-card">
-      <h2><i class="fas fa-bed"></i> HHR Registration</h2>
-      <div class="sub">Household Registration for ITN Campaign 2026</div>
-      <input type="text" placeholder="Full name (Household Head)">
-      <input type="text" placeholder="Household ID / NHIS Number">
-      <input type="text" placeholder="District / Chiefdom">
-      <input type="number" placeholder="Number of household members">
-      <button onclick="alert('✅ Registration data saved successfully.')">Submit Registration</button>
-      <div class="success"><i class="fas fa-check-circle"></i> ITN campaign 2026 active</div>
-    </div>
-    </body>
-    </html>`;
-  }
-  
-  function closeIframePanel() {
-    iframePanel.style.display = 'none';
-    dynamicIframe.src = "registration.html";
-    dynamicIframe.onerror = null;
-  }
-  
-  window.onclick = function(event) {
-    if (event.target === iframePanel) closeIframePanel();
-  };
   
   // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
