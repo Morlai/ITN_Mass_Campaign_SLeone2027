@@ -338,6 +338,52 @@
   img {
     background-color: transparent;
   }
+
+  /* Iframe Panel Styles */
+  .iframe-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fefefe;
+    display: none;
+    flex-direction: column;
+    z-index: 1100;
+    border-radius: inherit;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .iframe-header {
+    background: #1e3a8a;
+    color: white;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .iframe-header button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    background: white;
+  }
 </style>
 </head>
 <body>
@@ -390,8 +436,8 @@
     </div>
 
     <div class="actions">
-      <!-- REGISTER (HHR) - Only card remaining -->
-      <div class="card register" onclick="handleCardAction('REGISTER')">
+      <!-- REGISTER (HHR) - Opens subregistration.html in iframe -->
+      <div class="card register" onclick="openRegistrationIframe()">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
           <div class="card-abbr">(HHR)</div>
@@ -405,6 +451,15 @@
     <div class="footer-line1">Developed by</div>
     <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
   </div>
+</div>
+
+<!-- Iframe Panel for subregistration.html -->
+<div id="iframePanel" class="iframe-panel">
+  <div class="iframe-header">
+    <span><i class="fas fa-home"></i> Household Registration (HHR)</span>
+    <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
+  </div>
+  <iframe id="registrationIframe" src="subregistration.html" title="Household Registration"></iframe>
 </div>
 
 <script>
@@ -508,7 +563,131 @@
     carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
-
+  
+  // ---------- IFRAME FUNCTIONS FOR REGISTRATION ----------
+  const iframePanel = document.getElementById('iframePanel');
+  const registrationIframe = document.getElementById('registrationIframe');
+  
+  function openRegistrationIframe() {
+    // Reload the iframe to ensure fresh content
+    registrationIframe.src = "subregistration.html";
+    
+    // Handle iframe load error - provide fallback if subregistration.html doesn't exist
+    registrationIframe.onerror = function() {
+      registrationIframe.srcdoc = getFallbackRegistrationForm();
+    };
+    
+    // Check if iframe loaded successfully after timeout
+    setTimeout(() => {
+      try {
+        if (registrationIframe.contentWindow && registrationIframe.contentDocument && 
+            registrationIframe.contentDocument.body && 
+            registrationIframe.contentDocument.body.innerHTML.trim() === "") {
+          registrationIframe.srcdoc = getFallbackRegistrationForm();
+        }
+      } catch(e) {
+        registrationIframe.srcdoc = getFallbackRegistrationForm();
+      }
+    }, 500);
+    
+    iframePanel.style.display = 'flex';
+  }
+  
+  function closeIframePanel() {
+    iframePanel.style.display = 'none';
+    registrationIframe.src = "subregistration.html";
+    registrationIframe.onerror = null;
+  }
+  
+  // Fallback registration form if subregistration.html is not found
+  function getFallbackRegistrationForm() {
+    return `<!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Household Registration</title>
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+      <style>
+        *{margin:0;padding:0;box-sizing:border-box;}
+        body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #eef2ff 0%, #ffffff 100%);padding:20px;margin:0;min-height:100vh;}
+        .reg-card{background:white;border-radius:32px;padding:24px 22px;box-shadow:0 15px 35px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}
+        h2{color:#1e3a8a;font-size:24px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
+        .sub{color:#4b5563;font-size:13px;margin-bottom:22px;border-left:3px solid #3b82f6;padding-left:12px;}
+        input, select{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:14px;background:#f8fafc;}
+        input:focus, select:focus{outline:none;border-color:#3b82f6;background:white;}
+        button{background:#1e3a8a;color:white;border:none;padding:14px;width:100%;border-radius:50px;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px;transition:0.2s;}
+        button:active{transform:scale(0.97);}
+        .success-badge{background:#e8f5e9;color:#15803d;padding:12px;border-radius:20px;margin-top:20px;font-size:12px;text-align:center;}
+      </style>
+    </head>
+    <body>
+      <div class="reg-card">
+        <h2><i class="fas fa-bed"></i> ITN Campaign 2026</h2>
+        <div class="sub">Household Registration for Insecticide-Treated Nets Distribution</div>
+        <input type="text" id="fullName" placeholder="Full name (Household Head)">
+        <input type="text" id="householdId" placeholder="Household ID / NHIS Number">
+        <input type="text" id="district" placeholder="District / Chiefdom">
+        <input type="text" id="community" placeholder="Community / Village">
+        <input type="number" id="members" placeholder="Number of household members">
+        <select id="eligible">
+          <option value="yes">Eligible for ITN distribution</option>
+          <option value="no">Not eligible</option>
+        </select>
+        <button onclick="submitRegistration()"><i class="fas fa-save"></i> Submit Registration</button>
+        <div id="successMsg" class="success-badge" style="display: none;">
+          <i class="fas fa-check-circle"></i> Registration saved successfully!
+        </div>
+        <div class="success-badge" style="margin-top: 12px; background: #e3f2fd; color: #0b5ed7;">
+          <i class="fas fa-info-circle"></i> ITN distribution campaign 2026 active
+        </div>
+      </div>
+      <script>
+        function submitRegistration() {
+          const fullName = document.getElementById('fullName').value.trim();
+          const householdId = document.getElementById('householdId').value.trim();
+          const district = document.getElementById('district').value.trim();
+          const community = document.getElementById('community').value.trim();
+          const members = document.getElementById('members').value;
+          const eligible = document.getElementById('eligible').value;
+          
+          if (!fullName || !householdId || !district || !community || !members) {
+            alert('❌ Please fill in all required fields.');
+            return;
+          }
+          
+          if (parseInt(members) <= 0) {
+            alert('❌ Number of household members must be greater than 0.');
+            return;
+          }
+          
+          const successMsg = document.getElementById('successMsg');
+          successMsg.style.display = 'block';
+          
+          setTimeout(() => {
+            successMsg.style.display = 'none';
+          }, 3000);
+          
+          // Clear form
+          document.getElementById('fullName').value = '';
+          document.getElementById('householdId').value = '';
+          document.getElementById('district').value = '';
+          document.getElementById('community').value = '';
+          document.getElementById('members').value = '';
+          document.getElementById('eligible').value = 'yes';
+        }
+      <\/script>
+    </body>
+    </html>`;
+  }
+  
+  // Close iframe panel when clicking on overlay
+  iframePanel.addEventListener('click', function(e) {
+    if (e.target === iframePanel) {
+      closeIframePanel();
+    }
+  });
+  
   // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
     img.onerror = function() {
