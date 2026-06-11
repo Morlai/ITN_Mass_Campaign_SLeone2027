@@ -342,6 +342,51 @@
   img {
     background-color: transparent;
   }
+
+  /* Iframe Panel Styles */
+  .iframe-panel {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fefefe;
+    display: none;
+    flex-direction: column;
+    z-index: 1100;
+    border-radius: inherit;
+    overflow: hidden;
+    animation: slideUp 0.3s ease;
+  }
+  @keyframes slideUp {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+  .iframe-header {
+    color: white;
+    padding: 14px 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+    font-size: 16px;
+  }
+  .iframe-header button {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    font-size: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  iframe {
+    flex: 1;
+    border: none;
+    width: 100%;
+    background: white;
+  }
 </style>
 </head>
 <body>
@@ -394,8 +439,8 @@
     </div>
 
     <div class="actions">
-      <!-- REGISTER (HHR) - No handler -->
-      <div class="card register">
+      <!-- REGISTER (HHR) - Opens subregistration.html in iframe -->
+      <div class="card register" onclick="openSubRegistrationIframe()">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
           <div class="card-abbr">(HHR)</div>
@@ -481,6 +526,24 @@
     <div class="footer-line1">Developed by</div>
     <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
   </div>
+</div>
+
+<!-- Iframe Panel for subregistration.html -->
+<div id="subRegistrationPanel" class="iframe-panel">
+  <div class="iframe-header" style="background: linear-gradient(105deg, #1e3a8a, #3b82f6);">
+    <span><i class="fas fa-home"></i> Household Registration (HHR)</span>
+    <button onclick="closeSubRegistrationPanel()"><i class="fas fa-times"></i></button>
+  </div>
+  <iframe id="subRegistrationIframe" src="subregistration.html" title="Sub Registration Form"></iframe>
+</div>
+
+<!-- Iframe Panel for registration.html -->
+<div id="manualEntryPanel" class="iframe-panel">
+  <div class="iframe-header" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);">
+    <span><i class="fas fa-pen-alt"></i> Manual Entry Form</span>
+    <button onclick="closeManualEntryPanel()"><i class="fas fa-times"></i></button>
+  </div>
+  <iframe id="manualEntryIframe" src="registration.html" title="Manual Entry Form"></iframe>
 </div>
 
 <script>
@@ -584,6 +647,87 @@
     carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
+  
+  // ---------- IFRAME FUNCTIONS FOR REGISTRATION (subregistration.html) ----------
+  const subRegistrationPanel = document.getElementById('subRegistrationPanel');
+  const subRegistrationIframe = document.getElementById('subRegistrationIframe');
+  
+  function openSubRegistrationIframe() {
+    subRegistrationIframe.src = "subregistration.html";
+    subRegistrationIframe.onerror = function() {
+      subRegistrationIframe.srcdoc = getSubRegistrationFallback();
+    };
+    setTimeout(() => {
+      try {
+        if (subRegistrationIframe.contentWindow && subRegistrationIframe.contentDocument && 
+            subRegistrationIframe.contentDocument.body && 
+            subRegistrationIframe.contentDocument.body.innerHTML.trim() === "") {
+          subRegistrationIframe.srcdoc = getSubRegistrationFallback();
+        }
+      } catch(e) {
+        subRegistrationIframe.srcdoc = getSubRegistrationFallback();
+      }
+    }, 500);
+    subRegistrationPanel.style.display = 'flex';
+  }
+  
+  function closeSubRegistrationPanel() {
+    subRegistrationPanel.style.display = 'none';
+    subRegistrationIframe.src = "subregistration.html";
+    subRegistrationIframe.onerror = null;
+  }
+  
+  // ---------- IFRAME FUNCTIONS FOR MANUAL ENTRY (registration.html) ----------
+  const manualEntryPanel = document.getElementById('manualEntryPanel');
+  const manualEntryIframe = document.getElementById('manualEntryIframe');
+  
+  function openManualEntryIframe() {
+    manualEntryIframe.src = "registration.html";
+    manualEntryIframe.onerror = function() {
+      manualEntryIframe.srcdoc = getManualEntryFallback();
+    };
+    setTimeout(() => {
+      try {
+        if (manualEntryIframe.contentWindow && manualEntryIframe.contentDocument && 
+            manualEntryIframe.contentDocument.body && 
+            manualEntryIframe.contentDocument.body.innerHTML.trim() === "") {
+          manualEntryIframe.srcdoc = getManualEntryFallback();
+        }
+      } catch(e) {
+        manualEntryIframe.srcdoc = getManualEntryFallback();
+      }
+    }, 500);
+    manualEntryPanel.style.display = 'flex';
+  }
+  
+  function closeManualEntryPanel() {
+    manualEntryPanel.style.display = 'none';
+    manualEntryIframe.src = "registration.html";
+    manualEntryIframe.onerror = null;
+  }
+  
+  // Fallback for subregistration.html
+  function getSubRegistrationFallback() {
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #eef2ff 0%, #ffffff 100%);padding:20px;}.reg-card{background:white;border-radius:32px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}h2{color:#1e3a8a;}.sub{color:#4b5563;margin-bottom:18px;border-left:3px solid #3b82f6;padding-left:12px;}input,select{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}button{background:#1e3a8a;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;cursor:pointer;}</style></head><body><div class='reg-card'><h2><i class='fas fa-home'></i> HHR Registration</h2><div class='sub'>Household Registration - ITN Campaign 2026</div><input type='text' placeholder='Household Head Name'><input type='text' placeholder='Household ID'><input type='text' placeholder='District / Chiefdom'><button onclick='alert(\"✅ Registration saved\")'>Submit</button></div></body></html>`;
+  }
+  
+  // Fallback for registration.html (Manual Entry)
+  function getManualEntryFallback() {
+    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Manual Entry</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);padding:20px;}.form-card{background:white;border-radius:32px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}h2{color:#ea580c;}.sub{color:#4b5563;margin-bottom:18px;border-left:3px solid #f97316;padding-left:12px;}input{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}select{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}button{background:#ea580c;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;cursor:pointer;}</style></head><body><div class='form-card'><h2><i class='fas fa-pen-alt'></i> Manual Entry</h2><div class='sub'>Region » District » Chiefdom » PHU » Community</div><select><option>Select Region</option><option>Western</option><option>Northern</option></select><input type='text' placeholder='District'><input type='text' placeholder='Chiefdom'><input type='text' placeholder='Community'><button onclick='alert(\"✅ Data saved\")'>Submit</button></div></body></html>`;
+  }
+  
+  // Close panels when clicking on overlay
+  subRegistrationPanel.addEventListener('click', function(e) {
+    if (e.target === subRegistrationPanel) {
+      closeSubRegistrationPanel();
+    }
+  });
+  
+  manualEntryPanel.addEventListener('click', function(e) {
+    if (e.target === manualEntryPanel) {
+      closeManualEntryPanel();
+    }
+  });
   
   // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
