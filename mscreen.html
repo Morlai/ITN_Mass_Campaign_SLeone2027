@@ -1,4 +1,4 @@
-<!DOCTYPE html>    
+<!DOCTYPE html>     
 <html lang="en">
 <head> 
 <meta charset="UTF-8">
@@ -394,8 +394,8 @@
     </div>
 
     <div class="actions">
-      <!-- REGISTER (HHR) - Now shows simple alert (no iframe, no panel) -->
-      <div class="card register" onclick="handleCardAction('REGISTER')">
+      <!-- REGISTER (HHR) - No handler -->
+      <div class="card register">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
           <div class="card-abbr">(HHR)</div>
@@ -403,8 +403,8 @@
         <div class="card-right"><i class="fas fa-arrow-right"></i></div>
       </div>
       
-      <!-- DISTRIBUTION (HHD) -->
-      <div class="card distribution" onclick="handleCardAction('DISTRIBUTION')">
+      <!-- DISTRIBUTION (HHD) - No handler -->
+      <div class="card distribution">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-users"></i><span class="card-main-text">DISTRIBUTION</span></div>
           <div class="card-abbr">(HHD)</div>
@@ -412,8 +412,8 @@
         <div class="card-right"><i class="fas fa-hand-holding-heart"></i></div>
       </div>
       
-      <!-- MONITORING (Nat. Sup) -->
-      <div class="card monitoring" onclick="handleCardAction('MONITORING')">
+      <!-- MONITORING (Nat. Sup) - No handler -->
+      <div class="card monitoring">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-simple"></i><span class="card-main-text">MONITORING</span></div>
           <div class="card-abbr">(Nat. Sup)</div>
@@ -421,8 +421,8 @@
         <div class="card-right"><i class="fas fa-eye"></i></div>
       </div>
       
-      <!-- STOCK -->
-      <div class="card stock" onclick="handleCardAction('STOCK')">
+      <!-- STOCK - No handler -->
+      <div class="card stock">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-box"></i><span class="card-main-text">STOCK</span></div>
           <div class="card-abbr"></div>
@@ -430,8 +430,8 @@
         <div class="card-right"><i class="fas fa-chart-simple"></i></div>
       </div>
       
-      <!-- DASHBOARD -->
-      <div class="card dashboard" onclick="handleCardAction('DASHBOARD')">
+      <!-- DASHBOARD - No handler -->
+      <div class="card dashboard">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
           <div class="card-abbr"></div>
@@ -439,8 +439,8 @@
         <div class="card-right"><i class="fas fa-eye"></i></div>
       </div>
       
-      <!-- ATTENDANCE -->
-      <div class="card attendance" onclick="handleCardAction('ATTENDANCE')">
+      <!-- ATTENDANCE - No handler -->
+      <div class="card attendance">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-calendar-check"></i><span class="card-main-text">ATTENDANCE</span></div>
           <div class="card-abbr"></div>
@@ -448,8 +448,8 @@
         <div class="card-right"><i class="fas fa-user-check"></i></div>
       </div>
       
-      <!-- DEVICE TRACKING -->
-      <div class="card device-tracking" onclick="handleCardAction('DEVICE_TRACKING')">
+      <!-- DEVICE TRACKING - No handler -->
+      <div class="card device-tracking">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-mobile-alt"></i><span class="card-main-text">DEVICE TRACKING</span></div>
           <div class="card-abbr"></div>
@@ -457,8 +457,8 @@
         <div class="card-right"><i class="fas fa-map-marker-alt"></i></div>
       </div>
       
-      <!-- RECONCILIATION -->
-      <div class="card reconciliation" onclick="handleCardAction('RECONCILIATION')">
+      <!-- RECONCILIATION - No handler -->
+      <div class="card reconciliation">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-calculator"></i><span class="card-main-text">RECONCILIATION</span></div>
           <div class="card-abbr"></div>
@@ -466,8 +466,8 @@
         <div class="card-right"><i class="fas fa-check-double"></i></div>
       </div>
       
-      <!-- WASTE MANAGEMENT -->
-      <div class="card waste-management" onclick="handleCardAction('WASTE_MANAGEMENT')">
+      <!-- WASTE MANAGEMENT - No handler -->
+      <div class="card waste-management">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-trash-alt"></i><span class="card-main-text">WASTE MANAGEMENT</span></div>
           <div class="card-abbr"></div>
@@ -583,31 +583,6 @@
   if (carouselElement) {
     carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
-  }
-  
-  // ---------- CARD ACTION HANDLER (Simple alerts for all cards, no iframe, no panel) ----------
-  function handleCardAction(actionType) {
-    if (actionType === "REGISTER") {
-      alert("📝 REGISTER (HHR) Module\n\nHousehold Registration for ITN Campaign 2026\n• Register new households\n• Capture demographic data\n• Generate household IDs\n• Track registration status");
-    } else if (actionType === "MONITORING") {
-      alert("📊 MONITORING (Nat. Sup) Module\n\nNational supervision and monitoring dashboards.\n• Real-time supervision data\n• District performance metrics\n• Quality assurance tracking");
-    } else if (actionType === "DISTRIBUTION") {
-      alert("✅ DISTRIBUTION (HHD) Module\n\nHousehold distribution management.\n• Track net distribution per household\n• Monitor coverage rates\n• View distribution schedules");
-    } else if (actionType === "STOCK") {
-      alert("📦 STOCK Module\n\nInventory & supply chain analytics.\n• Current stock levels\n• Reorder alerts\n• Warehouse distribution status");
-    } else if (actionType === "DASHBOARD") {
-      alert("📊 DASHBOARD\n\nReal-time ITN campaign analytics.\n• Coverage by district\n• Performance metrics\n• Household registration trends");
-    } else if (actionType === "ATTENDANCE") {
-      alert("📋 ATTENDANCE Module\n\nStaff and field worker attendance tracking.\n• Daily check-ins\n• Training attendance\n• Supervision logs");
-    } else if (actionType === "DEVICE_TRACKING") {
-      alert("📍 DEVICE TRACKING Module\n\nField device monitoring.\n• GPS location tracking\n• Device status\n• Field movement history");
-    } else if (actionType === "RECONCILIATION") {
-      alert("🔄 RECONCILIATION Module\n\nData consistency and verification.\n• Match distribution vs registration\n• Identify discrepancies\n• Generate reconciliation reports");
-    } else if (actionType === "WASTE_MANAGEMENT") {
-      alert("♻️ WASTE MANAGEMENT Module\n\nDamaged/expired net tracking.\n• Record damaged nets\n• Disposal documentation\n• Waste reduction metrics");
-    } else {
-      alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
-    }
   }
   
   // Fix partner images fallback
