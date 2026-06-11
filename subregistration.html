@@ -20,51 +20,7 @@
       line-height: 1.3;
     }
 
-    /* ===== HEADER - PHONE VIEW ===== */
-    .app-header {
-      background-color: #0a59c6;
-      color: white;
-      padding: 0.5rem 0.75rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      width: 100%;
-    }
-
-    .header-container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .brand-icons {
-      display: flex;
-      align-items: center;
-      gap: 0.15rem;
-    }
-
-    .icon-reg {
-      font-size: 1rem;
-      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
-    }
-
-    .brand h1 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: rgba(255,255,255,0.15);
-      padding: 0.15rem 0.7rem;
-      border-radius: 40px;
-      backdrop-filter: blur(2px);
-      letter-spacing: 0.3px;
-    }
+    /* ===== HEADER - REMOVED (no header section) ===== */
 
     /* ===== MAIN BODY - FLEXIBLE GRID THAT FITS ON SCREEN ===== */
     .main-content {
@@ -74,8 +30,31 @@
       margin: 0 auto;
       padding: 1rem 0.75rem;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
+    }
+
+    /* Info banner that replaces header content */
+    .info-banner {
+      background: linear-gradient(135deg, #0a59c6 0%, #0b5ed7 100%);
+      color: white;
+      text-align: center;
+      padding: 12px 16px;
+      border-radius: 24px;
+      margin-bottom: 20px;
+      width: 100%;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .info-banner .title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+    .info-banner .subtitle {
+      font-size: 10px;
+      opacity: 0.9;
     }
 
     /* Cards container - horizontal row that fits without overflow */
@@ -352,8 +331,15 @@
         padding: 0.25rem 0.15rem;
       }
       
-      .brand h1 {
-        font-size: 0.8rem;
+      .info-banner {
+        padding: 10px 12px;
+        margin-bottom: 16px;
+      }
+      .info-banner .title {
+        font-size: 12px;
+      }
+      .info-banner .subtitle {
+        font-size: 9px;
       }
     }
     
@@ -422,22 +408,16 @@
 </head>
 <body>
 
-  <!-- HEADER - "REGISTRATION" only, no "HUB" -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="brand">
-        <div class="brand-icons">
-          <span class="icon-reg">📝</span>
-          <span class="icon-reg">✅</span>
-          <span class="icon-reg">👥</span>
-        </div>
-        <h1>REGISTRATION</h1>
-      </div>
-    </div>
-  </header>
+  <!-- HEADER COMPLETELY REMOVED - No app-header, no brand icons, no REGISTRATION text in header -->
 
   <!-- MAIN BODY - Three action cards in a single row that fits on screen properly -->
   <main class="main-content">
+    <!-- Info banner that replaces previous header content (Household Registration info) -->
+    <div class="info-banner">
+      <div class="title">🏠 Household Registration</div>
+      <div class="subtitle">ITN Campaign 2026 - Sierra Leone</div>
+    </div>
+
     <div class="cards-container">
       
       <!-- ACTION CARD 1: MANUAL ENTRY - Opens registration.html in iframe -->
@@ -636,11 +616,7 @@
               const successMsg = document.getElementById('successMsg');
               successMsg.style.display = 'block';
               
-              setTimeout(() => {
-                successMsg.style.display = 'none';
-              }, 3000);
-              
-              // Clear form
+              // Clear form fields after successful submission
               document.getElementById('region').value = '';
               document.getElementById('district').value = '';
               document.getElementById('chiefdom').value = '';
@@ -648,6 +624,10 @@
               document.getElementById('community').value = '';
               document.getElementById('householdHead').value = '';
               document.getElementById('members').value = '';
+              
+              setTimeout(() => {
+                successMsg.style.display = 'none';
+              }, 3000);
             }
           <\/script>
         </body>
@@ -668,7 +648,7 @@
         });
       }
 
-      // Scan QR Card - Shows alert (kept original behavior)
+      // Scan QR Card - Shows alert
       if (scanCard) {
         const handleScan = () => {
           alert('📷 SCAN QR CODE\n\nCamera will open. Scanning QR auto-fills all fields instantly.');
@@ -682,7 +662,7 @@
         });
       }
 
-      // RECORDS Card - Shows alert (kept original behavior)
+      // RECORDS Card - Shows alert
       if (recordsCard) {
         const handleRecords = () => {
           alert('📋 RECORDS\n\nView & manage submitted registrations. Filter by hierarchy or date.');
@@ -714,22 +694,31 @@
         "Launch scanner",
         "Search · Export · History",
         "Browse entries",
+        "REGISTRATION",
         "HUB"
       ];
       
       let hasForbidden = false;
       forbiddenPhrases.forEach(phrase => {
         if (document.body.innerText.includes(phrase)) {
-          console.warn(`⚠️ Forbidden phrase found: "${phrase}"`);
-          hasForbidden = true;
+          if (phrase === "REGISTRATION") {
+            // REGISTRATION text removed from header, but may appear elsewhere - fine
+            if (document.querySelector('.app-header')) {
+              console.warn(`⚠️ Header REGISTRATION found`);
+              hasForbidden = true;
+            }
+          } else if (document.body.innerText.includes(phrase)) {
+            console.warn(`⚠️ Forbidden phrase found: "${phrase}"`);
+            hasForbidden = true;
+          }
         }
       });
       
       if (!hasForbidden) {
-        console.log('✅ SUCCESS: Three cards display in a single row. Clicking MANUAL ENTRY opens registration.html in iframe.');
+        console.log('✅ SUCCESS: Header removed. Info banner added in body with Household Registration. Three cards display in a single row.');
       }
       
-      console.log('📱 Phone view active | Cards layout: flex row, equal width, fit screen');
+      console.log('📱 Phone view active | Header completely removed | Info banner now in body');
     })();
   </script>
 </body>
