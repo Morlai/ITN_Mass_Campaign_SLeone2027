@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-<title>ICF-SL | ITN Campaign - Data Driven Distribution</title>
+<title>ICF-SL | ITN Campaign - Analytics & Oversight</title>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 <style>
@@ -244,10 +244,10 @@
   }
 
   .actions {
-    padding: 14px 16px 12px;
+    padding: 20px 16px 24px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
   }
   .card {
     border-radius: 26px;
@@ -299,11 +299,8 @@
   .card-right i {
     font-size: 18px;
   }
-  .lock-icon {
-    font-size: 16px;
-  }
   
-  /* Individual card gradients - exactly matching original styles */
+  /* Card gradients - only DASHBOARD, RECONCILIATION, WASTE MANAGEMENT */
   .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
   .reconciliation { background: linear-gradient(105deg, #d97706, #f59e0b); }
   .waste-management { background: linear-gradient(105deg, #0891b2, #06b6d4); }
@@ -336,122 +333,6 @@
   }
   .copyright-symbol {
     font-size: 9px;
-  }
-
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.75);
-    backdrop-filter: blur(5px);
-    display: none;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-  }
-  .modal-box {
-    background: #ffffff;
-    padding: 24px 20px;
-    border-radius: 36px;
-    width: 85%;
-    max-width: 300px;
-    text-align: center;
-    box-shadow: 0 20px 30px rgba(0,0,0,0.3);
-    animation: fadeSlideUp 0.2s ease;
-  }
-  @keyframes fadeSlideUp {
-    from { opacity: 0; transform: translateY(20px);}
-    to { opacity: 1; transform: translateY(0);}
-  }
-  .modal-box h3 {
-    font-size: 22px;
-    font-weight: 800;
-    margin-bottom: 16px;
-    color: #0b5ed7;
-  }
-  .modal input {
-    width: 100%;
-    padding: 12px 14px;
-    margin: 8px 0;
-    border-radius: 50px;
-    border: 1.5px solid #e2e8f0;
-    font-size: 14px;
-    background: #f8fafc;
-  }
-  .modal input:focus {
-    outline: none;
-    border-color: #0b5ed7;
-    background: white;
-  }
-  .modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-    margin-top: 16px;
-  }
-  .modal button {
-    padding: 10px 0;
-    width: 48%;
-    border: none;
-    border-radius: 50px;
-    font-weight: 700;
-    cursor: pointer;
-    font-size: 14px;
-  }
-  .login {
-    background: #0b5ed7;
-    color: white;
-  }
-  .cancel {
-    background: #eef2ff;
-    color: #334155;
-  }
-  #loginErrorMessage {
-    margin-top: 10px;
-    font-size: 11px;
-    font-weight: 500;
-  }
-
-  .iframe-panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fefefe;
-    display: none;
-    flex-direction: column;
-    z-index: 1100;
-    border-radius: inherit;
-    overflow: hidden;
-  }
-  .iframe-header {
-    background: #0b5ed7;
-    color: white;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .iframe-header button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    background: white;
   }
   
   img {
@@ -509,31 +390,31 @@
     </div>
 
     <div class="actions">
-      <!-- DASHBOARD (Only Remaining Module) -->
-      <div class="card dashboard" onclick="openActionModal('DASHBOARD')">
+      <!-- DASHBOARD Module - No Login Required -->
+      <div class="card dashboard" onclick="handleCardAction('DASHBOARD')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
           <div class="card-abbr"></div>
         </div>
-        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-eye"></i></div>
+        <div class="card-right"><i class="fas fa-arrow-right"></i><i class="fas fa-eye"></i></div>
       </div>
       
-      <!-- RECONCILIATION - New Card -->
-      <div class="card reconciliation" onclick="openActionModal('RECONCILIATION')">
+      <!-- RECONCILIATION Module - No Login Required -->
+      <div class="card reconciliation" onclick="handleCardAction('RECONCILIATION')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-calculator"></i><span class="card-main-text">RECONCILIATION</span></div>
           <div class="card-abbr"></div>
         </div>
-        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-check-double"></i></div>
+        <div class="card-right"><i class="fas fa-arrow-right"></i><i class="fas fa-check-double"></i></div>
       </div>
       
-      <!-- WASTE MANAGEMENT - New Card -->
-      <div class="card waste-management" onclick="openActionModal('WASTE_MANAGEMENT')">
+      <!-- WASTE MANAGEMENT Module - No Login Required -->
+      <div class="card waste-management" onclick="handleCardAction('WASTE_MANAGEMENT')">
         <div class="card-left">
           <div class="card-main-row"><i class="fas fa-trash-alt"></i><span class="card-main-text">WASTE MANAGEMENT</span></div>
           <div class="card-abbr"></div>
         </div>
-        <div class="card-right"><i class="fas fa-lock lock-icon"></i><i class="fas fa-recycle"></i></div>
+        <div class="card-right"><i class="fas fa-arrow-right"></i><i class="fas fa-recycle"></i></div>
       </div>
     </div>
   </div>
@@ -542,27 +423,6 @@
     <div class="footer-line1">Developed by</div>
     <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
   </div>
-</div>
-
-<div id="loginModal" class="modal">
-  <div class="modal-box">
-    <h3><i class="fas fa-lock"></i> Secure Access</h3>
-    <input type="text" id="usernameInput" placeholder="Username" autocomplete="off">
-    <input type="password" id="passwordInput" placeholder="Password">
-    <div class="modal-buttons">
-      <button class="cancel" onclick="closeLoginModal()">Cancel</button>
-      <button class="login" onclick="performLogin()">Login</button>
-    </div>
-    <p id="loginErrorMessage" style="color:#d32f2f; margin-top:10px;"></p>
-  </div>
-</div>
-
-<div id="iframePanel" class="iframe-panel">
-  <div class="iframe-header">
-    <span><i class="fas fa-edit"></i> Dashboard & Analytics Portal</span>
-    <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
-  </div>
-  <iframe id="dynamicIframe" src="registration.html" title="ICF module"></iframe>
 </div>
 
 <script>
@@ -667,105 +527,20 @@
     carouselElement.addEventListener('mouseleave', () => startAutoSlide());
   }
   
-  // ---------- CSV LOGIN VALIDATION ----------
-  let validCredentials = [];
-  
-  async function loadCredentials() {
-    try {
-      const response = await fetch('Keys.csv');
-      if (!response.ok) {
-        console.warn('Keys.csv not found. Using default admin/1234');
-        validCredentials = [{ username: 'admin', password: '1234' }];
-        return;
-      }
-      const csvText = await response.text();
-      const lines = csvText.trim().split('\n');
-      const startIndex = lines[0].toLowerCase().includes('username') ? 1 : 0;
-      for (let i = startIndex; i < lines.length; i++) {
-        const line = lines[i].trim();
-        if (line === '') continue;
-        const parts = line.split(',');
-        if (parts.length >= 2) {
-          validCredentials.push({
-            username: parts[0].trim(),
-            password: parts[1].trim()
-          });
-        }
-      }
-      if (validCredentials.length === 0) {
-        validCredentials.push({ username: 'admin', password: '1234' });
-      }
-      console.log('Credentials loaded:', validCredentials.length);
-    } catch (error) {
-      console.error('Error loading CSV:', error);
-      validCredentials = [{ username: 'admin', password: '1234' }];
-    }
-  }
-  
-  function validateCredentials(username, password) {
-    return validCredentials.some(cred => 
-      cred.username === username && cred.password === password
-    );
-  }
-  
-  // ---------- MODAL & IFRAME FLOW ----------
-  let pendingAction = "";
-  const loginModal = document.getElementById('loginModal');
-  const iframePanel = document.getElementById('iframePanel');
-  const dynamicIframe = document.getElementById('dynamicIframe');
-  const usernameField = document.getElementById('usernameInput');
-  const passwordField = document.getElementById('passwordInput');
-  const errorMsgSpan = document.getElementById('loginErrorMessage');
-  
-  function openActionModal(actionType) {
-    pendingAction = actionType;
-    if (usernameField) usernameField.value = "";
-    if (passwordField) passwordField.value = "";
-    if (errorMsgSpan) errorMsgSpan.innerText = "";
-    loginModal.style.display = 'flex';
-  }
-  
-  function closeLoginModal() {
-    loginModal.style.display = 'none';
-    pendingAction = "";
-    if (errorMsgSpan) errorMsgSpan.innerText = "";
-  }
-  
-  function performLogin() {
-    const username = usernameField ? usernameField.value.trim() : "";
-    const password = passwordField ? passwordField.value : "";
-    
-    if (validateCredentials(username, password)) {
-      closeLoginModal();
-      
-      // Provide distinct and contextual messages for the three remaining modules
-      if (pendingAction === "DASHBOARD") {
-        alert("📊 DASHBOARD: Access Granted.\nReal-time ITN coverage, performance metrics, district comparisons, and campaign analytics are now available.");
-        // Optionally you could load a dashboard iframe, but keep as alert per requirement.
-      } else if (pendingAction === "RECONCILIATION") {
-        alert("🔄 RECONCILIATION Module: Access Granted.\nYou can now reconcile distributed ITNs against registered households, verify data consistency, and audit distribution records.");
-      } else if (pendingAction === "WASTE_MANAGEMENT") {
-        alert("♻️ WASTE MANAGEMENT Module: Access Granted.\nTrack damaged/expired nets, record disposal processes, monitor waste collection points, and manage environmental compliance reporting.");
-      } else {
-        alert(`Access granted for ${pendingAction} module.`);
-      }
-      pendingAction = "";
+  // ---------- DIRECT CARD ACTION HANDLER (NO LOGIN REQUIRED) ----------
+  function handleCardAction(actionType) {
+    if (actionType === "DASHBOARD") {
+      alert("📊 DASHBOARD MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nReal-time ITN Campaign Analytics:\n\n✓ Coverage by district & chiefdom\n✓ Performance metrics & KPIs\n✓ Household registration trends\n✓ Distribution progress tracking\n✓ Stock utilization rates\n✓ Supervisor performance dashboards\n✓ Real-time data synchronization\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Export reports & drill down by region\n🔄 Auto-refresh every 30 seconds");
+    } else if (actionType === "RECONCILIATION") {
+      alert("🔄 RECONCILIATION MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nData Verification & Audit Tools:\n\n✓ Match distribution vs registration records\n✓ Identify discrepancies in real-time\n✓ Generate reconciliation reports\n✓ Verify household counts vs nets distributed\n✓ Flag anomalies for investigation\n✓ Complete audit trail tracking\n✓ Batch validation processing\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Ensure data integrity across all levels\n✓ Export discrepancy reports");
+    } else if (actionType === "WASTE_MANAGEMENT") {
+      alert("♻️ WASTE MANAGEMENT MODULE\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nDamaged & Expired Net Tracking:\n\n✓ Record damaged nets by location\n✓ Track disposal & recycling processes\n✓ Monitor waste collection points\n✓ Environmental compliance reporting\n✓ Generate waste reduction metrics\n✓ Schedule collection activities\n✓ Inventory of expired stock\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n📌 Support sustainable campaign practices\n✓ Real-time waste tracking dashboard");
     } else {
-      if (errorMsgSpan) errorMsgSpan.innerText = "❌ Invalid credentials. Please check username and password.";
+      alert(`${actionType} Module\n\nAccess granted. Module dashboard will load.`);
     }
   }
   
-  function closeIframePanel() {
-    iframePanel.style.display = 'none';
-    dynamicIframe.src = "registration.html";
-    dynamicIframe.onerror = null;
-  }
-  
-  window.onclick = function(event) {
-    if (event.target === loginModal) closeLoginModal();
-    if (event.target === iframePanel) closeIframePanel();
-  };
-  
+  // Fix partner images fallback
   document.querySelectorAll('.partner-item img').forEach(img => {
     img.onerror = function() {
       if (!img.dataset.fallbackSet) {
@@ -774,8 +549,6 @@
       }
     };
   });
-  
-  loadCredentials();
 </script>
 </body>
 </html>
