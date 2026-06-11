@@ -126,7 +126,7 @@
     .records-header h3 { font-size: 18px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
     .records-header button { background: rgba(255,255,255,0.2); border: none; color: white; font-size: 20px; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; }
     .records-content { padding: 16px; max-height: 70vh; overflow-x: auto; overflow-y: auto; }
-    .records-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 800px; }
+    .records-table { width: 100%; border-collapse: collapse; font-size: 11px; min-width: 900px; }
     .records-table th, .records-table td { border: 1px solid #e2e8f0; padding: 8px 6px; text-align: left; vertical-align: top; }
     .records-table th { background: #f1f5f9; font-weight: 700; position: sticky; top: 0; font-size: 10px; }
     .records-table td { font-size: 10px; word-break: break-word; }
@@ -163,7 +163,7 @@
   <main class="main-content">
     <div class="cards-container">
 
-      <!-- ACTION CARD 1: MANUAL ENTRY - Opens registration.html -->
+      <!-- ACTION CARD 1: MANUAL ENTRY -->
       <div class="action-card card-manual" role="button" tabindex="0" aria-label="Manual entry form for demographic data">
         <div class="card-header">
           <div class="card-icon">✍️</div>
@@ -234,7 +234,7 @@
     </div>
   </footer>
 
-  <!-- Iframe Panel for Manual Entry Form - loads registration.html -->
+  <!-- Iframe Panel for Manual Entry Form -->
   <div id="iframePanel" class="iframe-panel">
     <div class="iframe-header">
       <span><i class="fas fa-edit"></i> Manual Entry Form</span>
@@ -284,24 +284,24 @@
         localStorage.setItem('itn_registrations', JSON.stringify(registrations));
       }
       
-      // Add registration from MANUAL ENTRY or SCAN QR
+      // Add registration from MANUAL ENTRY or SCAN QR - matches the required fields exactly
       function addRegistration(data) {
         const newRecord = {
           id: Date.now(),
           username: data.username || "field_user",
-          region: data.region,
-          district: data.district,
-          chiefdom: data.chiefdom,
-          community: data.community,
-          nearestHealthFacility: data.nearestHealthFacility || data.phu,
-          name: data.name || data.householdHeadName || data.headName,
-          mobile: data.mobile || data.mobileNumber,
+          region: data.region || "",
+          district: data.district || "",
+          chiefdom: data.chiefdom || "",
+          community: data.community || "",
+          nearestHealthFacility: data.nearestHealthFacility || data.phu || data.healthFacility || "",
+          name: data.name || data.headName || data.householdHeadName || "",
+          mobile: data.mobile || data.mobileNumber || "",
           underFivesChildren: parseInt(data.underFivesChildren) || parseInt(data.underFives) || 0,
           pregnantWomen: parseInt(data.pregnantWomen) || 0,
           totalMembers: parseInt(data.totalMembers) || 0,
           gpsCoordinates: data.gpsCoordinates || data.gps || "N/A",
           token: "ITN-" + new Date().getFullYear() + "-" + String(registrations.length + 1).padStart(3, '0'),
-          itnReceived: data.itnReceived || Math.ceil((parseInt(data.totalMembers) || 2) / 2),
+          itnReceived: parseInt(data.itnReceived) || Math.ceil((parseInt(data.totalMembers) || 2) / 2),
           timestamp: new Date().toISOString()
         };
         registrations.unshift(newRecord);
@@ -309,7 +309,7 @@
         return newRecord;
       }
       
-      // Display records with the required columns
+      // Display records with the exact required fields
       function displayRecords() {
         const content = document.getElementById('recordsContent');
         const recordCountSpan = document.getElementById('recordCount');
@@ -324,7 +324,7 @@
         
         if (recordCountSpan) recordCountSpan.textContent = registrations.length;
         
-        // Required columns as specified
+        // Exact required columns as specified
         const columns = [
           'Username', 'Region', 'District', 'Chiefdom', 'Community', 
           'Nearest Health Facility', 'Name', 'Mobile', 'Under-Fives Children', 
@@ -333,7 +333,7 @@
         
         let tableHTML = `<table class="records-table"><thead><tr>`;
         columns.forEach(col => { tableHTML += `<th>${col}</th>`; });
-        tableHTML += `<tr></thead><tbody>`;
+        tableHTML += `</table></thead><tbody>`;
         
         registrations.forEach(rec => {
           tableHTML += `<tr>
@@ -379,7 +379,7 @@
         if (modal) modal.style.display = 'none';
       }
       
-      // -------------------- IFRAME LOGIC - LOADS registration.html FILE --------------------
+      // -------------------- IFRAME LOGIC FOR MANUAL ENTRY --------------------
       const manualCard = document.querySelector('.card-manual');
       const scanCard = document.querySelector('.card-scan');
       const recordsCard = document.querySelector('.card-records');
@@ -387,43 +387,14 @@
       const iframePanel = document.getElementById('iframePanel');
       const registrationIframe = document.getElementById('registrationIframe');
       
-      // Open registration.html directly
-      function openRegistrationIframe() {
-        registrationIframe.src = "registration.html";
-        
-        registrationIframe.onerror = function() {
-          registrationIframe.srcdoc = getFallbackRegistrationForm();
-        };
-        
-        setTimeout(() => {
-          try {
-            if (registrationIframe.contentWindow && registrationIframe.contentDocument && 
-                registrationIframe.contentDocument.body && 
-                registrationIframe.contentDocument.body.innerHTML.trim() === "") {
-              registrationIframe.srcdoc = getFallbackRegistrationForm();
-            }
-          } catch(e) {
-            registrationIframe.srcdoc = getFallbackRegistrationForm();
-          }
-        }, 500);
-        
-        iframePanel.style.display = 'flex';
-      }
-      
-      function closeIframePanel() {
-        iframePanel.style.display = 'none';
-        registrationIframe.src = "registration.html";
-        registrationIframe.onerror = null;
-      }
-      
-      // Fallback registration form that submits data with correct field names for RECORDS
-      function getFallbackRegistrationForm() {
+      // Manual Entry Form that saves data to RECORDS with the required fields
+      function getManualEntryForm() {
         return `<!DOCTYPE html>
         <html>
         <head>
           <meta charset="UTF-8">
           <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-          <title>Household Registration | ITN Campaign</title>
+          <title>Manual Entry | Household Registration</title>
           <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
           <style>
             *{margin:0;padding:0;box-sizing:border-box;}
@@ -447,8 +418,8 @@
         <body>
           <div class="form-container">
             <div class="form-card">
-              <h2><i class="fas fa-bed"></i> Household Registration</h2>
-              <div class="sub">ITN Campaign 2026 - Sierra Leone</div>
+              <h2><i class="fas fa-pen-alt"></i> Manual Entry</h2>
+              <div class="sub">Household Registration Form - ITN Campaign 2026</div>
               
               <div class="form-group"><label><i class="fas fa-user"></i> Username</label><input type="text" id="username" placeholder="Enter username"></div>
               
@@ -464,7 +435,7 @@
               
               <div class="row-2">
                 <div class="form-group"><label><i class="fas fa-hospital"></i> Nearest Health Facility</label><input type="text" id="healthFacility" placeholder="PHU / Hospital"></div>
-                <div class="form-group"><label><i class="fas fa-user-circle"></i> Name (Household Head)</label><input type="text" id="headName" placeholder="Full name"></div>
+                <div class="form-group"><label><i class="fas fa-user-circle"></i> Name</label><input type="text" id="name" placeholder="Household Head Name"></div>
               </div>
               
               <div class="row-2">
@@ -484,7 +455,7 @@
               
               <button onclick="submitRegistration()"><i class="fas fa-save"></i> Submit Registration</button>
               <div id="successMsg" class="success-badge" style="display:none;"></div>
-              <div class="info-badge"><i class="fas fa-info-circle"></i> Data saved locally. View in RECORDS.</div>
+              <div class="info-badge"><i class="fas fa-info-circle"></i> Data will appear in RECORDS.</div>
             </div>
           </div>
           <script>
@@ -495,7 +466,7 @@
               const chiefdom = document.getElementById('chiefdom').value.trim();
               const community = document.getElementById('community').value.trim();
               const healthFacility = document.getElementById('healthFacility').value.trim();
-              const headName = document.getElementById('headName').value.trim();
+              const name = document.getElementById('name').value.trim();
               const mobile = document.getElementById('mobile').value.trim();
               const gps = document.getElementById('gps').value.trim();
               const underFives = parseInt(document.getElementById('underFives').value) || 0;
@@ -503,7 +474,7 @@
               const totalMembers = parseInt(document.getElementById('totalMembers').value);
               const itnReceived = parseInt(document.getElementById('itnReceived').value) || 0;
               
-              if (!region || !district || !chiefdom || !community || !healthFacility || !headName || !totalMembers || totalMembers < 1) {
+              if (!region || !district || !chiefdom || !community || !healthFacility || !name || !totalMembers || totalMembers < 1) {
                 alert('❌ Please fill all required fields (Region, District, Chiefdom, Community, Health Facility, Name, Total Members)');
                 return;
               }
@@ -515,7 +486,7 @@
                 chiefdom: chiefdom,
                 community: community,
                 nearestHealthFacility: healthFacility,
-                name: headName,
+                name: name,
                 mobile: mobile,
                 gpsCoordinates: gps || "N/A",
                 underFivesChildren: underFives,
@@ -532,18 +503,18 @@
               
               // Clear form
               document.getElementById('username').value = '';
+              document.getElementById('region').value = '';
               document.getElementById('district').value = '';
               document.getElementById('chiefdom').value = '';
               document.getElementById('community').value = '';
               document.getElementById('healthFacility').value = '';
-              document.getElementById('headName').value = '';
+              document.getElementById('name').value = '';
               document.getElementById('mobile').value = '';
               document.getElementById('gps').value = '';
               document.getElementById('underFives').value = '0';
               document.getElementById('pregnantWomen').value = '0';
               document.getElementById('totalMembers').value = '1';
               document.getElementById('itnReceived').value = '2';
-              document.getElementById('region').value = '';
               
               setTimeout(() => { successMsg.style.display = 'none'; }, 3000);
             }
@@ -552,17 +523,30 @@
         </html>`;
       }
       
+      function openRegistrationIframe() {
+        registrationIframe.srcdoc = getManualEntryForm();
+        iframePanel.style.display = 'flex';
+      }
+      
+      function closeIframePanel() {
+        iframePanel.style.display = 'none';
+      }
+      
+      // Listen for messages from the iframe (Manual Entry form submissions)
       window.addEventListener('message', function(event) {
         if (event.data && event.data.type === 'SAVE_REGISTRATION') {
           addRegistration(event.data.data);
           alert('✅ Registration saved successfully! View it in RECORDS.');
+          // Refresh records display if modal is open
+          if (document.getElementById('recordsModal').style.display === 'block') {
+            displayRecords();
+          }
         }
       });
       
-      // SCAN QR - Simulate QR scan and add registration
+      // SCAN QR - Add registration directly to RECORDS
       function handleScanQR() {
-        // Simulated QR scan data
-        const qrData = prompt("📷 SCAN QR CODE\n\nPosition the QR code in the camera viewfinder.\n\nFor demo, enter registration data in JSON format or click Cancel to use sample:", '{"username":"qr_user","region":"Western","district":"Freetown","chiefdom":"Central","community":"Brookfields","nearestHealthFacility":"Community Health Center","name":"John Kamara","mobile":"+23276543210","gpsCoordinates":"8.4871° N, 13.2353° W","underFivesChildren":2,"pregnantWomen":1,"totalMembers":5,"itnReceived":3}');
+        const qrData = prompt("📷 SCAN QR CODE\n\nPosition the QR code in the camera viewfinder.\n\nFor demo, enter registration data in JSON format:", '{"username":"qr_user","region":"Western","district":"Freetown","chiefdom":"Central","community":"Brookfields","nearestHealthFacility":"Community Health Center","name":"John Kamara","mobile":"+23276543210","gpsCoordinates":"8.4871° N, 13.2353° W","underFivesChildren":2,"pregnantWomen":1,"totalMembers":5,"itnReceived":3}');
         
         if (qrData) {
           try {
@@ -573,7 +557,6 @@
             alert('❌ Invalid QR data format. Please enter valid JSON.');
           }
         } else if (qrData === "") {
-          // Default sample if user just presses OK with empty
           const sampleData = {
             username: "qr_scan_user",
             region: "Western",
@@ -644,8 +627,8 @@
       
       loadData();
       
-      console.log('✅ RECORDS now displays columns: Username, Region, District, Chiefdom, Community, Nearest Health Facility, Name, Mobile, Under-Fives Children, Pregnant Women, Total Members, GPS Coordinates, Token, ITN Received');
-      console.log('✅ MANUAL ENTRY and SCAN QR both save data to RECORDS');
+      console.log('✅ MANUAL ENTRY form saves data to RECORDS');
+      console.log('✅ RECORDS displays: Username, Region, District, Chiefdom, Community, Nearest Health Facility, Name, Mobile, Under-Fives Children, Pregnant Women, Total Members, GPS Coordinates, Token, ITN Received');
     })();
   </script>
 </body>
