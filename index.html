@@ -336,7 +336,7 @@
 
 <script>
   // ====================== EMBEDDED CSV USER DATABASE (exactly as requested) ======================
-  // CSV data with the exact columns and rows from the specification
+  // Full CSV data with the exact columns and rows from the specification
   const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -389,6 +389,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     sessionStorage.setItem('loggedInUser', user.USERNAME);
     // Also store raw user data for role display
     sessionStorage.setItem('userRole', user.USERNAME);
+    return permissions;
   }
 
   // language state & translations
@@ -450,7 +451,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     else { pwd.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); }
   };
   
-  // LOGIN logic using embedded CSV database
+  // ========== LOGIN with REDIRECT to mscreen.html (fully linked) ==========
   async function performLogin() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
@@ -458,25 +459,20 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     
     const user = findUser(username, password);
     if (user) {
-      storeUserPermissions(user);
+      const permissions = storeUserPermissions(user);
       showSuccess(t('loginSuccess'));
-      // Display access level feedback in console (for debugging)
-      console.log(`✅ User ${username} logged in with permissions:`, {
-        REGISTER: user.REGISTER,
-        DISTRIBUTION: user.DISTRIBUTION,
-        MONITORING: user.MONITORING,
-        STOCK: user.STOCK,
-        DASHBOARD: user.DASHBOARD,
-        ATTENDANCE: user.ATTENDANCE,
-        DEVICE_TRACKING: user["DEVICE TRACKING"],
-        RECONCILIATION: user.RECONCILIATION,
-        WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
-      });
+      // Log access for debugging/audit
+      console.log(`✅ [ACCESS GRANTED] User: ${username} | Time: ${new Date().toISOString()}`);
+      console.log(`📋 Permissions:`, permissions);
+      
+      // REDIRECT TO mScreen DASHBOARD (mscreen.html) - fully linked
       setTimeout(() => {
-        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}`;
+        // Pass username as query parameter for additional verification if needed
+        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}&t=${Date.now()}`;
       }, 900);
     } else { 
-      showError(t('loginError')); 
+      showError(t('loginError'));
+      console.warn(`❌ [ACCESS DENIED] Failed login attempt for username: ${username}`);
     }
   }
 
@@ -592,13 +588,16 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   
   // Clear any previous session on page load for security (fresh login required)
   if (sessionStorage.getItem('loggedInUser')) {
+    console.log("🧹 Clearing previous session for security");
     sessionStorage.removeItem('userPermissions');
     sessionStorage.removeItem('loggedInUser');
     sessionStorage.removeItem('userRole');
   }
   
-  // Optional: Console log the embedded user database for verification
-  console.log("✅ Embedded CSV User Database loaded:", usersDatabase.map(u => u.USERNAME));
+  // Console log the embedded user database for verification
+  console.log("✅ Embedded CSV User Database loaded successfully");
+  console.log("📊 Available users:", usersDatabase.map(u => `${u.USERNAME} (${u.PASSWORD})`));
+  console.log("🔗 Ready to redirect to mscreen.html upon successful login");
 </script>
 </body>
 </html>
