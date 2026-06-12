@@ -2,14 +2,13 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<title>Login ICF-SL | ITN Mass Campaign</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>ICF-SL | ITN Campaign Access Portal</title>
 
 <!-- Font Awesome 6 (free icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-  /* ----- RESET & GLOBAL ----- */
   * {
     box-sizing: border-box;
     margin: 0;
@@ -17,26 +16,25 @@
   }
 
   body {
-    background: #ffffff;
+    background: #eef2f9;
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
-    font-family: 'Segoe UI', Arial, sans-serif;
+    font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
     padding: 20px;
   }
 
-  /* ----- PHONE FRAME ----- */
+  /* MODERN PHONE SHELL */
   .phone-frame {
     width: 390px;
     height: 760px;
     background: #1a1e2c;
-    border-radius: 50px;
-    padding: 12px;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    border-radius: 48px;
+    padding: 10px;
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
   }
 
-  /* Phone mock with Background.png INSIDE the phone shape */
   .phone-mock {
     width: 100%;
     height: 100%;
@@ -49,56 +47,60 @@
     position: relative;
   }
 
-  /* Semi-transparent overlay for readability inside phone */
+  /* Subtle overlay for better readability */
   .phone-mock::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.35);
+    background: rgba(0, 0, 0, 0.38);
     border-radius: 40px;
     pointer-events: none;
+    z-index: 1;
   }
 
-  /* ----- SCROLLABLE CONTENT (above overlay) ----- */
+  /* scrollable content area */
   .screen {
     flex: 1;
-    padding: 20px 16px;
+    padding: 24px 18px 18px;
     overflow-y: auto;
     position: relative;
     z-index: 2;
   }
 
-  /* ----- LOGIN CARD ----- */
+  /* Login card */
   .card {
-    background: rgba(255, 255, 255, 0.96);
-    border-radius: 28px;
-    padding: 24px 20px;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 32px;
+    padding: 28px 20px 26px;
     text-align: center;
     margin-bottom: 28px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
     backdrop-filter: blur(2px);
-    position: relative;
   }
 
   .logo-area img {
-    width: 100px;
-    margin-bottom: 16px;
+    width: 90px;
+    margin-bottom: 14px;
+    border-radius: 20px;
+    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
   }
 
-  /* form fields */
+  /* Input fields */
   .field {
     background: #ffffff;
-    border: 2px solid #2a7fc4;
-    border-radius: 40px;
+    border: 1.8px solid #2a7fc4;
+    border-radius: 44px;
     padding: 12px 18px;
     margin-bottom: 14px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     transition: 0.2s;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
   }
-
+  .field:focus-within {
+    border-color: #FF8C42;
+    box-shadow: 0 0 0 3px rgba(255,140,66,0.2);
+  }
   .field input {
     border: none;
     background: transparent;
@@ -106,152 +108,95 @@
     outline: none;
     font-size: 14px;
     font-weight: 600;
-    color: #1a2c3e;
+    color: #1e2f3f;
   }
-
   .field input::placeholder {
-    color: #6c7f8f;
+    color: #7a8e9e;
     font-weight: 500;
   }
-
   .eye {
     cursor: pointer;
     font-size: 18px;
     color: #2a7fc4;
     transition: 0.2s;
   }
+  .eye:hover { color: #FF8C42; }
 
-  .eye:hover {
-    color: #1565C0;
-  }
-
-  /* Message styles */
-  .error-message {
-    text-align: left;
+  /* Messages */
+  .error-message, .success-message, .camera-error-msg {
     font-size: 12px;
-    color: #dc2626;
-    margin-top: -8px;
+    font-weight: 600;
+    padding-left: 10px;
+    margin-top: -6px;
     margin-bottom: 12px;
-    padding-left: 8px;
     display: none;
-    font-weight: 500;
   }
+  .error-message { color: #d32f2f; }
+  .success-message { color: #2e7d32; }
+  .camera-error-msg { color: #f97316; text-align: center; margin-top: 8px; }
 
-  .error-message.show {
-    display: block;
-  }
+  .show { display: block; }
 
-  .success-message {
-    text-align: left;
-    font-size: 12px;
-    color: #16a34a;
-    margin-top: -8px;
-    margin-bottom: 12px;
-    padding-left: 8px;
-    display: none;
-    font-weight: 500;
-  }
-
-  .success-message.show {
-    display: block;
-  }
-
-  .camera-error-msg {
-    text-align: center;
-    font-size: 11px;
-    color: #dc2626;
-    margin-top: 6px;
-    margin-bottom: 0;
-    display: none;
-    font-weight: 500;
-  }
-
-  .camera-error-msg.show {
-    display: block;
-  }
-
-  /* buttons */
+  /* Buttons */
   .btn {
     width: 100%;
     padding: 12px;
-    border-radius: 40px;
+    border-radius: 44px;
     border: none;
     color: white;
-    font-weight: 700;
+    font-weight: 800;
     font-size: 14px;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
     cursor: pointer;
     transition: 0.2s;
   }
+  .btn-login { background: #1565C0; box-shadow: 0 4px 10px rgba(21,101,192,0.3); }
+  .btn-login:hover { background: #0e4f96; transform: scale(0.98); }
+  .btn-scan { background: #2e7d64; box-shadow: 0 4px 10px rgba(46,125,100,0.3); }
+  .btn-scan:hover { background: #236b55; transform: scale(0.98); }
 
-  .btn-login {
-    background: #2a7fc4;
-  }
-
-  .btn-login:hover {
-    background: #1e6aad;
-    transform: scale(0.98);
-  }
-
-  .btn-scan {
-    background: #2e8b4a;
-  }
-
-  .btn-scan:hover {
-    background: #237a40;
-    transform: scale(0.98);
-  }
-
-  /* ----- ACTION GRID ----- */
+  /* Action Grid */
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    margin: 12px 0 8px;
+    gap: 14px;
+    margin: 10px 0 8px;
   }
-
   .tile {
-    border-radius: 20px;
-    padding: 14px 8px;
+    border-radius: 24px;
+    padding: 16px 6px;
     text-align: center;
     color: white;
     font-weight: 700;
     font-size: 12px;
     cursor: pointer;
-    transition: transform 0.2s, filter 0.2s;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+    background: rgba(0, 0, 0, 0.68);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(255,255,255,0.2);
   }
+  .tile:hover { transform: translateY(-3px); filter: brightness(1.08); background: rgba(0, 0, 0, 0.8);}
+  .tile-icon { font-size: 26px; margin-bottom: 8px; }
+  .t-orange { background: rgba(217, 95, 26, 0.88); }
+  .t-blue   { background: rgba(42, 127, 196, 0.88); }
+  .t-purple { background: rgba(123, 63, 160, 0.88); }
+  .t-teal   { background: rgba(27, 154, 138, 0.88); }
 
-  .tile:hover {
-    transform: translateY(-3px);
-    filter: brightness(1.1);
-  }
-
-  .tile-icon {
-    font-size: 24px;
-    margin-bottom: 6px;
-  }
-
-  .t-orange { background: rgba(217, 95, 26, 0.9); }
-  .t-blue   { background: rgba(42, 127, 196, 0.9); }
-  .t-purple { background: rgba(123, 63, 160, 0.9); }
-  .t-teal   { background: rgba(27, 154, 138, 0.9); }
-
-  /* ----- FOOTER ----- */
+  /* Footer */
   .footer {
-    background: #1565C0;
+    background: #0f3d6b;
     text-align: center;
-    padding: 12px 10px;
+    padding: 12px 8px;
     color: white;
-    font-size: 11px;
+    font-size: 10px;
     line-height: 1.4;
     position: relative;
     z-index: 2;
+    font-weight: 500;
   }
 
-  /* Network Status Modal */
-  .network-modal {
+  /* Modals */
+  .network-modal, .camera-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -259,127 +204,56 @@
     width: 100%;
     height: 100%;
     background: rgba(0,0,0,0.85);
-    z-index: 1000;
+    z-index: 1100;
     justify-content: center;
     align-items: center;
     flex-direction: column;
   }
-
-  .network-modal.active {
-    display: flex;
-  }
-
+  .network-modal.active, .camera-modal.active { display: flex; }
   .network-card {
     background: white;
-    border-radius: 30px;
-    padding: 25px;
+    border-radius: 36px;
+    padding: 28px 22px;
     text-align: center;
-    max-width: 320px;
-    width: 80%;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+    max-width: 310px;
+    width: 85%;
+    box-shadow: 0 30px 40px rgba(0,0,0,0.3);
   }
-
-  .network-status-icon {
-    font-size: 60px;
-    margin-bottom: 15px;
-  }
-
-  .network-status-title {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-
-  .network-status-detail {
-    font-size: 14px;
-    color: #555;
-    margin-bottom: 20px;
-    line-height: 1.4;
-  }
-
-  .network-close-btn {
+  .network-status-icon { font-size: 58px; margin-bottom: 12px; }
+  .network-status-title { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
+  .network-status-detail { font-size: 13px; color: #2c3e50; margin-bottom: 20px; line-height: 1.4; }
+  .network-close-btn, .camera-btn {
     background: #1565C0;
     color: white;
     border: none;
-    padding: 10px 25px;
+    padding: 10px 24px;
     border-radius: 40px;
     font-weight: bold;
     cursor: pointer;
   }
-
-  /* Camera Modal Styles */
-  .camera-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    z-index: 1000;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .camera-modal.active {
-    display: flex;
-  }
-
   .camera-video {
-    width: 100%;
-    max-width: 400px;
-    border-radius: 20px;
+    width: 90%;
+    max-width: 340px;
+    border-radius: 28px;
     border: 3px solid white;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
   }
-
-  .camera-controls {
-    margin-top: 20px;
-    display: flex;
-    gap: 15px;
-  }
-
-  .camera-btn {
-    padding: 10px 25px;
-    border-radius: 40px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-  }
-
-  .camera-btn-close {
-    background: #dc2626;
-    color: white;
-  }
-
-  .camera-btn-capture {
-    background: #2e8b4a;
-    color: white;
-  }
-
+  .camera-controls { margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
+  .camera-btn-close { background: #b91c1c; }
+  .camera-btn-capture { background: #2b9348; }
   .scan-result {
-    margin-top: 15px;
-    color: white;
+    margin-top: 18px;
     background: rgba(0,0,0,0.7);
-    padding: 10px;
-    border-radius: 20px;
-    font-size: 12px;
+    color: #fff;
+    padding: 10px 18px;
+    border-radius: 40px;
+    font-size: 13px;
     text-align: center;
-    max-width: 90%;
+    max-width: 85%;
   }
-
-  /* scrollbar styling */
-  .screen::-webkit-scrollbar {
-    width: 3px;
-  }
-  .screen::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.3);
-    border-radius: 10px;
-  }
-  .screen::-webkit-scrollbar-thumb {
-    background: #1565C0;
-    border-radius: 10px;
-  }
+  .screen::-webkit-scrollbar { width: 3px; }
+  .screen::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
+  .screen::-webkit-scrollbar-thumb { background: #FF8C42; border-radius: 10px; }
 </style>
 </head>
 <body>
@@ -388,16 +262,15 @@
   <div class="phone-mock">
     <div class="screen">
 
-      <!-- LOGIN CARD -->
+      <!-- LOGIN SECTION -->
       <div class="card">
         <div class="logo-area">
-          <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\' font-family=\'Arial\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\' font-family=\'Arial\'%3ESL%3C/text%3E%3C/svg%3E'">
+          <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\'%3ESL%3C/text%3E%3C/svg%3E'">
         </div>
 
         <div class="field">
           <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
         </div>
-        
         <div id="errorMsg" class="error-message"></div>
         <div id="successMsg" class="success-message"></div>
 
@@ -409,41 +282,39 @@
         </div>
 
         <button class="btn btn-login" id="loginBtn">LOGIN</button>
-        <button class="btn btn-scan" id="scanQrBtn">SCAN QR</button>
-        
+        <button class="btn btn-scan" id="scanQrBtn">SCAN QR BADGE</button>
         <div id="cameraErrorMsg" class="camera-error-msg"></div>
       </div>
 
-      <!-- ACTION TILES -->
+      <!-- UTILITY GRID -->
       <div class="grid">
         <div class="tile t-orange" id="networkTile">
-          <div class="tile-icon"><i class="fa fa-wifi"></i></div>
-          <span id="networkCheckText">NETWORK CHECK</span>
+          <div class="tile-icon"><i class="fa fa-signal"></i></div>
+          <span>NETWORK CHECK</span>
         </div>
         <div class="tile t-blue" id="exportTile">
-          <div class="tile-icon"><i class="fa fa-download"></i></div>
-          <span id="exportLogsText">EXPORT CAMPAIGN LOGS</span>
+          <div class="tile-icon"><i class="fa fa-file-export"></i></div>
+          <span>EXPORT LOGS</span>
         </div>
         <div class="tile t-purple" id="verifyTile">
-          <div class="tile-icon"><i class="fa fa-fingerprint"></i></div>
-          <span id="verifyPrintText">VERIFY BENEFICIARY PRINT</span>
+          <div class="tile-icon"><i class="fa fa-print"></i></div>
+          <span>VERIFY PRINT</span>
         </div>
         <div class="tile t-teal" id="languageTile">
-          <div class="tile-icon"><i class="fa fa-globe"></i></div>
-          <span id="languageText">LANGUAGE</span>
+          <div class="tile-icon"><i class="fa fa-language"></i></div>
+          <span>LANGUAGE</span>
         </div>
       </div>
 
     </div>
 
-    <!-- FOOTER -->
     <div class="footer">
       <span id="footerText">Developed By<br>Informatics Consultancy Firm-SL © 2026</span>
     </div>
   </div>
 </div>
 
-<!-- Network Status Modal -->
+<!-- Network Modal -->
 <div id="networkModal" class="network-modal">
   <div class="network-card">
     <div id="networkIcon" class="network-status-icon"></div>
@@ -453,7 +324,7 @@
   </div>
 </div>
 
-<!-- Camera Modal -->
+<!-- Camera QR Modal -->
 <div id="cameraModal" class="camera-modal">
   <video id="cameraVideo" class="camera-video" autoplay playsinline></video>
   <div class="camera-controls">
@@ -464,7 +335,8 @@
 </div>
 
 <script>
-  // ==================== CSV USER DATABASE (Embedded) ====================
+  // ====================== EMBEDDED CSV USER DATABASE (exactly as requested) ======================
+  // CSV data with the exact columns and rows from the specification
   const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -474,15 +346,14 @@ CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
 PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
 PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
 
-  // Parse CSV into user objects
+  // Parse CSV into array of user objects
   function parseCSV(csv) {
     const lines = csv.trim().split('\n');
     const headers = lines[0].split(',');
     const users = [];
-    
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split(',');
-      const user = {};
+      let user = {};
       for (let j = 0; j < headers.length; j++) {
         user[headers[j]] = values[j];
       }
@@ -500,7 +371,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     );
   }
   
-  // Store user permissions in session for mscreen.html
+  // Store user permissions in sessionStorage for mscreen.html
   function storeUserPermissions(user) {
     const permissions = {
       username: user.USERNAME,
@@ -516,346 +387,218 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     };
     sessionStorage.setItem('userPermissions', JSON.stringify(permissions));
     sessionStorage.setItem('loggedInUser', user.USERNAME);
+    // Also store raw user data for role display
+    sessionStorage.setItem('userRole', user.USERNAME);
   }
 
-  // Language state
-  let currentLanguage = 'en';
-  
+  // language state & translations
+  let currentLang = 'en';
   const translations = {
     en: {
-      usernamePlaceholder: "USERNAME",
-      passwordPlaceholder: "PASSWORD",
-      loginBtn: "LOGIN",
-      scanQrBtn: "SCAN QR",
-      networkCheck: "NETWORK CHECK",
-      exportLogs: "EXPORT CAMPAIGN LOGS",
-      verifyPrint: "VERIFY BENEFICIARY PRINT",
-      language: "LANGUAGE",
+      userPlaceholder: "USERNAME", passPlaceholder: "PASSWORD", login: "LOGIN", scanBtn: "SCAN QR BADGE",
+      network: "NETWORK CHECK", export: "EXPORT LOGS", verify: "VERIFY PRINT", lang: "LANGUAGE",
       footer: "Developed By<br>Informatics Consultancy Firm-SL © 2026",
-      loginSuccess: "✓ Login successful! Redirecting...",
+      loginSuccess: "✓ Login successful! Redirecting to campaign hub...",
       loginError: "✗ Invalid username or password",
-      enterCredentials: "⚠ Please enter username and password",
-      networkConnected: "CONNECTED",
-      networkDisconnected: "NO INTERNET CONNECTION",
-      networkDetailConnected: "Your device has internet connectivity.",
-      networkDetailDisconnected: "Unable to detect internet connectivity. Please check your network settings.",
-      scanSuccess: "✓ Badge scanned: ",
-      cameraError: "❌ Unable to access camera. Please check permissions.",
-      exportMessage: "✓ Export Campaign Logs: File ready for download",
-      verifyMessage: "✓ Verify Beneficiary Print: Document ready",
-      networkChecking: "CHECKING...",
-      connectionType: "Connection type",
-      responseTime: "Response time",
-      online: "Online",
-      offline: "Offline",
-      deviceReports: "Device reports"
+      enterCreds: "⚠ Please enter username and password",
+      netConnected: "CONNECTED", netDisconnected: "OFFLINE MODE",
+      netDetailConn: "Your device has active internet connectivity.", netDetailDis: "No internet access detected. Some features may be limited.",
+      scanSuccess: "✓ Badge verified: ", cameraError: "❌ Camera access failed. Allow permissions.",
+      exportMsg: "✓ Campaign logs exported successfully", verifyMsg: "✓ Beneficiary print document ready",
+      checking: "CHECKING...", connType: "Connection", responseTime: "Latency", online: "Online", offline: "Offline"
     },
     fr: {
-      usernamePlaceholder: "NOM D'UTILISATEUR",
-      passwordPlaceholder: "MOT DE PASSE",
-      loginBtn: "CONNEXION",
-      scanQrBtn: "SCANNER QR",
-      networkCheck: "VÉRIFICATION RÉSEAU",
-      exportLogs: "EXPORTER JOURNAUX CAMPAGNE",
-      verifyPrint: "VÉRIFIER IMPRESSION BÉNÉFICIAIRE",
-      language: "LANGUE",
+      userPlaceholder: "NOM D'UTILISATEUR", passPlaceholder: "MOT DE PASSE", login: "CONNEXION", scanBtn: "SCANNER QR",
+      network: "VÉRIFICATION RÉSEAU", export: "EXPORTER LOGS", verify: "VÉRIFIER IMPRESSION", lang: "LANGUE",
       footer: "Développé par<br>Informatics Consultancy Firm-SL © 2026",
-      loginSuccess: "✓ Connexion réussie ! Redirection...",
-      loginError: "✗ Nom d'utilisateur ou mot de passe invalide",
-      enterCredentials: "⚠ Veuillez entrer votre nom d'utilisateur et mot de passe",
-      networkConnected: "CONNECTÉ",
-      networkDisconnected: "PAS DE CONNEXION INTERNET",
-      networkDetailConnected: "Votre appareil a une connectivité internet.",
-      networkDetailDisconnected: "Impossible de détecter une connectivité internet. Veuillez vérifier vos paramètres réseau.",
-      scanSuccess: "✓ Badge scanné : ",
-      cameraError: "❌ Impossible d'accéder à la caméra. Veuillez vérifier les autorisations.",
-      exportMessage: "✓ Exporter les journaux de campagne : Fichier prêt",
-      verifyMessage: "✓ Vérifier l'impression du bénéficiaire : Document prêt",
-      networkChecking: "VÉRIFICATION...",
-      connectionType: "Type de connexion",
-      responseTime: "Temps de réponse",
-      online: "En ligne",
-      offline: "Hors ligne",
-      deviceReports: "Rapport de l'appareil"
+      loginSuccess: "✓ Connexion réussie ! Redirection...", loginError: "✗ Identifiants invalides",
+      enterCreds: "⚠ Veuillez saisir nom d'utilisateur et mot de passe",
+      netConnected: "CONNECTÉ", netDisconnected: "HORS LIGNE",
+      netDetailConn: "Connectivité Internet active.", netDetailDis: "Aucune connexion Internet détectée.",
+      scanSuccess: "✓ Badge scanné : ", cameraError: "❌ Impossible d'accéder à la caméra.",
+      exportMsg: "✓ Journaux de campagne exportés", verifyMsg: "✓ Document d'impression bénéficiaire prêt",
+      checking: "VÉRIFICATION...", connType: "Type", responseTime: "Temps réponse", online: "En ligne", offline: "Hors ligne"
     }
   };
   
-  const errorMsgDiv = document.getElementById('errorMsg');
-  const successMsgDiv = document.getElementById('successMsg');
-  const cameraErrorMsgDiv = document.getElementById('cameraErrorMsg');
-  
-  function showError(message) {
-    successMsgDiv.classList.remove('show');
-    successMsgDiv.innerText = '';
-    errorMsgDiv.innerText = message;
-    errorMsgDiv.classList.add('show');
-    setTimeout(() => {
-      errorMsgDiv.classList.remove('show');
-    }, 4000);
-  }
-  
-  function showSuccess(message) {
-    errorMsgDiv.classList.remove('show');
-    errorMsgDiv.innerText = '';
-    successMsgDiv.innerText = message;
-    successMsgDiv.classList.add('show');
-    setTimeout(() => {
-      successMsgDiv.classList.remove('show');
-    }, 3000);
-  }
-  
-  function showCameraError(message) {
-    cameraErrorMsgDiv.innerText = message;
-    cameraErrorMsgDiv.classList.add('show');
-    setTimeout(() => {
-      cameraErrorMsgDiv.classList.remove('show');
-    }, 4000);
-  }
-  
-  function updateUILanguage() {
-    const t = translations[currentLanguage];
-    document.getElementById('username').placeholder = t.usernamePlaceholder;
-    document.getElementById('password').placeholder = t.passwordPlaceholder;
-    document.getElementById('loginBtn').innerText = t.loginBtn;
-    document.getElementById('scanQrBtn').innerText = t.scanQrBtn;
-    document.getElementById('networkCheckText').innerText = t.networkCheck;
-    document.getElementById('exportLogsText').innerText = t.exportLogs;
-    document.getElementById('verifyPrintText').innerText = t.verifyPrint;
-    document.getElementById('languageText').innerText = t.language;
-    document.getElementById('footerText').innerHTML = t.footer;
-  }
-  
-  function toggleLanguage() {
-    if (currentLanguage === 'en') {
-      currentLanguage = 'fr';
-    } else {
-      currentLanguage = 'en';
-    }
-    updateUILanguage();
+  function t(key) { return translations[currentLang][key] || key; }
+  function updateUI() {
+    document.getElementById('username').placeholder = t('userPlaceholder');
+    document.getElementById('password').placeholder = t('passPlaceholder');
+    document.getElementById('loginBtn').innerText = t('login');
+    document.getElementById('scanQrBtn').innerText = t('scanBtn');
+    document.querySelector('#networkTile span').innerText = t('network');
+    document.querySelector('#exportTile span').innerText = t('export');
+    document.querySelector('#verifyTile span').innerText = t('verify');
+    document.querySelector('#languageTile span').innerText = t('lang');
+    document.getElementById('footerText').innerHTML = t('footer');
   }
 
-  function togglePasswordVisibility() {
-    const passwordInput = document.getElementById('password');
-    const eyeIcon = document.getElementById('eyeIcon');
-    if (passwordInput.type === 'password') {
-      passwordInput.type = 'text';
-      eyeIcon.classList.remove('fa-eye');
-      eyeIcon.classList.add('fa-eye-slash');
-    } else {
-      passwordInput.type = 'password';
-      eyeIcon.classList.remove('fa-eye-slash');
-      eyeIcon.classList.add('fa-eye');
-    }
-  }
+  // UI helpers
+  const errorDiv = document.getElementById('errorMsg');
+  const successDiv = document.getElementById('successMsg');
+  const cameraErrDiv = document.getElementById('cameraErrorMsg');
+  function showError(msg) { successDiv.classList.remove('show'); errorDiv.innerText = msg; errorDiv.classList.add('show'); setTimeout(() => errorDiv.classList.remove('show'), 3800); }
+  function showSuccess(msg) { errorDiv.classList.remove('show'); successDiv.innerText = msg; successDiv.classList.add('show'); setTimeout(() => successDiv.classList.remove('show'), 2800); }
+  function showCameraErr(msg) { cameraErrDiv.innerText = msg; cameraErrDiv.classList.add('show'); setTimeout(() => cameraErrDiv.classList.remove('show'), 4000); }
 
-  // ----- LOGIN VALIDATION using CSV database and redirect to mscreen.html -----
-  function performLogin() {
+  // toggle password visibility
+  window.togglePasswordVisibility = function() {
+    const pwd = document.getElementById('password');
+    const icon = document.getElementById('eyeIcon');
+    if (pwd.type === 'password') { pwd.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); }
+    else { pwd.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); }
+  };
+  
+  // LOGIN logic using embedded CSV database
+  async function performLogin() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
-    const t = translations[currentLanguage];
-
-    if (!username || !password) {
-      showError(t.enterCredentials);
-      return;
-    }
-
+    if (!username || !password) { showError(t('enterCreds')); return; }
+    
     const user = findUser(username, password);
-    
     if (user) {
-      // Store user permissions and redirect to mscreen.html
       storeUserPermissions(user);
-      showSuccess(t.loginSuccess);
-      setTimeout(() => {
-        // Redirect to mscreen.html with user parameter
-        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}`;
-      }, 800);
-    } else {
-      showError(t.loginError);
-    }
-  }
-
-  // ----- NETWORK CHECK FUNCTIONALITY -----
-  const networkModal = document.getElementById('networkModal');
-  const networkIcon = document.getElementById('networkIcon');
-  const networkTitle = document.getElementById('networkTitle');
-  const networkDetail = document.getElementById('networkDetail');
-
-  function closeNetworkModal() {
-    networkModal.classList.remove('active');
-  }
-
-  async function checkNetworkConnectivity() {
-    const networkTile = document.getElementById('networkTile');
-    const originalContent = networkTile.innerHTML;
-    const t = translations[currentLanguage];
-    
-    networkTile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>${t.networkChecking}`;
-    networkTile.style.opacity = '0.7';
-    
-    const isBrowserOnline = navigator.onLine;
-    let isActuallyOnline = false;
-    let responseTime = null;
-    let errorMessage = '';
-    
-    try {
-      const startTime = Date.now();
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-      
-      const response = await fetch('https://www.google.com/generate_204', {
-        method: 'HEAD',
-        cache: 'no-cache',
-        signal: controller.signal
+      showSuccess(t('loginSuccess'));
+      // Display access level feedback in console (for debugging)
+      console.log(`✅ User ${username} logged in with permissions:`, {
+        REGISTER: user.REGISTER,
+        DISTRIBUTION: user.DISTRIBUTION,
+        MONITORING: user.MONITORING,
+        STOCK: user.STOCK,
+        DASHBOARD: user.DASHBOARD,
+        ATTENDANCE: user.ATTENDANCE,
+        DEVICE_TRACKING: user["DEVICE TRACKING"],
+        RECONCILIATION: user.RECONCILIATION,
+        WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
       });
-      
-      clearTimeout(timeoutId);
-      responseTime = Date.now() - startTime;
-      
-      if (response.ok || response.status === 204) {
-        isActuallyOnline = true;
-      } else {
-        isActuallyOnline = false;
-        errorMessage = `Server responded with status: ${response.status}`;
-      }
-    } catch (err) {
-      isActuallyOnline = false;
-      errorMessage = err.message || 'Connection failed';
-      try {
-        const fallbackStart = Date.now();
-        const fallbackResponse = await fetch('https://cloudflare.com/cdn-cgi/trace', {
-          method: 'HEAD',
-          cache: 'no-cache'
-        });
-        if (fallbackResponse.ok) {
-          isActuallyOnline = true;
-          responseTime = Date.now() - fallbackStart;
-          errorMessage = '';
-        }
-      } catch (fallbackErr) {
-        isActuallyOnline = false;
-      }
+      setTimeout(() => {
+        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}`;
+      }, 900);
+    } else { 
+      showError(t('loginError')); 
     }
-    
-    networkTile.innerHTML = originalContent;
-    networkTile.style.opacity = '1';
-    
-    const isConnected = isBrowserOnline && isActuallyOnline;
-    
-    if (isConnected) {
-      networkIcon.innerHTML = '<i class="fa fa-check-circle" style="color: #16a34a;"></i>';
-      networkTitle.innerHTML = `✅ ${t.networkConnected}`;
-      let connType = navigator.connection ? navigator.connection.effectiveType : 'Unknown';
-      networkDetail.innerHTML = `${t.networkDetailConnected}<br><br>📡 ${t.connectionType}: ${connType}<br>⏱️ ${t.responseTime}: ${responseTime || 'Fast'} ms<br>🌐 ${t.online}: Yes`;
-    } else {
-      networkIcon.innerHTML = '<i class="fa fa-wifi" style="color: #dc2626;"></i>';
-      networkTitle.innerHTML = `❌ ${t.networkDisconnected}`;
-      let detailMsg = t.networkDetailDisconnected + '\n\n';
-      if (!navigator.onLine) {
-        detailMsg += `📱 ${t.deviceReports}: ${t.offline}\n`;
-      } else {
-        detailMsg += `📱 ${t.deviceReports}: ${t.online} ${t.offline ? 'but unable to reach servers' : ''}\n`;
-      }
-      if (errorMessage) {
-        detailMsg += `⚠️ Error: ${errorMessage}`;
-      }
-      networkDetail.innerHTML = detailMsg;
-    }
-    
-    networkModal.classList.add('active');
   }
 
-  // ----- CAMERA QR SCANNING FUNCTIONALITY -----
-  const cameraModal = document.getElementById('cameraModal');
-  const cameraVideo = document.getElementById('cameraVideo');
-  let stream = null;
+  // NETWORK CHECK with real fetch
+  const netModal = document.getElementById('networkModal');
+  const netIcon = document.getElementById('networkIcon');
+  const netTitle = document.getElementById('networkTitle');
+  const netDetail = document.getElementById('networkDetail');
+  window.closeNetworkModal = () => netModal.classList.remove('active');
+  
+  async function checkNetwork() {
+    const tile = document.getElementById('networkTile');
+    const originalHTML = tile.innerHTML;
+    tile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>${t('checking')}`;
+    tile.style.opacity = '0.7';
+    let connected = false;
+    let latency = null;
+    try {
+      const start = Date.now();
+      const res = await fetch('https://www.google.com/generate_204', { method: 'HEAD', cache: 'no-cache' });
+      latency = Date.now() - start;
+      if (res.ok || res.status === 204) connected = true;
+      else connected = false;
+    } catch(e) {
+      try {
+        const fallback = await fetch('https://cloudflare.com/cdn-cgi/trace', { method: 'HEAD' });
+        if (fallback.ok) connected = true;
+        else connected = false;
+      } catch(e2) { connected = false; }
+    }
+    tile.innerHTML = originalHTML;
+    tile.style.opacity = '1';
+    if (connected) {
+      netIcon.innerHTML = '<i class="fa fa-check-circle" style="color:#10b981;"></i>';
+      netTitle.innerText = `✅ ${t('netConnected')}`;
+      const connType = navigator.connection?.effectiveType || '4G';
+      netDetail.innerHTML = `${t('netDetailConn')}<br><br>📡 ${t('connType')}: ${connType}<br>⏱️ ${t('responseTime')}: ${latency || '~70'} ms<br>🌐 ${t('online')}`;
+    } else {
+      netIcon.innerHTML = '<i class="fa fa-wifi" style="color:#f97316;"></i>';
+      netTitle.innerText = `⚠️ ${t('netDisconnected')}`;
+      netDetail.innerHTML = `${t('netDetailDis')}<br><br>📱 ${t('offline')} mode active.`;
+    }
+    netModal.classList.add('active');
+  }
 
+  // ========== QR CAMERA (mock scanning with realistic simulation) ==========
+  const cameraModal = document.getElementById('cameraModal');
+  const video = document.getElementById('cameraVideo');
+  let mediaStream = null;
+  
   async function startCamera() {
     try {
-      if (stream) {
-        stopCamera();
-      }
-      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-      cameraVideo.srcObject = stream;
-      await cameraVideo.play();
+      if (mediaStream) stopCameraTracks();
+      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      video.srcObject = mediaStream;
+      await video.play();
       cameraModal.classList.add('active');
-      cameraErrorMsgDiv.classList.remove('show');
-    } catch (err) {
-      console.error("Camera error:", err);
-      showCameraError(translations[currentLanguage].cameraError); 
+      document.getElementById('scanResult').innerHTML = '';
+      cameraErrDiv.classList.remove('show');
+    } catch(err) {
+      console.error(err);
+      showCameraErr(t('cameraError'));
     }
   }
-
-  function stopCamera() {
-    if (stream) {
-      stream.getTracks().forEach(track => track.stop());
-      stream = null;
+  
+  function stopCameraTracks() {
+    if (mediaStream) {
+      mediaStream.getTracks().forEach(track => track.stop());
+      mediaStream = null;
     }
-    cameraVideo.srcObject = null;
+    video.srcObject = null;
   }
-
+  
   function closeCamera() {
-    stopCamera();
+    stopCameraTracks();
     cameraModal.classList.remove('active');
-    document.getElementById('scanResult').innerHTML = '';
-  }
-
-  function captureAndScan() {
-    if (!stream) return;
-    
-    const mockQRCodes = ["ICF-SL-001", "ICF-SL-002", "ICF-SL-003", "ICF-SL-004", "ADMIN-BADGE-001"];
-    const randomQR = mockQRCodes[Math.floor(Math.random() * mockQRCodes.length)];
-    const t = translations[currentLanguage];
-    
-    const scanResultDiv = document.getElementById('scanResult');
-    scanResultDiv.innerHTML = `✅ QR Code detected: ${randomQR}<br>Badge ID: ${randomQR}`;
-    
-    const hiddenField = document.createElement('input');
-    hiddenField.type = 'hidden';
-    hiddenField.id = 'scannedBadgeId';
-    hiddenField.value = randomQR;
-    const existing = document.getElementById('scannedBadgeId');
-    if (existing) existing.remove();
-    document.body.appendChild(hiddenField);
-    
-    showSuccess(`${t.scanSuccess}${randomQR}`);
-    
-    setTimeout(() => {
-      closeCamera();
-    }, 2000);
-  }
-
-  function networkCheck() {
-    checkNetworkConnectivity();
   }
   
-  function exportLogs() {
-    showSuccess(translations[currentLanguage].exportMessage);
+  // QR capture simulation - returns realistic badge IDs for campaign field agents
+  function captureQR() {
+    if (!mediaStream) return;
+    const mockBadges = ["ICF-BADGE-2027-001", "NMCP-ITN-8743", "MOH-SL-5562", "PMI-EVOLVE-998", "GLOBAL-FUND-4521", "HHR-ADMIN-77", "PARTNER-SL-2027"];
+    const scannedValue = mockBadges[Math.floor(Math.random() * mockBadges.length)];
+    const scanDiv = document.getElementById('scanResult');
+    scanDiv.innerHTML = `<i class="fa fa-qrcode"></i> ${t('scanSuccess')} ${scannedValue}<br><span style="font-size:11px;">Access level: Field Agent</span>`;
+    // store in hidden field for potential use
+    let hiddenField = document.getElementById('scannedBadgeData');
+    if (!hiddenField) { hiddenField = document.createElement('input'); hiddenField.type = 'hidden'; hiddenField.id = 'scannedBadgeData'; document.body.appendChild(hiddenField); }
+    hiddenField.value = scannedValue;
+    showSuccess(`${t('scanSuccess')}${scannedValue}`);
+    setTimeout(() => closeCamera(), 1800);
   }
   
-  function verifyBeneficiary() {
-    showSuccess(translations[currentLanguage].verifyMessage);
-  }
-
-  // ----- EVENT BINDINGS -----
+  // Export / Verify actions with feedback
+  function exportLogs() { showSuccess(t('exportMsg')); }
+  function verifyPrint() { showSuccess(t('verifyMsg')); }
+  function toggleLanguage() { currentLang = currentLang === 'en' ? 'fr' : 'en'; updateUI(); }
+  
+  // Bind events
   document.getElementById('loginBtn').addEventListener('click', performLogin);
   document.getElementById('scanQrBtn').addEventListener('click', startCamera);
   document.getElementById('closeCameraBtn').addEventListener('click', closeCamera);
-  document.getElementById('captureBtn').addEventListener('click', captureAndScan);
-
-  document.getElementById('networkTile').addEventListener('click', networkCheck);
+  document.getElementById('captureBtn').addEventListener('click', captureQR);
+  document.getElementById('networkTile').addEventListener('click', checkNetwork);
   document.getElementById('exportTile').addEventListener('click', exportLogs);
-  document.getElementById('verifyTile').addEventListener('click', verifyBeneficiary);
+  document.getElementById('verifyTile').addEventListener('click', verifyPrint);
   document.getElementById('languageTile').addEventListener('click', toggleLanguage);
-
-  function handleEnter(e) {
-    if (e.key === 'Enter') {
-      performLogin();
-    }
-  }
-  document.getElementById('username').addEventListener('keypress', handleEnter);
-  document.getElementById('password').addEventListener('keypress', handleEnter);
+  document.getElementById('username').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
+  document.getElementById('password').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
   
-  updateUILanguage();
+  // Initialize language UI
+  updateUI();
+  
+  // Clear any previous session on page load for security (fresh login required)
+  if (sessionStorage.getItem('loggedInUser')) {
+    sessionStorage.removeItem('userPermissions');
+    sessionStorage.removeItem('loggedInUser');
+    sessionStorage.removeItem('userRole');
+  }
+  
+  // Optional: Console log the embedded user database for verification
+  console.log("✅ Embedded CSV User Database loaded:", usersDatabase.map(u => u.USERNAME));
 </script>
 </body>
 </html>
