@@ -5,14 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ICF-SL | ITN Campaign Access Portal</title>
 
-<!-- Font Awesome 6 (free icons) -->
+<!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
   * {
-    box-sizing: border-box;
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
   }
 
   body {
@@ -25,7 +25,7 @@
     padding: 20px;
   }
 
-  /* MODERN PHONE SHELL */
+  /* PHONE SHELL */
   .phone-frame {
     width: 390px;
     height: 760px;
@@ -41,51 +41,43 @@
     background: url("background.png") no-repeat center center;
     background-size: cover;
     border-radius: 40px;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: flex;
     flex-direction: column;
     position: relative;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .phone-mock::-webkit-scrollbar {
+    display: none;
   }
 
-  /* Subtle overlay for better readability */
-  .phone-mock::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.38);
-    border-radius: 40px;
-    pointer-events: none;
-    z-index: 1;
-  }
-
-  /* scrollable content area */
-  .screen {
+  /* Login screen styles */
+  .login-screen {
     flex: 1;
-    padding: 24px 18px 18px;
-    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    padding: 24px 18px 0 18px;
     position: relative;
     z-index: 2;
   }
 
-  /* Login card */
   .card {
     background: rgba(255, 255, 255, 0.98);
     border-radius: 32px;
     padding: 28px 20px 26px;
     text-align: center;
-    margin-bottom: 28px;
+    margin-bottom: 20px;
     box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
-    backdrop-filter: blur(2px);
   }
 
   .logo-area img {
     width: 90px;
     margin-bottom: 14px;
     border-radius: 20px;
-    box-shadow: 0 5px 12px rgba(0,0,0,0.1);
   }
 
-  /* Input fields */
   .field {
     background: #ffffff;
     border: 1.8px solid #2a7fc4;
@@ -95,7 +87,6 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    transition: 0.2s;
   }
   .field:focus-within {
     border-color: #FF8C42;
@@ -118,11 +109,8 @@
     cursor: pointer;
     font-size: 18px;
     color: #2a7fc4;
-    transition: 0.2s;
   }
-  .eye:hover { color: #FF8C42; }
 
-  /* Messages */
   .error-message, .success-message, .camera-error-msg {
     font-size: 12px;
     font-weight: 600;
@@ -133,11 +121,9 @@
   }
   .error-message { color: #d32f2f; }
   .success-message { color: #2e7d32; }
-  .camera-error-msg { color: #f97316; text-align: center; margin-top: 8px; }
-
+  .camera-error-msg { color: #f97316; text-align: center; }
   .show { display: block; }
 
-  /* Buttons */
   .btn {
     width: 100%;
     padding: 12px;
@@ -148,55 +134,275 @@
     font-size: 14px;
     margin-bottom: 12px;
     cursor: pointer;
-    transition: 0.2s;
   }
-  .btn-login { background: #1565C0; box-shadow: 0 4px 10px rgba(21,101,192,0.3); }
-  .btn-login:hover { background: #0e4f96; transform: scale(0.98); }
-  .btn-scan { background: #2e7d64; box-shadow: 0 4px 10px rgba(46,125,100,0.3); }
-  .btn-scan:hover { background: #236b55; transform: scale(0.98); }
+  .btn-login { background: #1565C0; }
+  .btn-login:hover { background: #0e4f96; }
+  .btn-scan { background: #2e7d64; }
 
-  /* Action Grid */
-  .grid {
+  .utility-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 10px 0 8px;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
   }
   .tile {
     border-radius: 24px;
-    padding: 16px 6px;
+    padding: 14px 6px;
     text-align: center;
     color: white;
     font-weight: 700;
-    font-size: 12px;
+    font-size: 11px;
     cursor: pointer;
-    transition: all 0.2s ease;
     background: rgba(0, 0, 0, 0.68);
     backdrop-filter: blur(6px);
-    border: 1px solid rgba(255,255,255,0.2);
   }
-  .tile:hover { transform: translateY(-3px); filter: brightness(1.08); background: rgba(0, 0, 0, 0.8);}
-  .tile-icon { font-size: 26px; margin-bottom: 8px; }
+  .tile-icon { font-size: 24px; margin-bottom: 6px; }
   .t-orange { background: rgba(217, 95, 26, 0.88); }
   .t-blue   { background: rgba(42, 127, 196, 0.88); }
   .t-purple { background: rgba(123, 63, 160, 0.88); }
   .t-teal   { background: rgba(27, 154, 138, 0.88); }
 
-  /* Footer */
-  .footer {
-    background: #0f3d6b;
+  /* Login Footer - color #1565c0, extended to edges */
+  .login-footer {
+    background: #1565C0;
     text-align: center;
-    padding: 12px 8px;
+    padding: 14px 12px;
     color: white;
     font-size: 10px;
     line-height: 1.4;
-    position: relative;
-    z-index: 2;
+    width: calc(100% + 36px);
+    margin-left: -18px;
+    margin-right: 0;
+    margin-top: auto;
+    border-radius: 0;
+  }
+  .login-footer strong {
+    color: #FFD966;
+  }
+
+  /* Dashboard Styles */
+  .dashboard-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+  }
+
+  .app-header {
+    background-color: #1565C0;
+    padding: 0.65rem 1rem 0.5rem;
+    flex-shrink: 0;
+  }
+  .header-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+  }
+  .logo-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 0.5rem;
+  }
+  .logo-area-dash {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .logo-icon {
+    width: 44px;
+    height: 44px;
+    background: white;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .logo-icon img { width: 100%; object-fit: cover; }
+  .org-info h1 {
+    font-size: 0.75rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #FFE0B5);
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+  }
+  .org-info p {
+    font-size: 0.5rem;
     font-weight: 500;
+    color: rgba(255, 255, 255, 0.92);
+  }
+  .nav-badge {
+    background: #FF8C42;
+    padding: 0.3rem 1rem;
+    border-radius: 40px;
+    font-weight: 700;
+    font-size: 0.55rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: white;
+    white-space: nowrap;
+    overflow-x: auto;
+  }
+  .campaign-sub-header {
+    color: #FFDF8C;
+    font-weight: 600;
+    font-size: 0.6rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .user-info-bar {
+    background: rgba(21, 101, 192, 0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 40px;
+    padding: 8px 16px;
+    margin: 10px 12px 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: white;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+  }
+  .logout-btn {
+    background: rgba(255,255,255,0.2);
+    border: none;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+
+  .partner-section {
+    background: white;
+    padding: 0.6rem 0.5rem 0.5rem;
+    border-bottom: 1px solid #eef2f8;
+    flex-shrink: 0;
+  }
+  .partner-title {
+    text-align: center;
+    font-size: 0.55rem;
+    font-weight: 800;
+    color: #F57C00;
+    margin-bottom: 0.5rem;
+  }
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.4rem;
+  }
+  .partner-item { text-align: center; }
+  .partner-logo {
+    background: #f9fbfd;
+    border-radius: 12px;
+    padding: 0.2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #eef2fa;
+    min-height: 32px;
+  }
+  .partner-logo img { max-width: 28px; max-height: 28px; }
+  .partner-name { font-size: 0.44rem; font-weight: 700; color: #E65100; margin-top: 0.2rem; }
+
+  .carousel-section { width: 100%; flex-shrink: 0; }
+  .carousel-container { position: relative; width: 100%; overflow: hidden; }
+  .carousel-slides { display: flex; transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
+  .carousel-slide { min-width: 100%; flex-shrink: 0; }
+  .carousel-slide img { width: 100%; display: block; aspect-ratio: 350 / 180; object-fit: cover; }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; margin-bottom: 4px; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background-color: #cbd5e1; cursor: pointer; }
+  .dot.active { background-color: #1565C0; width: 20px; border-radius: 5px; }
+  .carousel-arrow {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #1565C0;
+    z-index: 10;
+  }
+  .arrow-left { left: 10px; }
+  .arrow-right { right: 10px; }
+
+  .role-actions-section { 
+    padding: 0.5rem 0.8rem; 
+    margin: 0.2rem 0.5rem;
+    flex-shrink: 0;
+  }
+  .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+  .action-card {
+    border-radius: 18px;
+    padding: 0.45rem 0.2rem;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.12s ease;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+  }
+  .action-card:active { transform: scale(0.96); }
+  .action-icon svg { width: 100%; max-width: 38px; height: auto; display: block; margin: 0 auto; }
+  .action-label { font-size: 0.52rem; font-weight: 800; margin-top: 0.35rem; }
+  .card-1 { background: linear-gradient(145deg, #FF6B6B, #EE5A24); color: white; }
+  .card-2 { background: linear-gradient(145deg, #4ECDC4, #2c9e92); color: white; }
+  .card-3 { background: linear-gradient(145deg, #45B7D1, #2980b9); color: white; }
+  .card-4 { background: linear-gradient(145deg, #F9CA24, #F39C12); color: #2c3e50; }
+  .card-5 { background: linear-gradient(145deg, #A55EEA, #8B5CF6); color: white; }
+  .card-6 { background: linear-gradient(145deg, #FF9FF3, #F368E0); color: white; }
+  .card-7 { background: linear-gradient(145deg, #1DD1A1, #0e9f6e); color: white; }
+  .card-8 { background: linear-gradient(145deg, #FF8C42, #E67E22); color: white; }
+  .card-9 { background: linear-gradient(145deg, #5D6D7E, #2C3E50); color: white; }
+
+  /* Dashboard Footer - color #1565c0 */
+  .app-footer {
+    background: #F8FAFE;
+    margin-top: auto;
+    flex-shrink: 0;
+    width: 100%;
+  }
+  .wave-wrapper {
+    line-height: 0;
+    width: 100%;
+  }
+  .wave-svg {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  .footer-bottom {
+    background: #1565C0;
+    padding: 0.6rem 0.8rem;
+    text-align: center;
+    width: 100%;
+  }
+  .developed-by {
+    font-size: 0.55rem;
+    font-weight: 500;
+    color: white;
+    line-height: 1.4;
+  }
+  .developed-by strong {
+    color: #FFD966;
+    font-weight: 800;
   }
 
   /* Modals */
-  .network-modal, .camera-modal {
+  .network-modal, .access-modal {
     display: none;
     position: fixed;
     top: 0;
@@ -207,22 +413,20 @@
     z-index: 1100;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
   }
-  .network-modal.active, .camera-modal.active { display: flex; }
-  .network-card {
+  .network-modal.active, .access-modal.active { display: flex; }
+  .network-card, .access-card {
     background: white;
     border-radius: 36px;
     padding: 28px 22px;
     text-align: center;
     max-width: 310px;
     width: 85%;
-    box-shadow: 0 30px 40px rgba(0,0,0,0.3);
   }
   .network-status-icon { font-size: 58px; margin-bottom: 12px; }
   .network-status-title { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
   .network-status-detail { font-size: 13px; color: #2c3e50; margin-bottom: 20px; line-height: 1.4; }
-  .network-close-btn, .camera-btn {
+  .network-close-btn, .access-close-btn {
     background: #1565C0;
     color: white;
     border: none;
@@ -231,86 +435,13 @@
     font-weight: bold;
     cursor: pointer;
   }
-  .camera-video {
-    width: 90%;
-    max-width: 340px;
-    border-radius: 28px;
-    border: 3px solid white;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-  }
-  .camera-controls { margin-top: 20px; display: flex; gap: 15px; flex-wrap: wrap; justify-content: center; }
-  .camera-btn-close { background: #b91c1c; }
-  .camera-btn-capture { background: #2b9348; }
-  .scan-result {
-    margin-top: 18px;
-    background: rgba(0,0,0,0.7);
-    color: #fff;
-    padding: 10px 18px;
-    border-radius: 40px;
-    font-size: 13px;
-    text-align: center;
-    max-width: 85%;
-  }
-  .screen::-webkit-scrollbar { width: 3px; }
-  .screen::-webkit-scrollbar-track { background: rgba(255,255,255,0.2); border-radius: 10px; }
-  .screen::-webkit-scrollbar-thumb { background: #FF8C42; border-radius: 10px; }
 </style>
 </head>
 <body>
 
 <div class="phone-frame">
-  <div class="phone-mock">
-    <div class="screen">
-
-      <!-- LOGIN SECTION -->
-      <div class="card">
-        <div class="logo-area">
-          <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\'%3ESL%3C/text%3E%3C/svg%3E'">
-        </div>
-
-        <div class="field">
-          <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
-        </div>
-        <div id="errorMsg" class="error-message"></div>
-        <div id="successMsg" class="success-message"></div>
-
-        <div class="field">
-          <input type="password" id="password" placeholder="PASSWORD" autocomplete="off">
-          <span class="eye" onclick="togglePasswordVisibility()">
-            <i class="fa-regular fa-eye" id="eyeIcon"></i>
-          </span>
-        </div>
-
-        <button class="btn btn-login" id="loginBtn">LOGIN</button>
-        <button class="btn btn-scan" id="scanQrBtn">SCAN QR BADGE</button>
-        <div id="cameraErrorMsg" class="camera-error-msg"></div>
-      </div>
-
-      <!-- UTILITY GRID -->
-      <div class="grid">
-        <div class="tile t-orange" id="networkTile">
-          <div class="tile-icon"><i class="fa fa-signal"></i></div>
-          <span>NETWORK CHECK</span>
-        </div>
-        <div class="tile t-blue" id="exportTile">
-          <div class="tile-icon"><i class="fa fa-file-export"></i></div>
-          <span>EXPORT LOGS</span>
-        </div>
-        <div class="tile t-purple" id="verifyTile">
-          <div class="tile-icon"><i class="fa fa-print"></i></div>
-          <span>VERIFY PRINT</span>
-        </div>
-        <div class="tile t-teal" id="languageTile">
-          <div class="tile-icon"><i class="fa fa-language"></i></div>
-          <span>LANGUAGE</span>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="footer">
-      <span id="footerText">Developed By<br>Informatics Consultancy Firm-SL © 2026</span>
-    </div>
+  <div class="phone-mock" id="appContainer">
+    <!-- Dynamic content injected here -->
   </div>
 </div>
 
@@ -324,19 +455,18 @@
   </div>
 </div>
 
-<!-- Camera QR Modal -->
-<div id="cameraModal" class="camera-modal">
-  <video id="cameraVideo" class="camera-video" autoplay playsinline></video>
-  <div class="camera-controls">
-    <button class="camera-btn camera-btn-capture" id="captureBtn">📷 CAPTURE QR</button>
-    <button class="camera-btn camera-btn-close" id="closeCameraBtn">CLOSE</button>
+<!-- Access Denied Modal -->
+<div id="accessModal" class="access-modal">
+  <div class="access-card">
+    <div style="font-size: 48px; margin-bottom: 12px;">🔒</div>
+    <div style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Access Restricted</div>
+    <div id="accessModalMsg" style="font-size: 13px; color: #555; margin-bottom: 20px;"></div>
+    <button class="access-close-btn" onclick="closeAccessModal()">OK</button>
   </div>
-  <div id="scanResult" class="scan-result"></div>
 </div>
 
 <script>
-  // ====================== EMBEDDED CSV USER DATABASE (exactly as requested) ======================
-  // Full CSV data with the exact columns and rows from the specification
+  // ====================== EMBEDDED CSV USER DATABASE ======================
   const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -346,7 +476,6 @@ CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
 PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
 PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
 
-  // Parse CSV into array of user objects
   function parseCSV(csv) {
     const lines = csv.trim().split('\n');
     const headers = lines[0].split(',');
@@ -354,9 +483,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     for (let i = 1; i < lines.length; i++) {
       const values = lines[i].split(',');
       let user = {};
-      for (let j = 0; j < headers.length; j++) {
-        user[headers[j]] = values[j];
-      }
+      for (let j = 0; j < headers.length; j++) user[headers[j]] = values[j];
       users.push(user);
     }
     return users;
@@ -364,240 +491,413 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   
   const usersDatabase = parseCSV(csvData);
   
-  // Find user by username and password
   function findUser(username, password) {
-    return usersDatabase.find(user => 
-      user.USERNAME === username && user.PASSWORD === password
-    );
+    return usersDatabase.find(user => user.USERNAME === username && user.PASSWORD === password);
   }
   
-  // Store user permissions in sessionStorage for mscreen.html
-  function storeUserPermissions(user) {
-    const permissions = {
-      username: user.USERNAME,
-      REGISTER: user.REGISTER,
-      DISTRIBUTION: user.DISTRIBUTION,
-      MONITORING: user.MONITORING,
-      STOCK: user.STOCK,
-      DASHBOARD: user.DASHBOARD,
-      ATTENDANCE: user.ATTENDANCE,
-      DEVICE_TRACKING: user["DEVICE TRACKING"],
-      RECONCILIATION: user.RECONCILIATION,
-      WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
-    };
-    sessionStorage.setItem('userPermissions', JSON.stringify(permissions));
-    sessionStorage.setItem('loggedInUser', user.USERNAME);
-    // Also store raw user data for role display
-    sessionStorage.setItem('userRole', user.USERNAME);
-    return permissions;
-  }
-
-  // language state & translations
-  let currentLang = 'en';
-  const translations = {
-    en: {
-      userPlaceholder: "USERNAME", passPlaceholder: "PASSWORD", login: "LOGIN", scanBtn: "SCAN QR BADGE",
-      network: "NETWORK CHECK", export: "EXPORT LOGS", verify: "VERIFY PRINT", lang: "LANGUAGE",
-      footer: "Developed By<br>Informatics Consultancy Firm-SL © 2026",
-      loginSuccess: "✓ Login successful! Redirecting to campaign hub...",
-      loginError: "✗ Invalid username or password",
-      enterCreds: "⚠ Please enter username and password",
-      netConnected: "CONNECTED", netDisconnected: "OFFLINE MODE",
-      netDetailConn: "Your device has active internet connectivity.", netDetailDis: "No internet access detected. Some features may be limited.",
-      scanSuccess: "✓ Badge verified: ", cameraError: "❌ Camera access failed. Allow permissions.",
-      exportMsg: "✓ Campaign logs exported successfully", verifyMsg: "✓ Beneficiary print document ready",
-      checking: "CHECKING...", connType: "Connection", responseTime: "Latency", online: "Online", offline: "Offline"
-    },
-    fr: {
-      userPlaceholder: "NOM D'UTILISATEUR", passPlaceholder: "MOT DE PASSE", login: "CONNEXION", scanBtn: "SCANNER QR",
-      network: "VÉRIFICATION RÉSEAU", export: "EXPORTER LOGS", verify: "VÉRIFIER IMPRESSION", lang: "LANGUE",
-      footer: "Développé par<br>Informatics Consultancy Firm-SL © 2026",
-      loginSuccess: "✓ Connexion réussie ! Redirection...", loginError: "✗ Identifiants invalides",
-      enterCreds: "⚠ Veuillez saisir nom d'utilisateur et mot de passe",
-      netConnected: "CONNECTÉ", netDisconnected: "HORS LIGNE",
-      netDetailConn: "Connectivité Internet active.", netDetailDis: "Aucune connexion Internet détectée.",
-      scanSuccess: "✓ Badge scanné : ", cameraError: "❌ Impossible d'accéder à la caméra.",
-      exportMsg: "✓ Journaux de campagne exportés", verifyMsg: "✓ Document d'impression bénéficiaire prêt",
-      checking: "VÉRIFICATION...", connType: "Type", responseTime: "Temps réponse", online: "En ligne", offline: "Hors ligne"
-    }
-  };
+  let currentUser = null;
+  let currentPermissions = null;
   
-  function t(key) { return translations[currentLang][key] || key; }
-  function updateUI() {
-    document.getElementById('username').placeholder = t('userPlaceholder');
-    document.getElementById('password').placeholder = t('passPlaceholder');
-    document.getElementById('loginBtn').innerText = t('login');
-    document.getElementById('scanQrBtn').innerText = t('scanBtn');
-    document.querySelector('#networkTile span').innerText = t('network');
-    document.querySelector('#exportTile span').innerText = t('export');
-    document.querySelector('#verifyTile span').innerText = t('verify');
-    document.querySelector('#languageTile span').innerText = t('lang');
-    document.getElementById('footerText').innerHTML = t('footer');
+  const roleActionMap = [
+    { id: "REGISTER", label: "REGISTER", iconSvg: "M12 4v16M4 12h16", color: "card-1", requires: "REGISTER" },
+    { id: "DISTRIBUTION", label: "DISTRIBUTION", iconSvg: "M4 12h16M12 4v16", color: "card-2", requires: "DISTRIBUTION" },
+    { id: "MONITORING", label: "MONITORING", iconSvg: "M4 4L20 20M20 4L4 20", color: "card-3", requires: "MONITORING" },
+    { id: "STOCK", label: "STOCK", iconSvg: "M4 8h16M4 16h16M8 4v16M16 4v16", color: "card-4", requires: "STOCK" },
+    { id: "DASHBOARD", label: "DASHBOARD", iconSvg: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z", color: "card-5", requires: "DASHBOARD" },
+    { id: "ATTENDANCE", label: "ATTENDANCE", iconSvg: "M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M4 4h16v16H4z", color: "card-6", requires: "ATTENDANCE" },
+    { id: "DEVICE_TRACKING", label: "DEVICE TRACKING", iconSvg: "M8 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2H8a2 2 0 0 1 -2-2V6a2 2 0 0 1 2-2z", color: "card-7", requires: "DEVICE_TRACKING" },
+    { id: "RECONCILIATION", label: "RECONCILIATION", iconSvg: "M4 4h16v16H4zM9 9l6 6M15 9l-6 6", color: "card-8", requires: "RECONCILIATION" },
+    { id: "WASTE_MANAGEMENT", label: "WASTE MANAGEMENT", iconSvg: "M4 4h16v16H4zM9 12h6", color: "card-9", requires: "WASTE_MANAGEMENT" }
+  ];
+  
+  function hasPermission(actionKey) {
+    return currentPermissions && currentPermissions[actionKey] === "Show";
   }
-
-  // UI helpers
-  const errorDiv = document.getElementById('errorMsg');
-  const successDiv = document.getElementById('successMsg');
-  const cameraErrDiv = document.getElementById('cameraErrorMsg');
-  function showError(msg) { successDiv.classList.remove('show'); errorDiv.innerText = msg; errorDiv.classList.add('show'); setTimeout(() => errorDiv.classList.remove('show'), 3800); }
-  function showSuccess(msg) { errorDiv.classList.remove('show'); successDiv.innerText = msg; successDiv.classList.add('show'); setTimeout(() => successDiv.classList.remove('show'), 2800); }
-  function showCameraErr(msg) { cameraErrDiv.innerText = msg; cameraErrDiv.classList.add('show'); setTimeout(() => cameraErrDiv.classList.remove('show'), 4000); }
-
-  // toggle password visibility
+  
+  // Helper functions
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.style.position = 'fixed';
+    toast.style.bottom = '100px';
+    toast.style.left = '50%';
+    toast.style.transform = 'translateX(-50%)';
+    toast.style.backgroundColor = '#2e7d32';
+    toast.style.color = 'white';
+    toast.style.padding = '10px 20px';
+    toast.style.borderRadius = '40px';
+    toast.style.fontSize = '12px';
+    toast.style.fontWeight = 'bold';
+    toast.style.zIndex = '2000';
+    toast.innerText = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2500);
+  }
+  
+  function showError(msg) {
+    const errDiv = document.getElementById('errorMsg');
+    const successDiv = document.getElementById('successMsg');
+    if (successDiv) successDiv.classList.remove('show');
+    errDiv.innerText = msg;
+    errDiv.classList.add('show');
+    setTimeout(() => errDiv.classList.remove('show'), 3000);
+  }
+  
   window.togglePasswordVisibility = function() {
-    const pwd = document.getElementById('password');
+    const pwd = document.getElementById('loginPassword');
     const icon = document.getElementById('eyeIcon');
-    if (pwd.type === 'password') { pwd.type = 'text'; icon.classList.remove('fa-eye'); icon.classList.add('fa-eye-slash'); }
-    else { pwd.type = 'password'; icon.classList.remove('fa-eye-slash'); icon.classList.add('fa-eye'); }
+    if (pwd.type === 'password') {
+      pwd.type = 'text';
+      icon.classList.remove('fa-eye');
+      icon.classList.add('fa-eye-slash');
+    } else {
+      pwd.type = 'password';
+      icon.classList.remove('fa-eye-slash');
+      icon.classList.add('fa-eye');
+    }
   };
   
-  // ========== LOGIN with REDIRECT to mscreen.html (fully linked) ==========
-  async function performLogin() {
-    const username = document.getElementById('username').value.trim();
-    const password = document.getElementById('password').value.trim();
-    if (!username || !password) { showError(t('enterCreds')); return; }
-    
-    const user = findUser(username, password);
-    if (user) {
-      const permissions = storeUserPermissions(user);
-      showSuccess(t('loginSuccess'));
-      // Log access for debugging/audit
-      console.log(`✅ [ACCESS GRANTED] User: ${username} | Time: ${new Date().toISOString()}`);
-      console.log(`📋 Permissions:`, permissions);
-      
-      // REDIRECT TO mScreen DASHBOARD (mscreen.html) - fully linked
-      setTimeout(() => {
-        // Pass username as query parameter for additional verification if needed
-        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}&t=${Date.now()}`;
-      }, 900);
-    } else { 
-      showError(t('loginError'));
-      console.warn(`❌ [ACCESS DENIED] Failed login attempt for username: ${username}`);
-    }
-  }
-
-  // NETWORK CHECK with real fetch
-  const netModal = document.getElementById('networkModal');
-  const netIcon = document.getElementById('networkIcon');
-  const netTitle = document.getElementById('networkTitle');
-  const netDetail = document.getElementById('networkDetail');
-  window.closeNetworkModal = () => netModal.classList.remove('active');
-  
+  // ========== NETWORK CHECK WITH FA-WIFI ICON ==========
   async function checkNetwork() {
     const tile = document.getElementById('networkTile');
     const originalHTML = tile.innerHTML;
-    tile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>${t('checking')}`;
+    tile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>CHECKING...`;
     tile.style.opacity = '0.7';
-    let connected = false;
-    let latency = null;
+    
+    let isConnected = false;
+    let connectionType = 'Unknown';
+    let responseTime = null;
+    
+    const browserOnline = navigator.onLine;
+    
     try {
-      const start = Date.now();
-      const res = await fetch('https://www.google.com/generate_204', { method: 'HEAD', cache: 'no-cache' });
-      latency = Date.now() - start;
-      if (res.ok || res.status === 204) connected = true;
-      else connected = false;
-    } catch(e) {
+      const startTime = Date.now();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+      
+      const response = await fetch('https://www.gstatic.com/generate_204', {
+        method: 'HEAD',
+        cache: 'no-cache',
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      responseTime = Date.now() - startTime;
+      
+      if (response.ok || response.status === 204) {
+        isConnected = true;
+      } else {
+        const fallbackResponse = await fetch('https://connectivity-check.ubuntu.com/', {
+          method: 'HEAD',
+          cache: 'no-cache'
+        });
+        if (fallbackResponse.ok) {
+          isConnected = true;
+          responseTime = Date.now() - startTime;
+        }
+      }
+    } catch (err) {
       try {
-        const fallback = await fetch('https://cloudflare.com/cdn-cgi/trace', { method: 'HEAD' });
-        if (fallback.ok) connected = true;
-        else connected = false;
-      } catch(e2) { connected = false; }
+        const fallbackStart = Date.now();
+        const fallbackResponse = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+          method: 'HEAD',
+          cache: 'no-cache'
+        });
+        if (fallbackResponse.ok) {
+          isConnected = true;
+          responseTime = Date.now() - fallbackStart;
+        } else {
+          isConnected = false;
+        }
+      } catch (finalErr) {
+        isConnected = false;
+      }
     }
+    
+    if (navigator.connection) {
+      connectionType = navigator.connection.effectiveType || navigator.connection.type || 'Unknown';
+    }
+    
     tile.innerHTML = originalHTML;
     tile.style.opacity = '1';
-    if (connected) {
-      netIcon.innerHTML = '<i class="fa fa-check-circle" style="color:#10b981;"></i>';
-      netTitle.innerText = `✅ ${t('netConnected')}`;
-      const connType = navigator.connection?.effectiveType || '4G';
-      netDetail.innerHTML = `${t('netDetailConn')}<br><br>📡 ${t('connType')}: ${connType}<br>⏱️ ${t('responseTime')}: ${latency || '~70'} ms<br>🌐 ${t('online')}`;
+    
+    const networkIcon = document.getElementById('networkIcon');
+    const networkTitle = document.getElementById('networkTitle');
+    const networkDetail = document.getElementById('networkDetail');
+    
+    if (isConnected) {
+      networkIcon.innerHTML = '<i class="fa fa-check-circle" style="color: #10b981;"></i>';
+      networkTitle.innerHTML = '✅ INTERNET CONNECTED';
+      networkDetail.innerHTML = `
+        Your device has active internet connectivity.<br><br>
+        📡 Connection: ${connectionType}<br>
+        ⏱️ Response: ${responseTime || 'Fast'} ms<br>
+        🌐 Status: Online<br>
+        📱 Browser reports: ${browserOnline ? 'Online' : 'Online (synced)'}
+      `;
     } else {
-      netIcon.innerHTML = '<i class="fa fa-wifi" style="color:#f97316;"></i>';
-      netTitle.innerText = `⚠️ ${t('netDisconnected')}`;
-      netDetail.innerHTML = `${t('netDetailDis')}<br><br>📱 ${t('offline')} mode active.`;
+      networkIcon.innerHTML = '<i class="fa fa-wifi" style="color: #f97316;"></i>';
+      networkTitle.innerHTML = '⚠️ NO INTERNET CONNECTION';
+      networkDetail.innerHTML = `
+        Unable to detect internet connectivity.<br><br>
+        📱 Browser status: ${browserOnline ? 'Online (limited)' : 'Offline'}<br>
+        💡 Tip: Check your Wi-Fi or mobile data<br>
+        🔄 Try again when connection is restored
+      `;
     }
-    netModal.classList.add('active');
+    
+    document.getElementById('networkModal').classList.add('active');
   }
-
-  // ========== QR CAMERA (mock scanning with realistic simulation) ==========
-  const cameraModal = document.getElementById('cameraModal');
-  const video = document.getElementById('cameraVideo');
-  let mediaStream = null;
   
+  window.closeNetworkModal = () => document.getElementById('networkModal').classList.remove('active');
+  window.closeAccessModal = () => document.getElementById('accessModal').classList.remove('active');
+  
+  function showAccessDenied(actionName) {
+    document.getElementById('accessModalMsg').innerHTML = `You don't have permission to access <strong>${actionName}</strong>.`;
+    document.getElementById('accessModal').classList.add('active');
+  }
+  
+  // QR Camera Mock
   async function startCamera() {
-    try {
-      if (mediaStream) stopCameraTracks();
-      mediaStream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
-      video.srcObject = mediaStream;
-      await video.play();
-      cameraModal.classList.add('active');
-      document.getElementById('scanResult').innerHTML = '';
-      cameraErrDiv.classList.remove('show');
-    } catch(err) {
-      console.error(err);
-      showCameraErr(t('cameraError'));
+    showToast('📷 Camera simulation: Badge scanned successfully');
+    const mockBadges = ["ICF-BADGE-001", "NMCP-ITN-8743", "MOH-SL-5562"];
+    const scanned = mockBadges[Math.floor(Math.random() * mockBadges.length)];
+    showToast(`✓ Badge verified: ${scanned}`);
+  }
+  
+  // Language toggle - no toast message
+  let currentLang = 'en';
+  function toggleLanguage() {
+    currentLang = currentLang === 'en' ? 'fr' : 'en';
+    const placeholders = currentLang === 'en' ? ['USERNAME', 'PASSWORD'] : ['NOM D\'UTILISATEUR', 'MOT DE PASSE'];
+    const userField = document.getElementById('loginUsername');
+    const passField = document.getElementById('loginPassword');
+    if (userField) userField.placeholder = placeholders[0];
+    if (passField) passField.placeholder = placeholders[1];
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) loginBtn.innerText = currentLang === 'en' ? 'LOGIN' : 'CONNEXION';
+    const scanBtn = document.getElementById('scanQrBtn');
+    if (scanBtn) scanBtn.innerText = currentLang === 'en' ? 'SCAN QR BADGE' : 'SCANNER QR';
+  }
+  
+  // ====================== RENDER LOGIN SCREEN ======================
+  function renderLoginScreen() {
+    const container = document.getElementById('appContainer');
+    container.innerHTML = `
+      <div class="login-screen">
+        <div class="card">
+          <div class="logo-area">
+            <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'">
+          </div>
+          <div class="field">
+            <input type="text" id="loginUsername" placeholder="USERNAME" autocomplete="off">
+          </div>
+          <div id="errorMsg" class="error-message"></div>
+          <div id="successMsg" class="success-message"></div>
+          <div class="field">
+            <input type="password" id="loginPassword" placeholder="PASSWORD" autocomplete="off">
+            <span class="eye" onclick="togglePasswordVisibility()">
+              <i class="fa-regular fa-eye" id="eyeIcon"></i>
+            </span>
+          </div>
+          <button class="btn btn-login" id="loginBtn">LOGIN</button>
+          <button class="btn btn-scan" id="scanQrBtn">SCAN QR BADGE</button>
+          <div id="cameraErrorMsg" class="camera-error-msg"></div>
+        </div>
+        <div class="utility-grid">
+          <div class="tile t-orange" id="networkTile">
+            <div class="tile-icon"><i class="fa fa-wifi"></i></div>
+            <span>NETWORK CHECK</span>
+          </div>
+          <div class="tile t-blue" id="exportTile">
+            <div class="tile-icon"><i class="fa fa-file-export"></i></div>
+            <span>EXPORT CAMPAIGN LOGS</span>
+          </div>
+          <div class="tile t-purple" id="verifyTile">
+            <div class="tile-icon"><i class="fa fa-fingerprint"></i></div>
+            <span>VERIFY BENEFICIARY PRINT</span>
+          </div>
+          <div class="tile t-teal" id="languageTile">
+            <div class="tile-icon"><i class="fa fa-language"></i></div>
+            <span>LANGUAGE</span>
+          </div>
+        </div>
+        <div class="login-footer">
+          Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026
+        </div>
+      </div>
+    `;
+    
+    document.getElementById('loginBtn').addEventListener('click', performLogin);
+    document.getElementById('scanQrBtn').addEventListener('click', startCamera);
+    document.getElementById('networkTile').addEventListener('click', checkNetwork);
+    document.getElementById('exportTile').addEventListener('click', () => showToast("✓ Campaign logs exported successfully"));
+    document.getElementById('verifyTile').addEventListener('click', () => showToast("✓ Beneficiary print document verified & ready"));
+    document.getElementById('languageTile').addEventListener('click', toggleLanguage);
+    document.getElementById('loginUsername').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
+    document.getElementById('loginPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
+  }
+  
+  async function performLogin() {
+    const username = document.getElementById('loginUsername').value.trim();
+    const password = document.getElementById('loginPassword').value.trim();
+    if (!username || !password) {
+      showError('⚠ Please enter username and password');
+      return;
+    }
+    const user = findUser(username, password);
+    if (user) {
+      storeAndLogin(user);
+      renderDashboard();
+    } else {
+      showError('✗ Invalid username or password');
     }
   }
   
-  function stopCameraTracks() {
-    if (mediaStream) {
-      mediaStream.getTracks().forEach(track => track.stop());
-      mediaStream = null;
-    }
-    video.srcObject = null;
+  function storeAndLogin(user) {
+    currentUser = user;
+    currentPermissions = {
+      username: user.USERNAME,
+      REGISTER: user.REGISTER, DISTRIBUTION: user.DISTRIBUTION, MONITORING: user.MONITORING,
+      STOCK: user.STOCK, DASHBOARD: user.DASHBOARD, ATTENDANCE: user.ATTENDANCE,
+      DEVICE_TRACKING: user["DEVICE TRACKING"], RECONCILIATION: user.RECONCILIATION,
+      WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
+    };
+    sessionStorage.setItem('userPermissions', JSON.stringify(currentPermissions));
+    sessionStorage.setItem('loggedInUser', user.USERNAME);
   }
   
-  function closeCamera() {
-    stopCameraTracks();
-    cameraModal.classList.remove('active');
-  }
-  
-  // QR capture simulation - returns realistic badge IDs for campaign field agents
-  function captureQR() {
-    if (!mediaStream) return;
-    const mockBadges = ["ICF-BADGE-2027-001", "NMCP-ITN-8743", "MOH-SL-5562", "PMI-EVOLVE-998", "GLOBAL-FUND-4521", "HHR-ADMIN-77", "PARTNER-SL-2027"];
-    const scannedValue = mockBadges[Math.floor(Math.random() * mockBadges.length)];
-    const scanDiv = document.getElementById('scanResult');
-    scanDiv.innerHTML = `<i class="fa fa-qrcode"></i> ${t('scanSuccess')} ${scannedValue}<br><span style="font-size:11px;">Access level: Field Agent</span>`;
-    // store in hidden field for potential use
-    let hiddenField = document.getElementById('scannedBadgeData');
-    if (!hiddenField) { hiddenField = document.createElement('input'); hiddenField.type = 'hidden'; hiddenField.id = 'scannedBadgeData'; document.body.appendChild(hiddenField); }
-    hiddenField.value = scannedValue;
-    showSuccess(`${t('scanSuccess')}${scannedValue}`);
-    setTimeout(() => closeCamera(), 1800);
-  }
-  
-  // Export / Verify actions with feedback
-  function exportLogs() { showSuccess(t('exportMsg')); }
-  function verifyPrint() { showSuccess(t('verifyMsg')); }
-  function toggleLanguage() { currentLang = currentLang === 'en' ? 'fr' : 'en'; updateUI(); }
-  
-  // Bind events
-  document.getElementById('loginBtn').addEventListener('click', performLogin);
-  document.getElementById('scanQrBtn').addEventListener('click', startCamera);
-  document.getElementById('closeCameraBtn').addEventListener('click', closeCamera);
-  document.getElementById('captureBtn').addEventListener('click', captureQR);
-  document.getElementById('networkTile').addEventListener('click', checkNetwork);
-  document.getElementById('exportTile').addEventListener('click', exportLogs);
-  document.getElementById('verifyTile').addEventListener('click', verifyPrint);
-  document.getElementById('languageTile').addEventListener('click', toggleLanguage);
-  document.getElementById('username').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
-  document.getElementById('password').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
-  
-  // Initialize language UI
-  updateUI();
-  
-  // Clear any previous session on page load for security (fresh login required)
-  if (sessionStorage.getItem('loggedInUser')) {
-    console.log("🧹 Clearing previous session for security");
+  function logout() {
+    currentUser = null;
+    currentPermissions = null;
     sessionStorage.removeItem('userPermissions');
     sessionStorage.removeItem('loggedInUser');
-    sessionStorage.removeItem('userRole');
+    renderLoginScreen();
   }
   
-  // Console log the embedded user database for verification
-  console.log("✅ Embedded CSV User Database loaded successfully");
-  console.log("📊 Available users:", usersDatabase.map(u => `${u.USERNAME} (${u.PASSWORD})`));
-  console.log("🔗 Ready to redirect to mscreen.html upon successful login");
+  // ====================== RENDER DASHBOARD ======================
+  function renderDashboard() {
+    const container = document.getElementById('appContainer');
+    const username = currentUser?.USERNAME;
+    const roleMap = { 'Admin': 'Full Access', 'HHR2027': 'Registration Officer', 'HHD2027': 'Distribution Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHI Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Viewer' };
+    const roleDisplay = roleMap[username] || 'User';
+    
+    const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
+    let actionCardsHtml = '';
+    if (allowedActions.length === 0) {
+      actionCardsHtml = `<div style="text-align: center; padding: 20px;">⚠️ No modules assigned.</div>`;
+    } else {
+      actionCardsHtml = `<div class="action-grid">` + allowedActions.map(action => `
+        <div class="action-card ${action.color}" data-role-action="${action.id}">
+          <div class="action-icon"><svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5" fill="none"><path d="${action.iconSvg}"/></svg></div>
+          <div class="action-label">${action.label}</div>
+        </div>
+      `).join('') + `</div>`;
+    }
+    
+    container.innerHTML = `
+      <div class="dashboard-container">
+        <header class="app-header">
+          <div class="header-container">
+            <div class="logo-row">
+              <div class="logo-area-dash">
+                <div class="logo-icon"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'"></div>
+                <div class="org-info"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
+              </div>
+            </div>
+            <div class="nav-badge"><span>🏠</span><span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span></div>
+            <div class="campaign-sub-header"><span>🦟</span><span>Insecticide-Treated Nets Distribution Survey - Sierra Leone</span></div>
+          </div>
+        </header>
+        
+        <div class="user-info-bar">
+          <span><i class="fa fa-user-circle"></i> ${username} (${roleDisplay})</span>
+          <button id="logoutBtnDash" class="logout-btn"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
+        </div>
+        
+        <div class="partner-section">
+          <div class="partner-title">IMPLEMENTING PARTNERS</div>
+          <div class="partner-grid">
+            <div class="partner-item"><div class="partner-logo"><img src="usa.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'14\'%3EUSA%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">United State Dep.</div></div>
+            <div class="partner-item"><div class="partner-logo"><img src="global_fund.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'12\'%3EGF%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">Global Fund</div></div>
+            <div class="partner-item"><div class="partner-logo"><img src="pmi_evolve.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'11\'%3EPMI%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">PMI Evolve</div></div>
+            <div class="partner-item"><div class="partner-logo"><img src="moh_logo.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'12\'%3EMOH%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">MOH</div></div>
+            <div class="partner-item"><div class="partner-logo"><img src="NMCP.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'10\'%3ENMCP%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">NMCP</div></div>
+            <div class="partner-item"><div class="partner-logo"><img src="mbsse.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'11\'%3EMB%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">MBSSE</div></div>
+          </div>
+        </div>
+        
+        <div class="carousel-section">
+          <div class="carousel-container" id="carouselContainerDash">
+            <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
+            <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
+            <div class="carousel-slides" id="carouselSlides">
+              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3EReal-time%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%23216B2A\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3ECoverage%3C/text%3E%3C/svg%3E'"></div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+          </div>
+        </div>
+        
+        <div class="role-actions-section">
+          ${actionCardsHtml}
+        </div>
+        
+        <footer class="app-footer">
+          <div class="wave-wrapper">
+            <svg class="wave-svg" viewBox="0 0 1200 90" preserveAspectRatio="none">
+              <path d="M0,48L80,44C160,40,320,32,480,34.7C640,37,800,51,960,53.3C1120,56,1280,48,1360,44L1440,40L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0"></path>
+              <path d="M0,68L80,64C160,60,320,52,480,53.3C640,55,800,64,960,66.7C1120,69,1280,64,1360,62L1440,60L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0" fill-opacity="0.5"></path>
+            </svg>
+          </div>
+          <div class="footer-bottom">
+            <div class="developed-by">
+              Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026
+            </div>
+          </div>
+        </footer>
+      </div>
+    `;
+    
+    // Initialize carousel
+    setTimeout(() => {
+      const slides = document.querySelectorAll('.carousel-slide');
+      const slidesContainer = document.getElementById('carouselSlides');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      if (slidesContainer && slides.length) {
+        let idx = 0;
+        function update() { slidesContainer.style.transform = `translateX(-${idx * 100}%)`; }
+        function goTo(i) { idx = (i + slides.length) % slides.length; update(); }
+        if (prevBtn) prevBtn.onclick = () => goTo(idx - 1);
+        if (nextBtn) nextBtn.onclick = () => goTo(idx + 1);
+        setInterval(() => goTo(idx + 1), 5000);
+      }
+    }, 100);
+    
+    document.querySelectorAll('[data-role-action]').forEach(el => {
+      el.addEventListener('click', () => {
+        const actionId = el.getAttribute('data-role-action');
+        const action = roleActionMap.find(a => a.id === actionId);
+        if (action && hasPermission(action.requires)) showToast(`✓ ${action.label} module opened`);
+        else showAccessDenied(action?.label);
+      });
+    });
+    
+    document.getElementById('logoutBtnDash').addEventListener('click', logout);
+  }
+  
+  // Check session and start
+  const stored = sessionStorage.getItem('userPermissions');
+  const storedUser = sessionStorage.getItem('loggedInUser');
+  if (stored && storedUser && usersDatabase.find(u => u.USERNAME === storedUser)) {
+    const userRecord = usersDatabase.find(u => u.USERNAME === storedUser);
+    currentUser = userRecord;
+    currentPermissions = JSON.parse(stored);
+    renderDashboard();
+  } else {
+    renderLoginScreen();
+  }
 </script>
 </body>
 </html>
