@@ -44,10 +44,10 @@
       background: transparent;
     }
 
-    /* ===== HEADER - REDUCED SIZE ===== */
+    /* ===== HEADER - CENTERED CONTENT ===== */
     .app-header {
       background-color: #1565C0;
-      padding: 0.35rem 1rem;
+      padding: 0.5rem 1rem;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
       position: relative;
       z-index: 2;
@@ -60,30 +60,31 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 0.25rem;
+      justify-content: center;
+      gap: 0.3rem;
     }
 
-    /* Logo and org row - compact */
+    /* Logo and org row - CENTERED */
     .logo-row {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: center;
       width: 100%;
       flex-wrap: wrap;
-      gap: 0.3rem;
+      gap: 0.5rem;
     }
 
     .logo-area {
       display: flex;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
     }
 
     .logo-icon {
-      width: 28px;
-      height: 28px;
+      width: 40px;
+      height: 40px;
       background: white;
-      border-radius: 8px;
+      border-radius: 10px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -91,13 +92,18 @@
       box-shadow: 0 2px 3px rgba(0,0,0,0.1);
     }
 
-    .logo-icon svg {
+    .logo-icon img {
       width: 100%;
       height: 100%;
+      object-fit: cover;
+    }
+
+    .org-info {
+      text-align: left;
     }
 
     .org-info h1 {
-      font-size: 0.7rem;
+      font-size: 0.8rem;
       font-weight: 700;
       background: linear-gradient(135deg, #ffffff 0%, #e0f0ff 100%);
       background-clip: text;
@@ -108,10 +114,10 @@
     }
 
     .org-info p {
-      font-size: 0.45rem;
-      opacity: 0.85;
-      margin-top: 0.05rem;
-      font-weight: 400;
+      font-size: 0.5rem;
+      opacity: 0.9;
+      margin-top: 0.1rem;
+      font-weight: 500;
       color: white;
     }
 
@@ -119,13 +125,13 @@
     .nav-badge {
       background: #FF8C42;
       backdrop-filter: blur(2px);
-      padding: 0.2rem 0.7rem;
+      padding: 0.25rem 0.9rem;
       border-radius: 30px;
       font-weight: 700;
-      font-size: 0.5rem;
+      font-size: 0.55rem;
       display: flex;
       align-items: center;
-      gap: 4px;
+      gap: 5px;
       color: white;
       text-align: center;
       line-height: 1.2;
@@ -139,7 +145,7 @@
 
     .nav-badge span:first-child {
       font-weight: 700;
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       flex-shrink: 0;
     }
 
@@ -148,7 +154,7 @@
       letter-spacing: 0.1px;
       white-space: nowrap;
       flex-shrink: 0;
-      font-size: 0.5rem;
+      font-size: 0.55rem;
     }
 
     /* Campaign header section - sub text with icon - smaller */
@@ -163,7 +169,7 @@
     .campaign-sub-header {
       color: #FFD966;
       font-weight: 600;
-      font-size: 0.55rem;
+      font-size: 0.6rem;
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -171,7 +177,7 @@
       margin-top: 0.1rem;
     }
 
-    /* ===== PARTNER LOGOS SECTION - NO HOVER EFFECT ===== */
+    /* ===== PARTNER LOGOS SECTION ===== */
     .partner-section {
       background-color: white;
       padding: 0.4rem 0.5rem;
@@ -214,7 +220,6 @@
       min-height: 28px;
     }
 
-    /* Partner logo image styling */
     .partner-logo img {
       max-width: 24px;
       max-height: 24px;
@@ -265,7 +270,6 @@
       object-fit: cover;
     }
 
-    /* Carousel Navigation Dots */
     .carousel-dots {
       display: flex;
       justify-content: center;
@@ -291,7 +295,6 @@
       border-radius: 3px;
     }
 
-    /* Carousel Navigation Arrows */
     .carousel-arrow {
       position: absolute;
       top: 50%;
@@ -374,7 +377,6 @@
       margin-top: 0.1rem;
     }
 
-    /* Individual Card Colors */
     .card-1 { background: linear-gradient(135deg, #FF6B6B, #EE5A24); color: white; }
     .card-2 { background: linear-gradient(135deg, #4ECDC4, #44B39A); color: white; }
     .card-3 { background: linear-gradient(135deg, #45B7D1, #3498DB); color: white; }
@@ -385,19 +387,16 @@
     .card-8 { background: linear-gradient(135deg, #FF8C42, #E67E22); color: white; }
     .card-9 { background: linear-gradient(135deg, #636E72, #2D3436); color: white; }
 
-    /* Ensure text contrast for card-4 */
     .card-4 .action-label { color: #2c3e50; }
     .card-4 .action-icon svg circle { stroke: #2c3e50; }
     .card-4 .action-icon svg rect { fill: #2c3e50; }
 
-    /* Main content container - EMPTY */
     .content-container {
       flex: 1;
       background-color: #F5F7FA;
       width: 100%;
     }
 
-    /* Footer wave */
     .app-footer {
       background-color: #F5F7FA;
       margin-top: 0;
@@ -446,21 +445,12 @@
     }
 
     @media (max-width: 700px) {
-      .logo-row {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-      .nav-badge {
-        align-self: flex-start;
-        margin-top: 0.1rem;
-        font-size: 0.45rem;
-        padding: 0.2rem 0.6rem;
-      }
-      .nav-badge span:last-child {
-        font-size: 0.45rem;
+      .logo-area {
+        flex-wrap: wrap;
+        justify-content: center;
       }
       .campaign-sub-header {
-        font-size: 0.5rem;
+        font-size: 0.55rem;
       }
       .partner-grid {
         gap: 0.15rem;
@@ -507,28 +497,25 @@
 </head>
 <body>
 <div class="phone-mock">
-  <!-- HEADER - REDUCED SIZE -->
+  <!-- HEADER - CENTERED CONTENT with ICF-SL Logo.png -->
   <header class="app-header">
     <div class="header-container">
+      <!-- Logo and Organization row - CENTERED -->
       <div class="logo-row">
         <div class="logo-area">
           <div class="logo-icon">
-            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect width="100" height="100" rx="20" fill="white" />
-              <circle cx="50" cy="48" r="34" fill="#1565C0" />
-              <text x="50" y="63" text-anchor="middle" fill="white" font-size="28" font-weight="800" font-family="Arial, sans-serif">ICF</text>
-              <text x="50" y="78" text-anchor="middle" fill="#1565C0" font-size="10" font-weight="bold" font-family="Arial">SL</text>
-            </svg>
+            <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\' font-family=\'Arial\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\' font-family=\'Arial\'%3ESL%3C/text%3E%3C/svg%3E'">
           </div>
           <div class="org-info">
             <h1>Informaatics Consultancy Firm-SL (ICF-SL)</h1>
             <p>Driving Data-Driven Solutions for Health and Development</p>
           </div>
         </div>
-        <div class="nav-badge">
-          <span>🏠</span>
-          <span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span>
-        </div>
+      </div>
+      <!-- Nav badge -->
+      <div class="nav-badge">
+        <span>🏠</span>
+        <span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span>
       </div>
       <div class="campaign-header-section">
         <div class="campaign-sub-header">
@@ -539,46 +526,40 @@
     </div>
   </header>
 
-  <!-- PARTNER LOGOS SECTION - NO HOVER EFFECT -->
+  <!-- PARTNER LOGOS SECTION -->
   <div class="partner-section">
     <div class="partner-title">IMPLEMENTING PARTNERS</div>
     <div class="partner-grid">
-      <!-- Partner 1 - United State Dep. -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="usa.png" alt="USA" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EUSA%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">United State Dep.</div>
       </div>
-      <!-- Partner 2 - Global Fund -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EGF%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">Global Fund</div>
       </div>
-      <!-- Partner 3 - PMI Evolve -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EPMI%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">PMI Evolve</div>
       </div>
-      <!-- Partner 4 - MOH -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EMOH%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">MOH</div>
       </div>
-      <!-- Partner 5 - NMCP -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3ENMCP%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">NMCP</div>
       </div>
-      <!-- Partner 6 - MBSSE -->
       <div class="partner-item">
         <div class="partner-logo">
           <img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EMB%3C/text%3E%3C/svg%3E'">
@@ -653,7 +634,7 @@
   <!-- MAIN BODY - COMPLETELY EMPTY -->
   <main class="content-container"></main>
 
-  <!-- FOOTER WITH VISIBLE TEXT -->
+  <!-- FOOTER -->
   <footer class="app-footer">
     <div class="wave-wrapper">
       <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 90" preserveAspectRatio="none">
