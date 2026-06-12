@@ -162,7 +162,7 @@
   .t-purple { background: rgba(123, 63, 160, 0.88); }
   .t-teal   { background: rgba(27, 154, 138, 0.88); }
 
-  /* Login Footer - color #1565c0, extended to edges */
+  /* Login Footer */
   .login-footer {
     background: #1565C0;
     text-align: center;
@@ -313,22 +313,64 @@
   .partner-logo img { max-width: 28px; max-height: 28px; }
   .partner-name { font-size: 0.44rem; font-weight: 700; color: #E65100; margin-top: 0.2rem; }
 
-  .carousel-section { width: 100%; flex-shrink: 0; }
-  .carousel-container { position: relative; width: 100%; overflow: hidden; }
-  .carousel-slides { display: flex; transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1); }
-  .carousel-slide { min-width: 100%; flex-shrink: 0; }
-  .carousel-slide img { width: 100%; display: block; aspect-ratio: 350 / 180; object-fit: cover; }
-  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin-top: 6px; margin-bottom: 4px; }
-  .dot { width: 6px; height: 6px; border-radius: 50%; background-color: #cbd5e1; cursor: pointer; }
-  .dot.active { background-color: #1565C0; width: 20px; border-radius: 5px; }
+  /* SMART SLIDER - ORIGINAL SIZE AND STYLE */
+  .carousel-section { 
+    width: 100%; 
+    background: transparent;
+    margin: 0;
+    padding: 0;
+  }
+  .carousel-container { 
+    position: relative; 
+    width: 100%; 
+    overflow: hidden;
+    background: #000;
+    border-radius: 0;
+  }
+  .carousel-slides { 
+    display: flex; 
+    transition: transform 0.5s ease-in-out;
+  }
+  .carousel-slide { 
+    min-width: 100%; 
+    flex-shrink: 0;
+  }
+  .carousel-slide img { 
+    width: 100%; 
+    height: auto;
+    display: block;
+    object-fit: cover;
+  }
+  .carousel-dots { 
+    display: flex; 
+    justify-content: center; 
+    gap: 8px; 
+    margin-top: 8px;
+    margin-bottom: 8px;
+    background: transparent;
+    padding: 4px 0;
+  }
+  .dot { 
+    width: 6px; 
+    height: 6px; 
+    border-radius: 50%; 
+    background-color: #cbd5e1; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .dot.active { 
+    background-color: #1565C0; 
+    width: 20px; 
+    border-radius: 4px;
+  }
   .carousel-arrow {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 30px;
-    height: 30px;
-    background: rgba(255,255,255,0.9);
-    border-radius: 30px;
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -336,7 +378,13 @@
     font-size: 20px;
     font-weight: bold;
     color: #1565C0;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
     z-index: 10;
+  }
+  .carousel-arrow:hover {
+    background: white;
+    transform: translateY(-50%) scale(1.05);
   }
   .arrow-left { left: 10px; }
   .arrow-right { right: 10px; }
@@ -368,7 +416,7 @@
   .card-8 { background: linear-gradient(145deg, #FF8C42, #E67E22); color: white; }
   .card-9 { background: linear-gradient(145deg, #5D6D7E, #2C3E50); color: white; }
 
-  /* Dashboard Footer - color #1565c0 */
+  /* Dashboard Footer */
   .app-footer {
     background: #F8FAFE;
     margin-top: auto;
@@ -514,7 +562,6 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     return currentPermissions && currentPermissions[actionKey] === "Show";
   }
   
-  // Helper functions
   function showToast(msg) {
     const toast = document.createElement('div');
     toast.style.position = 'fixed';
@@ -556,7 +603,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     }
   };
   
-  // ========== NETWORK CHECK WITH FA-WIFI ICON ==========
+  // NETWORK CHECK
   async function checkNetwork() {
     const tile = document.getElementById('networkTile');
     const originalHTML = tile.innerHTML;
@@ -566,35 +613,21 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     let isConnected = false;
     let connectionType = 'Unknown';
     let responseTime = null;
-    
     const browserOnline = navigator.onLine;
     
     try {
       const startTime = Date.now();
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 8000);
-      
       const response = await fetch('https://www.gstatic.com/generate_204', {
         method: 'HEAD',
         cache: 'no-cache',
         signal: controller.signal
       });
-      
       clearTimeout(timeoutId);
       responseTime = Date.now() - startTime;
-      
-      if (response.ok || response.status === 204) {
-        isConnected = true;
-      } else {
-        const fallbackResponse = await fetch('https://connectivity-check.ubuntu.com/', {
-          method: 'HEAD',
-          cache: 'no-cache'
-        });
-        if (fallbackResponse.ok) {
-          isConnected = true;
-          responseTime = Date.now() - startTime;
-        }
-      }
+      if (response.ok || response.status === 204) isConnected = true;
+      else isConnected = false;
     } catch (err) {
       try {
         const fallbackStart = Date.now();
@@ -605,12 +638,8 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
         if (fallbackResponse.ok) {
           isConnected = true;
           responseTime = Date.now() - fallbackStart;
-        } else {
-          isConnected = false;
         }
-      } catch (finalErr) {
-        isConnected = false;
-      }
+      } catch (finalErr) { isConnected = false; }
     }
     
     if (navigator.connection) {
@@ -631,8 +660,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
         Your device has active internet connectivity.<br><br>
         📡 Connection: ${connectionType}<br>
         ⏱️ Response: ${responseTime || 'Fast'} ms<br>
-        🌐 Status: Online<br>
-        📱 Browser reports: ${browserOnline ? 'Online' : 'Online (synced)'}
+        🌐 Status: Online
       `;
     } else {
       networkIcon.innerHTML = '<i class="fa fa-wifi" style="color: #f97316;"></i>';
@@ -640,11 +668,9 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
       networkDetail.innerHTML = `
         Unable to detect internet connectivity.<br><br>
         📱 Browser status: ${browserOnline ? 'Online (limited)' : 'Offline'}<br>
-        💡 Tip: Check your Wi-Fi or mobile data<br>
-        🔄 Try again when connection is restored
+        💡 Tip: Check your Wi-Fi or mobile data
       `;
     }
-    
     document.getElementById('networkModal').classList.add('active');
   }
   
@@ -656,7 +682,6 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     document.getElementById('accessModal').classList.add('active');
   }
   
-  // QR Camera Mock
   async function startCamera() {
     showToast('📷 Camera simulation: Badge scanned successfully');
     const mockBadges = ["ICF-BADGE-001", "NMCP-ITN-8743", "MOH-SL-5562"];
@@ -664,7 +689,6 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     showToast(`✓ Badge verified: ${scanned}`);
   }
   
-  // Language toggle - no toast message
   let currentLang = 'en';
   function toggleLanguage() {
     currentLang = currentLang === 'en' ? 'fr' : 'en';
@@ -679,7 +703,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     if (scanBtn) scanBtn.innerText = currentLang === 'en' ? 'SCAN QR BADGE' : 'SCANNER QR';
   }
   
-  // ====================== RENDER LOGIN SCREEN ======================
+  // RENDER LOGIN SCREEN
   function renderLoginScreen() {
     const container = document.getElementById('appContainer');
     container.innerHTML = `
@@ -774,7 +798,71 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     renderLoginScreen();
   }
   
-  // ====================== RENDER DASHBOARD ======================
+  // Initialize carousel function
+  function initCarousel() {
+    const slidesContainer = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    
+    if (!slidesContainer) return;
+    
+    const slides = document.querySelectorAll('.carousel-slide');
+    if (slides.length === 0) return;
+    
+    let currentIndex = 0;
+    let autoInterval;
+    
+    function createDots() {
+      if (!dotsContainer) return;
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, idx) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (idx === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(idx));
+        dotsContainer.appendChild(dot);
+      });
+    }
+    
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, idx) => {
+        if (idx === currentIndex) dot.classList.add('active');
+        else dot.classList.remove('active');
+      });
+    }
+    
+    function goToSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+      updateDots();
+      resetAutoSlide();
+    }
+    
+    function nextSlide() { goToSlide(currentIndex + 1); }
+    function prevSlide() { goToSlide(currentIndex - 1); }
+    
+    function resetAutoSlide() {
+      if (autoInterval) clearInterval(autoInterval);
+      autoInterval = setInterval(() => { nextSlide(); }, 5000);
+    }
+    
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    createDots();
+    resetAutoSlide();
+    
+    const container = document.querySelector('.carousel-container');
+    if (container) {
+      container.addEventListener('mouseenter', () => clearInterval(autoInterval));
+      container.addEventListener('mouseleave', resetAutoSlide);
+    }
+  }
+  
+  // RENDER DASHBOARD
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
@@ -827,13 +915,13 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
         </div>
         
         <div class="carousel-section">
-          <div class="carousel-container" id="carouselContainerDash">
+          <div class="carousel-container">
             <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
             <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
             <div class="carousel-slides" id="carouselSlides">
-              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
-              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3EReal-time%3C/text%3E%3C/svg%3E'"></div>
-              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 180\'%3E%3Crect width=\'350\' height=\'180\' fill=\'%23216B2A\'/%3E%3Ctext x=\'175\' y=\'85\' fill=\'white\' font-size=\'16\'%3ECoverage%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3Ctext x=\'175\' y=\\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHousehold Registration%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EData Collection%3C/text%3E%3Ctext x=\'175\' y=\\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EReal-time Monitoring%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3Ctext x=\'175\' y=\\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHealth %26 Development%3C/text%3E%3C/svg%3E'"></div>
             </div>
             <div class="carousel-dots" id="carouselDots"></div>
           </div>
@@ -859,21 +947,10 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
       </div>
     `;
     
-    // Initialize carousel
+    // Initialize carousel after DOM is ready
     setTimeout(() => {
-      const slides = document.querySelectorAll('.carousel-slide');
-      const slidesContainer = document.getElementById('carouselSlides');
-      const prevBtn = document.getElementById('prevBtn');
-      const nextBtn = document.getElementById('nextBtn');
-      if (slidesContainer && slides.length) {
-        let idx = 0;
-        function update() { slidesContainer.style.transform = `translateX(-${idx * 100}%)`; }
-        function goTo(i) { idx = (i + slides.length) % slides.length; update(); }
-        if (prevBtn) prevBtn.onclick = () => goTo(idx - 1);
-        if (nextBtn) nextBtn.onclick = () => goTo(idx + 1);
-        setInterval(() => goTo(idx + 1), 5000);
-      }
-    }, 100);
+      initCarousel();
+    }, 50);
     
     document.querySelectorAll('[data-role-action]').forEach(el => {
       el.addEventListener('click', () => {
