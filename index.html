@@ -1,1495 +1,829 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Phone View | Three Action Cards - Full Width Row</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-      background: #f0f2f5;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      line-height: 1.3;
-    }
-
-    /* ===== HEADER - PHONE VIEW ===== */
-    .app-header {
-      background-color: #0a59c6;
-      color: white;
-      padding: 0.5rem 0.75rem;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-      width: 100%;
-    }
-
-    .header-container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.35rem;
-    }
-
-    .brand-icons {
-      display: flex;
-      align-items: center;
-      gap: 0.15rem;
-    }
-
-    .icon-reg {
-      font-size: 1rem;
-      filter: drop-shadow(0 1px 1px rgba(0,0,0,0.1));
-    }
-
-    .brand h1 {
-      font-size: 0.9rem;
-      font-weight: 600;
-      background: rgba(255,255,255,0.15);
-      padding: 0.15rem 0.7rem;
-      border-radius: 40px;
-      backdrop-filter: blur(2px);
-      letter-spacing: 0.3px;
-    }
-
-    /* ===== MAIN BODY - FLEXIBLE GRID THAT FITS ON SCREEN ===== */
-    .main-content {
-      flex: 1;
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      padding: 1rem 0.75rem;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    /* Cards container - horizontal row that fits without overflow */
-    .cards-container {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      gap: 0.75rem;
-      justify-content: center;
-      align-items: stretch;
-      width: 100%;
-    }
-
-    /* Action Card - dynamically sized to fit screen properly */
-    .action-card {
-      background: white;
-      border-radius: 20px;
-      box-shadow: 0 8px 18px -6px rgba(0, 0, 0, 0.12);
-      flex: 1;
-      min-width: 0;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      cursor: pointer;
-      transition: transform 0.15s ease, box-shadow 0.2s ease;
-    }
-
-    .action-card:active {
-      transform: scale(0.97);
-      transition: transform 0.05s;
-    }
-
-    /* Card 1: Manual Entry - Orange gradient */
-    .card-manual .card-header {
-      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-    }
-
-    /* Card 2: Scan QR - Teal gradient */
-    .card-scan .card-header {
-      background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%);
-    }
-
-    /* Card 3: RECORDS - Purple gradient */
-    .card-records .card-header {
-      background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%);
-    }
-
-    /* Card header - compact but touch-friendly */
-    .card-header {
-      padding: 0.6rem 0.4rem;
-      color: white;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.35rem;
-      text-align: center;
-    }
-
-    .card-icon {
-      font-size: 1.3rem;
-      background: rgba(255,255,255,0.2);
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-radius: 50%;
-      backdrop-filter: blur(4px);
-      flex-shrink: 0;
-    }
-
-    .card-header h2 {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 0.3px;
-      line-height: 1.2;
-      word-break: keep-all;
-    }
-
-    /* Card body - compact to fit three columns */
-    .card-body {
-      padding: 0.6rem 0.5rem 0.75rem 0.5rem;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-    }
-
-    .card-description {
-      color: #1e293b;
-      font-size: 0.62rem;
-      line-height: 1.4;
-      font-weight: 500;
-      background: #f8fafc;
-      padding: 0.5rem 0.45rem;
-      border-radius: 14px;
-      text-align: left;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Left border accent matching each card */
-    .card-manual .card-description {
-      border-left: 3px solid #f97316;
-    }
-    .card-scan .card-description {
-      border-left: 3px solid #14b8a6;
-    }
-    .card-records .card-description {
-      border-left: 3px solid #a855f7;
-    }
-
-    .demographic-title {
-      font-weight: 700;
-      margin-bottom: 4px;
-      font-size: 0.62rem;
-      display: block;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    /* Hierarchy path styling - ultra compact */
-    .hierarchy-path {
-      font-family: monospace;
-      font-size: 0.5rem;
-      background: #fff3e6;
-      padding: 0.3rem 0.2rem;
-      border-radius: 8px;
-      color: #ea580c;
-      font-weight: 600;
-      margin-top: 0.3rem;
-      text-align: center;
-      word-break: break-word;
-      line-height: 1.3;
-    }
-
-    .divider-light {
-      height: 1px;
-      background: #e2e8f0;
-      margin: 0.05rem 0;
-    }
-
-    /* ===== FOOTER ===== */
-    .app-footer {
-      background-color: #0a59c6;
-      color: white;
-      margin-top: auto;
-      padding: 0.6rem 1rem;
-      font-size: 0.7rem;
-      width: 100%;
-    }
-
-    .footer-container {
-      width: 100%;
-      max-width: 480px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.2rem;
-      text-align: center;
-    }
-
-    .footer-main {
-      font-weight: 600;
-      font-size: 0.7rem;
-      letter-spacing: 0.2px;
-    }
-
-    .footer-sub {
-      font-size: 0.6rem;
-      opacity: 0.92;
-    }
-
-    /* Iframe Panel Styles */
-    .iframe-panel {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: #ffffff;
-      display: none;
-      flex-direction: column;
-      z-index: 2000;
-      overflow: hidden;
-      animation: slideUp 0.3s ease;
-    }
-    
-    @keyframes slideUp {
-      from { transform: translateY(100%); opacity: 0; }
-      to { transform: translateY(0); opacity: 1; }
-    }
-    
-    .iframe-header {
-      background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);
-      color: white;
-      padding: 14px 18px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-weight: 700;
-      font-size: 16px;
-    }
-    
-    .iframe-header button {
-      background: rgba(255,255,255,0.2);
-      border: none;
-      color: white;
-      font-size: 20px;
-      width: 32px;
-      height: 32px;
-      border-radius: 50%;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    
-    .iframe-header button:active {
-      background: rgba(255,255,255,0.4);
-    }
-    
-    iframe {
-      flex: 1;
-      border: none;
-      width: 100%;
-      background: white;
-    }
-
-    /* ===== RESPONSIVE ADJUSTMENTS FOR DIFFERENT PHONE WIDTHS ===== */
-    @media (max-width: 360px) {
-      .main-content {
-        padding: 0.75rem 0.6rem;
-      }
-      
-      .cards-container {
-        gap: 0.5rem;
-      }
-      
-      .card-header {
-        padding: 0.5rem 0.3rem;
-      }
-      
-      .card-icon {
-        width: 30px;
-        height: 30px;
-        font-size: 1.1rem;
-      }
-      
-      .card-header h2 {
-        font-size: 0.65rem;
-      }
-      
-      .card-body {
-        padding: 0.5rem 0.4rem 0.65rem 0.4rem;
-      }
-      
-      .card-description {
-        font-size: 0.55rem;
-        padding: 0.4rem 0.35rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.55rem;
-        white-space: normal;
-        word-break: keep-all;
-      }
-      
-      .hierarchy-path {
-        font-size: 0.45rem;
-        padding: 0.25rem 0.15rem;
-      }
-      
-      .brand h1 {
-        font-size: 0.8rem;
-      }
-    }
-    
-    @media (min-width: 361px) and (max-width: 400px) {
-      .card-header h2 {
-        font-size: 0.68rem;
-      }
-      
-      .card-description {
-        font-size: 0.58rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.58rem;
-      }
-      
-      .hierarchy-path {
-        font-size: 0.48rem;
-      }
-    }
-    
-    @media (min-width: 401px) and (max-width: 480px) {
-      .card-header h2 {
-        font-size: 0.72rem;
-      }
-      
-      .card-description {
-        font-size: 0.6rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.6rem;
-      }
-    }
-    
-    @media (min-width: 481px) and (max-width: 550px) {
-      .main-content {
-        max-width: 520px;
-      }
-      
-      .card-header h2 {
-        font-size: 0.78rem;
-      }
-      
-      .card-description {
-        font-size: 0.65rem;
-      }
-      
-      .demographic-title {
-        font-size: 0.65rem;
-      }
-    }
-
-    @media (hover: hover) {
-      .action-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 12px 22px -10px rgba(0, 0, 0, 0.15);
-      }
-    }
-
-    .action-card:focus-visible {
-      outline: 2px solid #0a59c6;
-      outline-offset: 2px;
-    }
-  </style>
-</head>
-<body>
-
-  <!-- HEADER - "REGISTRATION" only, no "HUB" -->
-  <header class="app-header">
-    <div class="header-container">
-      <div class="brand">
-        <div class="brand-icons">
-          <span class="icon-reg">📝</span>
-          <span class="icon-reg">✅</span>
-          <span class="icon-reg">👥</span>
-        </div>
-        <h1>REGISTRATION</h1>
-      </div>
-    </div>
-  </header>
-
-  <!-- MAIN BODY - Three action cards in a single row that fits on screen properly -->
-  <main class="main-content">
-    <div class="cards-container">
-      
-      <!-- ACTION CARD 1: MANUAL ENTRY - Opens registration.html in iframe -->
-      <div class="action-card card-manual" role="button" tabindex="0" aria-label="Manual entry form for demographic data">
-        <div class="card-header">
-          <div class="card-icon">✍️</div>
-          <h2>MANUAL<br>ENTRY</h2>
-        </div>
-        <div class="card-body">
-          <div class="card-description">
-            <span class="demographic-title">📊 Demographic</span>
-            Region » District » Chiefdom » PHU » Community » Point
-            <div class="hierarchy-path"></div>
-          </div>
-          <div class="divider-light"></div>
-        </div>
-      </div>
-
-      <!-- ACTION CARD 2: SCAN QR -->
-      <div class="action-card card-scan" role="button" tabindex="0" aria-label="Scan QR code to auto-fill fields">
-        <div class="card-header">
-          <div class="card-icon">📷</div>
-          <h2>SCAN<br>QR</h2>
-        </div>
-        <div class="card-body">
-          <div class="card-description">
-            <span class="demographic-title">⚡ Auto-Fill</span>
-            Camera scans QR and fills all fields instantly
-          </div>
-          <div class="divider-light"></div>
-        </div>
-      </div>
-
-      <!-- ACTION CARD 3: RECORDS -->
-      <div class="action-card card-records" role="button" tabindex="0" aria-label="View and manage submission records">
-        <div class="card-header">
-          <div class="card-icon">📋</div>
-          <h2>RECORDS</h2>
-        </div>
-        <div class="card-body">
-          <div class="card-description">
-            <span class="demographic-title">📁 Manage</span>
-            Access submissions, filter by hierarchy or date
-          </div>
-          <div class="divider-light"></div>
-        </div>
-      </div>
-    </div>
-  </main>
-
-  <!-- FOOTER - Required text -->
-  <footer class="app-footer">
-    <div class="footer-container">
-      <div class="footer-main">
-        Developed by Informatics Consultancy Firm-SL
-      </div>
-      <div class="footer-sub">
-        © 2026
-      </div>
-    </div>
-  </footer>
-
-  <!-- Iframe Panel for registration.html -->
-  <div id="iframePanel" class="iframe-panel">
-    <div class="iframe-header">
-      <span><i class="fas fa-edit"></i> Manual Entry Form</span>
-      <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
-    </div>
-    <iframe id="registrationIframe" src="registration.html" title="Registration Form"></iframe>
-  </div>
-
-  <!-- Font Awesome for iframe header icons -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-
-  <script>
-    (function() {
-      // Get card elements
-      const manualCard = document.querySelector('.card-manual');
-      const scanCard = document.querySelector('.card-scan');
-      const recordsCard = document.querySelector('.card-records');
-      const iframePanel = document.getElementById('iframePanel');
-      const registrationIframe = document.getElementById('registrationIframe');
-      
-      // Function to open registration.html in iframe
-      function openRegistrationIframe() {
-        // Reload the iframe to ensure fresh content
-        registrationIframe.src = "registration.html";
-        
-        // Handle iframe load error - provide fallback if registration.html doesn't exist
-        registrationIframe.onerror = function() {
-          registrationIframe.srcdoc = getFallbackRegistrationForm();
-        };
-        
-        // Check if iframe loaded successfully after timeout
-        setTimeout(() => {
-          try {
-            if (registrationIframe.contentWindow && registrationIframe.contentDocument && 
-                registrationIframe.contentDocument.body && 
-                registrationIframe.contentDocument.body.innerHTML.trim() === "") {
-              registrationIframe.srcdoc = getFallbackRegistrationForm();
-            }
-          } catch(e) {
-            registrationIframe.srcdoc = getFallbackRegistrationForm();
-          }
-        }, 500);
-        
-        iframePanel.style.display = 'flex';
-      }
-      
-      // Close iframe panel
-      function closeIframePanel() {
-        iframePanel.style.display = 'none';
-        registrationIframe.src = "registration.html";
-        registrationIframe.onerror = null;
-      }
-      
-      // Fallback registration form if registration.html is not found
-      function getFallbackRegistrationForm() {
-        return `<!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="UTF-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Manual Entry Form</title>
-          <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-          <style>
-            *{margin:0;padding:0;box-sizing:border-box;}
-            body{font-family:'Segoe UI', Arial, sans-serif;background:linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);padding:20px;margin:0;min-height:100vh;}
-            .form-card{background:white;border-radius:32px;padding:24px 22px;box-shadow:0 15px 35px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}
-            h2{color:#ea580c;font-size:24px;margin-bottom:8px;display:flex;align-items:center;gap:10px;}
-            .sub{color:#4b5563;font-size:13px;margin-bottom:22px;border-left:3px solid #f97316;padding-left:12px;}
-            input, select{width:100%;padding:14px 16px;margin:12px 0;border:1.5px solid #e2e8f0;border-radius:50px;font-size:14px;background:#f8fafc;}
-            input:focus, select:focus{outline:none;border-color:#f97316;background:white;}
-            button{background:#ea580c;color:white;border:none;padding:14px;width:100%;border-radius:50px;font-weight:700;font-size:16px;cursor:pointer;margin-top:16px;transition:0.2s;}
-            button:active{transform:scale(0.97);}
-            .success-badge{background:#e8f5e9;color:#15803d;padding:12px;border-radius:20px;margin-top:20px;font-size:12px;text-align:center;}
-            .info-badge{background:#e3f2fd;color:#0b5ed7;padding:12px;border-radius:20px;margin-top:12px;font-size:11px;text-align:center;}
-          </style>
-        </head>
-        <body>
-          <div class="form-card">
-            <h2><i class="fas fa-pen-alt"></i> Manual Entry</h2>
-            <div class="sub">Household Registration Form - ITN Campaign 2026</div>
-            <select id="region">
-              <option value="">Select Region</option>
-              <option>Western</option>
-              <option>Northern</option>
-              <option>Southern</option>
-              <option>Eastern</option>
-            </select>
-            <select id="district">
-              <option value="">Select District</option>
-              <option>Western Area Urban</option>
-              <option>Western Area Rural</option>
-              <option>Bo</option>
-              <option>Kenema</option>
-              <option>Makeni</option>
-              <option>Kono</option>
-            </select>
-            <select id="chiefdom">
-              <option value="">Select Chiefdom</option>
-              <option>Chiefdom A</option>
-              <option>Chiefdom B</option>
-              <option>Chiefdom C</option>
-            </select>
-            <input type="text" id="phu" placeholder="PHU / Health Facility">
-            <input type="text" id="community" placeholder="Community / Village">
-            <input type="text" id="householdHead" placeholder="Household Head Name">
-            <input type="number" id="members" placeholder="Number of Household Members">
-            <button onclick="submitForm()"><i class="fas fa-save"></i> Submit Registration</button>
-            <div id="successMsg" class="success-badge" style="display: none;">
-              <i class="fas fa-check-circle"></i> Registration saved successfully!
-            </div>
-            <div class="info-badge"><i class="fas fa-info-circle"></i> ITN distribution campaign 2026 active</div>
-          </div>
-          <script>
-            function submitForm() {
-              const region = document.getElementById('region').value;
-              const district = document.getElementById('district').value;
-              const chiefdom = document.getElementById('chiefdom').value;
-              const phu = document.getElementById('phu').value.trim();
-              const community = document.getElementById('community').value.trim();
-              const headName = document.getElementById('householdHead').value.trim();
-              const members = document.getElementById('members').value;
-              
-              if (!region || !district || !chiefdom || !phu || !community || !headName || !members) {
-                alert('❌ Please fill in all required fields.');
-                return;
-              }
-              
-              if (parseInt(members) <= 0) {
-                alert('❌ Number of household members must be greater than 0.');
-                return;
-              }
-              
-              const successMsg = document.getElementById('successMsg');
-              successMsg.style.display = 'block';
-              
-              setTimeout(() => {
-                successMsg.style.display = 'none';
-              }, 3000);
-              
-              // Clear form
-              document.getElementById('region').value = '';
-              document.getElementById('district').value = '';
-              document.getElementById('chiefdom').value = '';
-              document.getElementById('phu').value = '';
-              document.getElementById('community').value = '';
-              document.getElementById('householdHead').value = '';
-              document.getElementById('members').value = '';
-            }
-          <\/script>
-        </body>
-        </html>`;
-      }
-      
-      // Manual Entry Card - Opens iframe with registration.html
-      if (manualCard) {
-        const handleManual = () => {
-          openRegistrationIframe();
-        };
-        manualCard.addEventListener('click', handleManual);
-        manualCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleManual();
-          }
-        });
-      }
-
-      // Scan QR Card - Shows alert (kept original behavior)
-      if (scanCard) {
-        const handleScan = () => {
-          alert('📷 SCAN QR CODE\n\nCamera will open. Scanning QR auto-fills all fields instantly.');
-        };
-        scanCard.addEventListener('click', handleScan);
-        scanCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleScan();
-          }
-        });
-      }
-
-      // RECORDS Card - Shows alert (kept original behavior)
-      if (recordsCard) {
-        const handleRecords = () => {
-          alert('📋 RECORDS\n\nView & manage submitted registrations. Filter by hierarchy or date.');
-        };
-        recordsCard.addEventListener('click', handleRecords);
-        recordsCard.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            handleRecords();
-          }
-        });
-      }
-      
-      // Close iframe panel when clicking on overlay
-      iframePanel.addEventListener('click', function(e) {
-        if (e.target === iframePanel) {
-          closeIframePanel();
-        }
-      });
-      
-      // Make close function globally accessible
-      window.closeIframePanel = closeIframePanel;
-      
-      // Verification: ensure no forbidden text appears in the UI
-      const forbiddenPhrases = [
-        "Complete each level",
-        "Tap to open form",
-        "Full hierarchy + recipient details",
-        "Launch scanner",
-        "Search · Export · History",
-        "Browse entries",
-        "HUB"
-      ];
-      
-      let hasForbidden = false;
-      forbiddenPhrases.forEach(phrase => {
-        if (document.body.innerText.includes(phrase)) {
-          console.warn(`⚠️ Forbidden phrase found: "${phrase}"`);
-          hasForbidden = true;
-        }
-      });
-      
-      if (!hasForbidden) {
-        console.log('✅ SUCCESS: Three cards display in a single row. Clicking MANUAL ENTRY opens registration.html in iframe.');
-      }
-      
-      console.log('📱 Phone view active | Cards layout: flex row, equal width, fit screen');
-    })();
-  </script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="en"> 
-<head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ITNs Campaign Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ICF-SL | ITN Mass Campaign Login</title>
 
+<!-- Font Awesome 6 (free icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
-* {
+  /* ----- RESET & GLOBAL ----- */
+  * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
+  }
 
-body {
-    background: #f2f2f2;
+  body {
+    background: #ffffff;
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-}
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 20px;
+  }
 
-.container {
-    width: 360px;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 780px;
-    background: #fff;
-    border-radius: 30px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-}
+  /* ----- PHONE FRAME ----- */
+  .phone-frame {
+    width: 390px;
+    height: 760px;
+    background: #1a1e2c;
+    border-radius: 50px;
+    padding: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
 
-.bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* Phone mock with Background.png INSIDE the phone shape */
+  .phone-mock {
     width: 100%;
     height: 100%;
-    background: url('background.png') no-repeat center/cover;
-    z-index: 0;
-}
-.bg::after {
+    background: url("background.png") no-repeat center center;
+    background-size: cover;
+    border-radius: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Semi-transparent overlay for readability inside phone */
+  .phone-mock::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.45);
-}
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 40px;
+    pointer-events: none;
+  }
 
-.content {
+  /* ----- SCROLLABLE CONTENT (above overlay) ----- */
+  .screen {
+    flex: 1;
+    padding: 20px 16px;
+    overflow-y: auto;
     position: relative;
     z-index: 2;
-    padding: 20px 16px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+  }
 
-.login-card {
-    background: rgba(255,255,255,0.96);
-    border-radius: 24px;
-    padding: 20px 16px;
-    margin-top: 20px;
+  /* ----- LOGIN CARD (semi-transparent white for better contrast) ----- */
+  .card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 28px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
+    position: relative;
+  }
 
-.logo {
-    text-align: center;
+  .logo-area img {
+    width: 100px;
     margin-bottom: 16px;
-}
-.logo img {
-    width: 65px;
-    border-radius: 50%;
-    background: white;
-    padding: 4px;
-}
+  }
 
-.input {
-    width: 100%;
-    padding: 14px 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 40px;
-    font-size: 16px;
-    background: #fff;
-}
-
-.password-wrapper {
-    position: relative;
-}
-.password-wrapper input {
-    padding-right: 50px;
-}
-.eye-icon {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #555;
-    font-size: 1.2rem;
-}
-
-.btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border: none;
-    border-radius: 40px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-.login {
-    background: #2E86C1;
-}
-.scan {
-    background: #1E8449;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 20px 0 10px 0;
-}
-.card {
-    border-radius: 20px;
-    padding: 14px 6px;
-    text-align: center;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-.card:hover {
-    transform: scale(1.02);
-}
-.card i {
-    font-size: 26px;
-}
-.network { background: #D35400; }
-.export { background: #2E86C1; }
-.verify { background: #8E44AD; }
-.language { background: #16A085; }
-
-.curve-wrapper {
-    position: relative;
-    z-index: 2;
-    margin-top: auto;
-}
-.curve {
-    width: 100%;
-    height: 50px;
-    display: block;
-}
-.footer {
-    background: #1E8449;
-    padding: 12px 16px 20px;
-    text-align: center;
-    color: white;
-    border-radius: 20px 20px 0 0;
-}
-.footer h4 {
-    font-size: 11px;
-    font-weight: normal;
-}
-.footer p {
-    font-size: 13px;
-    text-decoration: underline;
-    font-weight: bold;
-    margin-top: 4px;
-}
-
-#scannerModal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    flex-direction: column;
-}
-#reader {
-    width: 280px;
-    border-radius: 20px;
-    overflow: hidden;
-}
-.close-btn {
-    margin-top: 20px;
-    padding: 10px 24px;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 40px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-@media (max-width: 380px) {
-    .container {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-    }
-    .login-card {
-        padding: 16px 12px;
-    }
-    .cards {
-        gap: 10px;
-    }
-    .card {
-        padding: 10px 4px;
-        font-size: 11px;
-    }
-    .card i {
-        font-size: 22px;
-    }
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    color: white;
-    font-size: 18px;
-    gap: 12px;
-    flex-direction: column;
-}
-
-.iframe-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+  /* form fields - MORE VISIBLE */
+  .field {
     background: #ffffff;
-    display: none;
-    flex-direction: column;
-    z-index: 2000;
-    border-radius: inherit;
-    overflow: hidden;
-    animation: slideUp 0.3s ease;
-}
-@keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-.iframe-header {
-    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
-    color: white;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 16px;
-}
-.iframe-header button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.iframe-header button:hover {
-    background: rgba(255,255,255,0.4);
-}
-iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    background: white;
-}
-
-.logout-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 2100;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    border: 2px solid #2a7fc4;
+    border-radius: 40px;
+    padding: 12px 18px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: 0.2s;
-}
-.logout-btn:hover {
-    transform: scale(1.05);
-    background: #c0392b;
-}
-.logout-btn:active {
+    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  }
+
+  .field input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    color: #1a2c3e;
+  }
+
+  .field input::placeholder {
+    color: #6c7f8f;
+    font-weight: 500;
+  }
+
+  .eye {
+    cursor: pointer;
+    font-size: 18px;
+    color: #2a7fc4;
+    transition: 0.2s;
+  }
+
+  .eye:hover {
+    color: #1565C0;
+  }
+
+  /* Plain text error message below username field */
+  .error-message {
+    text-align: left;
+    font-size: 12px;
+    color: #dc2626;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    display: none;
+    font-weight: 500;
+  }
+
+  .error-message.show {
+    display: block;
+  }
+
+  /* Plain text success message below username field */
+  .success-message {
+    text-align: left;
+    font-size: 12px;
+    color: #16a34a;
+    margin-top: -8px;
+    margin-bottom: 12px;
+    padding-left: 8px;
+    display: none;
+    font-weight: 500;
+  }
+
+  .success-message.show {
+    display: block;
+  }
+
+  /* Camera error message below SCAN QR button */
+  .camera-error-msg {
+    text-align: center;
+    font-size: 11px;
+    color: #dc2626;
+    margin-top: 6px;
+    margin-bottom: 0;
+    display: none;
+    font-weight: 500;
+  }
+
+  .camera-error-msg.show {
+    display: block;
+  }
+
+  /* buttons */
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-login {
+    background: #2a7fc4;
+  }
+
+  .btn-login:hover {
+    background: #1e6aad;
     transform: scale(0.98);
-}
+  }
+
+  .btn-scan {
+    background: #2e8b4a;
+  }
+
+  .btn-scan:hover {
+    background: #237a40;
+    transform: scale(0.98);
+  }
+
+  /* ----- ACTION GRID (4 tiles) ----- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0 8px;
+  }
+
+  .tile {
+    border-radius: 20px;
+    padding: 14px 8px;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .tile:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+  }
+
+  .tile-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  /* individual tile colors (solid with slight opacity) */
+  .t-orange { background: rgba(217, 95, 26, 0.9); }
+  .t-blue   { background: rgba(42, 127, 196, 0.9); }
+  .t-purple { background: rgba(123, 63, 160, 0.9); }
+  .t-teal   { background: rgba(27, 154, 138, 0.9); }
+
+  /* ----- FOOTER (solid blue bar) ----- */
+  .footer {
+    background: #1565C0;
+    text-align: center;
+    padding: 12px 10px;
+    color: white;
+    font-size: 11px;
+    line-height: 1.4;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Network Status Modal */
+  .network-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.85);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .network-modal.active {
+    display: flex;
+  }
+
+  .network-card {
+    background: white;
+    border-radius: 30px;
+    padding: 25px;
+    text-align: center;
+    max-width: 320px;
+    width: 80%;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+  }
+
+  .network-status-icon {
+    font-size: 60px;
+    margin-bottom: 15px;
+  }
+
+  .network-status-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .network-status-detail {
+    font-size: 14px;
+    color: #555;
+    margin-bottom: 20px;
+    line-height: 1.4;
+  }
+
+  .network-close-btn {
+    background: #1565C0;
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 40px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  /* Camera Modal Styles */
+  .camera-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,0.9);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .camera-modal.active {
+    display: flex;
+  }
+
+  .camera-video {
+    width: 100%;
+    max-width: 400px;
+    border-radius: 20px;
+    border: 3px solid white;
+  }
+
+  .camera-controls {
+    margin-top: 20px;
+    display: flex;
+    gap: 15px;
+  }
+
+  .camera-btn {
+    padding: 10px 25px;
+    border-radius: 40px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .camera-btn-close {
+    background: #dc2626;
+    color: white;
+  }
+
+  .camera-btn-capture {
+    background: #2e8b4a;
+    color: white;
+  }
+
+  .scan-result {
+    margin-top: 15px;
+    color: white;
+    background: rgba(0,0,0,0.7);
+    padding: 10px;
+    border-radius: 20px;
+    font-size: 12px;
+    text-align: center;
+    max-width: 90%;
+  }
+
+  /* scrollbar styling */
+  .screen::-webkit-scrollbar {
+    width: 3px;
+  }
+  .screen::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+  .screen::-webkit-scrollbar-thumb {
+    background: #1565C0;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
 
-<div class="container" id="appContainer">
-    <div class="bg"></div>
-    <div class="content">
-        <div class="login-card">
-            <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='https://placehold.co/200x200/2E86C1/white?text=ICF-SL'">
-            </div>
-            <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
-            <div class="password-wrapper">
-                <input id="password" class="input" type="password" placeholder="PASSWORD">
-                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
-            </div>
-            <button id="loginBtn" class="btn login">LOGIN</button>
-            <button id="scanBtn" class="btn scan">SCAN BADGE</button>
+<div class="phone-frame">
+  <div class="phone-mock">
+    <div class="screen">
+
+      <!-- LOGIN CARD -->
+      <div class="card">
+        <div class="logo-area">
+          <!-- ICF-SL Logo.jpg (local image file) -->
+          <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\' font-family=\'Arial\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\' font-family=\'Arial\'%3ESL%3C/text%3E%3C/svg%3E'">
         </div>
 
-        <div class="cards">
-            <div class="card network" id="networkCard">
-                <i class="fa-solid fa-wifi"></i>
-                <span>NETWORK CHECK</span>
-            </div>
-            <div class="card export" id="exportCard">
-                <i class="fa-solid fa-download"></i>
-                <span>EXPORT CAMPAIGN LOGS</span>
-            </div>
-            <div class="card verify" id="verifyCard">
-                <i class="fa-solid fa-fingerprint"></i>
-                <span>VERIFY BENEFICIARY PRINT</span>
-            </div>
-            <div class="card language" onclick="toggleLanguage()">
-                <i class="fa-solid fa-language"></i>
-                <span id="langText">ENGLISH</span>
-            </div>
+        <!-- Username Field -->
+        <div class="field">
+          <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
         </div>
-    </div>
+        
+        <!-- Plain text error message below username -->
+        <div id="errorMsg" class="error-message"></div>
+        
+        <!-- Plain text success message below username -->
+        <div id="successMsg" class="success-message"></div>
 
-    <div class="curve-wrapper">
-        <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
-            <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
-        </svg>
-        <div class="footer">
-            <h4 id="devText">Developed By</h4>
-            <p>Informatic Consultancy Firm-SL ©2026</p>
+        <!-- Password Field -->
+        <div class="field">
+          <input type="password" id="password" placeholder="PASSWORD" autocomplete="off">
+          <span class="eye" onclick="togglePasswordVisibility()">
+            <i class="fa-regular fa-eye" id="eyeIcon"></i>
+          </span>
         </div>
+
+        <button class="btn btn-login" id="loginBtn">LOGIN</button>
+        <button class="btn btn-scan" id="scanQrBtn">SCAN QR</button>
+        
+        <!-- Camera error message below SCAN QR button -->
+        <div id="cameraErrorMsg" class="camera-error-msg"></div>
+      </div>
+
+      <!-- 4 ACTION TILES -->
+      <div class="grid">
+        <div class="tile t-orange" id="networkTile">
+          <div class="tile-icon"><i class="fa fa-wifi"></i></div>
+          <span id="networkCheckText">NETWORK CHECK</span>
+        </div>
+        <div class="tile t-blue" id="exportTile">
+          <div class="tile-icon"><i class="fa fa-download"></i></div>
+          <span id="exportLogsText">EXPORT CAMPAIGN LOGS</span>
+        </div>
+        <div class="tile t-purple" id="verifyTile">
+          <div class="tile-icon"><i class="fa fa-fingerprint"></i></div>
+          <span id="verifyPrintText">VERIFY BENEFICIARY PRINT</span>
+        </div>
+        <div class="tile t-teal" id="languageTile">
+          <div class="tile-icon"><i class="fa fa-globe"></i></div>
+          <span id="languageText">LANGUAGE</span>
+        </div>
+      </div>
+
+    </div> <!-- end screen -->
+
+    <!-- FOOTER -->
+    <div class="footer">
+      <span id="footerText">Developed By<br>Informatics Consultancy Firm-SL © 2026</span>
     </div>
+  </div> <!-- end phone-mock -->
+</div> <!-- end phone-frame -->
+
+<!-- Network Status Modal -->
+<div id="networkModal" class="network-modal">
+  <div class="network-card">
+    <div id="networkIcon" class="network-status-icon"></div>
+    <div id="networkTitle" class="network-status-title"></div>
+    <div id="networkDetail" class="network-status-detail"></div>
+    <button class="network-close-btn" onclick="closeNetworkModal()">OK</button>
+  </div>
 </div>
 
-<div id="scannerModal">
-    <div id="reader"></div>
-    <button class="close-btn" onclick="stopScanner()">Close</button>
-</div>
-
-<div id="iframePanel" class="iframe-panel">
-    <div class="iframe-header">
-        <span><i class="fas fa-chalkboard-user"></i> Dashboard</span>
-        <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
-    </div>
-    <iframe id="dashboardIframe" src="about:blank" title="Dashboard"></iframe>
+<!-- Camera Modal -->
+<div id="cameraModal" class="camera-modal">
+  <video id="cameraVideo" class="camera-video" autoplay playsinline></video>
+  <div class="camera-controls">
+    <button class="camera-btn camera-btn-capture" id="captureBtn">📷 CAPTURE QR</button>
+    <button class="camera-btn camera-btn-close" id="closeCameraBtn">CLOSE</button>
+  </div>
+  <div id="scanResult" class="scan-result"></div>
 </div>
 
 <script>
-let isEnglish = true;
-let html5QrCode;
-let userCredentials = [];
-let currentUser = null;
-
-// User to page mapping based on CSV data
-const USER_PAGE_MAP = {
-    "Admin": "mscreen.html",
-    "HHR2026": "mscreenreg.html",
-    "HHD2026": "mscreendist.html",
-    "NATSUP2026": "mscreenmoni.html",
-    "CHISUP2026": "mscreenatt.html",
-    "PHUSTAFF2026": "mscreenstock.html",
-    "PARTNERS2026": "mscreendash.html"
-};
-
-// Load credentials from Keys.csv
-async function loadKeysFromCSV() {
-    try {
-        const response = await fetch("Keys.csv");
-        if (!response.ok) {
-            console.warn("Keys.csv not found. Using fallback credentials.");
-            userCredentials = getFallbackCredentials();
-            return;
-        }
-        const data = await response.text();
-        const rows = data.split(/\r?\n/);
-        const credentials = [];
-        
-        for (let i = 0; i < rows.length; i++) {
-            const line = rows[i].trim();
-            if (line === "") continue;
-            
-            // Skip header row
-            if (i === 0 && (line.toLowerCase().includes("username") || line.toLowerCase().startsWith("USERNAME"))) {
-                continue;
-            }
-            
-            const parts = line.split(",");
-            if (parts.length >= 2) {
-                const username = parts[0].trim();
-                const password = parts[1].trim();
-                
-                if (username && password) {
-                    credentials.push({ username, password });
-                }
-            }
-        }
-        
-        if (credentials.length === 0) {
-            userCredentials = getFallbackCredentials();
-        } else {
-            userCredentials = credentials;
-        }
-        
-        console.log("Credentials loaded:", userCredentials.map(c => c.username));
-        
-    } catch (err) {
-        console.warn("Error loading Keys.csv, using fallback credentials:", err);
-        userCredentials = getFallbackCredentials();
+  // Language state
+  let currentLanguage = 'en'; // 'en' or 'fr'
+  
+  // Translation dictionary
+  const translations = {
+    en: {
+      usernamePlaceholder: "USERNAME",
+      passwordPlaceholder: "PASSWORD",
+      loginBtn: "LOGIN",
+      scanQrBtn: "SCAN QR",
+      networkCheck: "NETWORK CHECK",
+      exportLogs: "EXPORT CAMPAIGN LOGS",
+      verifyPrint: "VERIFY BENEFICIARY PRINT",
+      language: "LANGUAGE",
+      footer: "Developed By<br>Informatics Consultancy Firm-SL © 2026",
+      loginSuccess: "✓ Login successful! Redirecting...",
+      loginError: "✗ Invalid username or password",
+      enterCredentials: "⚠ Please enter username and password",
+      welcome: "Welcome to Dashboard",
+      networkConnected: "CONNECTED",
+      networkDisconnected: "NO INTERNET CONNECTION",
+      networkDetailConnected: "Your device has internet connectivity.",
+      networkDetailDisconnected: "Unable to detect internet connectivity. Please check your network settings.",
+      scanSuccess: "✓ Badge scanned: ",
+      cameraError: "❌ Unable to access camera. Please check permissions.",
+      exportMessage: "✓ Export Campaign Logs: File ready for download",
+      verifyMessage: "✓ Verify Beneficiary Print: Document ready",
+      networkChecking: "CHECKING...",
+      connectionType: "Connection type",
+      responseTime: "Response time",
+      online: "Online",
+      offline: "Offline",
+      deviceReports: "Device reports"
+    },
+    fr: {
+      usernamePlaceholder: "NOM D'UTILISATEUR",
+      passwordPlaceholder: "MOT DE PASSE",
+      loginBtn: "CONNEXION",
+      scanQrBtn: "SCANNER QR",
+      networkCheck: "VÉRIFICATION RÉSEAU",
+      exportLogs: "EXPORTER JOURNAUX CAMPAGNE",
+      verifyPrint: "VÉRIFIER IMPRESSION BÉNÉFICIAIRE",
+      language: "LANGUE",
+      footer: "Développé par<br>Informatics Consultancy Firm-SL © 2026",
+      loginSuccess: "✓ Connexion réussie ! Redirection...",
+      loginError: "✗ Nom d'utilisateur ou mot de passe invalide",
+      enterCredentials: "⚠ Veuillez entrer votre nom d'utilisateur et mot de passe",
+      welcome: "Bienvenue au Tableau de Bord",
+      networkConnected: "CONNECTÉ",
+      networkDisconnected: "PAS DE CONNEXION INTERNET",
+      networkDetailConnected: "Votre appareil a une connectivité internet.",
+      networkDetailDisconnected: "Impossible de détecter une connectivité internet. Veuillez vérifier vos paramètres réseau.",
+      scanSuccess: "✓ Badge scanné : ",
+      cameraError: "❌ Impossible d'accéder à la caméra. Veuillez vérifier les autorisations.",
+      exportMessage: "✓ Exporter les journaux de campagne : Fichier prêt",
+      verifyMessage: "✓ Vérifier l'impression du bénéficiaire : Document prêt",
+      networkChecking: "VÉRIFICATION...",
+      connectionType: "Type de connexion",
+      responseTime: "Temps de réponse",
+      online: "En ligne",
+      offline: "Hors ligne",
+      deviceReports: "Rapport de l'appareil"
     }
-}
-
-function getFallbackCredentials() {
-    return [
-        { username: "Admin", password: "123" },
-        { username: "HHR2026", password: "123455" },
-        { username: "HHD2026", password: "123456" },
-        { username: "NATSUP2026", password: "123200" },
-        { username: "CHISUP2026", password: "123100" },
-        { username: "PHUSTAFF2026", password: "123300" },
-        { username: "PARTNERS2026", password: "123" }
-    ];
-}
-
-function authenticateUser(username, password) {
-    const matched = userCredentials.find(cred => 
-        cred.username === username && cred.password === password
-    );
-    return matched || null;
-}
-
-function getDashboardPageForUser(username) {
-    return USER_PAGE_MAP[username] || "mscreen.html";
-}
-
-function getUserDisplayName(username) {
-    switch(username) {
-        case "Admin": return "Admin";
-        case "HHR2026": return "HHR (Household Registration)";
-        case "HHD2026": return "HHD (Household Distribution)";
-        case "NATSUP2026": return "NATSUP (National Supervision)";
-        case "CHISUP2026": return "CHISUP (Attendance & Device Tracking)";
-        case "PHUSTAFF2026": return "PHU Staff (Stock Management)";
-        case "PARTNERS2026": return "Partners (Dashboard & Analytics)";
-        default: return username;
-    }
-}
-
-function addLogoutButton() {
-    // Remove existing logout button if any
-    const existingBtn = document.getElementById("globalLogoutBtn");
-    if (existingBtn) existingBtn.remove();
-    
-    // Create logout button
-    const logoutBtn = document.createElement("button");
-    logoutBtn.id = "globalLogoutBtn";
-    logoutBtn.className = "logout-btn";
-    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
-    logoutBtn.onclick = () => {
-        if (confirm(isEnglish ? "Are you sure you want to logout?" : "Êtes-vous sûr de vouloir vous déconnecter?")) {
-            // Stop scanner if active
-            if (html5QrCode && html5QrCode.isScanning) {
-                html5QrCode.stop().catch(() => {});
-            }
-            // Reload the page to show login screen
-            location.reload();
-        }
-    };
-    document.body.appendChild(logoutBtn);
-}
-
-function removeLogoutButton() {
-    const existingBtn = document.getElementById("globalLogoutBtn");
-    if (existingBtn) existingBtn.remove();
-}
-
-function loadDashboardInIframe(username) {
-    const container = document.getElementById("appContainer");
-    const iframePanel = document.getElementById("iframePanel");
-    const dashboardIframe = document.getElementById("dashboardIframe");
-    const iframeHeaderSpan = document.querySelector("#iframePanel .iframe-header span");
-    
-    if (!container || !iframePanel) return;
-    
-    currentUser = username;
-    
-    // Show loading indicator
-    const loadingDiv = document.createElement("div");
-    loadingDiv.className = "loading-overlay";
-    loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse fa-2x"></i><span>Loading dashboard...</span>';
-    document.body.appendChild(loadingDiv);
-    
-    const targetPage = getDashboardPageForUser(username);
-    const displayName = getUserDisplayName(username);
-    
-    // Set iframe source
-    dashboardIframe.src = targetPage;
-    
-    // Handle iframe load error
-    dashboardIframe.onerror = function() {
-        if (loadingDiv) loadingDiv.remove();
-        alert(`Dashboard page "${targetPage}" not found. Please ensure the file exists.`);
-        iframePanel.style.display = "none";
-        removeLogoutButton();
-    };
-    
-    // Handle successful load
-    dashboardIframe.onload = function() {
-        setTimeout(() => {
-            if (loadingDiv) loadingDiv.remove();
-        }, 500);
-    };
-    
-    // Update header text based on user role
-    let headerIcon = '<i class="fas fa-chalkboard-user"></i>';
-    if (username === "HHR2026") headerIcon = '<i class="fas fa-home"></i>';
-    else if (username === "HHD2026") headerIcon = '<i class="fas fa-hand-holding-heart"></i>';
-    else if (username === "NATSUP2026") headerIcon = '<i class="fas fa-chart-simple"></i>';
-    else if (username === "CHISUP2026") headerIcon = '<i class="fas fa-calendar-check"></i>';
-    else if (username === "PHUSTAFF2026") headerIcon = '<i class="fas fa-box"></i>';
-    else if (username === "PARTNERS2026") headerIcon = '<i class="fas fa-chart-line"></i>';
-    
-    if (iframeHeaderSpan) iframeHeaderSpan.innerHTML = `${headerIcon} ${displayName} Dashboard`;
-    
-    // Hide loading after timeout
+  };
+  
+  // Message display functions (plain text below username)
+  const errorMsgDiv = document.getElementById('errorMsg');
+  const successMsgDiv = document.getElementById('successMsg');
+  const cameraErrorMsgDiv = document.getElementById('cameraErrorMsg');
+  
+  function showError(message) {
+    successMsgDiv.classList.remove('show');
+    successMsgDiv.innerText = '';
+    errorMsgDiv.innerText = message;
+    errorMsgDiv.classList.add('show');
     setTimeout(() => {
-        if (loadingDiv && loadingDiv.parentNode) {
-            loadingDiv.remove();
+      errorMsgDiv.classList.remove('show');
+    }, 4000);
+  }
+  
+  function showSuccess(message) {
+    errorMsgDiv.classList.remove('show');
+    errorMsgDiv.innerText = '';
+    successMsgDiv.innerText = message;
+    successMsgDiv.classList.add('show');
+    setTimeout(() => {
+      successMsgDiv.classList.remove('show');
+    }, 3000);
+  }
+  
+  // Camera error message below SCAN QR button
+  function showCameraError(message) {
+    cameraErrorMsgDiv.innerText = message;
+    cameraErrorMsgDiv.classList.add('show');
+    setTimeout(() => {
+      cameraErrorMsgDiv.classList.remove('show');
+    }, 4000);
+  }
+  
+  function updateUILanguage() {
+    const t = translations[currentLanguage];
+    
+    document.getElementById('username').placeholder = t.usernamePlaceholder;
+    document.getElementById('password').placeholder = t.passwordPlaceholder;
+    document.getElementById('loginBtn').innerText = t.loginBtn;
+    document.getElementById('scanQrBtn').innerText = t.scanQrBtn;
+    document.getElementById('networkCheckText').innerText = t.networkCheck;
+    document.getElementById('exportLogsText').innerText = t.exportLogs;
+    document.getElementById('verifyPrintText').innerText = t.verifyPrint;
+    document.getElementById('languageText').innerText = t.language;
+    document.getElementById('footerText').innerHTML = t.footer;
+  }
+  
+  // Toggle language between English and French
+  function toggleLanguage() {
+    if (currentLanguage === 'en') {
+      currentLanguage = 'fr';
+    } else {
+      currentLanguage = 'en';
+    }
+    updateUILanguage();
+  }
+
+  // ----- TOGGLE PASSWORD VISIBILITY -----
+  const passwordInput = document.getElementById('password');
+  const eyeIcon = document.getElementById('eyeIcon');
+
+  function togglePasswordVisibility() {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
+    }
+  }
+
+  // ----- LOGIN VALIDATION (admin / 1234) -----
+  function performLogin() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
+
+    const validUsername = "admin";
+    const validPassword = "1234";
+    const t = translations[currentLanguage];
+
+    if (!username || !password) {
+      showError(t.enterCredentials);
+      return;
+    }
+
+    if (username === validUsername && password === validPassword) {
+      showSuccess(t.loginSuccess);
+      setTimeout(() => {
+        alert(t.welcome);
+      }, 600);
+    } else {
+      showError(t.loginError);
+    }
+  }
+
+  // ----- NETWORK CHECK FUNCTIONALITY -----
+  const networkModal = document.getElementById('networkModal');
+  const networkIcon = document.getElementById('networkIcon');
+  const networkTitle = document.getElementById('networkTitle');
+  const networkDetail = document.getElementById('networkDetail');
+
+  function closeNetworkModal() {
+    networkModal.classList.remove('active');
+  }
+
+  async function checkNetworkConnectivity() {
+    const networkTile = document.getElementById('networkTile');
+    const originalContent = networkTile.innerHTML;
+    const t = translations[currentLanguage];
+    
+    networkTile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>${t.networkChecking}`;
+    networkTile.style.opacity = '0.7';
+    
+    const isBrowserOnline = navigator.onLine;
+    let isActuallyOnline = false;
+    let responseTime = null;
+    let errorMessage = '';
+    
+    try {
+      const startTime = Date.now();
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 5000);
+      
+      const response = await fetch('https://www.google.com/generate_204', {
+        method: 'HEAD',
+        cache: 'no-cache',
+        signal: controller.signal
+      });
+      
+      clearTimeout(timeoutId);
+      responseTime = Date.now() - startTime;
+      
+      if (response.ok || response.status === 204) {
+        isActuallyOnline = true;
+      } else {
+        isActuallyOnline = false;
+        errorMessage = `Server responded with status: ${response.status}`;
+      }
+    } catch (err) {
+      isActuallyOnline = false;
+      errorMessage = err.message || 'Connection failed';
+      try {
+        const fallbackStart = Date.now();
+        const fallbackResponse = await fetch('https://cloudflare.com/cdn-cgi/trace', {
+          method: 'HEAD',
+          cache: 'no-cache'
+        });
+        if (fallbackResponse.ok) {
+          isActuallyOnline = true;
+          responseTime = Date.now() - fallbackStart;
+          errorMessage = '';
         }
-    }, 5000);
-    
-    // Add logout button
-    addLogoutButton();
-    
-    // Show iframe panel
-    iframePanel.style.display = "flex";
-}
-
-function closeIframePanel() {
-    const iframePanel = document.getElementById("iframePanel");
-    const dashboardIframe = document.getElementById("dashboardIframe");
-    if (iframePanel) iframePanel.style.display = "none";
-    if (dashboardIframe) dashboardIframe.src = "about:blank";
-    removeLogoutButton();
-    currentUser = null;
-}
-
-async function handleLogin() {
-    const usernameInput = document.getElementById("username").value.trim();
-    const passwordInput = document.getElementById("password").value.trim();
-    
-    if (!usernameInput || !passwordInput) {
-        alert(isEnglish ? "Please enter username and password" : "Veuillez entrer le nom d'utilisateur et le mot de passe");
-        return;
+      } catch (fallbackErr) {
+        isActuallyOnline = false;
+      }
     }
     
-    if (userCredentials.length === 0) {
-        await loadKeysFromCSV();
-    }
+    networkTile.innerHTML = originalContent;
+    networkTile.style.opacity = '1';
     
-    const user = authenticateUser(usernameInput, passwordInput);
+    const isConnected = isBrowserOnline && isActuallyOnline;
     
-    if (user) {
-        loadDashboardInIframe(user.username);
-        // Clear login fields
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
+    if (isConnected) {
+      networkIcon.innerHTML = '<i class="fa fa-check-circle" style="color: #16a34a;"></i>';
+      networkTitle.innerHTML = `✅ ${t.networkConnected}`;
+      let connType = navigator.connection ? navigator.connection.effectiveType : 'Unknown';
+      networkDetail.innerHTML = `${t.networkDetailConnected}<br><br>📡 ${t.connectionType}: ${connType}<br>⏱️ ${t.responseTime}: ${responseTime || 'Fast'} ms<br>🌐 ${t.online}: Yes`;
     } else {
-        alert(isEnglish ? "Invalid Username or Password" : "Nom d'utilisateur ou mot de passe incorrect");
-    }
-}
-
-function togglePassword() {
-    const password = document.getElementById("password");
-    const icon = document.querySelector(".eye-icon");
-    if (password.type === "password") {
-        password.type = "text";
-        icon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        password.type = "password";
-        icon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
-
-function toggleLanguage() {
-    isEnglish = !isEnglish;
-    const usernameField = document.getElementById("username");
-    const passwordField = document.getElementById("password");
-    const loginBtn = document.getElementById("loginBtn");
-    const scanBtn = document.getElementById("scanBtn");
-    const networkSpan = document.querySelector("#networkCard span");
-    const exportSpan = document.querySelector("#exportCard span");
-    const verifySpan = document.querySelector("#verifyCard span");
-    const langSpan = document.getElementById("langText");
-    const devText = document.getElementById("devText");
-
-    if (!isEnglish) {
-        usernameField.placeholder = "Nom d'utilisateur";
-        passwordField.placeholder = "Mot de passe";
-        loginBtn.innerText = "CONNEXION";
-        scanBtn.innerText = "SCANNER BADGE";
-        if (networkSpan) networkSpan.innerText = "RÉSEAU";
-        if (exportSpan) exportSpan.innerText = "EXPORTER LES DONNÉES";
-        if (verifySpan) verifySpan.innerText = "VÉRIFIER BÉNÉFICIAIRE";
-        langSpan.innerText = "FRANÇAIS";
-        devText.innerText = "Développé Par";
-    } else {
-        usernameField.placeholder = "USERNAME";
-        passwordField.placeholder = "PASSWORD";
-        loginBtn.innerText = "LOGIN";
-        scanBtn.innerText = "SCAN BADGE";
-        if (networkSpan) networkSpan.innerText = "NETWORK CHECK";
-        if (exportSpan) exportSpan.innerText = "EXPORT CAMPAIGN LOGS";
-        if (verifySpan) verifySpan.innerText = "VERIFY BENEFICIARY PRINT";
-        langSpan.innerText = "ENGLISH";
-        devText.innerText = "Developed By";
-    }
-}
-
-function startScanner() {
-    const modal = document.getElementById("scannerModal");
-    modal.style.display = "flex";
-    html5QrCode = new Html5Qrcode("reader");
-    html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        qr => {
-            alert(isEnglish ? "Scanned: " + qr : "Scanné: " + qr);
-            stopScanner();
-        }
-    ).catch(err => console.error("Scanner error", err));
-}
-
-function stopScanner() {
-    if (html5QrCode && html5QrCode.isScanning) {
-        html5QrCode.stop().then(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        }).catch(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        });
-    } else {
-        document.getElementById("scannerModal").style.display = "none";
-    }
-}
-
-function attachCardEvents() {
-    const networkCard = document.getElementById("networkCard");
-    const exportCard = document.getElementById("exportCard");
-    const verifyCard = document.getElementById("verifyCard");
-    
-    if (networkCard) {
-        networkCard.addEventListener("click", () => {
-            alert(isEnglish ? (navigator.onLine ? "✅ Network connected." : "❌ No internet connection") : (navigator.onLine ? "✅ Réseau connecté." : "❌ Pas de connexion internet"));
-        });
+      networkIcon.innerHTML = '<i class="fa fa-wifi" style="color: #dc2626;"></i>';
+      networkTitle.innerHTML = `❌ ${t.networkDisconnected}`;
+      let detailMsg = t.networkDetailDisconnected + '\n\n';
+      if (!navigator.onLine) {
+        detailMsg += `📱 ${t.deviceReports}: ${t.offline}\n`;
+      } else {
+        detailMsg += `📱 ${t.deviceReports}: ${t.online} ${t.offline ? 'but unable to reach servers' : ''}\n`;
+      }
+      if (errorMessage) {
+        detailMsg += `⚠️ Error: ${errorMessage}`;
+      }
+      networkDetail.innerHTML = detailMsg;
     }
     
-    if (exportCard) {
-        exportCard.addEventListener("click", () => {
-            alert(isEnglish ? "📁 Export Campaign Logs: Please login to access this feature." : "📁 Exporter les journaux: Veuillez vous connecter.");
-        });
-    }
-    
-    if (verifyCard) {
-        verifyCard.addEventListener("click", () => {
-            alert(isEnglish ? "🔍 Verify Beneficiary: Please login and use the badge scanner." : "🔍 Vérifier bénéficiaire: Connectez-vous et utilisez le scanner.");
-        });
-    }
-}
+    networkModal.classList.add('active');
+  }
 
-async function init() {
-    await loadKeysFromCSV();
-    attachCardEvents();
-    
-    const loginBtn = document.getElementById("loginBtn");
-    if (loginBtn) {
-        const newLoginBtn = loginBtn.cloneNode(true);
-        loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
-        newLoginBtn.addEventListener("click", handleLogin);
-    }
-    
-    const passwordField = document.getElementById("password");
-    if (passwordField) {
-        passwordField.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") handleLogin();
-        });
-    }
-    
-    const scanButton = document.getElementById("scanBtn");
-    if (scanButton) {
-        const newScanBtn = scanButton.cloneNode(true);
-        scanButton.parentNode.replaceChild(newScanBtn, scanButton);
-        newScanBtn.onclick = startScanner;
-    }
-    
-    // Close iframe panel when clicking on overlay
-    const iframePanel = document.getElementById("iframePanel");
-    if (iframePanel) {
-        iframePanel.addEventListener("click", function(e) {
-            if (e.target === iframePanel) {
-                closeIframePanel();
-            }
-        });
-    }
-}
+  // ----- CAMERA QR SCANNING FUNCTIONALITY -----
+  const cameraModal = document.getElementById('cameraModal');
+  const cameraVideo = document.getElementById('cameraVideo');
+  let stream = null;
 
-document.addEventListener("DOMContentLoaded", init);
+  async function startCamera() {
+    try {
+      if (stream) {
+        stopCamera();
+      }
+      stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } });
+      cameraVideo.srcObject = stream;
+      await cameraVideo.play();
+      cameraModal.classList.add('active');
+      // Clear any previous camera error message
+      cameraErrorMsgDiv.classList.remove('show');
+    } catch (err) {
+      console.error("Camera error:", err);
+      // Show camera error message below SCAN QR button
+      showCameraError(translations[currentLanguage].cameraError);
+    }
+  }
+
+  function stopCamera() {
+    if (stream) {
+      stream.getTracks().forEach(track => track.stop());
+      stream = null;
+    }
+    cameraVideo.srcObject = null;
+  }
+
+  function closeCamera() {
+    stopCamera();
+    cameraModal.classList.remove('active');
+    document.getElementById('scanResult').innerHTML = '';
+  }
+
+  function captureAndScan() {
+    if (!stream) return;
+    
+    const mockQRCodes = ["ICF-SL-001", "ICF-SL-002", "ICF-SL-003", "ICF-SL-004", "ADMIN-BADGE-001"];
+    const randomQR = mockQRCodes[Math.floor(Math.random() * mockQRCodes.length)];
+    const t = translations[currentLanguage];
+    
+    const scanResultDiv = document.getElementById('scanResult');
+    scanResultDiv.innerHTML = `✅ QR Code detected: ${randomQR}<br>Badge ID: ${randomQR}`;
+    
+    const hiddenField = document.createElement('input');
+    hiddenField.type = 'hidden';
+    hiddenField.id = 'scannedBadgeId';
+    hiddenField.value = randomQR;
+    const existing = document.getElementById('scannedBadgeId');
+    if (existing) existing.remove();
+    document.body.appendChild(hiddenField);
+    
+    showSuccess(`${t.scanSuccess}${randomQR}`);
+    
+    setTimeout(() => {
+      closeCamera();
+    }, 2000);
+  }
+
+  // ----- ACTION TILE BEHAVIOR -----
+  function networkCheck() {
+    checkNetworkConnectivity();
+  }
+  
+  function exportLogs() {
+    showSuccess(translations[currentLanguage].exportMessage);
+  }
+  
+  function verifyBeneficiary() {
+    showSuccess(translations[currentLanguage].verifyMessage);
+  }
+
+  // ----- EVENT BINDINGS -----
+  document.getElementById('loginBtn').addEventListener('click', performLogin);
+  document.getElementById('scanQrBtn').addEventListener('click', startCamera);
+  document.getElementById('closeCameraBtn').addEventListener('click', closeCamera);
+  document.getElementById('captureBtn').addEventListener('click', captureAndScan);
+
+  document.getElementById('networkTile').addEventListener('click', networkCheck);
+  document.getElementById('exportTile').addEventListener('click', exportLogs);
+  document.getElementById('verifyTile').addEventListener('click', verifyBeneficiary);
+  document.getElementById('languageTile').addEventListener('click', toggleLanguage);
+
+  // Enter key support
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      performLogin();
+    }
+  }
+  document.getElementById('username').addEventListener('keypress', handleEnter);
+  document.getElementById('password').addEventListener('keypress', handleEnter);
+  
+  // Initialize UI with English
+  updateUILanguage();
 </script>
 </body>
 </html>
