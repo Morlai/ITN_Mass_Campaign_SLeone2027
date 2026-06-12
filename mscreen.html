@@ -236,7 +236,7 @@
       text-align: center;
     }
 
-    /* ===== SMART SLIDER CAROUSEL SECTION ===== */
+    /* ===== SMART SLIDER CAROUSEL SECTION - USING infographics.jpg ===== */
     .carousel-section {
       background-color: transparent;
       padding: 0;
@@ -262,11 +262,20 @@
       box-sizing: border-box;
     }
 
-    .carousel-slide svg {
+    /* Style for infographics images */
+    .carousel-slide img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 0;
+      object-fit: cover;
+    }
+
+    /* Fallback for infographics.jpg (if image not found, show colored background) */
+    .carousel-slide .img-fallback {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     /* Carousel Navigation Dots */
@@ -585,38 +594,23 @@
     </div>
   </div>
 
-  <!-- SMART SLIDER CAROUSEL -->
+  <!-- SMART SLIDER CAROUSEL - USING infographics.jpg -->
   <div class="carousel-section">
     <div class="carousel-container">
       <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
       <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
       <div class="carousel-slides" id="carouselSlides">
+        <!-- Image 1 - infographics.jpg -->
         <div class="carousel-slide">
-          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
-            <rect width="350" height="200" rx="0" fill="url(#grad1)" />
-            <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#42a5f5"/></linearGradient></defs>
-            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">ITN Distribution</text>
-            <text x="175" y="120" text-anchor="middle" fill="#FFD966" font-size="12" font-family="Arial">Household Registration</text>
-            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Sierra Leone 2025</text>
-          </svg>
+          <img src="infographics.jpg" alt="Infographic 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 1%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EITN Campaign Data%3C/text%3E%3C/svg%3E'">
         </div>
+        <!-- Image 2 - infographics.jpg (same image or different variations) -->
         <div class="carousel-slide">
-          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
-            <rect width="350" height="200" rx="0" fill="url(#grad2)" />
-            <defs><linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F57C00"/><stop offset="100%" stop-color="#FFB74D"/></linearGradient></defs>
-            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">Data Collection</text>
-            <text x="175" y="120" text-anchor="middle" fill="#1565C0" font-size="12" font-family="Arial">Real-time Monitoring</text>
-            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Digital Solutions</text>
-          </svg>
+          <img src="infographics.png" alt="Infographic 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 2%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3ECampaign Progress%3C/text%3E%3C/svg%3E'">
         </div>
+        <!-- Image 3 - infographics.jpg -->
         <div class="carousel-slide">
-          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
-            <rect width="350" height="200" rx="0" fill="url(#grad3)" />
-            <defs><linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1B5E20"/><stop offset="100%" stop-color="#4CAF50"/></linearGradient></defs>
-            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">Community Impact</text>
-            <text x="175" y="120" text-anchor="middle" fill="#FFD966" font-size="12" font-family="Arial">Health & Development</text>
-            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Every Net Counts</text>
-          </svg>
+          <img src="infographicss.jpg" alt="Infographic 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 3%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EImpact Metrics%3C/text%3E%3C/svg%3E'">
         </div>
       </div>
       <div class="carousel-dots" id="carouselDots"></div>
@@ -714,7 +708,7 @@
 </div>
 
 <script>
-  // Smart Slider Carousel Functionality
+  // Smart Slider Carousel Functionality - with infographics.jpg images
   (function() {
     let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
