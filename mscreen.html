@@ -171,7 +171,7 @@
       margin-top: 0.1rem;
     }
 
-    /* ===== PARTNER LOGOS SECTION ===== */
+    /* ===== PARTNER LOGOS SECTION - USING GLOBAL_FUND.PNG ===== */
     .partner-section {
       background-color: white;
       padding: 0.4rem 0.5rem;
@@ -221,9 +221,11 @@
       border-color: #F57C00;
     }
 
-    .partner-logo svg {
-      width: 100%;
+    /* Partner logo image styling */
+    .partner-logo img {
       max-width: 24px;
+      max-height: 24px;
+      width: auto;
       height: auto;
     }
 
@@ -236,7 +238,7 @@
       text-align: center;
     }
 
-    /* ===== SMART SLIDER CAROUSEL SECTION - USING infographics.jpg ===== */
+    /* ===== SMART SLIDER CAROUSEL SECTION ===== */
     .carousel-section {
       background-color: transparent;
       padding: 0;
@@ -262,20 +264,12 @@
       box-sizing: border-box;
     }
 
-    /* Style for infographics images */
     .carousel-slide img {
       width: 100%;
       height: auto;
       display: block;
       border-radius: 0;
       object-fit: cover;
-    }
-
-    /* Fallback for infographics.jpg (if image not found, show colored background) */
-    .carousel-slide .img-fallback {
-      width: 100%;
-      height: auto;
-      display: block;
     }
 
     /* Carousel Navigation Dots */
@@ -338,7 +332,7 @@
       right: 8px;
     }
 
-    /* ===== ACTION CARDS SECTION - REDUCED SIZE ===== */
+    /* ===== ACTION CARDS SECTION ===== */
     .action-cards-section {
       background-color: transparent;
       padding: 0.3rem 0.6rem;
@@ -482,8 +476,9 @@
         min-height: 24px;
         padding: 0.1rem 0.05rem;
       }
-      .partner-logo svg {
+      .partner-logo img {
         max-width: 20px;
+        max-height: 20px;
       }
       .partner-name {
         font-size: 0.4rem;
@@ -551,136 +546,112 @@
     </div>
   </header>
 
-  <!-- PARTNER LOGOS SECTION WITH NAMES -->
+  <!-- PARTNER LOGOS SECTION - USING Global_fund.png FOR ALL PARTNER LOGOS -->
   <div class="partner-section">
     <div class="partner-title">IMPLEMENTING PARTNERS</div>
     <div class="partner-grid">
+      <!-- Partner 1 - United State Dep. -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">US</text></svg>
+          <img src="usa.png" alt="USA" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EGF%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">United State Dep.</div>
       </div>
+      <!-- Partner 2 - Global Fund -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">GF</text></svg>
+          <img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EGF%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">Global Fund</div>
       </div>
+      <!-- Partner 3 - PMI Evolve -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">PMI</text></svg>
+          <img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EPMI%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">PMI Evolve</div>
       </div>
+      <!-- Partner 4 - MOH -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">MOH</text></svg>
+          <img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EMOH%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">MOH</div>
       </div>
+      <!-- Partner 5 - NMCP -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">NMCP</text></svg>
+          <img src="NMCP.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3ENMCP%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">NMCP</div>
       </div>
+      <!-- Partner 6 - MBSSE -->
       <div class="partner-item">
         <div class="partner-logo">
-          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">MB</text></svg>
+          <img src="Global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23FFF3E0\'/%3E%3Ctext x=\'20\' y=\'24\' text-anchor=\'middle\' fill=\'%23F57C00\' font-size=\'10\' font-weight=\'700\'%3EMB%3C/text%3E%3C/svg%3E'">
         </div>
         <div class="partner-name">MBSSE</div>
       </div>
     </div>
   </div>
 
-  <!-- SMART SLIDER CAROUSEL - USING infographics.jpg -->
+  <!-- SMART SLIDER CAROUSEL -->
   <div class="carousel-section">
     <div class="carousel-container">
       <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
       <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
       <div class="carousel-slides" id="carouselSlides">
-        <!-- Image 1 - infographics.jpg -->
         <div class="carousel-slide">
-          <img src="infographics.jpg" alt="Infographic 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 1%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EITN Campaign Data%3C/text%3E%3C/svg%3E'">
+          <img src="infographics.jpg" alt="Infographic 1" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHousehold Registration%3C/text%3E%3C/svg%3E'">
         </div>
-        <!-- Image 2 - infographics.jpg (same image or different variations) -->
         <div class="carousel-slide">
-          <img src="infographics.png" alt="Infographic 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 2%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3ECampaign Progress%3C/text%3E%3C/svg%3E'">
+          <img src="infographics.png" alt="Infographic 2" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EData Collection%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EReal-time Monitoring%3C/text%3E%3C/svg%3E'">
         </div>
-        <!-- Image 3 - infographics.jpg -->
         <div class="carousel-slide">
-          <img src="infographicss.jpg" alt="Infographic 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EInfographic 3%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EImpact Metrics%3C/text%3E%3C/svg%3E'">
+          <img src="infographicss.jpg" alt="Infographic 3" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHealth & Development%3C/text%3E%3C/svg%3E'">
         </div>
       </div>
       <div class="carousel-dots" id="carouselDots"></div>
     </div>
   </div>
 
-  <!-- ACTION CARDS - REDUCED SIZE -->
+  <!-- ACTION CARDS -->
   <div class="action-cards-section">
     <div class="action-grid">
-      <!-- 1. REGISTER -->
       <div class="action-card card-1">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><text x="30" y="40" text-anchor="middle" fill="#EE5A24" font-size="12" font-weight="700">✓</text></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><text x="30" y="40" text-anchor="middle" fill="#EE5A24" font-size="12" font-weight="700">✓</text></svg></div>
         <div class="action-label">REGISTER</div>
       </div>
-      <!-- 2. DISTRIBUTION -->
       <div class="action-card card-2">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="15" y="30" width="30" height="18" rx="2" fill="white"/><rect x="22" y="22" width="16" height="10" rx="2" fill="white" opacity="0.8"/><text x="30" y="43" text-anchor="middle" fill="#44B39A" font-size="10" font-weight="700">📦</text></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="15" y="30" width="30" height="18" rx="2" fill="white"/><rect x="22" y="22" width="16" height="10" rx="2" fill="white" opacity="0.8"/><text x="30" y="43" text-anchor="middle" fill="#44B39A" font-size="10" font-weight="700">📦</text></svg></div>
         <div class="action-label">DISTRIBUTION</div>
       </div>
-      <!-- 3. MONITORING -->
       <div class="action-card card-3">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><polyline points="15,35 25,22 35,32 45,18" stroke="white" stroke-width="2.5" fill="none"/><circle cx="25" cy="22" r="2.5" fill="white"/><circle cx="35" cy="32" r="2.5" fill="white"/><circle cx="45" cy="18" r="2.5" fill="white"/></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><polyline points="15,35 25,22 35,32 45,18" stroke="white" stroke-width="2.5" fill="none"/><circle cx="25" cy="22" r="2.5" fill="white"/><circle cx="35" cy="32" r="2.5" fill="white"/><circle cx="45" cy="18" r="2.5" fill="white"/></svg></div>
         <div class="action-label">MONITORING</div>
       </div>
-      <!-- 4. STOCK -->
       <div class="action-card card-4">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.1)" stroke="#2c3e50" stroke-width="1.5"/><rect x="18" y="25" width="24" height="20" rx="2" fill="#2c3e50"/><line x1="20" y1="32" x2="40" y2="32" stroke="white" stroke-width="1.5"/><line x1="20" y1="38" x2="35" y2="38" stroke="white" stroke-width="1.5"/></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.1)" stroke="#2c3e50" stroke-width="1.5"/><rect x="18" y="25" width="24" height="20" rx="2" fill="#2c3e50"/><line x1="20" y1="32" x2="40" y2="32" stroke="white" stroke-width="1.5"/><line x1="20" y1="38" x2="35" y2="38" stroke="white" stroke-width="1.5"/></svg></div>
         <div class="action-label">STOCK</div>
       </div>
-      <!-- 5. DASHBOARD -->
       <div class="action-card card-5">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="16" y="28" width="8" height="16" rx="1" fill="white"/><rect x="26" y="20" width="8" height="24" rx="1" fill="white"/><rect x="36" y="24" width="8" height="20" rx="1" fill="white"/></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="16" y="28" width="8" height="16" rx="1" fill="white"/><rect x="26" y="20" width="8" height="24" rx="1" fill="white"/><rect x="36" y="24" width="8" height="20" rx="1" fill="white"/></svg></div>
         <div class="action-label">DASHBOARD</div>
       </div>
-      <!-- 6. ATTENDANCE -->
       <div class="action-card card-6">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><circle cx="30" cy="24" r="6" fill="white"/><path d="M18 42 Q30 48 42 42" stroke="white" stroke-width="2" fill="none"/></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><circle cx="30" cy="24" r="6" fill="white"/><path d="M18 42 Q30 48 42 42" stroke="white" stroke-width="2" fill="none"/></svg></div>
         <div class="action-label">ATTENDANCE</div>
       </div>
-      <!-- 7. DEVICE TRACKING -->
       <div class="action-card card-7">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><circle cx="30" cy="38" r="3" fill="#10AC84"/><text x="30" y="30" text-anchor="middle" fill="#10AC84" font-size="10" font-weight="700">📱</text></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><circle cx="30" cy="38" r="3" fill="#10AC84"/><text x="30" y="30" text-anchor="middle" fill="#10AC84" font-size="10" font-weight="700">📱</text></svg></div>
         <div class="action-label">DEVICE TRACKING</div>
       </div>
-      <!-- 8. RECONCILIATION -->
       <div class="action-card card-8">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><path d="M20 30 L28 38 L40 22" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><text x="20" y="48" text-anchor="middle" fill="white" font-size="8" font-weight="700">✓</text></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><path d="M20 30 L28 38 L40 22" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><text x="20" y="48" text-anchor="middle" fill="white" font-size="8" font-weight="700">✓</text></svg></div>
         <div class="action-label">RECONCILIATION</div>
       </div>
-      <!-- 9. WASTE MANAGEMENT -->
       <div class="action-card card-9">
-        <div class="action-icon">
-          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="22" y="28" width="16" height="18" rx="2" fill="white"/><path d="M25 28 L27 22 L33 22 L35 28" stroke="#2D3436" stroke-width="1.5" fill="none"/><text x="30" y="45" text-anchor="middle" fill="#2D3436" font-size="8" font-weight="700">♻️</text></svg>
-        </div>
+        <div class="action-icon"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="22" y="28" width="16" height="18" rx="2" fill="white"/><path d="M25 28 L27 22 L33 22 L35 28" stroke="#2D3436" stroke-width="1.5" fill="none"/><text x="30" y="45" text-anchor="middle" fill="#2D3436" font-size="8" font-weight="700">♻️</text></svg></div>
         <div class="action-label">WASTE MANAGEMENT</div>
       </div>
     </div>
@@ -708,7 +679,7 @@
 </div>
 
 <script>
-  // Smart Slider Carousel Functionality - with infographics.jpg images
+  // Smart Slider Carousel Functionality
   (function() {
     let currentIndex = 0;
     const slides = document.querySelectorAll('.carousel-slide');
