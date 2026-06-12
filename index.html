@@ -68,7 +68,7 @@
     z-index: 2;
   }
 
-  /* ----- LOGIN CARD (semi-transparent white for better contrast) ----- */
+  /* ----- LOGIN CARD ----- */
   .card {
     background: rgba(255, 255, 255, 0.96);
     border-radius: 28px;
@@ -85,7 +85,7 @@
     margin-bottom: 16px;
   }
 
-  /* form fields - MORE VISIBLE */
+  /* form fields */
   .field {
     background: #ffffff;
     border: 2px solid #2a7fc4;
@@ -125,7 +125,7 @@
     color: #1565C0;
   }
 
-  /* Plain text error message below username field */
+  /* Message styles */
   .error-message {
     text-align: left;
     font-size: 12px;
@@ -141,7 +141,6 @@
     display: block;
   }
 
-  /* Plain text success message below username field */
   .success-message {
     text-align: left;
     font-size: 12px;
@@ -157,7 +156,6 @@
     display: block;
   }
 
-  /* Camera error message below SCAN QR button */
   .camera-error-msg {
     text-align: center;
     font-size: 11px;
@@ -204,7 +202,7 @@
     transform: scale(0.98);
   }
 
-  /* ----- ACTION GRID (4 tiles) ----- */
+  /* ----- ACTION GRID ----- */
   .grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -235,13 +233,12 @@
     margin-bottom: 6px;
   }
 
-  /* individual tile colors (solid with slight opacity) */
   .t-orange { background: rgba(217, 95, 26, 0.9); }
   .t-blue   { background: rgba(42, 127, 196, 0.9); }
   .t-purple { background: rgba(123, 63, 160, 0.9); }
   .t-teal   { background: rgba(27, 154, 138, 0.9); }
 
-  /* ----- FOOTER (solid blue bar) ----- */
+  /* ----- FOOTER ----- */
   .footer {
     background: #1565C0;
     text-align: center;
@@ -394,22 +391,16 @@
       <!-- LOGIN CARD -->
       <div class="card">
         <div class="logo-area">
-          <!-- ICF-SL Logo.jpg (local image file) -->
           <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\' font-family=\'Arial\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\' font-family=\'Arial\'%3ESL%3C/text%3E%3C/svg%3E'">
         </div>
 
-        <!-- Username Field -->
         <div class="field">
           <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
         </div>
         
-        <!-- Plain text error message below username -->
         <div id="errorMsg" class="error-message"></div>
-        
-        <!-- Plain text success message below username -->
         <div id="successMsg" class="success-message"></div>
 
-        <!-- Password Field -->
         <div class="field">
           <input type="password" id="password" placeholder="PASSWORD" autocomplete="off">
           <span class="eye" onclick="togglePasswordVisibility()">
@@ -420,11 +411,10 @@
         <button class="btn btn-login" id="loginBtn">LOGIN</button>
         <button class="btn btn-scan" id="scanQrBtn">SCAN QR</button>
         
-        <!-- Camera error message below SCAN QR button -->
         <div id="cameraErrorMsg" class="camera-error-msg"></div>
       </div>
 
-      <!-- 4 ACTION TILES -->
+      <!-- ACTION TILES -->
       <div class="grid">
         <div class="tile t-orange" id="networkTile">
           <div class="tile-icon"><i class="fa fa-wifi"></i></div>
@@ -444,14 +434,14 @@
         </div>
       </div>
 
-    </div> <!-- end screen -->
+    </div>
 
     <!-- FOOTER -->
     <div class="footer">
       <span id="footerText">Developed By<br>Informatics Consultancy Firm-SL © 2026</span>
     </div>
-  </div> <!-- end phone-mock -->
-</div> <!-- end phone-frame -->
+  </div>
+</div>
 
 <!-- Network Status Modal -->
 <div id="networkModal" class="network-modal">
@@ -474,10 +464,63 @@
 </div>
 
 <script>
-  // Language state
-  let currentLanguage = 'en'; // 'en' or 'fr'
+  // ==================== CSV USER DATABASE (Embedded) ====================
+  const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
+Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
+HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+HHD2027,123456,Hide,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+NATSUP2027,1234567,Hide,Hide,Show,Hide,Show,Show,Hide,Hide,Show
+CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
+PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
+PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
+
+  // Parse CSV into user objects
+  function parseCSV(csv) {
+    const lines = csv.trim().split('\n');
+    const headers = lines[0].split(',');
+    const users = [];
+    
+    for (let i = 1; i < lines.length; i++) {
+      const values = lines[i].split(',');
+      const user = {};
+      for (let j = 0; j < headers.length; j++) {
+        user[headers[j]] = values[j];
+      }
+      users.push(user);
+    }
+    return users;
+  }
   
-  // Translation dictionary
+  const usersDatabase = parseCSV(csvData);
+  
+  // Find user by username and password
+  function findUser(username, password) {
+    return usersDatabase.find(user => 
+      user.USERNAME === username && user.PASSWORD === password
+    );
+  }
+  
+  // Store user permissions in session for mscreen.html
+  function storeUserPermissions(user) {
+    const permissions = {
+      username: user.USERNAME,
+      REGISTER: user.REGISTER,
+      DISTRIBUTION: user.DISTRIBUTION,
+      MONITORING: user.MONITORING,
+      STOCK: user.STOCK,
+      DASHBOARD: user.DASHBOARD,
+      ATTENDANCE: user.ATTENDANCE,
+      DEVICE_TRACKING: user["DEVICE TRACKING"],
+      RECONCILIATION: user.RECONCILIATION,
+      WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
+    };
+    sessionStorage.setItem('userPermissions', JSON.stringify(permissions));
+    sessionStorage.setItem('loggedInUser', user.USERNAME);
+  }
+
+  // Language state
+  let currentLanguage = 'en';
+  
   const translations = {
     en: {
       usernamePlaceholder: "USERNAME",
@@ -492,7 +535,6 @@
       loginSuccess: "✓ Login successful! Redirecting...",
       loginError: "✗ Invalid username or password",
       enterCredentials: "⚠ Please enter username and password",
-      welcome: "Welcome to Dashboard",
       networkConnected: "CONNECTED",
       networkDisconnected: "NO INTERNET CONNECTION",
       networkDetailConnected: "Your device has internet connectivity.",
@@ -521,7 +563,6 @@
       loginSuccess: "✓ Connexion réussie ! Redirection...",
       loginError: "✗ Nom d'utilisateur ou mot de passe invalide",
       enterCredentials: "⚠ Veuillez entrer votre nom d'utilisateur et mot de passe",
-      welcome: "Bienvenue au Tableau de Bord",
       networkConnected: "CONNECTÉ",
       networkDisconnected: "PAS DE CONNEXION INTERNET",
       networkDetailConnected: "Votre appareil a une connectivité internet.",
@@ -539,7 +580,6 @@
     }
   };
   
-  // Message display functions (plain text below username)
   const errorMsgDiv = document.getElementById('errorMsg');
   const successMsgDiv = document.getElementById('successMsg');
   const cameraErrorMsgDiv = document.getElementById('cameraErrorMsg');
@@ -564,7 +604,6 @@
     }, 3000);
   }
   
-  // Camera error message below SCAN QR button
   function showCameraError(message) {
     cameraErrorMsgDiv.innerText = message;
     cameraErrorMsgDiv.classList.add('show');
@@ -575,7 +614,6 @@
   
   function updateUILanguage() {
     const t = translations[currentLanguage];
-    
     document.getElementById('username').placeholder = t.usernamePlaceholder;
     document.getElementById('password').placeholder = t.passwordPlaceholder;
     document.getElementById('loginBtn').innerText = t.loginBtn;
@@ -587,7 +625,6 @@
     document.getElementById('footerText').innerHTML = t.footer;
   }
   
-  // Toggle language between English and French
   function toggleLanguage() {
     if (currentLanguage === 'en') {
       currentLanguage = 'fr';
@@ -597,11 +634,9 @@
     updateUILanguage();
   }
 
-  // ----- TOGGLE PASSWORD VISIBILITY -----
-  const passwordInput = document.getElementById('password');
-  const eyeIcon = document.getElementById('eyeIcon');
-
   function togglePasswordVisibility() {
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
     if (passwordInput.type === 'password') {
       passwordInput.type = 'text';
       eyeIcon.classList.remove('fa-eye');
@@ -613,13 +648,10 @@
     }
   }
 
-  // ----- LOGIN VALIDATION (admin / 1234) -----
+  // ----- LOGIN VALIDATION using CSV database -----
   function performLogin() {
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
-
-    const validUsername = "admin";
-    const validPassword = "1234";
     const t = translations[currentLanguage];
 
     if (!username || !password) {
@@ -627,11 +659,16 @@
       return;
     }
 
-    if (username === validUsername && password === validPassword) {
+    const user = findUser(username, password);
+    
+    if (user) {
+      // Store user permissions and redirect to mscreen.html
+      storeUserPermissions(user);
       showSuccess(t.loginSuccess);
       setTimeout(() => {
-        alert(t.welcome);
-      }, 600);
+        // Redirect to mscreen.html with user parameter
+        window.location.href = `mscreen.html?user=${encodeURIComponent(username)}`;
+      }, 800);
     } else {
       showError(t.loginError);
     }
@@ -741,11 +778,9 @@
       cameraVideo.srcObject = stream;
       await cameraVideo.play();
       cameraModal.classList.add('active');
-      // Clear any previous camera error message
       cameraErrorMsgDiv.classList.remove('show');
     } catch (err) {
       console.error("Camera error:", err);
-      // Show camera error message below SCAN QR button
       showCameraError(translations[currentLanguage].cameraError);
     }
   }
@@ -789,7 +824,6 @@
     }, 2000);
   }
 
-  // ----- ACTION TILE BEHAVIOR -----
   function networkCheck() {
     checkNetworkConnectivity();
   }
@@ -813,7 +847,6 @@
   document.getElementById('verifyTile').addEventListener('click', verifyBeneficiary);
   document.getElementById('languageTile').addEventListener('click', toggleLanguage);
 
-  // Enter key support
   function handleEnter(e) {
     if (e.key === 'Enter') {
       performLogin();
@@ -822,7 +855,6 @@
   document.getElementById('username').addEventListener('keypress', handleEnter);
   document.getElementById('password').addEventListener('keypress', handleEnter);
   
-  // Initialize UI with English
   updateUILanguage();
 </script>
 </body>
