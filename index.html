@@ -314,7 +314,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #eef2fa;
     min-height: 32px;
   }
   .partner-logo img { max-width: 28px; max-height: 28px; }
@@ -884,7 +883,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
-    const roleMap = { 'Admin': 'Full Access', 'HHR2027': 'HHRegister Dashboard', 'HHD2027': 'HHDistributor Dashboard', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHIEFDOM Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Dashboard' };
+    const roleMap = { 'Admin': 'Dashboard', 'HHR2027': 'Registration Officer', 'HHD2027': 'Distribution Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHI Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Viewer' };
     const roleDisplay = roleMap[username] || 'User';
     
     const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
