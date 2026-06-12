@@ -1,743 +1,856 @@
-<!DOCTYPE html>      
+<!DOCTYPE html>
 <html lang="en">
-<head> 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-<title>ICF-SL | ITN Campaign - Data Driven Distribution</title>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
-<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
-<style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+  <title>ICF-SL | HH ITN Campaign</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-  body {
-    background: #eef2f7;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'Inter', sans-serif;
-    padding: 0;
-  }
-
-  .phone {
-    width: 100%;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 100vh;
-    background: #ffffff;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    position: relative;
-    border-radius: 0;
-    box-shadow: none;
-  }
-
-  @media (min-width: 500px) {
     body {
-      padding: 16px;
-      background: #eef2f7;
+      background: #12141f;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, sans-serif;
+      padding: 20px;
     }
-    .phone {
-      max-width: 400px;
-      height: 90vh;
-      max-height: 800px;
-      border-radius: 40px;
-      box-shadow: 0 25px 45px -12px rgba(0,0,0,0.35);
+
+    /* Phone shape container - NO SCROLLBAR */
+    .phone-mock {
+      width: 100%;
+      max-width: 380px;
+      height: 700px;
+      background-color: #F5F7FA;
+      border-radius: 48px;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 8px #2c2e3a, 0 0 0 12px #11131f;
+      overflow-y: auto;
+      overflow-x: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
     }
-  }
 
-  @media (min-width: 768px) {
-    .phone {
-      max-width: 420px;
-      height: 85vh;
-      max-height: 750px;
+    .phone-mock::-webkit-scrollbar {
+      display: none;
+      width: 0;
+      background: transparent;
     }
-  }
 
-  .scroll-content {
-    flex: 1;
-    overflow-y: auto;
-    padding-bottom: 6px;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
-  }
+    /* ===== HEADER - REDUCED SIZE ===== */
+    .app-header {
+      background-color: #1565C0;
+      padding: 0.35rem 1rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+      position: relative;
+      z-index: 2;
+    }
 
-  .header-section {
-    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
-    color: white;
-    text-align: center;
-    padding: 12px 10px 14px;
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-  }
-  .logo-area {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 8px;
-  }
-  .logo-img {
-    width: 50px;
-    height: 50px;
-    object-fit: contain;
-    background: white;
-    border-radius: 12px;
-    padding: 5px;
-  }
-  .header-title {
-    text-align: left;
-  }
-  .header-title h2 {
-    font-size: 11px;
-    font-weight: 700;
-    line-height: 1.3;
-  }
-  .header-title p {
-    font-size: 8px;
-    opacity: 0.9;
-    margin-top: 2px;
-    line-height: 1.2;
-  }
-  .campaign-badge {
-    background: #ffcd3c;
-    color: #1e3a8a;
-    padding: 6px 12px;
-    border-radius: 30px;
-    font-size: 8px;
-    font-weight: 800;
-    display: inline-block;
-    margin-top: 8px;
-    letter-spacing: 0.3px;
-    line-height: 1.3;
-  }
-  .survey-text {
-    font-size: 7px;
-    margin-top: 6px;
-    opacity: 0.85;
-    font-weight: 500;
-  }
+    .header-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+    }
 
-  .partner-section {
-    background: transparent;
-    padding: 10px 14px 8px 14px;
-    border-bottom: 1px solid #eef2f8;
-  }
-  .partner-heading {
-    font-size: 11px;
-    font-weight: 800;
-    color: #D4AF37;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-  }
-  .partner-heading i {
-    font-size: 11px;
-  }
-  .partners-container {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-    row-gap: 10px;
-  }
-  .partner-item {
-    text-align: center;
-    padding: 6px 4px;
-  }
-  .partner-item img {
-    width: 100%;
-    max-width: 50px;
-    height: 46px;
-    object-fit: contain;
-    margin-bottom: 6px;
-  }
-  .partner-item span {
-    font-size: 8px;
-    font-weight: 700;
-    background: linear-gradient(135deg, #B8860B 0%, #D4AF37 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    display: block;
-    line-height: 1.3;
-  }
+    /* Logo and org row - compact */
+    .logo-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+    }
 
-  .carousel-container {
-    padding: 10px 14px 0px;
-  }
-  .carousel {
-    position: relative;
-    overflow: hidden;
-    border-radius: 24px;
-    box-shadow: 0 6px 14px rgba(0,0,0,0.1);
-    background: #f0f2f5;
-  }
-  .slides {
-    display: flex;
-    transition: transform 0.4s ease;
-  }
-  .slide {
-    min-width: 100%;
-    height: 180px;
-  }
-  .slide img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    background: #cbd5e1;
-  }
-  .btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.55);
-    backdrop-filter: blur(3px);
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-    transition: 0.2s;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .prev { left: 8px; }
-  .next { right: 8px; }
-  .btn:active { background: #0b5ed7; transform: translateY(-50%) scale(0.96);}
-  
-  .dots-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    padding: 12px 0 8px;
-  }
-  .dot {
-    width: 7px;
-    height: 7px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    padding: 0;
-  }
-  .dot.active {
-    width: 22px;
-    border-radius: 10px;
-    background: #0b5ed7;
-  }
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
 
-  .actions {
-    padding: 14px 16px 12px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .card {
-    border-radius: 26px;
-    padding: 14px 20px;
-    color: white;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 8px 14px -8px rgba(0,0,0,0.2);
-    border: 1px solid rgba(255,255,255,0.2);
-  }
-  .card:active {
-    transform: scale(0.97);
-  }
-  .card-left {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .card-main-row {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .card-main-row i {
-    font-size: 18px;
-    width: 22px;
-  }
-  .card-main-text {
-    font-weight: 700;
-    font-size: 14px;
-    letter-spacing: -0.2px;
-  }
-  .card-abbr {
-    font-size: 9px;
-    font-weight: 500;
-    opacity: 0.85;
-    margin-top: 3px;
-    margin-left: 32px;
-    letter-spacing: 0.3px;
-  }
-  .card-right {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .card-right i {
-    font-size: 18px;
-  }
-  .register { background: linear-gradient(105deg, #1e3a8a, #3b82f6); }
-  .distribution { background: linear-gradient(105deg, #0f5b2e, #2e9a5e); }
-  .monitoring { background: linear-gradient(105deg, #7c3aed, #a855f7); }
-  .stock { background: linear-gradient(105deg, #c2410c, #f97316); }
-  .dashboard { background: linear-gradient(105deg, #0f5b7a, #14b8a6); }
-  .attendance { background: linear-gradient(105deg, #059669, #10b981); }
-  .device-tracking { background: linear-gradient(105deg, #dc2626, #ef4444); }
-  .reconciliation { background: linear-gradient(105deg, #d97706, #f59e0b); }
-  .waste-management { background: linear-gradient(105deg, #0891b2, #06b6d4); }
+    .logo-icon {
+      width: 28px;
+      height: 28px;
+      background: white;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+    }
 
-  .footer {
-    text-align: center;
-    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
-    color: white;
-    font-size: 9px;
-    padding: 10px 8px;
-    font-weight: 500;
-    border-top-left-radius: 16px;
-    border-top-right-radius: 16px;
-    line-height: 1.4;
-  }
-  .footer-line1 {
-    font-size: 8px;
-    opacity: 0.9;
-    letter-spacing: 0.5px;
-    margin-bottom: 4px;
-  }
-  .footer-line2 {
-    font-weight: 600;
-    font-size: 9px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    flex-wrap: wrap;
-  }
-  .copyright-symbol {
-    font-size: 9px;
-  }
-  
-  img {
-    background-color: transparent;
-  }
+    .logo-icon svg {
+      width: 100%;
+      height: 100%;
+    }
 
-  /* Iframe Panel Styles */
-  .iframe-panel {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #fefefe;
-    display: none;
-    flex-direction: column;
-    z-index: 1100;
-    border-radius: inherit;
-    overflow: hidden;
-    animation: slideUp 0.3s ease;
-  }
-  @keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-  .iframe-header {
-    color: white;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 16px;
-  }
-  .iframe-header button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-  }
-  iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    background: white;
-  }
-</style>
+    .org-info h1 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, #ffffff 0%, #e0f0ff 100%);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      margin: 0;
+      line-height: 1.2;
+    }
+
+    .org-info p {
+      font-size: 0.45rem;
+      opacity: 0.85;
+      margin-top: 0.05rem;
+      font-weight: 400;
+      color: white;
+    }
+
+    /* Nav badge with ORANGE background - smaller */
+    .nav-badge {
+      background: #FF8C42;
+      backdrop-filter: blur(2px);
+      padding: 0.2rem 0.7rem;
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: white;
+      text-align: center;
+      line-height: 1.2;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.2);
+      white-space: nowrap;
+      overflow-x: auto;
+      overflow-y: hidden;
+      max-width: 100%;
+      scrollbar-width: thin;
+    }
+
+    .nav-badge span:first-child {
+      font-weight: 700;
+      font-size: 0.55rem;
+      flex-shrink: 0;
+    }
+
+    .nav-badge span:last-child {
+      font-weight: 600;
+      letter-spacing: 0.1px;
+      white-space: nowrap;
+      flex-shrink: 0;
+      font-size: 0.5rem;
+    }
+
+    /* Campaign header section - sub text with icon - smaller */
+    .campaign-header-section {
+      width: 100%;
+      text-align: center;
+      margin-top: 0.1rem;
+      margin-bottom: 0.1rem;
+    }
+    
+    /* Sub text styling - smaller */
+    .campaign-sub-header {
+      color: #FFD966;
+      font-weight: 600;
+      font-size: 0.55rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: transparent;
+      margin-top: 0.1rem;
+    }
+
+    /* ===== PARTNER LOGOS SECTION ===== */
+    .partner-section {
+      background-color: white;
+      padding: 0.4rem 0.5rem;
+      margin: 0;
+      border-radius: 0;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+      border-top: none;
+      border-bottom: 1px solid rgba(21, 101, 192, 0.08);
+      width: 100%;
+    }
+
+    .partner-title {
+      text-align: center;
+      font-size: 0.55rem;
+      font-weight: 700;
+      color: #F57C00;
+      margin-bottom: 0.4rem;
+      letter-spacing: 0.3px;
+    }
+
+    .partner-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.2rem;
+      width: 100%;
+    }
+
+    .partner-item {
+      text-align: center;
+    }
+
+    .partner-logo {
+      background: #f8fafc;
+      border-radius: 8px;
+      padding: 0.15rem 0.1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s ease;
+      border: 1px solid #eef2f8;
+      min-height: 28px;
+    }
+
+    .partner-logo:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 1px 4px rgba(245, 124, 0, 0.1);
+      border-color: #F57C00;
+    }
+
+    .partner-logo svg {
+      width: 100%;
+      max-width: 24px;
+      height: auto;
+    }
+
+    .partner-name {
+      font-size: 0.45rem;
+      font-weight: 600;
+      color: #F57C00;
+      margin-top: 0.2rem;
+      line-height: 1.2;
+      text-align: center;
+    }
+
+    /* ===== SMART SLIDER CAROUSEL SECTION ===== */
+    .carousel-section {
+      background-color: transparent;
+      padding: 0;
+      margin: 0;
+      border-radius: 0;
+      width: 100%;
+    }
+
+    .carousel-container {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 0;
+    }
+
+    .carousel-slides {
+      display: flex;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    .carousel-slide {
+      min-width: 100%;
+      box-sizing: border-box;
+    }
+
+    .carousel-slide svg {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 0;
+    }
+
+    /* Carousel Navigation Dots */
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 2px;
+      margin-bottom: 0;
+      background-color: transparent;
+      padding-bottom: 3px;
+    }
+
+    .dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background-color: #cbd5e1;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .dot.active {
+      background-color: #1565C0;
+      width: 16px;
+      border-radius: 3px;
+    }
+
+    /* Carousel Navigation Arrows */
+    .carousel-arrow {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 28px;
+      height: 28px;
+      background: rgba(255, 255, 255, 0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      font-weight: bold;
+      color: #1565C0;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      z-index: 10;
+    }
+
+    .carousel-arrow:hover {
+      background: white;
+      transform: translateY(-50%) scale(1.05);
+    }
+
+    .arrow-left {
+      left: 8px;
+    }
+
+    .arrow-right {
+      right: 8px;
+    }
+
+    /* ===== ACTION CARDS SECTION - REDUCED SIZE ===== */
+    .action-cards-section {
+      background-color: transparent;
+      padding: 0.3rem 0.6rem;
+      margin: 0.2rem 1rem;
+      border-radius: 0;
+      width: auto;
+    }
+
+    .action-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.35rem;
+    }
+
+    .action-card {
+      border-radius: 10px;
+      padding: 0.35rem 0.2rem;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+    }
+
+    .action-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .action-icon {
+      width: 100%;
+      margin-bottom: 0.2rem;
+    }
+
+    .action-icon svg {
+      width: 100%;
+      max-width: 30px;
+      height: auto;
+      margin: 0 auto;
+      display: block;
+    }
+
+    .action-label {
+      font-size: 0.5rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      margin-top: 0.1rem;
+    }
+
+    /* Individual Card Colors */
+    .card-1 { background: linear-gradient(135deg, #FF6B6B, #EE5A24); color: white; }
+    .card-2 { background: linear-gradient(135deg, #4ECDC4, #44B39A); color: white; }
+    .card-3 { background: linear-gradient(135deg, #45B7D1, #3498DB); color: white; }
+    .card-4 { background: linear-gradient(135deg, #F9CA24, #F6B93F); color: #2c3e50; }
+    .card-5 { background: linear-gradient(135deg, #A55EEA, #8B5CF6); color: white; }
+    .card-6 { background: linear-gradient(135deg, #FF9FF3, #F368E0); color: white; }
+    .card-7 { background: linear-gradient(135deg, #1DD1A1, #10AC84); color: white; }
+    .card-8 { background: linear-gradient(135deg, #FF8C42, #E67E22); color: white; }
+    .card-9 { background: linear-gradient(135deg, #636E72, #2D3436); color: white; }
+
+    /* Ensure text contrast for card-4 */
+    .card-4 .action-label { color: #2c3e50; }
+    .card-4 .action-icon svg circle { stroke: #2c3e50; }
+    .card-4 .action-icon svg rect { fill: #2c3e50; }
+
+    /* Main content container - EMPTY */
+    .content-container {
+      flex: 1;
+      background-color: #F5F7FA;
+      width: 100%;
+    }
+
+    /* Footer wave */
+    .app-footer {
+      background-color: #F5F7FA;
+      margin-top: 0;
+      position: relative;
+    }
+
+    .wave-wrapper {
+      position: relative;
+      width: 100%;
+      line-height: 0;
+    }
+
+    .wave-svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .footer-bottom {
+      background-color: #1565C0;
+      padding: 0.6rem 1rem;
+      text-align: center;
+    }
+
+    .footer-content {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.2rem;
+    }
+
+    .developed-by {
+      font-size: 0.55rem;
+      font-weight: 500;
+      text-align: center;
+      line-height: 1.4;
+      color: white;
+    }
+
+    .developed-by strong {
+      font-weight: 700;
+      color: #FFD966;
+    }
+
+    @media (max-width: 700px) {
+      .logo-row {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .nav-badge {
+        align-self: flex-start;
+        margin-top: 0.1rem;
+        font-size: 0.45rem;
+        padding: 0.2rem 0.6rem;
+      }
+      .nav-badge span:last-child {
+        font-size: 0.45rem;
+      }
+      .campaign-sub-header {
+        font-size: 0.5rem;
+      }
+      .partner-grid {
+        gap: 0.15rem;
+      }
+      .partner-logo {
+        min-height: 24px;
+        padding: 0.1rem 0.05rem;
+      }
+      .partner-logo svg {
+        max-width: 20px;
+      }
+      .partner-name {
+        font-size: 0.4rem;
+      }
+      .carousel-arrow {
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
+      }
+      .arrow-left {
+        left: 6px;
+      }
+      .arrow-right {
+        right: 6px;
+      }
+      .action-grid {
+        gap: 0.25rem;
+      }
+      .action-card {
+        padding: 0.3rem 0.15rem;
+      }
+      .action-icon svg {
+        max-width: 26px;
+      }
+      .action-label {
+        font-size: 0.45rem;
+      }
+      .developed-by {
+        font-size: 0.5rem;
+      }
+    }
+  </style>
 </head>
 <body>
-
-<div class="phone">
-
-  <div class="scroll-content">
-    <div class="header-section">
-      <div class="logo-area">
-        <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" class="logo-img" onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' fill=\'%230b5ed7\'/%3E%3Ctext x=\'50\' y=\'55\' font-size=\'14\' fill=\'white\' text-anchor=\'middle\'%3EICF-SL%3C/text%3E%3C/svg%3E';">
-        <div class="header-title">
-          <h2>Informatics Consultancy Firm-SL (ICF-SL)</h2>
-          <p>Driving Data-Driven Solutions for Health and Development</p>
+<div class="phone-mock">
+  <!-- HEADER - REDUCED SIZE -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-row">
+        <div class="logo-area">
+          <div class="logo-icon">
+            <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect width="100" height="100" rx="20" fill="white" />
+              <circle cx="50" cy="48" r="34" fill="#1565C0" />
+              <text x="50" y="63" text-anchor="middle" fill="white" font-size="28" font-weight="800" font-family="Arial, sans-serif">ICF</text>
+              <text x="50" y="78" text-anchor="middle" fill="#1565C0" font-size="10" font-weight="bold" font-family="Arial">SL</text>
+            </svg>
+          </div>
+          <div class="org-info">
+            <h1>Informaatics Consultancy Firm-SL (ICF-SL)</h1>
+            <p>Driving Data-Driven Solutions for Health and Development</p>
+          </div>
+        </div>
+        <div class="nav-badge">
+          <span>🏠</span>
+          <span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span>
         </div>
       </div>
-      <div class="campaign-badge">
-        <i class="fas fa-bed" style="margin-right: 3px;"></i> HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE
-      </div>
-      <div class="survey-text">
-        <i class="fas fa-clipboard-list"></i> Insecticide-Treated Nets Distribution Survey - Sierra Leone
-      </div>
-    </div>
-
-    <div class="partner-section">
-      <div class="partner-heading">
-        <i class="fas fa-handshake"></i> 
-        <span>IMPLEMENTING PARTNERS</span>
-      </div>
-      <div class="partners-container">
-        <div class="partner-item"><img src="usa.png" alt="United State Dep." onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>United State Dep.</span></div>
-        <div class="partner-item"><img src="global_fund.png" alt="Global Fund" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Ccircle cx=\'12\' cy=\'12\' r=\'10\'/%3E%3C/svg%3E';"><span>Global Fund</span></div>
-        <div class="partner-item"><img src="moh_logo.png" alt="MOH" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';"><span>MOH</span></div>
-        <div class="partner-item"><img src="NMCP.png" alt="NMCP" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpath d=\'M12 8v8M8 12h8\' stroke=\'white\' stroke-width=\'2\'/%3E%3C/svg%3E';"><span>NMCP</span></div>
-        <div class="partner-item"><img src="pmi_evolve.png" alt="PMI Evolve" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Cpolygon points=\'12,4 20,9 12,14 4,9\'/%3E%3C/svg%3E';"><span>PMI Evolve</span></div>
-        <div class="partner-item"><img src="NMCP.png" alt="MBSSE" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' fill=\'%23D4AF37\' viewBox=\'0 0 24 24\'%3E%3Cpath d=\'M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5\'/%3E%3C/svg%3E';"><span>MBSSE</span></div>
+      <div class="campaign-header-section">
+        <div class="campaign-sub-header">
+          <span>🦟</span>
+          <span>Insecticide-Treated Nets Distribution Survey - Sierra Leone</span>
+        </div>
       </div>
     </div>
+  </header>
 
+  <!-- PARTNER LOGOS SECTION WITH NAMES -->
+  <div class="partner-section">
+    <div class="partner-title">IMPLEMENTING PARTNERS</div>
+    <div class="partner-grid">
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">US</text></svg>
+        </div>
+        <div class="partner-name">United State Dep.</div>
+      </div>
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">GF</text></svg>
+        </div>
+        <div class="partner-name">Global Fund</div>
+      </div>
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">PMI</text></svg>
+        </div>
+        <div class="partner-name">PMI Evolve</div>
+      </div>
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">MOH</text></svg>
+        </div>
+        <div class="partner-name">MOH</div>
+      </div>
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">NMCP</text></svg>
+        </div>
+        <div class="partner-name">NMCP</div>
+      </div>
+      <div class="partner-item">
+        <div class="partner-logo">
+          <svg viewBox="0 0 40 24" fill="none"><rect width="40" height="24" rx="4" fill="#FFF3E0" /><text x="20" y="14" text-anchor="middle" fill="#F57C00" font-size="5" font-weight="700">MB</text></svg>
+        </div>
+        <div class="partner-name">MBSSE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SMART SLIDER CAROUSEL -->
+  <div class="carousel-section">
     <div class="carousel-container">
-      <div class="carousel">
-        <div class="slides" id="slides">
-          <div class="slide"><img src="infographics.png" alt="ITN Data" onerror="this.src='https://placehold.co/600x200/0b5ed7/white?text=ITN+Coverage+2026'"></div>
-          <div class="slide"><img src="infographicss.jpg" alt="Mosquito Net Impact" onerror="this.src='https://placehold.co/600x200/2e9a5e/white?text=Malaria+Prevention+Stats'"></div>
-          <div class="slide"><img src="infographics.jpg" alt="Distribution Milestones" onerror="this.src='https://placehold.co/600x200/c2410c/white?text=Campaign+Milestones'"></div>
+      <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
+      <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
+      <div class="carousel-slides" id="carouselSlides">
+        <div class="carousel-slide">
+          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
+            <rect width="350" height="200" rx="0" fill="url(#grad1)" />
+            <defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1565C0"/><stop offset="100%" stop-color="#42a5f5"/></linearGradient></defs>
+            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">ITN Distribution</text>
+            <text x="175" y="120" text-anchor="middle" fill="#FFD966" font-size="12" font-family="Arial">Household Registration</text>
+            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Sierra Leone 2025</text>
+          </svg>
         </div>
-        <button class="btn prev" onclick="moveSlide(-1)">❮</button>
-        <button class="btn next" onclick="moveSlide(1)">❯</button>
-      </div>
-      <div class="dots-container" id="dotsContainer"></div>
-    </div>
-
-    <div class="actions">
-      <!-- REGISTER (HHR) - Opens subregistration.html in iframe -->
-      <div class="card register" onclick="openSubRegistrationIframe()">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-home"></i><span class="card-main-text">REGISTER</span></div>
-          <div class="card-abbr">(HHR)</div>
+        <div class="carousel-slide">
+          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
+            <rect width="350" height="200" rx="0" fill="url(#grad2)" />
+            <defs><linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#F57C00"/><stop offset="100%" stop-color="#FFB74D"/></linearGradient></defs>
+            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">Data Collection</text>
+            <text x="175" y="120" text-anchor="middle" fill="#1565C0" font-size="12" font-family="Arial">Real-time Monitoring</text>
+            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Digital Solutions</text>
+          </svg>
         </div>
-        <div class="card-right"><i class="fas fa-arrow-right"></i></div>
-      </div>
-      
-      <!-- DISTRIBUTION (HHD) - No handler -->
-      <div class="card distribution">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-users"></i><span class="card-main-text">DISTRIBUTION</span></div>
-          <div class="card-abbr">(HHD)</div>
+        <div class="carousel-slide">
+          <svg viewBox="0 0 350 200" preserveAspectRatio="xMidYMid meet">
+            <rect width="350" height="200" rx="0" fill="url(#grad3)" />
+            <defs><linearGradient id="grad3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#1B5E20"/><stop offset="100%" stop-color="#4CAF50"/></linearGradient></defs>
+            <text x="175" y="90" text-anchor="middle" fill="white" font-size="18" font-weight="700" font-family="Arial">Community Impact</text>
+            <text x="175" y="120" text-anchor="middle" fill="#FFD966" font-size="12" font-family="Arial">Health & Development</text>
+            <text x="175" y="145" text-anchor="middle" fill="rgba(255,255,255,0.8)" font-size="10">Every Net Counts</text>
+          </svg>
         </div>
-        <div class="card-right"><i class="fas fa-hand-holding-heart"></i></div>
       </div>
-      
-      <!-- MONITORING (Nat. Sup) - No handler -->
-      <div class="card monitoring">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-chart-simple"></i><span class="card-main-text">MONITORING</span></div>
-          <div class="card-abbr">(Nat. Sup)</div>
-        </div>
-        <div class="card-right"><i class="fas fa-eye"></i></div>
-      </div>
-      
-      <!-- STOCK - No handler -->
-      <div class="card stock">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-box"></i><span class="card-main-text">STOCK</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-chart-simple"></i></div>
-      </div>
-      
-      <!-- DASHBOARD - No handler -->
-      <div class="card dashboard">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-chart-line"></i><span class="card-main-text">DASHBOARD</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-eye"></i></div>
-      </div>
-      
-      <!-- ATTENDANCE - No handler -->
-      <div class="card attendance">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-calendar-check"></i><span class="card-main-text">ATTENDANCE</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-user-check"></i></div>
-      </div>
-      
-      <!-- DEVICE TRACKING - No handler -->
-      <div class="card device-tracking">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-mobile-alt"></i><span class="card-main-text">DEVICE TRACKING</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-map-marker-alt"></i></div>
-      </div>
-      
-      <!-- RECONCILIATION - No handler -->
-      <div class="card reconciliation">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-calculator"></i><span class="card-main-text">RECONCILIATION</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-check-double"></i></div>
-      </div>
-      
-      <!-- WASTE MANAGEMENT - No handler -->
-      <div class="card waste-management">
-        <div class="card-left">
-          <div class="card-main-row"><i class="fas fa-trash-alt"></i><span class="card-main-text">WASTE MANAGEMENT</span></div>
-          <div class="card-abbr"></div>
-        </div>
-        <div class="card-right"><i class="fas fa-recycle"></i></div>
-      </div>
+      <div class="carousel-dots" id="carouselDots"></div>
     </div>
   </div>
 
-  <div class="footer">
-    <div class="footer-line1">Developed by</div>
-    <div class="footer-line2">Informatics Consultancy Firm-SL <span class="copyright-symbol">©</span> 2026</div>
+  <!-- ACTION CARDS - REDUCED SIZE -->
+  <div class="action-cards-section">
+    <div class="action-grid">
+      <!-- 1. REGISTER -->
+      <div class="action-card card-1">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><text x="30" y="40" text-anchor="middle" fill="#EE5A24" font-size="12" font-weight="700">✓</text></svg>
+        </div>
+        <div class="action-label">REGISTER</div>
+      </div>
+      <!-- 2. DISTRIBUTION -->
+      <div class="action-card card-2">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="15" y="30" width="30" height="18" rx="2" fill="white"/><rect x="22" y="22" width="16" height="10" rx="2" fill="white" opacity="0.8"/><text x="30" y="43" text-anchor="middle" fill="#44B39A" font-size="10" font-weight="700">📦</text></svg>
+        </div>
+        <div class="action-label">DISTRIBUTION</div>
+      </div>
+      <!-- 3. MONITORING -->
+      <div class="action-card card-3">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><polyline points="15,35 25,22 35,32 45,18" stroke="white" stroke-width="2.5" fill="none"/><circle cx="25" cy="22" r="2.5" fill="white"/><circle cx="35" cy="32" r="2.5" fill="white"/><circle cx="45" cy="18" r="2.5" fill="white"/></svg>
+        </div>
+        <div class="action-label">MONITORING</div>
+      </div>
+      <!-- 4. STOCK -->
+      <div class="action-card card-4">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.1)" stroke="#2c3e50" stroke-width="1.5"/><rect x="18" y="25" width="24" height="20" rx="2" fill="#2c3e50"/><line x1="20" y1="32" x2="40" y2="32" stroke="white" stroke-width="1.5"/><line x1="20" y1="38" x2="35" y2="38" stroke="white" stroke-width="1.5"/></svg>
+        </div>
+        <div class="action-label">STOCK</div>
+      </div>
+      <!-- 5. DASHBOARD -->
+      <div class="action-card card-5">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="16" y="28" width="8" height="16" rx="1" fill="white"/><rect x="26" y="20" width="8" height="24" rx="1" fill="white"/><rect x="36" y="24" width="8" height="20" rx="1" fill="white"/></svg>
+        </div>
+        <div class="action-label">DASHBOARD</div>
+      </div>
+      <!-- 6. ATTENDANCE -->
+      <div class="action-card card-6">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><circle cx="30" cy="24" r="6" fill="white"/><path d="M18 42 Q30 48 42 42" stroke="white" stroke-width="2" fill="none"/></svg>
+        </div>
+        <div class="action-label">ATTENDANCE</div>
+      </div>
+      <!-- 7. DEVICE TRACKING -->
+      <div class="action-card card-7">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="20" y="18" width="20" height="24" rx="3" fill="white"/><circle cx="30" cy="38" r="3" fill="#10AC84"/><text x="30" y="30" text-anchor="middle" fill="#10AC84" font-size="10" font-weight="700">📱</text></svg>
+        </div>
+        <div class="action-label">DEVICE TRACKING</div>
+      </div>
+      <!-- 8. RECONCILIATION -->
+      <div class="action-card card-8">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><path d="M20 30 L28 38 L40 22" stroke="white" stroke-width="3" fill="none" stroke-linecap="round"/><text x="20" y="48" text-anchor="middle" fill="white" font-size="8" font-weight="700">✓</text></svg>
+        </div>
+        <div class="action-label">RECONCILIATION</div>
+      </div>
+      <!-- 9. WASTE MANAGEMENT -->
+      <div class="action-card card-9">
+        <div class="action-icon">
+          <svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="28" fill="rgba(255,255,255,0.2)" stroke="white" stroke-width="1.5"/><rect x="22" y="28" width="16" height="18" rx="2" fill="white"/><path d="M25 28 L27 22 L33 22 L35 28" stroke="#2D3436" stroke-width="1.5" fill="none"/><text x="30" y="45" text-anchor="middle" fill="#2D3436" font-size="8" font-weight="700">♻️</text></svg>
+        </div>
+        <div class="action-label">WASTE MANAGEMENT</div>
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- Iframe Panel for subregistration.html -->
-<div id="subRegistrationPanel" class="iframe-panel">
-  <div class="iframe-header" style="background: linear-gradient(105deg, #1e3a8a, #3b82f6);">
-    <span><i class="fas fa-home"></i> Household Registration (HHR)</span>
-    <button onclick="closeSubRegistrationPanel()"><i class="fas fa-times"></i></button>
-  </div>
-  <iframe id="subRegistrationIframe" src="subregistration.html" title="Sub Registration Form"></iframe>
-</div>
+  <!-- MAIN BODY - COMPLETELY EMPTY -->
+  <main class="content-container"></main>
 
-<!-- Iframe Panel for registration.html -->
-<div id="manualEntryPanel" class="iframe-panel">
-  <div class="iframe-header" style="background: linear-gradient(135deg, #ea580c 0%, #f97316 100%);">
-    <span><i class="fas fa-pen-alt"></i> Manual Entry Form</span>
-    <button onclick="closeManualEntryPanel()"><i class="fas fa-times"></i></button>
-  </div>
-  <iframe id="manualEntryIframe" src="registration.html" title="Manual Entry Form"></iframe>
+  <!-- FOOTER WITH VISIBLE TEXT -->
+  <footer class="app-footer">
+    <div class="wave-wrapper">
+      <svg class="wave-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 90" preserveAspectRatio="none">
+        <path d="M0,48L80,44C160,40,320,32,480,34.7C640,37,800,51,960,53.3C1120,56,1280,48,1360,44L1440,40L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0" fill-opacity="1"></path>
+        <path d="M0,68L80,64C160,60,320,52,480,53.3C640,55,800,64,960,66.7C1120,69,1280,64,1360,62L1440,60L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0" fill-opacity="0.5"></path>
+      </svg>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-content">
+        <div class="developed-by">
+          Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026
+        </div>
+      </div>
+    </div>
+  </footer>
 </div>
 
 <script>
-  // ---------- CAROUSEL LOGIC WITH INFINITE LOOP ----------
-  let currentIndex = 0;
-  const slidesContainer = document.getElementById('slides');
-  const slides = document.querySelectorAll('.slide');
-  const totalSlides = slides.length;
-  const dotsContainer = document.getElementById('dotsContainer');
-  let autoInterval;
-  
-  function setupInfiniteLoop() {
-    const firstClone = slides[0].cloneNode(true);
-    const lastClone = slides[totalSlides - 1].cloneNode(true);
-    slidesContainer.appendChild(firstClone);
-    slidesContainer.insertBefore(lastClone, slides[0]);
-    slidesContainer.style.transform = `translateX(-${1 * 100}%)`;
-    currentIndex = 1;
-  }
-  
-  function createDots() {
-    dotsContainer.innerHTML = '';
-    for (let i = 0; i < totalSlides; i++) {
-      const dot = document.createElement('button');
-      dot.classList.add('dot');
-      if (i === 0) dot.classList.add('active');
-      dot.addEventListener('click', () => { goToSlide(i); resetAutoSlide(); });
-      dotsContainer.appendChild(dot);
+  // Smart Slider Carousel Functionality
+  (function() {
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.carousel-slide');
+    const slidesContainer = document.getElementById('carouselSlides');
+    const dotsContainer = document.getElementById('carouselDots');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    let autoSlideInterval;
+
+    function createDots() {
+      dotsContainer.innerHTML = '';
+      slides.forEach((_, index) => {
+        const dot = document.createElement('div');
+        dot.classList.add('dot');
+        if (index === currentIndex) dot.classList.add('active');
+        dot.addEventListener('click', () => goToSlide(index));
+        dotsContainer.appendChild(dot);
+      });
     }
-  }
-  
-  function updateDots() {
-    let realIndex = currentIndex - 1;
-    if (realIndex < 0) realIndex = totalSlides - 1;
-    if (realIndex >= totalSlides) realIndex = 0;
-    const dots = document.querySelectorAll('.dot');
-    dots.forEach((dot, idx) => {
-      if (idx === realIndex) dot.classList.add('active');
-      else dot.classList.remove('active');
+
+    function updateDots() {
+      const dots = document.querySelectorAll('.dot');
+      dots.forEach((dot, index) => {
+        if (index === currentIndex) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    function goToSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      currentIndex = index;
+      const offset = -currentIndex * 100;
+      slidesContainer.style.transform = `translateX(${offset}%)`;
+      updateDots();
+      resetAutoSlide();
+    }
+
+    function nextSlide() { goToSlide(currentIndex + 1); }
+    function prevSlide() { goToSlide(currentIndex - 1); }
+
+    function resetAutoSlide() {
+      if (autoSlideInterval) clearInterval(autoSlideInterval);
+      autoSlideInterval = setInterval(() => { nextSlide(); }, 5000);
+    }
+
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+
+    if (slides.length > 0) {
+      createDots();
+      resetAutoSlide();
+    }
+
+    const carouselContainer = document.querySelector('.carousel-container');
+    if (carouselContainer) {
+      carouselContainer.addEventListener('mouseenter', () => { if (autoSlideInterval) clearInterval(autoSlideInterval); });
+      carouselContainer.addEventListener('mouseleave', () => { resetAutoSlide(); });
+    }
+  })();
+
+  // Action Card Click Handlers
+  (function() {
+    const actionCards = document.querySelectorAll('.action-card');
+    const actionLabels = [
+      'REGISTER', 'DISTRIBUTION', 'MONITORING', 
+      'STOCK', 'DASHBOARD', 'ATTENDANCE',
+      'DEVICE TRACKING', 'RECONCILIATION', 'WASTE MANAGEMENT'
+    ];
+    
+    actionCards.forEach((card, index) => {
+      card.addEventListener('click', () => {
+        const actionName = actionLabels[index] || 'Action';
+        card.style.transform = 'scale(0.97)';
+        setTimeout(() => { card.style.transform = ''; }, 150);
+        console.log(`🔘 ${actionName} action triggered`);
+      });
     });
-  }
-  
-  function goToSlide(index) {
-    const targetPosition = index + 1;
-    currentIndex = targetPosition;
-    slidesContainer.style.transition = 'transform 0.4s ease';
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateDots();
-    setTimeout(() => {
-      if (currentIndex === 0) {
-        slidesContainer.style.transition = 'none';
-        currentIndex = totalSlides;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
-      } else if (currentIndex === totalSlides + 1) {
-        slidesContainer.style.transition = 'none';
-        currentIndex = 1;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
+  })();
+
+  // Ensure all text content is correct
+  (function() {
+    const verifyContent = () => {
+      const orgName = document.querySelector('.org-info h1');
+      if (orgName && orgName.innerText !== "Informaatics Consultancy Firm-SL (ICF-SL)") {
+        orgName.innerText = "Informaatics Consultancy Firm-SL (ICF-SL)";
       }
-    }, 400);
-  }
-  
-  function moveSlide(direction) {
-    let newIndex = currentIndex + direction;
-    if (newIndex < 0) newIndex = 0;
-    if (newIndex > totalSlides + 1) newIndex = totalSlides + 1;
-    currentIndex = newIndex;
-    slidesContainer.style.transition = 'transform 0.4s ease';
-    slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-    updateDots();
-    setTimeout(() => {
-      if (currentIndex === 0) {
-        slidesContainer.style.transition = 'none';
-        currentIndex = totalSlides;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
-      } else if (currentIndex === totalSlides + 1) {
-        slidesContainer.style.transition = 'none';
-        currentIndex = 1;
-        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-        updateDots();
+      
+      const tagline = document.querySelector('.org-info p');
+      if (tagline && tagline.innerText !== "Driving Data-Driven Solutions for Health and Development") {
+        tagline.innerText = "Driving Data-Driven Solutions for Health and Development";
       }
-    }, 400);
-  }
-  
-  function startAutoSlide() {
-    if (autoInterval) clearInterval(autoInterval);
-    autoInterval = setInterval(() => moveSlide(1), 5000);
-  }
-  
-  function resetAutoSlide() { startAutoSlide(); }
-  
-  setupInfiniteLoop();
-  createDots();
-  startAutoSlide();
-  window.moveSlide = moveSlide;
-  
-  const carouselElement = document.querySelector('.carousel');
-  if (carouselElement) {
-    carouselElement.addEventListener('mouseenter', () => clearInterval(autoInterval));
-    carouselElement.addEventListener('mouseleave', () => startAutoSlide());
-  }
-  
-  // ---------- IFRAME FUNCTIONS FOR REGISTRATION (subregistration.html) ----------
-  const subRegistrationPanel = document.getElementById('subRegistrationPanel');
-  const subRegistrationIframe = document.getElementById('subRegistrationIframe');
-  
-  function openSubRegistrationIframe() {
-    subRegistrationIframe.src = "subregistration.html";
-    subRegistrationIframe.onerror = function() {
-      subRegistrationIframe.srcdoc = getSubRegistrationFallback();
-    };
-    setTimeout(() => {
-      try {
-        if (subRegistrationIframe.contentWindow && subRegistrationIframe.contentDocument && 
-            subRegistrationIframe.contentDocument.body && 
-            subRegistrationIframe.contentDocument.body.innerHTML.trim() === "") {
-          subRegistrationIframe.srcdoc = getSubRegistrationFallback();
+      
+      const badgeSpan = document.querySelector('.nav-badge span:last-child');
+      if (badgeSpan && badgeSpan.innerText !== "HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE") {
+        badgeSpan.innerText = "HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE";
+      }
+      
+      const badgeFirstSpan = document.querySelector('.nav-badge span:first-child');
+      if (badgeFirstSpan && badgeFirstSpan.innerText !== "🏠") {
+        badgeFirstSpan.innerText = "🏠";
+      }
+      
+      const subHeaderContainer = document.querySelector('.campaign-sub-header');
+      if (subHeaderContainer) {
+        const iconSpan = subHeaderContainer.querySelector('span:first-child');
+        const textSpan = subHeaderContainer.querySelector('span:last-child');
+        if (iconSpan && iconSpan.innerText !== "🦟") iconSpan.innerText = "🦟";
+        if (textSpan && textSpan.innerText !== "Insecticide-Treated Nets Distribution Survey - Sierra Leone") {
+          textSpan.innerText = "Insecticide-Treated Nets Distribution Survey - Sierra Leone";
         }
-      } catch(e) {
-        subRegistrationIframe.srcdoc = getSubRegistrationFallback();
       }
-    }, 500);
-    subRegistrationPanel.style.display = 'flex';
-  }
-  
-  function closeSubRegistrationPanel() {
-    subRegistrationPanel.style.display = 'none';
-    subRegistrationIframe.src = "subregistration.html";
-    subRegistrationIframe.onerror = null;
-  }
-  
-  // ---------- IFRAME FUNCTIONS FOR MANUAL ENTRY (registration.html) ----------
-  const manualEntryPanel = document.getElementById('manualEntryPanel');
-  const manualEntryIframe = document.getElementById('manualEntryIframe');
-  
-  function openManualEntryIframe() {
-    manualEntryIframe.src = "registration.html";
-    manualEntryIframe.onerror = function() {
-      manualEntryIframe.srcdoc = getManualEntryFallback();
-    };
-    setTimeout(() => {
-      try {
-        if (manualEntryIframe.contentWindow && manualEntryIframe.contentDocument && 
-            manualEntryIframe.contentDocument.body && 
-            manualEntryIframe.contentDocument.body.innerHTML.trim() === "") {
-          manualEntryIframe.srcdoc = getManualEntryFallback();
+      
+      const partnerTitle = document.querySelector('.partner-title');
+      if (partnerTitle && partnerTitle.innerText !== "IMPLEMENTING PARTNERS") {
+        partnerTitle.innerText = "IMPLEMENTING PARTNERS";
+      }
+      
+      const contentContainer = document.querySelector('.content-container');
+      if (contentContainer) {
+        while (contentContainer.firstChild) {
+          contentContainer.removeChild(contentContainer.firstChild);
         }
-      } catch(e) {
-        manualEntryIframe.srcdoc = getManualEntryFallback();
-      }
-    }, 500);
-    manualEntryPanel.style.display = 'flex';
-  }
-  
-  function closeManualEntryPanel() {
-    manualEntryPanel.style.display = 'none';
-    manualEntryIframe.src = "registration.html";
-    manualEntryIframe.onerror = null;
-  }
-  
-  // Fallback for subregistration.html
-  function getSubRegistrationFallback() {
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>HHR Registration</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #eef2ff 0%, #ffffff 100%);padding:20px;}.reg-card{background:white;border-radius:32px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}h2{color:#1e3a8a;}.sub{color:#4b5563;margin-bottom:18px;border-left:3px solid #3b82f6;padding-left:12px;}input,select{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}button{background:#1e3a8a;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;cursor:pointer;}</style></head><body><div class='reg-card'><h2><i class='fas fa-home'></i> HHR Registration</h2><div class='sub'>Household Registration - ITN Campaign 2026</div><input type='text' placeholder='Household Head Name'><input type='text' placeholder='Household ID'><input type='text' placeholder='District / Chiefdom'><button onclick='alert(\"✅ Registration saved\")'>Submit</button></div></body></html>`;
-  }
-  
-  // Fallback for registration.html (Manual Entry)
-  function getManualEntryFallback() {
-    return `<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Manual Entry</title><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"><style>*{margin:0;padding:0;box-sizing:border-box;}body{font-family:'Inter',sans-serif;background:linear-gradient(145deg, #fff7ed 0%, #ffffff 100%);padding:20px;}.form-card{background:white;border-radius:32px;padding:24px;box-shadow:0 10px 25px rgba(0,0,0,0.1);max-width:400px;margin:0 auto;}h2{color:#ea580c;}.sub{color:#4b5563;margin-bottom:18px;border-left:3px solid #f97316;padding-left:12px;}input{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}select{width:100%;padding:12px;margin:10px 0;border:1.5px solid #e2e8f0;border-radius:50px;}button{background:#ea580c;color:white;border:none;padding:12px;width:100%;border-radius:50px;font-weight:700;cursor:pointer;}</style></head><body><div class='form-card'><h2><i class='fas fa-pen-alt'></i> Manual Entry</h2><div class='sub'>Region » District » Chiefdom » PHU » Community</div><select><option>Select Region</option><option>Western</option><option>Northern</option></select><input type='text' placeholder='District'><input type='text' placeholder='Chiefdom'><input type='text' placeholder='Community'><button onclick='alert(\"✅ Data saved\")'>Submit</button></div></body></html>`;
-  }
-  
-  // Close panels when clicking on overlay
-  subRegistrationPanel.addEventListener('click', function(e) {
-    if (e.target === subRegistrationPanel) {
-      closeSubRegistrationPanel();
-    }
-  });
-  
-  manualEntryPanel.addEventListener('click', function(e) {
-    if (e.target === manualEntryPanel) {
-      closeManualEntryPanel();
-    }
-  });
-  
-  // Fix partner images fallback
-  document.querySelectorAll('.partner-item img').forEach(img => {
-    img.onerror = function() {
-      if (!img.dataset.fallbackSet) {
-        img.dataset.fallbackSet = 'true';
-        img.src = 'data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23D4AF37\'%3E%3Crect width=\'24\' height=\'24\' rx=\'4\'/%3E%3C/svg%3E';
       }
     };
-  });
+    
+    verifyContent();
+    
+    const observer = new MutationObserver(() => {
+      verifyContent();
+    });
+    observer.observe(document.body, { childList: true, subtree: true, characterData: true });
+  })();
 </script>
 </body>
 </html>
