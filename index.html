@@ -884,7 +884,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
-    const roleMap = { 'Admin Dashboard': 'Full Access', 'HHR2027': 'Household Register Dashboard', 'HHD2027': 'Household Distributor Dashboard', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHIEFDOM Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Dashboard' };
+    const roleMap = { 'Admin': 'Full Access', 'HHR2027': 'HHRegister Dashboard', 'HHD2027': 'HHDistributor Dashboard', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHIEFDOM Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Dashboard' };
     const roleDisplay = roleMap[username] || 'User';
     
     const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
