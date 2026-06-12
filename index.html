@@ -1,759 +1,385 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ITNs Campaign Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>ICF-SL | ITN Campaign</title>
 
+<!-- Font Awesome 6 (free icons) -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-<script src="https://unpkg.com/html5-qrcode"></script>
 
 <style>
-* {
+  /* ----- RESET & GLOBAL ----- */
+  * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Arial, sans-serif;
-}
+  }
 
-body {
-    background: #f2f2f2;
+  body {
+    background: #ffffff;  /* Changed to white background */
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 100vh;
-}
+    font-family: 'Segoe UI', Arial, sans-serif;
+    padding: 20px;
+  }
 
-.container {
-    width: 360px;
-    max-width: 100%;
-    height: 100vh;
-    max-height: 780px;
-    background: #fff;
-    border-radius: 30px;
-    overflow-y: auto;
-    overflow-x: hidden;
-    position: relative;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-    display: flex;
-    flex-direction: column;
-}
+  /* ----- PHONE FRAME ----- */
+  .phone-frame {
+    width: 390px;
+    height: 760px;
+    background: #1a1e2c;
+    border-radius: 50px;
+    padding: 12px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+  }
 
-.bg {
-    position: absolute;
-    top: 0;
-    left: 0;
+  /* Phone mock with Background.png INSIDE the phone shape */
+  .phone-mock {
     width: 100%;
     height: 100%;
-    background: url('background.png') no-repeat center/cover;
-    z-index: 0;
-}
-.bg::after {
+    background: url("Background.png") no-repeat center center;
+    background-size: cover;
+    border-radius: 40px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* Semi-transparent overlay for readability inside phone */
+  .phone-mock::before {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.45);
-}
+    background: rgba(0, 0, 0, 0.35);
+    border-radius: 40px;
+    pointer-events: none;
+  }
 
-.content {
+  /* ----- SCROLLABLE CONTENT (above overlay) ----- */
+  .screen {
+    flex: 1;
+    padding: 20px 16px;
+    overflow-y: auto;
     position: relative;
     z-index: 2;
-    padding: 20px 16px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-}
+  }
 
-.login-card {
-    background: rgba(255,255,255,0.96);
-    border-radius: 24px;
-    padding: 20px 16px;
-    margin-top: 20px;
+  /* ----- LOGIN CARD (semi-transparent white for better contrast) ----- */
+  .card {
+    background: rgba(255, 255, 255, 0.96);
+    border-radius: 28px;
+    padding: 24px 20px;
+    text-align: center;
+    margin-bottom: 28px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(2px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-}
+  }
 
-.logo {
-    text-align: center;
+  .logo-area img {
+    width: 100px;
     margin-bottom: 16px;
-}
-.logo img {
-    width: 65px;
-    border-radius: 50%;
-    background: white;
-    padding: 4px;
-}
+  }
 
-.input {
-    width: 100%;
-    padding: 14px 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
+  /* form fields */
+  .field {
+    background: #f1f5f9;
     border-radius: 40px;
-    font-size: 16px;
-    background: #fff;
-}
-
-.password-wrapper {
-    position: relative;
-}
-.password-wrapper input {
-    padding-right: 50px;
-}
-.eye-icon {
-    position: absolute;
-    right: 16px;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: #555;
-    font-size: 1.2rem;
-}
-
-.btn {
-    width: 100%;
-    padding: 12px;
-    margin-top: 12px;
-    border: none;
-    border-radius: 40px;
-    color: white;
-    font-weight: bold;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.btn:hover {
-    transform: scale(1.02);
-    opacity: 0.9;
-}
-.login {
-    background: #2E86C1;
-}
-.scan {
-    background: #1E8449;
-}
-
-.cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-    margin: 20px 0 10px 0;
-}
-.card {
-    border-radius: 20px;
-    padding: 14px 6px;
-    text-align: center;
-    color: white;
-    font-size: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    transition: 0.2s;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-.card:hover {
-    transform: scale(1.02);
-}
-.card i {
-    font-size: 26px;
-}
-.network { background: #D35400; }
-.export { background: #2E86C1; }
-.verify { background: #8E44AD; }
-.language { background: #16A085; }
-
-.curve-wrapper {
-    position: relative;
-    z-index: 2;
-    margin-top: auto;
-}
-.curve {
-    width: 100%;
-    height: 50px;
-    display: block;
-}
-.footer {
-    background: #1E8449;
-    padding: 12px 16px 20px;
-    text-align: center;
-    color: white;
-    border-radius: 20px 20px 0 0;
-}
-.footer h4 {
-    font-size: 11px;
-    font-weight: normal;
-}
-.footer p {
-    font-size: 13px;
-    text-decoration: underline;
-    font-weight: bold;
-    margin-top: 4px;
-}
-
-#scannerModal {
-    position: fixed;
-    inset: 0;
-    background: rgba(0,0,0,0.95);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-    flex-direction: column;
-}
-#reader {
-    width: 280px;
-    border-radius: 20px;
-    overflow: hidden;
-}
-.close-btn {
-    margin-top: 20px;
-    padding: 10px 24px;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 40px;
-    font-size: 1rem;
-    cursor: pointer;
-}
-
-@media (max-width: 380px) {
-    .container {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-    }
-    .login-card {
-        padding: 16px 12px;
-    }
-    .cards {
-        gap: 10px;
-    }
-    .card {
-        padding: 10px 4px;
-        font-size: 11px;
-    }
-    .card i {
-        font-size: 22px;
-    }
-}
-
-.loading-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10000;
-    color: white;
-    font-size: 18px;
-    gap: 12px;
-    flex-direction: column;
-}
-
-.iframe-panel {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: #ffffff;
-    display: none;
-    flex-direction: column;
-    z-index: 2000;
-    border-radius: inherit;
-    overflow: hidden;
-    animation: slideUp 0.3s ease;
-}
-@keyframes slideUp {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-}
-.iframe-header {
-    background: linear-gradient(135deg, #0a4d9e 0%, #0b5ed7 100%);
-    color: white;
-    padding: 14px 18px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 700;
-    font-size: 16px;
-}
-.iframe-header button {
-    background: rgba(255,255,255,0.2);
-    border: none;
-    color: white;
-    font-size: 20px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.iframe-header button:hover {
-    background: rgba(255,255,255,0.4);
-}
-iframe {
-    flex: 1;
-    border: none;
-    width: 100%;
-    background: white;
-}
-
-.logout-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 2100;
-    background: #e74c3c;
-    color: white;
-    border: none;
-    border-radius: 50px;
-    padding: 12px 20px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    padding: 12px 18px;
+    margin-bottom: 14px;
     display: flex;
     align-items: center;
     gap: 8px;
     transition: 0.2s;
-}
-.logout-btn:hover {
-    transform: scale(1.05);
-    background: #c0392b;
-}
-.logout-btn:active {
+  }
+
+  .field input {
+    border: none;
+    background: transparent;
+    width: 100%;
+    outline: none;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .eye {
+    cursor: pointer;
+    font-size: 18px;
+    color: #5b6f8c;
+    transition: 0.2s;
+  }
+
+  .eye:hover {
+    color: #2a7fc4;
+  }
+
+  /* buttons */
+  .btn {
+    width: 100%;
+    padding: 12px;
+    border-radius: 40px;
+    border: none;
+    color: white;
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  .btn-login {
+    background: #2a7fc4;
+  }
+
+  .btn-login:hover {
+    background: #1e6aad;
     transform: scale(0.98);
-}
+  }
+
+  .btn-scan {
+    background: #2e8b4a;
+  }
+
+  .btn-scan:hover {
+    background: #237a40;
+    transform: scale(0.98);
+  }
+
+  /* ----- ACTION GRID (4 tiles) ----- */
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin: 12px 0 8px;
+  }
+
+  .tile {
+    border-radius: 20px;
+    padding: 14px 8px;
+    text-align: center;
+    color: white;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    transition: transform 0.2s, filter 0.2s;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+  }
+
+  .tile:hover {
+    transform: translateY(-3px);
+    filter: brightness(1.1);
+  }
+
+  .tile-icon {
+    font-size: 24px;
+    margin-bottom: 6px;
+  }
+
+  /* individual tile colors (solid with slight opacity) */
+  .t-orange { background: rgba(217, 95, 26, 0.9); }
+  .t-blue   { background: rgba(42, 127, 196, 0.9); }
+  .t-purple { background: rgba(123, 63, 160, 0.9); }
+  .t-teal   { background: rgba(27, 154, 138, 0.9); }
+
+  /* ----- FOOTER (solid blue bar) ----- */
+  .footer {
+    background: #1565C0;
+    text-align: center;
+    padding: 12px 10px;
+    color: white;
+    font-size: 11px;
+    line-height: 1.4;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ----- MESSAGE TOAST (error/success) ----- */
+  .message {
+    font-size: 12px;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    border-radius: 30px;
+    display: none;
+    font-weight: 500;
+  }
+
+  .error {
+    background: #fee2e2;
+    color: #b91c1c;
+    border-left: 4px solid #dc2626;
+  }
+
+  .success {
+    background: #dcfce7;
+    color: #15803d;
+    border-left: 4px solid #16a34a;
+  }
+
+  /* scrollbar styling */
+  .screen::-webkit-scrollbar {
+    width: 3px;
+  }
+  .screen::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.3);
+    border-radius: 10px;
+  }
+  .screen::-webkit-scrollbar-thumb {
+    background: #1565C0;
+    border-radius: 10px;
+  }
 </style>
 </head>
 <body>
 
-<div class="container" id="appContainer">
-    <div class="bg"></div>
-    <div class="content">
-        <div class="login-card">
-            <div class="logo">
-                <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='https://placehold.co/200x200/2E86C1/white?text=ICF-SL'">
-            </div>
-            <input id="username" class="input" placeholder="USERNAME" autocomplete="off">
-            <div class="password-wrapper">
-                <input id="password" class="input" type="password" placeholder="PASSWORD">
-                <i class="fa-solid fa-eye eye-icon" onclick="togglePassword()"></i>
-            </div>
-            <button id="loginBtn" class="btn login">LOGIN</button>
-            <button id="scanBtn" class="btn scan">SCAN BADGE</button>
+<div class="phone-frame">
+  <div class="phone-mock">
+    <div class="screen">
+
+      <!-- LOGIN CARD -->
+      <div class="card">
+        <div class="logo-area">
+          <!-- ICF-SL Logo.png (local image file) -->
+          <img src="ICF-SL Logo.png" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\' font-family=\'Arial\'%3EICF%3C/text%3E%3Ctext x=\'50\' y=\'78\' text-anchor=\'middle\' fill=\'%231565C0\' font-size=\'10\' font-weight=\'bold\' font-family=\'Arial\'%3ESL%3C/text%3E%3C/svg%3E'">
         </div>
 
-        <div class="cards">
-            <div class="card network" id="networkCard">
-                <i class="fa-solid fa-wifi"></i>
-                <span>NETWORK CHECK</span>
-            </div>
-            <div class="card export" id="exportCard">
-                <i class="fa-solid fa-download"></i>
-                <span>EXPORT CAMPAIGN LOGS</span>
-            </div>
-            <div class="card verify" id="verifyCard">
-                <i class="fa-solid fa-fingerprint"></i>
-                <span>VERIFY BENEFICIARY PRINT</span>
-            </div>
-            <div class="card language" onclick="toggleLanguage()">
-                <i class="fa-solid fa-language"></i>
-                <span id="langText">ENGLISH</span>
-            </div>
+        <!-- dynamic message (error / success) -->
+        <div id="msg" class="message"></div>
+
+        <div class="field">
+          <input type="text" id="username" placeholder="USERNAME" autocomplete="off">
         </div>
-    </div>
 
-    <div class="curve-wrapper">
-        <svg class="curve" viewBox="0 0 500 100" preserveAspectRatio="none">
-            <path d="M0,65 C80,95 140,100 200,75 C260,50 320,40 380,60 C430,75 470,70 500,65 L500,100 L0,100 Z" fill="#1E8449"/>
-        </svg>
-        <div class="footer">
-            <h4 id="devText">Developed By</h4>
-            <p>Informatic Consultancy Firm-SL ©2026</p>
+        <div class="field">
+          <input type="password" id="password" placeholder="PASSWORD" autocomplete="off">
+          <span class="eye" onclick="togglePasswordVisibility()">
+            <i class="fa-regular fa-eye" id="eyeIcon"></i>
+          </span>
         </div>
-    </div>
-</div>
 
-<div id="scannerModal">
-    <div id="reader"></div>
-    <button class="close-btn" onclick="stopScanner()">Close</button>
-</div>
+        <button class="btn btn-login" id="loginBtn">LOGIN</button>
+        <button class="btn btn-scan" id="scanQrBtn">SCAN QR</button>
+      </div>
 
-<div id="iframePanel" class="iframe-panel">
-    <div class="iframe-header">
-        <span><i class="fas fa-chalkboard-user"></i> Dashboard</span>
-        <button onclick="closeIframePanel()"><i class="fas fa-times"></i></button>
+      <!-- 4 ACTION TILES -->
+      <div class="grid">
+        <div class="tile t-orange" id="networkTile">
+          <div class="tile-icon"><i class="fa fa-wifi"></i></div>
+          NETWORK CHECK
+        </div>
+        <div class="tile t-blue" id="exportTile">
+          <div class="tile-icon"><i class="fa fa-download"></i></div>
+          EXPORT CAMPAIGN LOGS
+        </div>
+        <div class="tile t-purple" id="verifyTile">
+          <div class="tile-icon"><i class="fa fa-fingerprint"></i></div>
+          VERIFY BENEFICIARY PRINT
+        </div>
+        <div class="tile t-teal" id="languageTile">
+          <div class="tile-icon"><i class="fa fa-globe"></i></div>
+          LANGUAGE
+        </div>
+      </div>
+
+    </div> <!-- end screen -->
+
+    <!-- FOOTER -->
+    <div class="footer">
+      Developed By<br>
+      Informatics Consultancy Firm-SL © 2026
     </div>
-    <iframe id="dashboardIframe" src="about:blank" title="Dashboard"></iframe>
-</div>
+  </div> <!-- end phone-mock -->
+</div> <!-- end phone-frame -->
 
 <script>
-let isEnglish = true;
-let html5QrCode;
-let userCredentials = [];
-let currentUser = null;
+  // ----- TOGGLE PASSWORD VISIBILITY -----
+  const passwordInput = document.getElementById('password');
+  const eyeIcon = document.getElementById('eyeIcon');
 
-// User to page mapping based on CSV data
-const USER_PAGE_MAP = {
-    "Admin": "mscreen.html",
-    "HHR2026": "mscreenreg.html",
-    "HHD2026": "mscreendist.html",
-    "NATSUP2026": "mscreenmoni.html",
-    "CHISUP2026": "mscreenatt.html",
-    "PHUSTAFF2026": "mscreenstock.html",
-    "PARTNERS2026": "mscreendash.html"
-};
-
-// Load credentials from Keys.csv
-async function loadKeysFromCSV() {
-    try {
-        const response = await fetch("Keys.csv");
-        if (!response.ok) {
-            console.warn("Keys.csv not found. Using fallback credentials.");
-            userCredentials = getFallbackCredentials();
-            return;
-        }
-        const data = await response.text();
-        const rows = data.split(/\r?\n/);
-        const credentials = [];
-        
-        for (let i = 0; i < rows.length; i++) {
-            const line = rows[i].trim();
-            if (line === "") continue;
-            
-            // Skip header row
-            if (i === 0 && (line.toLowerCase().includes("username") || line.toLowerCase().startsWith("USERNAME"))) {
-                continue;
-            }
-            
-            const parts = line.split(",");
-            if (parts.length >= 2) {
-                const username = parts[0].trim();
-                const password = parts[1].trim();
-                
-                if (username && password) {
-                    credentials.push({ username, password });
-                }
-            }
-        }
-        
-        if (credentials.length === 0) {
-            userCredentials = getFallbackCredentials();
-        } else {
-            userCredentials = credentials;
-        }
-        
-        console.log("Credentials loaded:", userCredentials.map(c => c.username));
-        
-    } catch (err) {
-        console.warn("Error loading Keys.csv, using fallback credentials:", err);
-        userCredentials = getFallbackCredentials();
+  function togglePasswordVisibility() {
+    if (passwordInput.type === 'password') {
+      passwordInput.type = 'text';
+      eyeIcon.classList.remove('fa-eye');
+      eyeIcon.classList.add('fa-eye-slash');
+    } else {
+      passwordInput.type = 'password';
+      eyeIcon.classList.remove('fa-eye-slash');
+      eyeIcon.classList.add('fa-eye');
     }
-}
+  }
 
-function getFallbackCredentials() {
-    return [
-        { username: "Admin", password: "123" },
-        { username: "HHR2026", password: "123455" },
-        { username: "HHD2026", password: "123456" },
-        { username: "NATSUP2026", password: "123200" },
-        { username: "CHISUP2026", password: "123100" },
-        { username: "PHUSTAFF2026", password: "123300" },
-        { username: "PARTNERS2026", password: "123" }
-    ];
-}
-
-function authenticateUser(username, password) {
-    const matched = userCredentials.find(cred => 
-        cred.username === username && cred.password === password
-    );
-    return matched || null;
-}
-
-function getDashboardPageForUser(username) {
-    return USER_PAGE_MAP[username] || "mscreen.html";
-}
-
-function getUserDisplayName(username) {
-    switch(username) {
-        case "Admin": return "Admin";
-        case "HHR2026": return "HHR (Household Registration)";
-        case "HHD2026": return "HHD (Household Distribution)";
-        case "NATSUP2026": return "NATSUP (National Supervision)";
-        case "CHISUP2026": return "CHISUP (Attendance & Device Tracking)";
-        case "PHUSTAFF2026": return "PHU Staff (Stock Management)";
-        case "PARTNERS2026": return "Partners (Dashboard & Analytics)";
-        default: return username;
-    }
-}
-
-function addLogoutButton() {
-    // Remove existing logout button if any
-    const existingBtn = document.getElementById("globalLogoutBtn");
-    if (existingBtn) existingBtn.remove();
-    
-    // Create logout button
-    const logoutBtn = document.createElement("button");
-    logoutBtn.id = "globalLogoutBtn";
-    logoutBtn.className = "logout-btn";
-    logoutBtn.innerHTML = '<i class="fa-solid fa-sign-out-alt"></i> Logout';
-    logoutBtn.onclick = () => {
-        if (confirm(isEnglish ? "Are you sure you want to logout?" : "Êtes-vous sûr de vouloir vous déconnecter?")) {
-            // Stop scanner if active
-            if (html5QrCode && html5QrCode.isScanning) {
-                html5QrCode.stop().catch(() => {});
-            }
-            // Reload the page to show login screen
-            location.reload();
-        }
-    };
-    document.body.appendChild(logoutBtn);
-}
-
-function removeLogoutButton() {
-    const existingBtn = document.getElementById("globalLogoutBtn");
-    if (existingBtn) existingBtn.remove();
-}
-
-function loadDashboardInIframe(username) {
-    const container = document.getElementById("appContainer");
-    const iframePanel = document.getElementById("iframePanel");
-    const dashboardIframe = document.getElementById("dashboardIframe");
-    const iframeHeaderSpan = document.querySelector("#iframePanel .iframe-header span");
-    
-    if (!container || !iframePanel) return;
-    
-    currentUser = username;
-    
-    // Show loading indicator
-    const loadingDiv = document.createElement("div");
-    loadingDiv.className = "loading-overlay";
-    loadingDiv.innerHTML = '<i class="fa-solid fa-spinner fa-pulse fa-2x"></i><span>Loading dashboard...</span>';
-    document.body.appendChild(loadingDiv);
-    
-    const targetPage = getDashboardPageForUser(username);
-    const displayName = getUserDisplayName(username);
-    
-    // Set iframe source
-    dashboardIframe.src = targetPage;
-    
-    // Handle iframe load error
-    dashboardIframe.onerror = function() {
-        if (loadingDiv) loadingDiv.remove();
-        alert(`Dashboard page "${targetPage}" not found. Please ensure the file exists.`);
-        iframePanel.style.display = "none";
-        removeLogoutButton();
-    };
-    
-    // Handle successful load
-    dashboardIframe.onload = function() {
-        setTimeout(() => {
-            if (loadingDiv) loadingDiv.remove();
-        }, 500);
-    };
-    
-    // Update header text based on user role
-    let headerIcon = '<i class="fas fa-chalkboard-user"></i>';
-    if (username === "HHR2026") headerIcon = '<i class="fas fa-home"></i>';
-    else if (username === "HHD2026") headerIcon = '<i class="fas fa-hand-holding-heart"></i>';
-    else if (username === "NATSUP2026") headerIcon = '<i class="fas fa-chart-simple"></i>';
-    else if (username === "CHISUP2026") headerIcon = '<i class="fas fa-calendar-check"></i>';
-    else if (username === "PHUSTAFF2026") headerIcon = '<i class="fas fa-box"></i>';
-    else if (username === "PARTNERS2026") headerIcon = '<i class="fas fa-chart-line"></i>';
-    
-    if (iframeHeaderSpan) iframeHeaderSpan.innerHTML = `${headerIcon} ${displayName} Dashboard`;
-    
-    // Hide loading after timeout
+  // ----- MESSAGE HELPER -----
+  const msgDiv = document.getElementById('msg');
+  function showMessage(text, type) {
+    msgDiv.style.display = 'block';
+    msgDiv.className = `message ${type}`;
+    msgDiv.innerHTML = text;
     setTimeout(() => {
-        if (loadingDiv && loadingDiv.parentNode) {
-            loadingDiv.remove();
-        }
-    }, 5000);
-    
-    // Add logout button
-    addLogoutButton();
-    
-    // Show iframe panel
-    iframePanel.style.display = "flex";
-}
+      if (msgDiv.style.display === 'block') {
+        msgDiv.style.display = 'none';
+      }
+    }, 3000);
+  }
 
-function closeIframePanel() {
-    const iframePanel = document.getElementById("iframePanel");
-    const dashboardIframe = document.getElementById("dashboardIframe");
-    if (iframePanel) iframePanel.style.display = "none";
-    if (dashboardIframe) dashboardIframe.src = "about:blank";
-    removeLogoutButton();
-    currentUser = null;
-}
+  // ----- LOGIN VALIDATION (admin / 1234) -----
+  function performLogin() {
+    const username = document.getElementById('username').value.trim();
+    const password = document.getElementById('password').value.trim();
 
-async function handleLogin() {
-    const usernameInput = document.getElementById("username").value.trim();
-    const passwordInput = document.getElementById("password").value.trim();
-    
-    if (!usernameInput || !passwordInput) {
-        alert(isEnglish ? "Please enter username and password" : "Veuillez entrer le nom d'utilisateur et le mot de passe");
-        return;
+    const validUsername = "admin";
+    const validPassword = "1234";
+
+    if (!username || !password) {
+      showMessage("Please enter username and password", "error");
+      return;
     }
-    
-    if (userCredentials.length === 0) {
-        await loadKeysFromCSV();
-    }
-    
-    const user = authenticateUser(usernameInput, passwordInput);
-    
-    if (user) {
-        loadDashboardInIframe(user.username);
-        // Clear login fields
-        document.getElementById("username").value = "";
-        document.getElementById("password").value = "";
+
+    if (username === validUsername && password === validPassword) {
+      showMessage("Login successful!", "success");
+      setTimeout(() => {
+        alert("Welcome to Dashboard");
+      }, 500);
     } else {
-        alert(isEnglish ? "Invalid Username or Password" : "Nom d'utilisateur ou mot de passe incorrect");
+      showMessage("Invalid username or password", "error");
     }
-}
+  }
 
-function togglePassword() {
-    const password = document.getElementById("password");
-    const icon = document.querySelector(".eye-icon");
-    if (password.type === "password") {
-        password.type = "text";
-        icon.classList.replace("fa-eye", "fa-eye-slash");
-    } else {
-        password.type = "password";
-        icon.classList.replace("fa-eye-slash", "fa-eye");
-    }
-}
+  // ----- ACTION TILE BEHAVIOR -----
+  function networkCheck() {
+    alert("🌐 Network Check: Connected to ICF-SL server");
+  }
+  function exportLogs() {
+    alert("📁 Export Campaign Logs: File ready for download");
+  }
+  function verifyBeneficiary() {
+    alert("🖨️ Verify Beneficiary Print: Document ready");
+  }
+  function setLanguage() {
+    alert("🌐 Language: English selected");
+  }
 
-function toggleLanguage() {
-    isEnglish = !isEnglish;
-    const usernameField = document.getElementById("username");
-    const passwordField = document.getElementById("password");
-    const loginBtn = document.getElementById("loginBtn");
-    const scanBtn = document.getElementById("scanBtn");
-    const networkSpan = document.querySelector("#networkCard span");
-    const exportSpan = document.querySelector("#exportCard span");
-    const verifySpan = document.querySelector("#verifyCard span");
-    const langSpan = document.getElementById("langText");
-    const devText = document.getElementById("devText");
+  // ----- EVENT BINDINGS -----
+  document.getElementById('loginBtn').addEventListener('click', performLogin);
+  document.getElementById('scanQrBtn').addEventListener('click', () => {
+    alert("📱 Scan QR / Badge feature coming soon");
+  });
 
-    if (!isEnglish) {
-        usernameField.placeholder = "Nom d'utilisateur";
-        passwordField.placeholder = "Mot de passe";
-        loginBtn.innerText = "CONNEXION";
-        scanBtn.innerText = "SCANNER BADGE";
-        if (networkSpan) networkSpan.innerText = "RÉSEAU";
-        if (exportSpan) exportSpan.innerText = "EXPORTER LES DONNÉES";
-        if (verifySpan) verifySpan.innerText = "VÉRIFIER BÉNÉFICIAIRE";
-        langSpan.innerText = "FRANÇAIS";
-        devText.innerText = "Développé Par";
-    } else {
-        usernameField.placeholder = "USERNAME";
-        passwordField.placeholder = "PASSWORD";
-        loginBtn.innerText = "LOGIN";
-        scanBtn.innerText = "SCAN BADGE";
-        if (networkSpan) networkSpan.innerText = "NETWORK CHECK";
-        if (exportSpan) exportSpan.innerText = "EXPORT CAMPAIGN LOGS";
-        if (verifySpan) verifySpan.innerText = "VERIFY BENEFICIARY PRINT";
-        langSpan.innerText = "ENGLISH";
-        devText.innerText = "Developed By";
-    }
-}
+  document.getElementById('networkTile').addEventListener('click', networkCheck);
+  document.getElementById('exportTile').addEventListener('click', exportLogs);
+  document.getElementById('verifyTile').addEventListener('click', verifyBeneficiary);
+  document.getElementById('languageTile').addEventListener('click', setLanguage);
 
-function startScanner() {
-    const modal = document.getElementById("scannerModal");
-    modal.style.display = "flex";
-    html5QrCode = new Html5Qrcode("reader");
-    html5QrCode.start(
-        { facingMode: "environment" },
-        { fps: 10, qrbox: 250 },
-        qr => {
-            alert(isEnglish ? "Scanned: " + qr : "Scanné: " + qr);
-            stopScanner();
-        }
-    ).catch(err => console.error("Scanner error", err));
-}
-
-function stopScanner() {
-    if (html5QrCode && html5QrCode.isScanning) {
-        html5QrCode.stop().then(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        }).catch(() => {
-            document.getElementById("scannerModal").style.display = "none";
-        });
-    } else {
-        document.getElementById("scannerModal").style.display = "none";
+  // Enter key support
+  function handleEnter(e) {
+    if (e.key === 'Enter') {
+      performLogin();
     }
-}
-
-function attachCardEvents() {
-    const networkCard = document.getElementById("networkCard");
-    const exportCard = document.getElementById("exportCard");
-    const verifyCard = document.getElementById("verifyCard");
-    
-    if (networkCard) {
-        networkCard.addEventListener("click", () => {
-            alert(isEnglish ? (navigator.onLine ? "✅ Network connected." : "❌ No internet connection") : (navigator.onLine ? "✅ Réseau connecté." : "❌ Pas de connexion internet"));
-        });
-    }
-    
-    if (exportCard) {
-        exportCard.addEventListener("click", () => {
-            alert(isEnglish ? "📁 Export Campaign Logs: Please login to access this feature." : "📁 Exporter les journaux: Veuillez vous connecter.");
-        });
-    }
-    
-    if (verifyCard) {
-        verifyCard.addEventListener("click", () => {
-            alert(isEnglish ? "🔍 Verify Beneficiary: Please login and use the badge scanner." : "🔍 Vérifier bénéficiaire: Connectez-vous et utilisez le scanner.");
-        });
-    }
-}
-
-async function init() {
-    await loadKeysFromCSV();
-    attachCardEvents();
-    
-    const loginBtn = document.getElementById("loginBtn");
-    if (loginBtn) {
-        const newLoginBtn = loginBtn.cloneNode(true);
-        loginBtn.parentNode.replaceChild(newLoginBtn, loginBtn);
-        newLoginBtn.addEventListener("click", handleLogin);
-    }
-    
-    const passwordField = document.getElementById("password");
-    if (passwordField) {
-        passwordField.addEventListener("keypress", (e) => {
-            if (e.key === "Enter") handleLogin();
-        });
-    }
-    
-    const scanButton = document.getElementById("scanBtn");
-    if (scanButton) {
-        const newScanBtn = scanButton.cloneNode(true);
-        scanButton.parentNode.replaceChild(newScanBtn, scanButton);
-        newScanBtn.onclick = startScanner;
-    }
-    
-    // Close iframe panel when clicking on overlay
-    const iframePanel = document.getElementById("iframePanel");
-    if (iframePanel) {
-        iframePanel.addEventListener("click", function(e) {
-            if (e.target === iframePanel) {
-                closeIframePanel();
-            }
-        });
-    }
-}
-
-document.addEventListener("DOMContentLoaded", init);
+  }
+  document.getElementById('username').addEventListener('keypress', handleEnter);
+  document.getElementById('password').addEventListener('keypress', handleEnter);
 </script>
 </body>
 </html>
