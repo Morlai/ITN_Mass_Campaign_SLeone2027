@@ -257,12 +257,13 @@
     gap: 5px;
   }
 
+  /* USER INFO BAR */
   .user-info-bar {
-    background: rgba(21, 101, 192, 0.92);
+    background: rgba(21, 101, 192, 0.95);
     backdrop-filter: blur(8px);
-    border-radius: 40px;
-    padding: 8px 16px;
-    margin: 10px 12px 0 12px;
+    padding: 10px 16px;
+    margin: 0;
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -270,15 +271,21 @@
     font-size: 12px;
     font-weight: 600;
     flex-shrink: 0;
+    border-radius: 0;
   }
   .logout-btn {
     background: rgba(255,255,255,0.2);
     border: none;
     color: white;
-    padding: 4px 12px;
+    padding: 5px 14px;
     border-radius: 30px;
     cursor: pointer;
     font-size: 11px;
+    font-weight: 600;
+    transition: 0.2s;
+  }
+  .logout-btn:hover {
+    background: rgba(255,255,255,0.35);
   }
 
   .partner-section {
@@ -313,7 +320,7 @@
   .partner-logo img { max-width: 28px; max-height: 28px; }
   .partner-name { font-size: 0.44rem; font-weight: 700; color: #E65100; margin-top: 0.2rem; }
 
-  /* SMART SLIDER - FIXED IMAGE SIZE */
+  /* SMART SLIDER - UPDATED COLORS */
   .carousel-section { 
     width: 100%; 
     background: transparent;
@@ -324,7 +331,7 @@
     position: relative; 
     width: 100%; 
     overflow: hidden;
-    background: #000;
+    background: #1565C0;
     border-radius: 0;
   }
   .carousel-slides { 
@@ -335,7 +342,6 @@
     min-width: 100%; 
     flex-shrink: 0;
   }
-  /* FIXED SIZE FOR ALL SLIDER IMAGES - consistent dimensions */
   .carousel-slide img { 
     width: 100%;
     height: 200px;
@@ -356,14 +362,16 @@
     width: 6px; 
     height: 6px; 
     border-radius: 50%; 
-    background-color: #cbd5e1; 
+    background-color: #ffffff; 
     cursor: pointer;
     transition: all 0.3s ease;
+    opacity: 0.7;
   }
   .dot.active { 
-    background-color: #1565C0; 
+    background-color: #FF8C42; 
     width: 20px; 
     border-radius: 4px;
+    opacity: 1;
   }
   .carousel-arrow {
     position: absolute;
@@ -371,7 +379,7 @@
     transform: translateY(-50%);
     width: 32px;
     height: 32px;
-    background: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -391,6 +399,7 @@
   .arrow-left { left: 10px; }
   .arrow-right { right: 10px; }
 
+  /* ACTION CARDS - ORIGINAL DESIGN WITH FONT AWESOME ICONS */
   .role-actions-section { 
     padding: 0.5rem 0.8rem; 
     margin: 0.2rem 0.5rem;
@@ -406,8 +415,10 @@
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
   }
   .action-card:active { transform: scale(0.96); }
-  .action-icon svg { width: 100%; max-width: 38px; height: auto; display: block; margin: 0 auto; }
+  .action-icon { font-size: 28px; margin-bottom: 6px; }
   .action-label { font-size: 0.52rem; font-weight: 800; margin-top: 0.35rem; }
+  
+  /* Card gradient backgrounds */
   .card-1 { background: linear-gradient(145deg, #FF6B6B, #EE5A24); color: white; }
   .card-2 { background: linear-gradient(145deg, #4ECDC4, #2c9e92); color: white; }
   .card-3 { background: linear-gradient(145deg, #45B7D1, #2980b9); color: white; }
@@ -417,6 +428,9 @@
   .card-7 { background: linear-gradient(145deg, #1DD1A1, #0e9f6e); color: white; }
   .card-8 { background: linear-gradient(145deg, #FF8C42, #E67E22); color: white; }
   .card-9 { background: linear-gradient(145deg, #5D6D7E, #2C3E50); color: white; }
+  
+  .card-4 .action-label { color: #2c3e50; }
+  .card-4 .action-icon { color: #2c3e50; }
 
   /* Dashboard Footer */
   .app-footer {
@@ -548,16 +562,17 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   let currentUser = null;
   let currentPermissions = null;
   
+  // ORIGINAL FONT AWESOME ICONS FOR EACH ACTION
   const roleActionMap = [
-    { id: "REGISTER", label: "REGISTER", iconSvg: "M12 4v16M4 12h16", color: "card-1", requires: "REGISTER" },
-    { id: "DISTRIBUTION", label: "DISTRIBUTION", iconSvg: "M4 12h16M12 4v16", color: "card-2", requires: "DISTRIBUTION" },
-    { id: "MONITORING", label: "MONITORING", iconSvg: "M4 4L20 20M20 4L4 20", color: "card-3", requires: "MONITORING" },
-    { id: "STOCK", label: "STOCK", iconSvg: "M4 8h16M4 16h16M8 4v16M16 4v16", color: "card-4", requires: "STOCK" },
-    { id: "DASHBOARD", label: "DASHBOARD", iconSvg: "M4 4h7v7H4zM13 4h7v7h-7zM4 13h7v7H4zM13 13h7v7h-7z", color: "card-5", requires: "DASHBOARD" },
-    { id: "ATTENDANCE", label: "ATTENDANCE", iconSvg: "M12 12m-3 0a3 3 0 1 0 6 0a3 3 0 1 0 -6 0M4 4h16v16H4z", color: "card-6", requires: "ATTENDANCE" },
-    { id: "DEVICE_TRACKING", label: "DEVICE TRACKING", iconSvg: "M8 4h8a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2H8a2 2 0 0 1 -2-2V6a2 2 0 0 1 2-2z", color: "card-7", requires: "DEVICE_TRACKING" },
-    { id: "RECONCILIATION", label: "RECONCILIATION", iconSvg: "M4 4h16v16H4zM9 9l6 6M15 9l-6 6", color: "card-8", requires: "RECONCILIATION" },
-    { id: "WASTE_MANAGEMENT", label: "WASTE MANAGEMENT", iconSvg: "M4 4h16v16H4zM9 12h6", color: "card-9", requires: "WASTE_MANAGEMENT" }
+    { id: "REGISTER", label: "REGISTER", icon: "fa-id-card", color: "card-1", requires: "REGISTER" },
+    { id: "DISTRIBUTION", label: "DISTRIBUTION", icon: "fa-boxes", color: "card-2", requires: "DISTRIBUTION" },
+    { id: "MONITORING", label: "MONITORING", icon: "fa-chart-line", color: "card-3", requires: "MONITORING" },
+    { id: "STOCK", label: "STOCK", icon: "fa-warehouse", color: "card-4", requires: "STOCK" },
+    { id: "DASHBOARD", label: "DASHBOARD", icon: "fa-tachometer-alt", color: "card-5", requires: "DASHBOARD" },
+    { id: "ATTENDANCE", label: "ATTENDANCE", icon: "fa-users", color: "card-6", requires: "ATTENDANCE" },
+    { id: "DEVICE_TRACKING", label: "DEVICE TRACKING", icon: "fa-mobile-alt", color: "card-7", requires: "DEVICE_TRACKING" },
+    { id: "RECONCILIATION", label: "RECONCILIATION", icon: "fa-balance-scale", color: "card-8", requires: "RECONCILIATION" },
+    { id: "WASTE_MANAGEMENT", label: "WASTE MANAGEMENT", icon: "fa-recycle", color: "card-9", requires: "WASTE_MANAGEMENT" }
   ];
   
   function hasPermission(actionKey) {
@@ -864,7 +879,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     }
   }
   
-  // RENDER DASHBOARD with fixed size slider images
+  // RENDER DASHBOARD WITH FONT AWESOME ICONS
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
@@ -874,11 +889,11 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
     let actionCardsHtml = '';
     if (allowedActions.length === 0) {
-      actionCardsHtml = `<div style="text-align: center; padding: 20px;">⚠️ No modules assigned.</div>`;
+      actionCardsHtml = `<div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 20px; color: white;">⚠️ No modules assigned. Contact admin.</div>`;
     } else {
       actionCardsHtml = `<div class="action-grid">` + allowedActions.map(action => `
         <div class="action-card ${action.color}" data-role-action="${action.id}">
-          <div class="action-icon"><svg viewBox="0 0 24 24" width="30" height="30" stroke="currentColor" stroke-width="1.5" fill="none"><path d="${action.iconSvg}"/></svg></div>
+          <div class="action-icon"><i class="fa ${action.icon}"></i></div>
           <div class="action-label">${action.label}</div>
         </div>
       `).join('') + `</div>`;
@@ -921,9 +936,9 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
             <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
             <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
             <div class="carousel-slides" id="carouselSlides">
-              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHousehold Registration%3C/text%3E%3C/svg%3E'" style="height:200px; width:100%; object-fit:cover;"></div>
-              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EData Collection%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EReal-time Monitoring%3C/text%3E%3C/svg%3E'" style="height:200px; width:100%; object-fit:cover;"></div>
-              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHealth %26 Development%3C/text%3E%3C/svg%3E'" style="height:200px; width:100%; object-fit:cover;"></div>
+              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHousehold Registration%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EData Collection%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EReal-time Monitoring%3C/text%3E%3C/svg%3E'"></div>
+              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHealth %26 Development%3C/text%3E%3C/svg%3E'"></div>
             </div>
             <div class="carousel-dots" id="carouselDots"></div>
           </div>
