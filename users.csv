@@ -1,8 +1,8 @@
 USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
-Admin,123,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes,Yes
-HHR2026,123455,Yes,No,No,No,No,No,No,No,No
-HHD2026,123456,No,Yes,No,No,No,No,No,Yes,Yes
-NATSUP2026,123200,No,No,Yes,No,Yes,Yes,No,No,Yes
-CHISUP2026,123100,No,No,No,No,No,Yes,Yes,No,No
-PHUSTAFF2026,123300,No,No,No,Yes,No,No,No,Yes,No
-PARTNERS2026,123,No,No,No,No,Yes,No,No,Yes,Yes
+Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
+HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+HHD2027,123456,Hide,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+NATSUP2027,1234567,Hide,Hide,Show,Hide,Show,Show,Hide,Hide,Show
+CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
+PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
+PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show
