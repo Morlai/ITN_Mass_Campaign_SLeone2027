@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ICF-SL | ITN Campaign Access Portal</title>
+<title>ICF-SL | ITN Mass Campaign</title>
 
 <!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -257,10 +257,9 @@
     gap: 5px;
   }
 
-  /* USER INFO BAR */
+  /* USER INFO BAR - UPDATED BACKGROUND COLOR */
   .user-info-bar {
-    background: rgba(21, 101, 192, 0.95);
-    backdrop-filter: blur(8px);
+    background: #1b8a7e;
     padding: 10px 16px;
     margin: 0;
     width: 100%;
@@ -883,7 +882,7 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
-    const roleMap = { 'Admin': 'Dashboard', 'HHR2027': 'Registration Officer', 'HHD2027': 'Distribution Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHI Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Viewer' };
+    const roleMap = { 'Admin': 'Dashboard', 'HHR2027': 'HHRegister Officer', 'HHD2027': 'HHDistributor Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHIEFDOM Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Dashboard' };
     const roleDisplay = roleMap[username] || 'User';
     
     const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
