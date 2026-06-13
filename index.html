@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>ICF-SL | ITN Mass Campaign</title>
+<title>ICF-SL | ITN Campaign Access Portal</title>
 
 <!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -257,7 +257,7 @@
     gap: 5px;
   }
 
-  /* USER INFO BAR - UPDATED BACKGROUND COLOR */
+  /* USER INFO BAR */
   .user-info-bar {
     background: #1b8a7e;
     padding: 10px 16px;
@@ -273,7 +273,7 @@
     border-radius: 0;
   }
   .logout-btn {
-    background: rgba(255,255,255,0.2);
+    background: #FF0000;
     border: none;
     color: white;
     padding: 5px 14px;
@@ -284,7 +284,7 @@
     transition: 0.2s;
   }
   .logout-btn:hover {
-    background: rgba(255,255,255,0.35);
+    background: #cc0000;
   }
 
   .partner-section {
@@ -318,7 +318,7 @@
   .partner-logo img { max-width: 28px; max-height: 28px; }
   .partner-name { font-size: 0.44rem; font-weight: 700; color: #E65100; margin-top: 0.2rem; }
 
-  /* SMART SLIDER - UPDATED COLORS */
+  /* SMART SLIDER */
   .carousel-section { 
     width: 100%; 
     background: transparent;
@@ -398,7 +398,7 @@
   .arrow-left { left: 10px; }
   .arrow-right { right: 10px; }
 
-  /* ACTION CARDS - ORIGINAL DESIGN WITH FONT AWESOME ICONS */
+  /* ACTION CARDS */
   .role-actions-section { 
     padding: 0.5rem 0.8rem; 
     margin: 0.2rem 0.5rem;
@@ -561,7 +561,6 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
   let currentUser = null;
   let currentPermissions = null;
   
-  // ORIGINAL FONT AWESOME ICONS FOR EACH ACTION
   const roleActionMap = [
     { id: "REGISTER", label: "REGISTER", icon: "fa-id-card", color: "card-1", requires: "REGISTER" },
     { id: "DISTRIBUTION", label: "DISTRIBUTION", icon: "fa-boxes", color: "card-2", requires: "DISTRIBUTION" },
@@ -878,11 +877,11 @@ PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
     }
   }
   
-  // RENDER DASHBOARD WITH FONT AWESOME ICONS
+  // RENDER DASHBOARD
   function renderDashboard() {
     const container = document.getElementById('appContainer');
     const username = currentUser?.USERNAME;
-    const roleMap = { 'Admin': 'Dashboard', 'HHR2027': 'HHRegister Officer', 'HHD2027': 'HHDistributor Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHIEFDOM Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Dashboard' };
+    const roleMap = { 'Admin': 'Full Access', 'HHR2027': 'Registration Officer', 'HHD2027': 'Distribution Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHI Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Viewer' };
     const roleDisplay = roleMap[username] || 'User';
     
     const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
