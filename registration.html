@@ -1,1138 +1,455 @@
 <!DOCTYPE html>
-<html lang="en"> 
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
-<title>Household Registration | ITN Campaign</title> 
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+  <title>ITN Registration | Manual Entry Form</title>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+  <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-<!-- QR Code Generator Library -->
-<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
-
-<style>
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
-    background: #f0f2f5;
-    margin: 0;
-    padding: 12px 0 30px 0;
-}
-
-.registration-container {
-    max-width: 480px;
-    width: 100%;
-    margin: 0 auto;
-    background: #ffffff;
-    border-radius: 28px 28px 24px 24px;
-    overflow: hidden;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-}
-
-.header {
-    padding: 18px 20px;
-    font-weight: 700;
-    font-size: 1.35rem;
-    background: linear-gradient(135deg, #0b5ed7, #1e6f5c);
-    color: white;
-    letter-spacing: -0.3px;
-}
-
-.steps {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    margin: 24px 20px 16px 20px;
-    flex-wrap: wrap;
-}
-
-.steps::before {
-    content: "";
-    position: absolute;
-    top: 16px;
-    left: 5%;
-    right: 5%;
-    height: 4px;
-    background: #e2e8f0;
-    border-radius: 4px;
-    z-index: 0;
-}
-
-.progress-bar {
-    position: absolute;
-    top: 16px;
-    left: 5%;
-    height: 4px;
-    background: #2c7be5;
-    width: 0%;
-    transition: width 0.3s ease;
-    border-radius: 4px;
-    z-index: 1;
-}
-
-.step {
-    text-align: center;
-    width: 20%;
-    position: relative;
-    z-index: 2;
-}
-
-.circle {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: #cbd5e1;
-    color: white;
-    font-weight: bold;
-    font-size: 0.85rem;
-    line-height: 34px;
-    margin: 0 auto;
-    transition: all 0.2s;
-}
-
-.step.active .circle {
-    background: #2c7be5;
-    box-shadow: 0 2px 8px rgba(44,123,229,0.3);
-}
-
-.label {
-    font-size: 0.6rem;
-    margin-top: 6px;
-    color: #475569;
-    font-weight: 500;
-}
-
-.step.active .label {
-    color: #2c7be5;
-    font-weight: 700;
-}
-
-.section {
-    display: none;
-    background: #ffffff;
-    padding: 8px 20px 20px 20px;
-}
-
-.section.active {
-    display: block;
-}
-
-.row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-}
-
-.form-group {
-    width: 100%;
-    margin-bottom: 4px;
-    position: relative;
-}
-
-@media (min-width: 420px) {
-    .form-group {
-        width: calc(50% - 6px);
+    body {
+      background: radial-gradient(circle at 20% 30%, #1a2a3a, #0f1724);
+      font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Roboto', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px 12px;
     }
-}
 
-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #1e293b;
-    display: block;
-    margin-bottom: 4px;
-}
-
-input, select {
-    width: 100%;
-    padding: 12px 14px;
-    border: 1px solid #cbd5e1;
-    border-radius: 14px;
-    font-size: 0.9rem;
-    transition: all 0.2s;
-    background: #ffffff;
-}
-
-input:focus, select:focus {
-    outline: none;
-    border-color: #2c7be5;
-    box-shadow: 0 0 0 3px rgba(44,123,229,0.1);
-}
-
-input[readonly] {
-    background: #f8fafc;
-    color: #334155;
-}
-
-.error-message {
-    color: #dc2626;
-    font-size: 0.65rem;
-    margin-top: 4px;
-    display: none;
-}
-
-input.error {
-    border-color: #dc2626;
-    background-color: #fef2f2;
-}
-
-.buttons {
-    display: flex;
-    justify-content: space-between;
-    gap: 12px;
-    margin-top: 24px;
-    margin-bottom: 12px;
-}
-
-button {
-    padding: 12px 18px;
-    border: none;
-    border-radius: 40px;
-    font-weight: 600;
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    flex: 1;
-}
-
-.next {
-    background: #2c7be5;
-    color: white;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-}
-
-.prev {
-    background: #e2e8f0;
-    color: #1e293b;
-}
-
-.prev:hover, .next:hover {
-    transform: translateY(-1px);
-    filter: brightness(0.96);
-}
-
-.token-btn {
-    background: linear-gradient(145deg, #ff9800, #f97316);
-    color: white;
-    border-radius: 40px;
-    width: 100%;
-    margin-top: 12px;
-    font-weight: 700;
-    padding: 12px;
-}
-
-.token-box {
-    margin-top: 16px;
-    padding: 14px;
-    background: linear-gradient(145deg, #10b981, #059669);
-    color: white;
-    text-align: center;
-    font-weight: 700;
-    border-radius: 24px;
-    font-size: 0.85rem;
-    word-break: break-all;
-    display: none;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.review-box {
-    background: #f8fafc;
-    padding: 12px 16px;
-    border-radius: 20px;
-    border: 1px solid #e2e8f0;
-}
-
-.review-title {
-    font-weight: 800;
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-    color: #0f172a;
-}
-
-.review-box #review {
-    font-size: 0.7rem;
-    line-height: 1.3;
-    color: #1e293b;
-}
-
-.edit-btn {
-    margin-top: 12px;
-    padding: 6px 12px;
-    background: #facc15;
-    border-radius: 30px;
-    text-align: center;
-    font-weight: 600;
-    cursor: pointer;
-    transition: 0.2s;
-    font-size: 0.7rem;
-    display: inline-block;
-    width: auto;
-}
-
-.qr-section {
-    text-align: center;
-    padding: 20px;
-    background: #f8fafc;
-    border-radius: 24px;
-    margin-top: 10px;
-}
-
-.qr-placeholder {
-    background: white;
-    padding: 15px;
-    border-radius: 20px;
-    margin: 15px auto;
-    display: inline-block;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-.qr-placeholder canvas {
-    display: block;
-    margin: 0 auto;
-}
-
-.qr-buttons {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    margin-top: 15px;
-}
-
-.qr-btn {
-    background: #2c7be5;
-    color: white;
-    padding: 10px 16px;
-    border-radius: 40px;
-    font-size: 0.8rem;
-    font-weight: 600;
-    cursor: pointer;
-    flex: none;
-    width: auto;
-}
-
-.download-btn {
-    background: #10b981;
-}
-
-.success {
-    text-align: center;
-    background: #dcfce7;
-    color: #15803d;
-    padding: 16px;
-    border-radius: 24px;
-    font-weight: 700;
-    margin-top: 16px;
-}
-
-#registerBtn {
-    background: #2c7be5;
-    margin-top: 8px;
-}
-
-.gps-row {
-    display: flex;
-    gap: 12px;
-    width: 100%;
-}
-
-.gps-row .form-group {
-    flex: 1;
-}
-
-.review-gps {
-    margin-top: 4px;
-    font-size: 0.7rem;
-}
-
-@media (max-width: 400px) {
-    .steps {
-        margin: 20px 12px 12px 12px;
+    .phone-mock {
+      width: 100%;
+      max-width: 420px;
+      background-color: #0a0e17;
+      border-radius: 48px;
+      box-shadow: 0 30px 50px -20px rgba(0, 0, 0, 0.6), 0 0 0 6px #3a3f4e, 0 0 0 12px #1e2432;
+      display: flex;
+      flex-direction: column;
+      min-height: 700px;
     }
-    .section {
-        padding: 4px 16px 20px 16px;
+
+    .phone-screen {
+      background: #f0f2f5;
+      border-radius: 40px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
     }
-    .circle {
-        width: 30px;
-        height: 30px;
-        line-height: 30px;
-        font-size: 0.75rem;
-    }
-    .label {
-        font-size: 0.55rem;
-    }
-    .qr-buttons {
-        flex-direction: column;
-    }
-    .gps-row {
-        flex-direction: column;
-        gap: 0;
-    }
-}
-</style>
+
+    .plain-title { background: transparent; padding: 1.2rem 1rem 0.5rem 1rem; text-align: center; }
+    .title-row { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+    .plain-icon { font-size: 1.3rem; background: rgba(10,89,198,0.12); width: 40px; height: 40px; display: inline-flex; align-items: center; justify-content: center; border-radius: 50px; color: #0a59c6; }
+    .title-text { font-size: 1.2rem; font-weight: 700; color: #0a59c6; letter-spacing: 0.5px; background: rgba(10,89,198,0.08); padding: 0.2rem 1rem; border-radius: 40px; }
+    .home-main-content { flex: 1; width: 100%; padding: 1rem 1rem 1.2rem 1rem; display: flex; justify-content: center; align-items: center; background: #f0f2f5; }
+    .cards-container { display: flex; flex-direction: row; gap: 0.8rem; justify-content: center; align-items: stretch; width: 100%; flex-wrap: wrap; }
+    .action-card { background: white; border-radius: 22px; box-shadow: 0 8px 16px -5px rgba(0,0,0,0.1); width: 100%; min-width: 100px; max-width: 110px; transition: transform 0.2s ease; display: flex; flex-direction: column; overflow: hidden; cursor: pointer; flex: 1; }
+    .action-card:active { transform: scale(0.97); }
+    .card-manual .card-header { background: linear-gradient(135deg, #ea580c 0%, #f97316 100%); }
+    .card-scan .card-header { background: linear-gradient(135deg, #0d9488 0%, #14b8a6 100%); }
+    .card-records .card-header { background: linear-gradient(135deg, #7c3aed 0%, #a855f7 100%); }
+    .card-target .card-header { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); }
+    .card-header { padding: 0.5rem 0.3rem; color: white; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.3rem; text-align: center; }
+    .card-icon { font-size: 1.3rem; background: rgba(255,255,255,0.2); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50px; margin: 0 auto; }
+    .card-header h2 { font-size: 0.68rem; font-weight: 800; }
+    .card-body { padding: 0.45rem 0.5rem 0.6rem; }
+    .card-description { color: #1e293b; font-size: 0.52rem; background: #f8fafc; padding: 0.45rem; border-radius: 12px; border-left: 2.5px solid #f97316; }
+    .demographic-title { font-weight: 800; font-size: 0.58rem; display: block; }
+    .hierarchy-full { font-size: 0.48rem; color: #334155; margin-top: 0.2rem; }
+
+    .form-wrapper { display: none; flex-direction: column; flex: 1; overflow: hidden; background: #f0f2f5; }
+    .form-wrapper.active { display: flex; }
+    .form-header { background: linear-gradient(115deg, #0a59c6, #1e6f9f); padding: 16px 20px; color: white; font-weight: 800; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .form-title { font-size: 0.9rem; font-weight: 700; }
+    .steps { position: relative; display: flex; justify-content: space-between; padding: 14px 16px 10px 16px; background: #f0f2f5; flex-shrink: 0; }
+    .steps::before { content: ""; position: absolute; top: 31px; left: 8%; right: 8%; height: 5px; background: #e2eaf5; border-radius: 8px; z-index: 0; }
+    .progress-bar { position: absolute; top: 31px; left: 8%; height: 5px; background: #0a59c6; width: 0%; transition: width 0.3s ease; border-radius: 8px; z-index: 1; }
+    .step { text-align: center; width: 20%; position: relative; z-index: 2; }
+    .circle { width: 34px; height: 34px; border-radius: 50%; background: #cbdbe2; color: white; font-weight: bold; font-size: 0.8rem; line-height: 34px; margin: 0 auto; }
+    .step.active .circle { background: #0a59c6; box-shadow: 0 5px 12px rgba(10,89,198,0.4); }
+    .label { font-size: 0.48rem; margin-top: 5px; color: #4a5b6e; font-weight: 600; line-height: 1.2; display: flex; flex-direction: column; align-items: center; gap: 1px; text-align: center; }
+    .step.active .label { color: #0a59c6; font-weight: 800; }
+    .form-scroll-area { flex: 1; overflow-y: auto; background: #f0f2f5; }
+    .section { display: none; padding: 8px 18px 24px 18px; }
+    .section.active { display: block; animation: fadeSlide 0.25s ease; }
+    @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px);} to { opacity: 1; transform: translateY(0);} }
+    .row { display: flex; flex-wrap: wrap; gap: 12px; }
+    .form-group { width: 100%; margin-bottom: 4px; }
+    @media (min-width: 480px) { .form-group { width: calc(50% - 6px); } }
+    label { font-size: 0.7rem; font-weight: 800; color: #1f3b4c; margin-bottom: 4px; display: block; }
+    label .required-star { color: #e63946; margin-left: 3px; }
+    input, select { width: 100%; padding: 10px 12px; border: 1.8px solid #dee6ef; border-radius: 24px; font-size: 0.85rem; background: #ffffff; }
+    input:focus, select:focus { border-color: #0a59c6; outline: none; box-shadow: 0 0 0 3px rgba(10,89,198,0.2); }
+    .error-message { color: #e63946; font-size: 0.6rem; margin-top: 4px; display: none; }
+    .phone-shape-wrapper { width: 100%; background: #f8fafd; border-radius: 48px; padding: 4px 4px 4px 16px; border: 2px solid #cbdbe2; display: flex; align-items: center; gap: 6px; }
+    .phone-icon-sim { background: #0a59c6; border-radius: 20px; padding: 6px 6px; color: white; font-size: 0.8rem; text-align: center; width: 44px; display: flex; flex-direction: column; align-items: center; font-weight: bold; }
+    .phone-input-digit { flex: 1; border: none !important; background: transparent !important; font-size: 1rem; font-weight: 600; padding: 10px 0; font-family: monospace; letter-spacing: 1px; }
+    .token-btn { background: linear-gradient(105deg, #e9c46a, #f4a261); color: #2d3e50; font-weight: 800; border-radius: 48px; width: 100%; margin-top: 16px; padding: 12px; border: none; cursor: pointer; }
+    .token-box { margin-top: 14px; background: #0a59c6; color: #f4f1de; text-align: center; border-radius: 32px; padding: 12px; font-weight: 700; display: none; font-size: 0.8rem; word-break: break-all; }
+    .review-box { background: #fefcf5; padding: 16px; border-radius: 32px; border: 1px solid #e9ecef; }
+    .review-title { font-weight: 800; margin-bottom: 12px; color: #0c4a6e; border-left: 5px solid #0a59c6; padding-left: 12px; font-size: 0.9rem; }
+    .review-section { margin-bottom: 14px; }
+    .review-section-title { font-weight: 800; font-size: 0.75rem; color: #0a59c6; margin-bottom: 6px; border-bottom: 1px solid #e2e8f0; padding-bottom: 3px; }
+    .review-content { font-size: 0.68rem; line-height: 1.4; color: #1e293b; }
+    .edit-btn { background: #ffedd5; display: inline-block; padding: 6px 16px; border-radius: 40px; font-size: 0.65rem; font-weight: 700; cursor: pointer; margin-top: 12px; }
+    .scanner-container { text-align: center; background: #f8fafc; border-radius: 28px; padding: 16px; margin-bottom: 16px; border: 2px solid #e2e8f0; }
+    .scanner-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
+    .start-scanner-btn, .stop-scanner-btn { background: #0a59c6; color: white; border: none; padding: 8px 16px; border-radius: 40px; font-weight: 700; font-size: 0.7rem; cursor: pointer; }
+    .stop-scanner-btn { background: #e63946; }
+    #qr-reader { width: 100%; max-width: 300px; margin: 0 auto; border-radius: 20px; overflow: hidden; }
+    .qr-section { text-align: center; background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%); border-radius: 36px; padding: 20px 16px; margin: 0 auto; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; }
+    .qr-placeholder { background: white; padding: 16px; border-radius: 24px; display: flex; align-items: center; justify-content: center; margin: 10px auto; box-shadow: 0 6px 14px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; min-width: 220px; min-height: 220px; }
+    .qr-buttons { display: flex; gap: 12px; justify-content: center; margin-top: 20px; flex-wrap: wrap; width: 100%; }
+    .qr-btn, .download-btn { background: #0a59c6; color: white; border: none; padding: 10px 20px; border-radius: 48px; font-weight: 700; cursor: pointer; font-size: 0.75rem; min-width: 130px; }
+    .download-btn { background: #e76f51; }
+    .buttons { display: flex; gap: 12px; margin-top: 24px; }
+    .buttons button { flex: 1; padding: 10px; border-radius: 48px; font-weight: 700; border: none; cursor: pointer; }
+    .next { background: #0a59c6; color: white; }
+    .prev { background: #e2e8f0; color: #1e293b; }
+    .back-to-home, .back-to-home-records { width: 36px; height: 36px; padding: 0; border-radius: 50%; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; background: rgba(255,255,255,0.2); color: white; font-weight: 700; }
+    .app-footer { background-color: #0a59c6; color: white; padding: 0.7rem 1rem; width: 100%; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; margin-top: auto; flex-shrink: 0; }
+    .footer-container { display: flex; flex-direction: column; align-items: center; gap: 0.15rem; }
+    .footer-line-1, .footer-line-2 { text-align: center; font-size: 0.7rem; }
+    .success { background: #d9f0ec; padding: 20px; border-radius: 28px; text-align: center; font-weight: 800; color: #1f6d5c; font-size: 0.85rem; }
+
+    .records-container { display: none; flex-direction: column; flex: 1; background: #f0f2f5; overflow: hidden; }
+    .records-container.active { display: flex; }
+    .records-header { background: #0a59c6; color: white; padding: 16px 12px; text-align: center; font-weight: 800; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+    .records-table-wrapper { flex: 1; overflow-x: auto; overflow-y: auto; padding: 12px; }
+    .records-table { width: 100%; border-collapse: collapse; background: white; border-radius: 16px; overflow: hidden; font-size: 0.6rem; min-width: 1600px; }
+    .records-table th { background: #0a59c6; color: white; padding: 10px 6px; font-weight: 700; text-align: left; white-space: nowrap; }
+    .records-table td { padding: 8px 6px; border-bottom: 1px solid #e2e8f0; color: #1e293b; white-space: nowrap; vertical-align: middle; }
+    .records-table tr:hover { background: #f8fafc; }
+    .no-records { text-align: center; color: #64748b; padding: 40px; font-size: 0.8rem; }
+    .qr-image-inline { width: 60px; height: 60px; display: block; margin: 0 auto; cursor: pointer; border: 1px solid #ddd; border-radius: 8px; }
+    .qr-download-btn-sm { background: #e76f51; color: white; border: none; padding: 2px 6px; border-radius: 12px; font-size: 0.5rem; margin-top: 4px; cursor: pointer; display: block; width: 100%; }
+    .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+    .qr-modal { background: white; border-radius: 32px; padding: 24px; text-align: center; max-width: 350px; width: 90%; }
+    .qr-modal canvas { margin: 12px auto; display: block; border-radius: 16px; }
+
+    .unified-coverage-card { background: white; border-radius: 28px; padding: 20px; margin-bottom: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.08); }
+    .coverage-title { font-size: 0.9rem; font-weight: 800; color: #0a59c6; text-align: center; padding-bottom: 14px; border-bottom: 2px solid #e2e8f0; margin-bottom: 16px; letter-spacing: 0.5px; }
+    .coverage-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f2f5; }
+    .coverage-label { font-size: 0.7rem; font-weight: 600; color: #334155; }
+    .coverage-value { font-size: 0.9rem; font-weight: 800; color: #0a59c6; }
+    .progress-section-in-card { margin-top: 16px; padding-top: 12px; border-top: 2px dashed #e2e8f0; }
+    .progress-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .progress-label { font-size: 0.7rem; font-weight: 700; color: #334155; }
+    .progress-percent { font-size: 0.85rem; font-weight: 800; color: #0a59c6; }
+    .progress-bar-bg { background: #e2e8f0; border-radius: 20px; height: 12px; overflow: hidden; margin: 8px 0; }
+    .progress-fill { background: #0a59c6; width: 0%; height: 100%; border-radius: 20px; transition: width 0.5s ease; }
+    .progress-footer { font-size: 0.6rem; text-align: center; margin-top: 8px; color: #475569; font-weight: 600; }
+    .breakdown-card { background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border-radius: 28px; padding: 20px; margin-bottom: 16px; }
+    .breakdown-title { font-size: 1rem; font-weight: 800; text-align: center; margin-bottom: 16px; color: #92400e; }
+    .breakdown-row { display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+    .breakdown-col { flex: 1; min-width: 100px; }
+    .breakdown-subtitle { font-weight: 700; font-size: 0.7rem; color: #b45309; margin-bottom: 8px; padding-bottom: 4px; border-bottom: 1px solid #fed7aa; text-align: center; }
+    .breakdown-stats { font-size: 0.65rem; line-height: 1.6; color: #78350f; }
+    .target-summary { background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%); border-radius: 28px; padding: 20px; margin-bottom: 16px; text-align: center; }
+    .target-number { font-size: 2rem; font-weight: 800; color: #dc2626; }
+    .target-label { font-size: 0.7rem; color: #991b1b; margin-top: 4px; }
+    .daily-target-highlight { background: linear-gradient(135deg, #dc2626 0%, #ef4444 100%); color: white; }
+    .daily-target-highlight .target-number { color: #fef08a; }
+    .daily-target-highlight .target-label { color: #fef9c3; }
+  </style>
 </head>
 <body>
-<div class="registration-container">
-<div class="header">📝 REGISTRATION</div>
-
-<div class="steps">
-<div class="progress-bar" id="progress"></div>
-<div class="step active"><div class="circle">1</div><div class="label">Demographic Info</div></div>
-<div class="step"><div class="circle">2</div><div class="label">Household Details</div></div>
-<div class="step"><div class="circle">3</div><div class="label">Review</div></div>
-<div class="step"><div class="circle">4</div><div class="label">Summary QR</div></div>
-<div class="step"><div class="circle">5</div><div class="label">Complete</div></div>
-</div>
-
-<!-- SECTION 1 - DEMOGRAPHIC INFO -->
-<div class="section active" id="sec1">
-<div class="row">
-<div class="form-group"><label>Date</label><input id="date" readonly></div>
-<div class="form-group"><label>Region</label><select id="region"><option value="">-- Select Region --</option></select></div>
-<div class="form-group"><label>District</label><select id="district" disabled><option value="">-- First select Region --</option></select></div>
-<div class="form-group"><label>Chiefdom</label><select id="chiefdom" disabled><option value="">-- First select District --</option></select></div>
-<div class="form-group"><label>Community</label><select id="community" disabled><option value="">-- First select Chiefdom --</option></select></div>
-<div class="form-group"><label>Nearest Health Facility</label><select id="facility" disabled><option value="">-- First select Community --</option></select></div>
-<div class="form-group"><label>Distribution Point</label><select id="dp" disabled><option value="">-- First select Community --</option></select></div>
-</div>
-<div class="buttons">
-<div></div>
-<button class="next" onclick="next()">Next →</button>
-</div>
-</div>
-
-<!-- SECTION 2 - HOUSEHOLD DETAILS (with separate GPS fields) -->
-<div class="section" id="sec2">
-<div class="row">
-<div class="form-group"><label>Surname</label><input id="surname" placeholder="Enter surname"></div>
-<div class="form-group"><label>Middle Name</label><input id="mname" placeholder="Enter middle name"></div>
-<div class="form-group"><label>First Name</label><input id="fname" placeholder="Enter first name"></div>
-<div class="form-group">
-    <label>Mobile Number (9 digits, start with 0)</label>
-    <input type="tel" id="phone" placeholder="e.g., 071234567" maxlength="9" inputmode="numeric" oninput="validatePhone()">
-    <div class="error-message" id="phoneError">Mobile number must be exactly 9 digits and start with 0.</div>
-</div>
-<div class="form-group"><label>Number of people in the Household</label><input type="number" id="people" oninput="validateHouseholdNumbers()" min="0"></div>
-<div class="form-group"><label>Number of pregnant women</label><input type="number" id="pregnant" oninput="validateHouseholdNumbers()" min="0"><div class="error-message" id="pregnantError">Cannot exceed total household members.</div></div>
-<div class="form-group"><label>Number of Under-Fives Children</label><input type="number" id="under5" oninput="validateHouseholdNumbers()" min="0"><div class="error-message" id="under5Error">Cannot exceed total household members.</div></div>
-<div class="form-group"><label>Total Family Members</label><input id="total" readonly></div>
-<div class="form-group"><label>HHR Name</label><input id="registerName" placeholder="Enter HHR name"></div>
-<div class="gps-row">
-    <div class="form-group"><label>Latitude (Auto Captured)</label><input id="latitude" placeholder="Capturing..." readonly></div>
-    <div class="form-group"><label>Longitude (Auto Captured)</label><input id="longitude" placeholder="Capturing..." readonly></div>
-</div>
-</div>
-<div class="error-message" id="sumError" style="margin-top: 8px; text-align: center;">⚠️ Number of pregnant women + Under‑Five children cannot exceed the total number of people in the household.</div>
-<button class="token-btn" onclick="generateToken()">🔐 Generate Token</button>
-<div class="token-box" id="tokenBox"></div>
-<div class="buttons">
-<button class="prev" onclick="prev()">← Previous</button>
-<button class="next" onclick="goReview()">Next →</button>
-</div>
-</div>
-
-<!-- SECTION 3 - REVIEW (with separate GPS display) -->
-<div class="section" id="sec3">
-<div class="review-box">
-<div class="review-title">🏠 Household Summary</div>
-<div id="review"></div>
-<div class="edit-btn" onclick="prev()">✏️ Edit Household Information</div>
-</div>
-<div class="buttons">
-<button class="prev" onclick="prev()">← Previous</button>
-<button class="next" onclick="next()">Next →</button>
-</div>
-</div>
-
-<!-- SECTION 4 - SUMMARY QR -->
-<div class="section" id="secQr">
-<div class="qr-section">
-    <div class="review-title">📱 Summary QR Code</div>
-    <p style="font-size:0.7rem; margin-bottom:12px;">Generate a QR code for the Beneficiary Household</p>
-    <div class="qr-placeholder" id="qrPlaceholder">
-        <canvas id="qrCanvas" width="200" height="200" style="display:none;"></canvas>
-        <div id="qrMessage" style="color:#666; font-size:0.7rem;">By Click "Generate QR"</div>
+<div class="phone-mock">
+  <div class="phone-screen">
+    <!-- HOME SCREEN -->
+    <div id="homeScreen" style="display:flex; flex-direction:column; flex:1;">
+      <div class="plain-title"><div class="title-row"><span class="plain-icon">📝</span><span class="plain-icon">✅</span><span class="plain-icon">👥</span><span class="title-text">ITN REGISTRATION</span></div></div>
+      <div class="home-main-content"><div class="cards-container">
+        <div class="action-card card-manual" id="manualEntryBtn"><div class="card-header"><div class="card-icon">✍️</div><h2>MANUAL<br>ENTRY</h2></div><div class="card-body"><div class="card-description"><span class="demographic-title">📋 Demographics Info</span><div class="hierarchy-full">Region » District » Chiefdom » PHU » Community » Distribution Point</div></div></div></div>
+        <div class="action-card card-scan" id="scanQrBtn"><div class="card-header"><div class="card-icon">📷</div><h2>SCAN<br>QR</h2></div><div class="card-body"><div class="card-description"><span class="demographic-title">⚡ Auto-Fill</span>Scan QR & populate</div></div></div>
+        <div class="action-card card-target" id="targetBtn"><div class="card-header"><div class="card-icon">🎯</div><h2>DAILY<br>TARGET</h2></div><div class="card-body"><div class="card-description"><span class="demographic-title">📊 HHR Goals</span><div class="hierarchy-full">Track daily HHR target</div></div></div></div>
+        <div class="action-card card-records" id="recordsBtn"><div class="card-header"><div class="card-icon">📋</div><h2>RECORDS</h2></div><div class="card-body"><div class="card-description"><span class="demographic-title">📁 Manage</span>View & download QR codes</div></div></div>
+      </div></div>
+      <footer class="app-footer"><div class="footer-container"><div class="footer-line-1">Informatics Consultancy Firm-SL</div><div class="footer-line-2">© 2026</div></div></footer>
     </div>
-    <div class="qr-buttons">
-        <button class="qr-btn" id="generateQrBtn">📱 Generate QR</button>
-        <button class="qr-btn download-btn" id="downloadQrBtn" disabled>💾 Download QR</button>
-    </div>
-</div>
-<div class="buttons">
-    <button class="prev" onclick="prev()">← Previous</button>
-    <button class="next" onclick="next()">Next →</button>
-</div>
-</div>
 
-<!-- SECTION 5 - COMPLETE -->
-<div class="section" id="sec4">
-<h3 style="font-size:1.2rem; margin-bottom:8px;">✅ Complete</h3>
-<div class="success" id="successMsg"></div>
-<div class="buttons">
-<button class="prev" onclick="prev()">← Previous</button>
-<button class="next" id="registerBtn" onclick="register()">Register Household</button>
-</div>
-</div>
+    <!-- RECORDS PANEL -->
+    <div id="recordsContainer" class="records-container">
+      <div class="records-header"><button class="back-to-home-records" id="backFromRecordsBtn">←</button><span>HOUSEHOLD REGISTRY WITH QR</span><span style="width:36px;"></span></div>
+      <div class="records-table-wrapper">
+        <table class="records-table" id="recordsTable">
+          <thead><tr><th>Beneficiary</th><th>Surname</th><th>Middle Name</th><th>First Name</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Health Facility</th><th>Mobile</th><th>Members</th><th>Pregnant</th><th>Under5</th><th>ITN</th><th>HHR</th><th>Token</th><th>GPS</th><th>Date</th><th>Generate QR</th><th>Action</th>?</thead>
+          <tbody id="recordsTableBody"><tr><td colspan="20" class="no-records">No registrations yet</td>?</tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- MANUAL ENTRY FORM -->
+    <div id="formWrapperManual" class="form-wrapper">
+      <div class="form-header"><button class="back-to-home manual-back-btn">←</button><span class="form-title">✍️ MANUAL ENTRY</span><div class="header-spacer"></div></div>
+      <div class="steps">
+        <div class="progress-bar" id="progressManual"></div>
+        <div class="step active"><div class="circle">1</div><div class="label"><span>Demographics</span><span>Info</span></div></div>
+        <div class="step"><div class="circle">2</div><div class="label"><span>Household</span><span>Details</span></div></div>
+        <div class="step"><div class="circle">3</div><div class="label"><span>Review</span></div></div>
+        <div class="step"><div class="circle">4</div><div class="label"><span>Generate</span><span>QR Code</span></div></div>
+        <div class="step"><div class="circle">5</div><div class="label"><span>Finish</span></div></div>
+      </div>
+      <div class="form-scroll-area">
+        <!-- STEP 1: Demographics Info -->
+        <div class="section active" id="manualSec1">
+          <div class="form-group"><label>📅 Date <span class="required-star">*</span></label><input id="manualDate" readonly value="2026-06-14"></div>
+          <div class="row">
+            <div class="form-group"><label>🌍 Region <span class="required-star">*</span></label><select id="manualRegion"><option value="">-- Select Region --</option><option value="North">North</option><option value="South">South</option><option value="East">East</option></select><div class="error-message" id="manualRegionError">Region is required</div></div>
+            <div class="form-group"><label>🏛️ District <span class="required-star">*</span></label><select id="manualDistrict" disabled><option>-- First select Region --</option></select><div class="error-message" id="manualDistrictError">District is required</div></div>
+            <div class="form-group"><label>⛰️ Chiefdom <span class="required-star">*</span></label><select id="manualChiefdom" disabled><option>-- Select District first --</option></select><div class="error-message" id="manualChiefdomError">Chiefdom is required</div></div>
+            <div class="form-group"><label>🏘️ Community <span class="required-star">*</span></label><select id="manualCommunity" disabled><option>-- Select Chiefdom --</option></select><div class="error-message" id="manualCommunityError">Community is required</div></div>
+            <div class="form-group"><label>🏥 Health Facility <span class="required-star">*</span></label><select id="manualFacility" disabled><option>-- Select Community --</option></select><div class="error-message" id="manualFacilityError">Health Facility is required</div></div>
+            <div class="form-group"><label>📦 Distribution Point <span class="required-star">*</span></label><select id="manualDp" disabled><option>-- Select Community --</option></select><div class="error-message" id="manualDpError">Distribution Point is required</div></div>
+          </div>
+          <div class="buttons"><div></div><button class="next" onclick="validateAndNextStepManual()">Next →</button></div>
+        </div>
+
+        <!-- STEP 2: Household Details -->
+        <div class="section" id="manualSec2">
+          <div class="row">
+            <div class="form-group"><label>👤 Surname <span class="required-star">*</span></label><input id="manualSurname" placeholder="Family surname"><div class="error-message" id="manualSurnameError">Surname is required</div></div>
+            <div class="form-group"><label>👤 Middle Name</label><input id="manualMname" placeholder="Optional"></div>
+            <div class="form-group"><label>👤 First Name <span class="required-star">*</span></label><input id="manualFname" placeholder="Given name"><div class="error-message" id="manualFnameError">First Name is required</div></div>
+            <div class="form-group"><label>📞 Mobile Number <span class="required-star">*</span></label><div class="phone-shape-wrapper"><div class="phone-icon-sim">📱SIM</div><input type="tel" id="manualPhone" class="phone-input-digit" placeholder="071234567" maxlength="9" inputmode="numeric"></div><div class="error-message" id="manualPhoneError">Mobile must be exactly 9 digits and start with 0</div></div>
+            <div class="form-group"><label>👥 Total Members <span class="required-star">*</span></label><input type="number" id="manualPeople" min="1" value="" oninput="updateManualItn()"><div class="error-message" id="manualPeopleError">Total Members is required (minimum 1)</div></div>
+            <div class="form-group"><label>🤰 Pregnant women</label><input type="number" id="manualPregnant" min="0" value="0"></div>
+            <div class="form-group"><label>🧒 Under‑five children</label><input type="number" id="manualUnder5" min="0" value="0"></div>
+            <div class="form-group"><label>🦟 ITN Allocation</label><input id="manualTotal" readonly></div>
+            <div class="form-group"><label>🧑‍⚕️ HHR Name <span class="required-star">*</span></label><input id="manualRegisterName" placeholder="Full name of HHR"><div class="error-message" id="manualRegisterNameError">HHR Name is required</div></div>
+            <div class="form-group"><label>📍 Latitude</label><input id="manualLatitude" readonly placeholder="Auto capture..."></div>
+            <div class="form-group"><label>📍 Longitude</label><input id="manualLongitude" readonly placeholder="Auto capture..."></div>
+          </div>
+          <button class="token-btn" onclick="generateTokenManual()">🔐 Generate Household Token</button>
+          <div class="token-box" id="manualTokenBox"></div>
+          <div class="buttons"><button class="prev" onclick="prevStepManual()">← Previous</button><button class="next" onclick="validateHouseholdAndNext()">Review →</button></div>
+        </div>
+
+        <!-- STEP 3: Review -->
+        <div class="section" id="manualSec3">
+          <div class="review-box"><div class="review-title">Summary</div><div id="manualReview"></div><div class="edit-btn" onclick="prevStepManual()">✏️ Edit Information</div></div>
+          <div class="buttons"><button class="prev" onclick="prevStepManual()">← Back</button><button class="next" onclick="nextStepManual()">Proceed to QR →</button></div>
+        </div>
+
+        <!-- STEP 4: Generate QR Code -->
+        <div class="section" id="manualSecQr">
+          <div style="display:flex; justify-content:center;">
+            <div class="qr-section">
+              <div class="review-title"><span>📸</span> Generate QR Code</div>
+              <div class="qr-placeholder"><canvas id="manualQrCanvas" width="220" height="220" style="display:none;"></canvas><div id="manualQrMessage">Click button below to generate QR</div></div>
+              <div id="manualQrDownloadLink" style="display:none; margin-top:8px; font-size:0.7rem; color:#0a59c6; font-weight:700;"></div>
+              <div class="qr-buttons"><button class="qr-btn" onclick="generateManualQR()">Generate QR</button><button class="download-btn" id="manualDownloadQrBtn" disabled onclick="downloadManualQR()">Download QR</button></div>
+            </div>
+          </div>
+          <div class="buttons"><button class="prev" onclick="prevStepManual()">← Back</button><button class="next" onclick="nextStepManual()">Finish →</button></div>
+        </div>
+
+        <!-- STEP 5: Finish -->
+        <div class="section" id="manualSec4">
+          <div class="success" id="manualSuccessMsg"></div>
+          <div class="buttons"><button class="prev" onclick="prevStepManual()">← Back</button><button class="next" id="manualRegisterBtn" onclick="finalRegisterManual()">🏠 Register Household</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCAN QR FORM -->
+    <div id="formWrapperScan" class="form-wrapper">
+      <div class="form-header"><button class="back-to-home scan-back-btn">←</button><span class="form-title">📷 SCAN QR REGISTRATION</span><div class="header-spacer"></div></div>
+      <div class="steps"><div class="progress-bar" id="progressScan"></div><div class="step active"><div class="circle">1</div><div class="label"><span>Demographics</span><span>Info</span></div></div><div class="step"><div class="circle">2</div><div class="label"><span>Household</span><span>Details</span></div></div><div class="step"><div class="circle">3</div><div class="label"><span>Review</span></div></div><div class="step"><div class="circle">4</div><div class="label"><span>Generate</span><span>QR Code</span></div></div><div class="step"><div class="circle">5</div><div class="label"><span>Finish</span></div></div></div>
+      <div class="form-scroll-area">
+        <div class="section active" id="scanSec1"><div class="scanner-container"><div class="scanner-header"><span class="scanner-title">📷 Auto-fill from QR</span><button class="start-scanner-btn" id="startScannerBtn">▶ Start Camera</button><button class="stop-scanner-btn" id="stopScannerBtn" style="display:none;">⏹ Stop</button></div><div id="qr-reader" style="display:none;"></div><div class="scanner-status" id="scannerStatus">Click start to scan QR</div></div><div class="form-group"><label>Date</label><input id="scanDate" readonly value="2026-06-14"></div><div class="row"><div class="form-group"><label>Region *</label><select id="scanRegion"><option value="">-- Select --</option><option value="North">North</option><option value="South">South</option><option value="East">East</option></select><div class="error-message" id="scanRegionError">Region required</div></div><div class="form-group"><label>District *</label><select id="scanDistrict" disabled></select><div class="error-message" id="scanDistrictError">District required</div></div><div class="form-group"><label>Chiefdom *</label><select id="scanChiefdom" disabled></select><div class="error-message" id="scanChiefdomError">Chiefdom required</div></div><div class="form-group"><label>Community *</label><select id="scanCommunity" disabled></select><div class="error-message" id="scanCommunityError">Community required</div></div><div class="form-group"><label>Health Facility *</label><select id="scanFacility" disabled></select><div class="error-message" id="scanFacilityError">Health Facility required</div></div><div class="form-group"><label>Distribution Point *</label><select id="scanDp" disabled></select><div class="error-message" id="scanDpError">Distribution Point required</div></div></div><div class="buttons"><div></div><button class="next" onclick="validateAndNextStepScan()">Next →</button></div></div>
+        <div class="section" id="scanSec2"><div class="row"><div class="form-group"><label>Surname *</label><input id="scanSurname"><div class="error-message" id="scanSurnameError">Surname required</div></div><div class="form-group"><label>Middle Name</label><input id="scanMname"></div><div class="form-group"><label>First Name *</label><input id="scanFname"><div class="error-message" id="scanFnameError">First Name required</div></div><div class="form-group"><label>Mobile (0XXXXXXXX) *</label><div class="phone-shape-wrapper"><div class="phone-icon-sim">📱SIM</div><input type="tel" id="scanPhone" maxlength="9" placeholder="071234567"></div><div class="error-message" id="scanPhoneError">Invalid mobile format</div></div><div class="form-group"><label>Total Members *</label><input type="number" id="scanPeople" min="1" oninput="updateScanItn()"><div class="error-message" id="scanPeopleError">Total Members required</div></div><div class="form-group"><label>Pregnant Women</label><input type="number" id="scanPregnant" min="0" value="0"></div><div class="form-group"><label>Under‑five Children</label><input type="number" id="scanUnder5" min="0" value="0"></div><div class="form-group"><label>ITN Allocation</label><input id="scanTotal" readonly></div><div class="form-group"><label>HHR (Enumerator) *</label><input id="scanRegisterName"><div class="error-message" id="scanRegisterNameError">HHR Name required</div></div><div class="form-group"><label>Latitude</label><input id="scanLatitude" readonly></div><div class="form-group"><label>Longitude</label><input id="scanLongitude" readonly></div></div><button class="token-btn" onclick="generateTokenScan()">🔐 Generate Token</button><div class="token-box" id="scanTokenBox"></div><div class="buttons"><button class="prev" onclick="prevStepScan()">← Previous</button><button class="next" onclick="validateHouseholdScanAndNext()">Review →</button></div></div>
+        <div class="section" id="scanSec3"><div class="review-box"><div class="review-title">Summary</div><div id="scanReview"></div><div class="edit-btn" onclick="prevStepScan()">✏️ Edit</div></div><div class="buttons"><button class="prev" onclick="prevStepScan()">Back</button><button class="next" onclick="nextStepScan()">Proceed to QR</button></div></div>
+        <div class="section" id="scanSecQr"><div class="qr-section"><div class="review-title">📸 Registration QR</div><div class="qr-placeholder"><canvas id="scanQrCanvas" width="220" height="220" style="display:none;"></canvas><div id="scanQrMessage">Generate QR after review</div></div><div class="qr-buttons"><button class="qr-btn" onclick="generateScanQR()">Generate QR</button><button class="download-btn" id="scanDownloadQrBtn" disabled onclick="downloadScanQR()">Download QR</button></div></div><div class="buttons"><button class="prev" onclick="prevStepScan()">Back</button><button class="next" onclick="nextStepScan()">Finish →</button></div></div>
+        <div class="section" id="scanSec4"><div class="success" id="scanSuccessMsg"></div><div class="buttons"><button class="prev" onclick="prevStepScan()">Back</button><button class="next" id="scanRegisterBtn" onclick="finalRegisterScan()">✅ Register Household</button></div></div>
+      </div>
+    </div>
+
+    <!-- TARGET DASHBOARD -->
+    <div id="targetContainer" class="form-wrapper">
+      <div class="form-header"><button class="back-to-home target-back-btn">←</button><span class="form-title">📊 DAILY HHR TARGET DASHBOARD</span><div class="header-spacer"></div></div>
+      <div class="form-scroll-area" style="padding: 20px;">
+        <div class="target-summary daily-target-highlight"><div class="target-number" id="todayHouseholds">0</div><div class="target-label">🏠 Households Registered Today</div></div>
+        <div class="unified-coverage-card">
+          <div class="coverage-title">🏠 HOUSEHOLD REGISTRATION COVERAGE</div>
+          <div class="coverage-item"><span class="coverage-label">📊 Total Registered Households (All Time)</span><span class="coverage-value" id="totalHouseholdsAll">0</span></div>
+          <div class="coverage-item"><span class="coverage-label">👥 Total Individuals Reached</span><span class="coverage-value" id="totalBeneficiaries">0</span></div>
+          <div class="coverage-item"><span class="coverage-label">🎯 Target Households</span><span class="coverage-value" id="targetHouseholds">500</span></div>
+          <div class="coverage-item"><span class="coverage-label">✅ Registered Households</span><span class="coverage-value" id="registeredHouseholds">0</span></div>
+          <div class="coverage-item"><span class="coverage-label">⏳ Remaining Households</span><span class="coverage-value" id="remainingHouseholds">500</span></div>
+          <div class="coverage-item"><span class="coverage-label">🦟 Total ITN Issued</span><span class="coverage-value" id="totalITNIssued">0</span></div>
+          <div class="progress-section-in-card">
+            <div class="progress-header"><span class="progress-label">📈 Overall Progress</span><span class="progress-percent" id="targetProgressPercent">0%</span></div>
+            <div class="progress-bar-bg"><div class="progress-fill" id="progressBarFill"></div></div>
+            <div class="progress-footer"><span id="currentCount">0</span> out of 500 households registered</div>
+          </div>
+        </div>
+        <div class="breakdown-card">
+          <div class="breakdown-title">🗺️ DISTRICT, CHIEFDOM & PHU BREAKDOWN</div>
+          <div class="breakdown-row">
+            <div class="breakdown-col"><div class="breakdown-subtitle">📌 District</div><div class="breakdown-stats" id="districtStats">Loading...</div></div>
+            <div class="breakdown-col"><div class="breakdown-subtitle">⛰️ Chiefdom</div><div class="breakdown-stats" id="chiefdomStats">Loading...</div></div>
+            <div class="breakdown-col"><div class="breakdown-subtitle">🏥 PHU</div><div class="breakdown-stats" id="phuStats">Loading...</div></div>
+          </div>
+        </div>
+        <div class="buttons" style="margin-top: 20px;"><button class="prev" onclick="goHome()">← Back to Home</button><button class="next" onclick="refreshTargetDashboard()">🔄 Refresh</button></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-// ========================
-// 1) Load CSV and build cascading dropdowns (including Health Facility)
-// ========================
-let locationData = [];
+  let stepManual = 1, stepScan = 1, tokenManual = "", tokenScan = "";
+  let regManualFlag = false, regScanFlag = false;
+  let records = [];
 
-async function loadLocationData() {
-    try {
-        const response = await fetch('TestDisData.csv');
-        if (!response.ok) throw new Error('CSV not found');
-        const csvText = await response.text();
-        const lines = csvText.trim().split(/\r?\n/);
-        if (lines.length < 2) throw new Error('Empty CSV');
-        const headers = lines[0].split(',').map(h => h.trim().toLowerCase());
-        const regionIdx = headers.indexOf('region');
-        const districtIdx = headers.indexOf('district');
-        const chiefdomIdx = headers.indexOf('chiefdom');
-        const communityIdx = headers.indexOf('community');
-        const healthFacilityIdx = headers.indexOf('healthfacility');
-        const dpIdx = headers.indexOf('distributionpoint');
-        
-        if (regionIdx === -1 || districtIdx === -1 || chiefdomIdx === -1 || communityIdx === -1 || dpIdx === -1) {
-            throw new Error('CSV missing required columns: region, district, chiefdom, community, distributionpoint');
-        }
-        
-        for (let i = 1; i < lines.length; i++) {
-            const values = lines[i].split(',').map(v => v.trim());
-            if (values.length < 6 && healthFacilityIdx === -1) continue;
-            locationData.push({
-                Region: values[regionIdx],
-                District: values[districtIdx],
-                Chiefdom: values[chiefdomIdx],
-                Community: values[communityIdx],
-                HealthFacility: healthFacilityIdx !== -1 ? values[healthFacilityIdx] : "",
-                DistributionPoint: values[dpIdx]
-            });
-        }
-        console.log(`Loaded ${locationData.length} location records`);
-        populateRegionDropdown();
-        
-        // If no health facility column, show a fallback text input
-        if (healthFacilityIdx === -1) {
-            const facilityGroup = document.querySelector('.form-group:has(label[for="facility"])') || 
-                                 document.querySelector('.form-group:nth-child(6)');
-            if (facilityGroup) {
-                const selectElem = document.getElementById('facility');
-                const inputElem = document.createElement('input');
-                inputElem.id = 'facility';
-                inputElem.placeholder = 'Enter facility name';
-                inputElem.className = 'form-control';
-                selectElem.parentNode.replaceChild(inputElem, selectElem);
-                inputElem.classList.add('input');
-                console.warn('CSV missing "healthfacility" column. Using text input instead.');
-            }
-        }
-    } catch (err) {
-        console.warn('Error loading CSV, using fallback demo data:', err);
-        // Fallback demo data with health facility
-        locationData = [
-            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Mambo", HealthFacility: "Mambo CHC", DistributionPoint: "PHU Mambo" },
-            { Region: "North", District: "Port Loko", Chiefdom: "Bureh", Community: "Rogbere", HealthFacility: "Rogbere Clinic", DistributionPoint: "Rogbere CHC" },
-            { Region: "North", District: "Kambia", Chiefdom: "Mambolo", Community: "Kychom", HealthFacility: "Kychom HP", DistributionPoint: "Kychom HP" },
-            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "Bo Town", HealthFacility: "Bo Govt Hospital", DistributionPoint: "Bo Govt Hospital" },
-            { Region: "South", District: "Bo", Chiefdom: "Kakua", Community: "New Site", HealthFacility: "New Site Clinic", DistributionPoint: "New Site Clinic" },
-            { Region: "East", District: "Kenema", Chiefdom: "Dama", Community: "Kenyema", HealthFacility: "Kenyema CHC", DistributionPoint: "Kenyema CHC" }
-        ];
-        populateRegionDropdown();
-        showToast('⚠️ Using demo location data (TestDisData.csv not found)', false);
-    }
-}
+  const TARGET_GOAL = 500;
 
-function populateRegionDropdown() {
-    const regionSet = new Set(locationData.map(item => item.Region));
-    const regionSelect = document.getElementById('region');
-    regionSelect.innerHTML = '<option value="">-- Select Region --</option>';
-    Array.from(regionSet).sort().forEach(region => {
-        const opt = document.createElement('option');
-        opt.value = region;
-        opt.textContent = region;
-        regionSelect.appendChild(opt);
-    });
-    regionSelect.disabled = false;
-}
+  function loadStore() { const s = localStorage.getItem('itn_hh'); if(s) records = JSON.parse(s); refreshTable(); refreshTargetDashboard(); }
+  function saveStore() { localStorage.setItem('itn_hh', JSON.stringify(records)); refreshTable(); refreshTargetDashboard(); }
+  function escape(s) { if(!s) return ''; return s.replace(/[&<>]/g, m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+  function getTodayDate() { const today = new Date(); return today.toISOString().split('T')[0]; }
 
-function getDistrictsForRegion(region) {
-    const districts = new Set();
-    locationData.forEach(item => {
-        if (item.Region === region) districts.add(item.District);
-    });
-    return Array.from(districts).sort();
-}
+  function refreshTargetDashboard() {
+    const totalHH = records.length;
+    const totalITNIssued = records.reduce((sum, r) => sum + (parseInt(r.itn) || 0), 0);
+    const totalBeneficiaries = records.reduce((sum, r) => sum + (parseInt(r.members) || 0), 0);
+    const progressPercent = Math.min(100, Math.round((totalHH / TARGET_GOAL) * 100));
+    const remaining = Math.max(0, TARGET_GOAL - totalHH);
+    const todayStr = getTodayDate();
+    const todayHouseholds = records.filter(r => { const recordDate = r.date.split(',')[0]; return recordDate === todayStr || r.date.includes(todayStr); }).length;
+    
+    document.getElementById('todayHouseholds').innerText = todayHouseholds;
+    document.getElementById('totalHouseholdsAll').innerText = totalHH;
+    document.getElementById('totalBeneficiaries').innerText = totalBeneficiaries;
+    document.getElementById('targetHouseholds').innerText = TARGET_GOAL;
+    document.getElementById('registeredHouseholds').innerText = totalHH;
+    document.getElementById('remainingHouseholds').innerText = remaining;
+    document.getElementById('totalITNIssued').innerText = totalITNIssued;
+    document.getElementById('targetProgressPercent').innerText = progressPercent + '%';
+    document.getElementById('progressBarFill').style.width = progressPercent + '%';
+    document.getElementById('currentCount').innerText = totalHH;
+    
+    const districtCounts = {}; records.forEach(r => { if (r.district) districtCounts[r.district] = (districtCounts[r.district] || 0) + 1; });
+    document.getElementById('districtStats').innerHTML = Object.entries(districtCounts).length ? Object.entries(districtCounts).map(([d, c]) => `<div>• ${d}: ${c}</div>`).join('') : '<div>No data</div>';
+    const chiefdomCounts = {}; records.forEach(r => { if (r.chiefdom) chiefdomCounts[r.chiefdom] = (chiefdomCounts[r.chiefdom] || 0) + 1; });
+    document.getElementById('chiefdomStats').innerHTML = Object.entries(chiefdomCounts).length ? Object.entries(chiefdomCounts).map(([c, cnt]) => `<div>• ${c}: ${cnt}</div>`).join('') : '<div>No data</div>';
+    const phuCounts = {}; records.forEach(r => { if (r.healthFacility) phuCounts[r.healthFacility] = (phuCounts[r.healthFacility] || 0) + 1; });
+    document.getElementById('phuStats').innerHTML = Object.entries(phuCounts).length ? Object.entries(phuCounts).map(([p, cnt]) => `<div>• ${p}: ${cnt}</div>`).join('') : '<div>No data</div>';
+  }
 
-function getChiefdomsForDistrict(region, district) {
-    const chiefdoms = new Set();
-    locationData.forEach(item => {
-        if (item.Region === region && item.District === district) chiefdoms.add(item.Chiefdom);
-    });
-    return Array.from(chiefdoms).sort();
-}
-
-function getCommunitiesForChiefdom(region, district, chiefdom) {
-    const communities = new Set();
-    locationData.forEach(item => {
-        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom) communities.add(item.Community);
-    });
-    return Array.from(communities).sort();
-}
-
-function getHealthFacilitiesForCommunity(region, district, chiefdom, community) {
-    const facilities = new Set();
-    locationData.forEach(item => {
-        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom && item.Community === community) {
-            if (item.HealthFacility) facilities.add(item.HealthFacility);
-        }
-    });
-    return Array.from(facilities).sort();
-}
-
-function getDistributionPointsForCommunity(region, district, chiefdom, community) {
-    const points = new Set();
-    locationData.forEach(item => {
-        if (item.Region === region && item.District === district && item.Chiefdom === chiefdom && item.Community === community) {
-            points.add(item.DistributionPoint);
-        }
-    });
-    return Array.from(points).sort();
-}
-
-function updateDistrictDropdown() {
-    const region = document.getElementById('region').value;
-    const districtSelect = document.getElementById('district');
-    const chiefdomSelect = document.getElementById('chiefdom');
-    const communitySelect = document.getElementById('community');
-    const facilitySelect = document.getElementById('facility');
-    const dpSelect = document.getElementById('dp');
-    if (!region) {
-        districtSelect.innerHTML = '<option value="">-- First select Region --</option>';
-        districtSelect.disabled = true;
-        chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
-        chiefdomSelect.disabled = true;
-        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
-        communitySelect.disabled = true;
-        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-            facilitySelect.disabled = true;
-        }
-        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-        dpSelect.disabled = true;
-        return;
-    }
-    const districts = getDistrictsForRegion(region);
-    districtSelect.innerHTML = '<option value="">-- Select District --</option>';
-    districts.forEach(dist => {
-        const opt = document.createElement('option');
-        opt.value = dist;
-        opt.textContent = dist;
-        districtSelect.appendChild(opt);
-    });
-    districtSelect.disabled = false;
-    // reset dependent
-    chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
-    chiefdomSelect.disabled = true;
-    communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
-    communitySelect.disabled = true;
-    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-        facilitySelect.disabled = true;
-    }
-    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-    dpSelect.disabled = true;
-}
-
-function updateChiefdomDropdown() {
-    const region = document.getElementById('region').value;
-    const district = document.getElementById('district').value;
-    const chiefdomSelect = document.getElementById('chiefdom');
-    const communitySelect = document.getElementById('community');
-    const facilitySelect = document.getElementById('facility');
-    const dpSelect = document.getElementById('dp');
-    if (!region || !district) {
-        chiefdomSelect.innerHTML = '<option value="">-- First select District --</option>';
-        chiefdomSelect.disabled = true;
-        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
-        communitySelect.disabled = true;
-        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-            facilitySelect.disabled = true;
-        }
-        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-        dpSelect.disabled = true;
-        return;
-    }
-    const chiefdoms = getChiefdomsForDistrict(region, district);
-    chiefdomSelect.innerHTML = '<option value="">-- Select Chiefdom --</option>';
-    chiefdoms.forEach(ch => {
-        const opt = document.createElement('option');
-        opt.value = ch;
-        opt.textContent = ch;
-        chiefdomSelect.appendChild(opt);
-    });
-    chiefdomSelect.disabled = false;
-    communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
-    communitySelect.disabled = true;
-    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-        facilitySelect.disabled = true;
-    }
-    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-    dpSelect.disabled = true;
-}
-
-function updateCommunityDropdown() {
-    const region = document.getElementById('region').value;
-    const district = document.getElementById('district').value;
-    const chiefdom = document.getElementById('chiefdom').value;
-    const communitySelect = document.getElementById('community');
-    const facilitySelect = document.getElementById('facility');
-    const dpSelect = document.getElementById('dp');
-    if (!region || !district || !chiefdom) {
-        communitySelect.innerHTML = '<option value="">-- First select Chiefdom --</option>';
-        communitySelect.disabled = true;
-        if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-            facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-            facilitySelect.disabled = true;
-        }
-        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-        dpSelect.disabled = true;
-        return;
-    }
-    const communities = getCommunitiesForChiefdom(region, district, chiefdom);
-    communitySelect.innerHTML = '<option value="">-- Select Community --</option>';
-    communities.forEach(comm => {
-        const opt = document.createElement('option');
-        opt.value = comm;
-        opt.textContent = comm;
-        communitySelect.appendChild(opt);
-    });
-    communitySelect.disabled = false;
-    if (facilitySelect && facilitySelect.tagName === 'SELECT') {
-        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-        facilitySelect.disabled = true;
-    }
-    dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-    dpSelect.disabled = true;
-}
-
-function updateHealthFacilityDropdown() {
-    const region = document.getElementById('region').value;
-    const district = document.getElementById('district').value;
-    const chiefdom = document.getElementById('chiefdom').value;
-    const community = document.getElementById('community').value;
-    const facilitySelect = document.getElementById('facility');
-    if (!facilitySelect || facilitySelect.tagName !== 'SELECT') return;
-    if (!region || !district || !chiefdom || !community) {
-        facilitySelect.innerHTML = '<option value="">-- First select Community --</option>';
-        facilitySelect.disabled = true;
-        return;
-    }
-    const facilities = getHealthFacilitiesForCommunity(region, district, chiefdom, community);
-    facilitySelect.innerHTML = '<option value="">-- Select Health Facility --</option>';
-    facilities.forEach(fac => {
-        const opt = document.createElement('option');
-        opt.value = fac;
-        opt.textContent = fac;
-        facilitySelect.appendChild(opt);
-    });
-    facilitySelect.disabled = facilities.length === 0;
-}
-
-function updateDistributionPointDropdown() {
-    const region = document.getElementById('region').value;
-    const district = document.getElementById('district').value;
-    const chiefdom = document.getElementById('chiefdom').value;
-    const community = document.getElementById('community').value;
-    const dpSelect = document.getElementById('dp');
-    if (!region || !district || !chiefdom || !community) {
-        dpSelect.innerHTML = '<option value="">-- First select Community --</option>';
-        dpSelect.disabled = true;
-        return;
-    }
-    const points = getDistributionPointsForCommunity(region, district, chiefdom, community);
-    dpSelect.innerHTML = '<option value="">-- Select Distribution Point --</option>';
-    points.forEach(pt => {
-        const opt = document.createElement('option');
-        opt.value = pt;
-        opt.textContent = pt;
-        dpSelect.appendChild(opt);
-    });
-    dpSelect.disabled = points.length === 0;
-}
-
-// attach event listeners
-document.getElementById('region').addEventListener('change', () => {
-    updateDistrictDropdown();
-});
-document.getElementById('district').addEventListener('change', () => {
-    updateChiefdomDropdown();
-});
-document.getElementById('chiefdom').addEventListener('change', () => {
-    updateCommunityDropdown();
-});
-document.getElementById('community').addEventListener('change', () => {
-    updateHealthFacilityDropdown();
-    updateDistributionPointDropdown();
-});
-
-// ========================
-// 2) Form logic (steps, GPS, token, etc.) - with separate GPS fields
-// ========================
-let step = 1;
-let token = "";
-let registered = false;
-let currentHouseholdSummary = "";
-let currentHouseholdName = "";
-
-document.getElementById('date').value = new Date().toISOString().split('T')[0];
-
-function updateUI() {
-    document.querySelectorAll(".section").forEach((s, i) => {
-        s.classList.toggle("active", i === step - 1);
-    });
-    document.querySelectorAll(".step").forEach((s, i) => {
-        s.classList.toggle("active", i <= step - 1);
-    });
-    const progressPercent = ((step - 1) / 4) * 90;
-    document.getElementById("progress").style.width = progressPercent + "%";
-}
-
-function next() { if (step < 5) { step++; updateUI(); } }
-function prev() { if (step > 1) { step--; updateUI(); } }
-
-// Mobile number validation
-function validatePhone() {
-    const phoneField = document.getElementById('phone');
-    const phone = phoneField.value;
-    const errorSpan = document.getElementById('phoneError');
-    const isValid = /^0\d{8}$/.test(phone);
-    if (!isValid && phone.length > 0) {
-        errorSpan.style.display = 'block';
-        phoneField.classList.add('error');
-    } else {
-        errorSpan.style.display = 'none';
-        phoneField.classList.remove('error');
-    }
+  function validateDemographicsManual() {
+    let isValid = true;
+    const region = document.getElementById('manualRegion').value;
+    const district = document.getElementById('manualDistrict').value;
+    const chiefdom = document.getElementById('manualChiefdom').value;
+    const community = document.getElementById('manualCommunity').value;
+    const facility = document.getElementById('manualFacility').value;
+    const dp = document.getElementById('manualDp').value;
+    if (!region) { document.getElementById('manualRegionError').style.display = 'block'; isValid = false; } else { document.getElementById('manualRegionError').style.display = 'none'; }
+    if (!district) { document.getElementById('manualDistrictError').style.display = 'block'; isValid = false; } else { document.getElementById('manualDistrictError').style.display = 'none'; }
+    if (!chiefdom) { document.getElementById('manualChiefdomError').style.display = 'block'; isValid = false; } else { document.getElementById('manualChiefdomError').style.display = 'none'; }
+    if (!community) { document.getElementById('manualCommunityError').style.display = 'block'; isValid = false; } else { document.getElementById('manualCommunityError').style.display = 'none'; }
+    if (!facility) { document.getElementById('manualFacilityError').style.display = 'block'; isValid = false; } else { document.getElementById('manualFacilityError').style.display = 'none'; }
+    if (!dp) { document.getElementById('manualDpError').style.display = 'block'; isValid = false; } else { document.getElementById('manualDpError').style.display = 'none'; }
     return isValid;
-}
+  }
 
-// Validation: pregnant + under5 should NOT exceed total people
-function validateHouseholdNumbers() {
-    const total = parseInt(document.getElementById('people').value) || 0;
-    const pregnant = parseInt(document.getElementById('pregnant').value) || 0;
-    const under5 = parseInt(document.getElementById('under5').value) || 0;
-    const sumError = document.getElementById('sumError');
-    const pregnantField = document.getElementById('pregnant');
-    const under5Field = document.getElementById('under5');
-    const pregnantError = document.getElementById('pregnantError');
-    const under5Error = document.getElementById('under5Error');
-    
-    // Individual bounds
-    let pregnantValid = true;
-    let under5Valid = true;
-    if (pregnant > total) {
-        pregnantError.style.display = 'block';
-        pregnantField.classList.add('error');
-        pregnantValid = false;
-    } else {
-        pregnantError.style.display = 'none';
-        pregnantField.classList.remove('error');
-    }
-    if (under5 > total) {
-        under5Error.style.display = 'block';
-        under5Field.classList.add('error');
-        under5Valid = false;
-    } else {
-        under5Error.style.display = 'none';
-        under5Field.classList.remove('error');
-    }
-    
-    // Sum should NOT exceed total
-    if ((pregnant + under5) <= total) {
-        sumError.style.display = 'none';
-    } else {
-        sumError.style.display = 'block';
-    }
-    
-    // Update total field
-    document.getElementById('total').value = total;
-    
-    return (pregnant + under5 <= total) && pregnantValid && under5Valid;
-}
+  function validateHouseholdManual() {
+    let isValid = true;
+    const surname = document.getElementById('manualSurname').value.trim();
+    const fname = document.getElementById('manualFname').value.trim();
+    const phone = document.getElementById('manualPhone').value.trim();
+    const people = document.getElementById('manualPeople').value;
+    const hhr = document.getElementById('manualRegisterName').value.trim();
+    if (!surname) { document.getElementById('manualSurnameError').style.display = 'block'; isValid = false; } else { document.getElementById('manualSurnameError').style.display = 'none'; }
+    if (!fname) { document.getElementById('manualFnameError').style.display = 'block'; isValid = false; } else { document.getElementById('manualFnameError').style.display = 'none'; }
+    if (!phone || !/^0\d{8}$/.test(phone)) { document.getElementById('manualPhoneError').style.display = 'block'; isValid = false; } else { document.getElementById('manualPhoneError').style.display = 'none'; }
+    if (!people || parseInt(people) < 1) { document.getElementById('manualPeopleError').style.display = 'block'; isValid = false; } else { document.getElementById('manualPeopleError').style.display = 'none'; }
+    if (!hhr) { document.getElementById('manualRegisterNameError').style.display = 'block'; isValid = false; } else { document.getElementById('manualRegisterNameError').style.display = 'none'; }
+    return isValid;
+  }
 
-// GPS capture - separate fields
-function captureGPS() {
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            pos => {
-                document.getElementById('latitude').value = pos.coords.latitude.toFixed(6);
-                document.getElementById('longitude').value = pos.coords.longitude.toFixed(6);
-            },
-            err => {
-                console.warn("GPS error:", err);
-                document.getElementById('latitude').value = "Unavailable";
-                document.getElementById('longitude').value = "Unavailable";
-            }
-        );
-    } else {
-        document.getElementById('latitude').value = "Not supported";
-        document.getElementById('longitude').value = "Not supported";
-    }
-}
+  function validateAndNextStepManual() { if (validateDemographicsManual()) nextStepManual(); else alert('Please fill all required fields in Demographics section.'); }
+  function validateHouseholdAndNext() { if (validateHouseholdManual()) { if (!tokenManual) generateTokenManual(); goToReviewManual(); } else alert('Please fill all required fields in Household Details section.'); }
+  function validateDemographicsScan() {
+    let isValid = true;
+    const region = document.getElementById('scanRegion').value;
+    const district = document.getElementById('scanDistrict').value;
+    const chiefdom = document.getElementById('scanChiefdom').value;
+    const community = document.getElementById('scanCommunity').value;
+    const facility = document.getElementById('scanFacility').value;
+    const dp = document.getElementById('scanDp').value;
+    if (!region) { document.getElementById('scanRegionError').style.display = 'block'; isValid = false; } else { document.getElementById('scanRegionError').style.display = 'none'; }
+    if (!district) { document.getElementById('scanDistrictError').style.display = 'block'; isValid = false; } else { document.getElementById('scanDistrictError').style.display = 'none'; }
+    if (!chiefdom) { document.getElementById('scanChiefdomError').style.display = 'block'; isValid = false; } else { document.getElementById('scanChiefdomError').style.display = 'none'; }
+    if (!community) { document.getElementById('scanCommunityError').style.display = 'block'; isValid = false; } else { document.getElementById('scanCommunityError').style.display = 'none'; }
+    if (!facility) { document.getElementById('scanFacilityError').style.display = 'block'; isValid = false; } else { document.getElementById('scanFacilityError').style.display = 'none'; }
+    if (!dp) { document.getElementById('scanDpError').style.display = 'block'; isValid = false; } else { document.getElementById('scanDpError').style.display = 'none'; }
+    return isValid;
+  }
+  function validateHouseholdScan() {
+    let isValid = true;
+    const surname = document.getElementById('scanSurname').value.trim();
+    const fname = document.getElementById('scanFname').value.trim();
+    const phone = document.getElementById('scanPhone').value.trim();
+    const people = document.getElementById('scanPeople').value;
+    const hhr = document.getElementById('scanRegisterName').value.trim();
+    if (!surname) { document.getElementById('scanSurnameError').style.display = 'block'; isValid = false; } else { document.getElementById('scanSurnameError').style.display = 'none'; }
+    if (!fname) { document.getElementById('scanFnameError').style.display = 'block'; isValid = false; } else { document.getElementById('scanFnameError').style.display = 'none'; }
+    if (!phone || !/^0\d{8}$/.test(phone)) { document.getElementById('scanPhoneError').style.display = 'block'; isValid = false; } else { document.getElementById('scanPhoneError').style.display = 'none'; }
+    if (!people || parseInt(people) < 1) { document.getElementById('scanPeopleError').style.display = 'block'; isValid = false; } else { document.getElementById('scanPeopleError').style.display = 'none'; }
+    if (!hhr) { document.getElementById('scanRegisterNameError').style.display = 'block'; isValid = false; } else { document.getElementById('scanRegisterNameError').style.display = 'none'; }
+    return isValid;
+  }
+  function validateAndNextStepScan() { if (validateDemographicsScan()) nextStepScan(); else alert('Please fill all required fields in Demographics section.'); }
+  function validateHouseholdScanAndNext() { if (validateHouseholdScan()) { if (!tokenScan) generateTokenScan(); goToReviewScan(); } else alert('Please fill all required fields in Household Details section.'); }
 
-// Call GPS capture on page load
-captureGPS();
-
-// Validate on load
-validateHouseholdNumbers();
-validatePhone();
-
-function generateToken() {
-    const f = (document.getElementById('fname')?.value || "").substring(0, 3).toUpperCase();
-    const m = (document.getElementById('mname')?.value || "").substring(0, 3).toUpperCase();
-    const s = (document.getElementById('surname')?.value || "").substring(0, 3).toUpperCase();
-    const phone = document.getElementById('phone')?.value || "";
-    token = `${f}_${m}_${s}_${phone}`;
-    const tokenBox = document.getElementById('tokenBox');
-    tokenBox.style.display = "block";
-    tokenBox.innerText = "🔑 TOKEN: " + token;
-}
-
-function goReview() {
-    // Validate mobile number
-    if (!validatePhone()) {
-        alert("Mobile number must be exactly 9 digits and start with 0 (e.g., 071234567).");
-        document.getElementById('phone').focus();
-        return;
-    }
-    const phone = document.getElementById('phone')?.value;
-    if (phone.length !== 9 || phone[0] !== '0') {
-        alert("Mobile number must be exactly 9 digits and start with 0.");
-        return;
-    }
-    
-    // Validate household numbers
-    const total = parseInt(document.getElementById('people').value) || 0;
-    const pregnant = parseInt(document.getElementById('pregnant').value) || 0;
-    const under5 = parseInt(document.getElementById('under5').value) || 0;
-    
-    if (pregnant > total) {
-        alert("Number of pregnant women cannot exceed the total number of people in the household.");
-        document.getElementById('pregnant').focus();
-        return;
-    }
-    if (under5 > total) {
-        alert("Number of under-five children cannot exceed the total number of people in the household.");
-        document.getElementById('under5').focus();
-        return;
-    }
-    if (pregnant + under5 > total) {
-        alert("Pregnant women + Under‑five children cannot exceed the total number of people in the household.");
-        document.getElementById('pregnant').focus();
-        return;
-    }
-    
-    if (!token) generateToken();
-
-    const totalMembers = total;
-    let itn = totalMembers <= 2 ? 1 : totalMembers <= 4 ? 2 : 3;
-
-    const region = document.getElementById('region')?.options[document.getElementById('region').selectedIndex]?.text || "";
-    const district = document.getElementById('district')?.options[document.getElementById('district').selectedIndex]?.text || "";
-    const chiefdom = document.getElementById('chiefdom')?.options[document.getElementById('chiefdom').selectedIndex]?.text || "";
-    const community = document.getElementById('community')?.options[document.getElementById('community').selectedIndex]?.text || "";
-    let facility = "";
-    const facilityElem = document.getElementById('facility');
-    if (facilityElem) {
-        if (facilityElem.tagName === 'SELECT') {
-            facility = facilityElem.options[facilityElem.selectedIndex]?.text || "";
-        } else {
-            facility = facilityElem.value || "";
-        }
-    }
-    const dp = document.getElementById('dp')?.options[document.getElementById('dp').selectedIndex]?.text || "";
-
-    // Get GPS values from separate fields
-    const latitude = document.getElementById('latitude')?.value || "";
-    const longitude = document.getElementById('longitude')?.value || "";
-
-    // Build household name for filename
-    const surname = document.getElementById('surname')?.value || "";
-    const mname = document.getElementById('mname')?.value || "";
-    const fname = document.getElementById('fname')?.value || "";
-    let householdName = "";
-    if (surname && fname) {
-        householdName = `${surname}_${fname}`;
-    } else if (surname) {
-        householdName = surname;
-    } else if (fname) {
-        householdName = fname;
-    } else {
-        householdName = "Household";
-    }
-    householdName = householdName.replace(/[^a-zA-Z0-9_]/g, '_');
-    currentHouseholdName = householdName;
-
-    const summary = `
-📍 Location
-Region: ${region}
-District: ${district}
-Chiefdom: ${chiefdom}
-Community: ${community}
-Health Facility: ${facility || "-"}
-Distribution Point: ${dp}
-
-👪 Household
-Name: ${surname} ${mname} ${fname}
-Mobile: ${phone}
-Total Members: ${totalMembers}
-Pregnant Women: ${pregnant}
-Under-Five Children: ${under5}
-HHR Name: ${document.getElementById('registerName')?.value || "-"}
-
-📍 GPS Coordinates
-Latitude: ${latitude}
-Longitude: ${longitude}
-
-🎟️ Token: ${token}
-🦟 ITNs to be Received: ${itn}
-    `;
-    currentHouseholdSummary = summary;
-
-    const reviewDiv = document.getElementById('review');
-    reviewDiv.innerHTML = summary.replace(/\n/g, '<br>');
-    next();
-}
-
-// QR Code generation
-function generateQRCode() {
-    const canvas = document.getElementById('qrCanvas');
-    const messageDiv = document.getElementById('qrMessage');
-    const downloadBtn = document.getElementById('downloadQrBtn');
-    
-    if (!currentHouseholdSummary) {
-        alert("Please go through the Review section first to generate household summary.");
-        return;
-    }
-    
-    try {
-        const qr = qrcode(0, 'M');
-        qr.addData(currentHouseholdSummary);
-        qr.make();
-        const cellSize = 4;
-        const margin = 4;
-        const size = qr.getModuleCount() * cellSize + margin * 2;
-        canvas.width = size;
-        canvas.height = size;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = '#ffffff';
-        ctx.fillRect(0, 0, size, size);
-        ctx.fillStyle = '#000000';
-        for (let row = 0; row < qr.getModuleCount(); row++) {
-            for (let col = 0; col < qr.getModuleCount(); col++) {
-                if (qr.isDark(row, col)) {
-                    ctx.fillRect(col * cellSize + margin, row * cellSize + margin, cellSize, cellSize);
-                }
-            }
-        }
-        canvas.style.display = 'block';
-        messageDiv.style.display = 'none';
-        downloadBtn.disabled = false;
-        showToast("✅ QR Code generated successfully!", true);
-    } catch (err) {
-        console.error(err);
-        alert("Error generating QR code. Please try again.");
-    }
-}
-
-function downloadQR() {
-    const canvas = document.getElementById('qrCanvas');
-    if (!canvas || canvas.width === 0) {
-        alert("Please generate a QR code first.");
-        return;
-    }
-    const link = document.createElement('a');
-    const fileName = currentHouseholdName ? `${currentHouseholdName}_QR.png` : "Household_QR.png";
-    link.download = fileName;
-    link.href = canvas.toDataURL();
-    link.click();
-    showToast("Thanks! QR Successfully Downloaded", true);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    const genBtn = document.getElementById('generateQrBtn');
-    const dlBtn = document.getElementById('downloadQrBtn');
-    if (genBtn) genBtn.addEventListener('click', generateQRCode);
-    if (dlBtn) dlBtn.addEventListener('click', downloadQR);
-});
-
-function register() {
-    const successDiv = document.getElementById('successMsg');
-    const registerBtn = document.getElementById('registerBtn');
-    if (!registered) {
-        successDiv.innerHTML = "✅ Successfully registered a household!";
-        registerBtn.innerText = "Next: Add Another Household →";
-        registered = true;
-    } else {
-        step = 1;
-        registered = false;
-        successDiv.innerHTML = "";
-        registerBtn.innerText = "Register Household";
-        // clear all inputs except date
-        document.querySelectorAll("input").forEach(input => {
-            if (input.id !== "date") input.value = "";
-        });
-        document.getElementById('region').value = "";
-        document.getElementById('district').innerHTML = '<option value="">-- First select Region --</option>';
-        document.getElementById('chiefdom').innerHTML = '<option value="">-- First select District --</option>';
-        document.getElementById('community').innerHTML = '<option value="">-- First select Chiefdom --</option>';
-        const facilityElem = document.getElementById('facility');
-        if (facilityElem && facilityElem.tagName === 'SELECT') {
-            facilityElem.innerHTML = '<option value="">-- First select Community --</option>';
-        }
-        document.getElementById('dp').innerHTML = '<option value="">-- First select Community --</option>';
-        document.getElementById('district').disabled = true;
-        document.getElementById('chiefdom').disabled = true;
-        document.getElementById('community').disabled = true;
-        if (facilityElem && facilityElem.tagName === 'SELECT') facilityElem.disabled = true;
-        document.getElementById('dp').disabled = true;
-        document.getElementById('tokenBox').style.display = "none";
-        // Reset QR section
-        const canvas = document.getElementById('qrCanvas');
-        const msgDiv = document.getElementById('qrMessage');
-        if (canvas) canvas.style.display = 'none';
-        if (msgDiv) msgDiv.style.display = 'block';
-        const dlBtn = document.getElementById('downloadQrBtn');
-        if (dlBtn) dlBtn.disabled = true;
-        token = "";
-        currentHouseholdSummary = "";
-        currentHouseholdName = "";
-        validateHouseholdNumbers();
-        captureGPS(); // recapture GPS on reset
-        updateUI();
-    }
-}
-
-function showToast(msg, isSuccess) {
-    const toast = document.createElement('div');
-    toast.style.cssText = `position:fixed; bottom:28px; left:50%; transform:translateX(-50%); background:${isSuccess ? '#10b981' : '#0F172A'}; color:white; padding:12px 24px; border-radius:60px; font-size:0.85rem; z-index:999; font-family:sans-serif;`;
-    toast.innerText = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
-}
-
-// Initialize CSV loading
-loadLocationData();
-
-updateUI();
+  function updateManualItn() { const t=parseInt(document.getElementById('manualPeople').value)||0; document.getElementById('manualTotal').value = t<=2?1:t<=4?2:3; }
+  function updateScanItn() { const t=parseInt(document.getElementById('scanPeople').value)||0; document.getElementById('scanTotal').value = t<=2?1:t<=4?2:3; }
+  function captureGPS() { if(navigator.geolocation) navigator.geolocation.getCurrentPosition(p=>{ ['manualLatitude','scanLatitude'].forEach(id=>{const el=document.getElementById(id); if(el) el.value=p.coords.latitude.toFixed(6);}); ['manualLongitude','scanLongitude'].forEach(id=>{const el=document.getElementById(id); if(el) el.value=p.coords.longitude.toFixed(6);}); },()=>{}); }
+  function generateTokenManual() { const f=(document.getElementById('manualFname').value||'X').slice(0,3).toUpperCase(), m=(document.getElementById('manualMname').value||'X').slice(0,3).toUpperCase(), s=(document.getElementById('manualSurname').value||'X').slice(0,3).toUpperCase(), p=document.getElementById('manualPhone').value.trim(); tokenManual=`${f}_${m}_${s}_${/^0\d{8}$/.test(p)?p:'000000000'}`; document.getElementById('manualTokenBox').style.display='block'; document.getElementById('manualTokenBox').innerText=`🔑 TOKEN: ${tokenManual}`; }
+  function generateTokenScan() { const f=(document.getElementById('scanFname').value||'X').slice(0,3).toUpperCase(), m=(document.getElementById('scanMname').value||'X').slice(0,3).toUpperCase(), s=(document.getElementById('scanSurname').value||'X').slice(0,3).toUpperCase(), p=document.getElementById('scanPhone').value.trim(); tokenScan=`${f}_${m}_${s}_${/^0\d{8}$/.test(p)?p:'000000000'}`; document.getElementById('scanTokenBox').style.display='block'; document.getElementById('scanTokenBox').innerText=`🔑 TOKEN: ${tokenScan}`; }
+  function goToReviewManual() { const g=id=>document.getElementById(id).value; document.getElementById('manualReview').innerHTML=`<div class="review-section"><div class="review-section-title">📍 Demographics Info</div><div class="review-content">Region: ${g('manualRegion')}<br>District: ${g('manualDistrict')}<br>Chiefdom: ${g('manualChiefdom')}<br>Community: ${g('manualCommunity')}<br>Health Facility: ${g('manualFacility')}<br>Distribution Point: ${g('manualDp')}</div></div><div class="review-section"><div class="review-section-title">🏠 Household Details</div><div class="review-content">Full Name: ${g('manualSurname')} ${g('manualMname')} ${g('manualFname')}<br>Mobile: ${g('manualPhone')}<br>Total Members: ${g('manualPeople')}<br>Pregnant: ${g('manualPregnant')}<br>Under5: ${g('manualUnder5')}<br>ITN Allocation: ${g('manualTotal')} nets<br>Enumerator: ${g('manualRegisterName')}<br>GPS: ${g('manualLatitude')}, ${g('manualLongitude')}<br>Token: ${tokenManual}</div></div>`; nextStepManual(); }
+  function goToReviewScan() { const g=id=>document.getElementById(id).value; document.getElementById('scanReview').innerHTML=`<div class="review-section"><div class="review-section-title">📍 Demographics Info</div><div class="review-content">Region: ${g('scanRegion')}<br>District: ${g('scanDistrict')}<br>Chiefdom: ${g('scanChiefdom')}<br>Community: ${g('scanCommunity')}<br>Health Facility: ${g('scanFacility')}<br>Distribution Point: ${g('scanDp')}</div></div><div class="review-section"><div class="review-section-title">🏠 Household Details</div><div class="review-content">Name: ${g('scanSurname')} ${g('scanMname')} ${g('scanFname')}<br>Mobile: ${g('scanPhone')}<br>Members: ${g('scanPeople')}<br>ITN: ${g('scanTotal')} nets<br>Enumerator: ${g('scanRegisterName')}<br>GPS: ${g('scanLatitude')},${g('scanLongitude')}<br>Token: ${tokenScan}</div></div>`; nextStepScan(); }
+  function buildQRData(prefix) { const g=id=>document.getElementById(id)?.value||''; const token=prefix==='manual'?tokenManual:tokenScan; return `ITN_REG\nToken:${token}\nRegion:${g(prefix+'Region')}\nDistrict:${g(prefix+'District')}\nChiefdom:${g(prefix+'Chiefdom')}\nCommunity:${g(prefix+'Community')}\nFacility:${g(prefix+'Facility')}\nName:${g(prefix+'Surname')} ${g(prefix+'Fname')}\nMobile:${g(prefix+'Phone')}\nMembers:${g(prefix+'People')}\nITN:${g(prefix+'Total')}\nHHR:${g(prefix+'RegisterName')}`; }
+  function renderQR(canvasId,msgId,data) { try { const qr=qrcode(0,'L'); qr.addData(data); qr.make(); const canvas=document.getElementById(canvasId); const size=220, mod=qr.getModuleCount(), cell=Math.floor(size/mod), off=Math.floor((size-cell*mod)/2); canvas.width=size; canvas.height=size; const ctx=canvas.getContext('2d'); ctx.fillStyle='white'; ctx.fillRect(0,0,size,size); ctx.fillStyle='black'; for(let r=0;r<mod;r++) for(let c=0;c<mod;c++) if(qr.isDark(r,c)) ctx.fillRect(off+c*cell,off+r*cell,cell,cell); canvas.style.display='block'; document.getElementById(msgId).style.display='none'; const dlBtn=canvasId.includes('manual')?document.getElementById('manualDownloadQrBtn'):document.getElementById('scanDownloadQrBtn'); if(dlBtn) dlBtn.disabled=false; } catch(e){ document.getElementById(msgId).innerText='QR error'; } }
+  function generateManualQR(){ renderQR('manualQrCanvas','manualQrMessage',buildQRData('manual')); }
+  function generateScanQR(){ renderQR('scanQrCanvas','scanQrMessage',buildQRData('scan')); }
+  function downloadQR(canvasId,prefix){ const c=document.getElementById(canvasId); if(!c||c.style.display==='none'){ alert('Generate QR first'); return; } const url=c.toDataURL('image/png'); const a=document.createElement('a'); a.href=url; a.download=`ITN_${prefix}_${Date.now()}.png`; a.click(); }
+  function downloadManualQR(){ downloadQR('manualQrCanvas','manual'); }
+  function downloadScanQR(){ downloadQR('scanQrCanvas','scan'); }
+  function generateQRDataURL(record) { const qrData = `ITN_REG\nToken:${record.token}\nRegion:${record.region}\nDistrict:${record.district}\nChiefdom:${record.chiefdom}\nCommunity:${record.community}\nFacility:${record.healthFacility}\nName:${record.surname} ${record.firstName}\nMobile:${record.mobile}\nMembers:${record.members}\nITN:${record.itn}\nHHR:${record.hhr}`; try { const qr = qrcode(0, 'L'); qr.addData(qrData); qr.make(); const size = 70, mod = qr.getModuleCount(), cell = Math.floor(size / mod), off = Math.floor((size - cell * mod) / 2); const canvas = document.createElement('canvas'); canvas.width = size; canvas.height = size; const ctx = canvas.getContext('2d'); ctx.fillStyle = 'white'; ctx.fillRect(0, 0, size, size); ctx.fillStyle = 'black'; for(let r = 0; r < mod; r++) for(let c = 0; c < mod; c++) if(qr.isDark(r, c)) ctx.fillRect(off + c * cell, off + r * cell, cell, cell); return canvas.toDataURL('image/png'); } catch(e) { return null; } }
+  function refreshTable() { const tbody = document.getElementById('recordsTableBody'); if(!tbody) return; if(records.length===0){ tbody.innerHTML='<tr><td colspan="20" class="no-records">No registrations yet</td>?</tr>'; return; } tbody.innerHTML = records.map((r, idx) => { const qrDataURL = generateQRDataURL(r); return `<tr><td>${escape(r.name)}</td><td>${escape(r.surname)}</td><td>${escape(r.middleName)}</td><td>${escape(r.firstName)}</td><td>${escape(r.region)}</td><td>${escape(r.district)}</td><td>${escape(r.chiefdom)}</td><td>${escape(r.community)}</td><td>${escape(r.healthFacility)}</td><td>${escape(r.mobile)}</td><td>${r.members}</td><td>${r.pregnant || 0}</td><td>${r.under5 || 0}</td><td>${r.itn}</td><td>${escape(r.hhr)}</td><td style="font-size:0.55rem;">${escape(r.token)}</td><td>${escape(r.gps)}</td><td>${r.date}</td><td style="text-align:center;"><img src="${qrDataURL}" class="qr-image-inline" data-record-index="${idx}" style="cursor:pointer; width:60px; height:60px;"></td><td style="text-align:center;"><button class="qr-download-btn-sm" data-record-index="${idx}">⬇️ Download</button></td></tr>`; }).join(''); document.querySelectorAll('.qr-image-inline').forEach(img => { img.addEventListener('click', (e) => { const idx = parseInt(img.getAttribute('data-record-index')); showQRModalForRecord(records[idx]); }); }); document.querySelectorAll('.qr-download-btn-sm').forEach(btn => { btn.addEventListener('click', (e) => { const idx = parseInt(btn.getAttribute('data-record-index')); downloadQRForRecord(records[idx]); }); }); }
+  function showQRModalForRecord(record) { const qrData = `ITN_REG\nToken:${record.token}\nRegion:${record.region}\nDistrict:${record.district}\nChiefdom:${record.chiefdom}\nCommunity:${record.community}\nFacility:${record.healthFacility}\nName:${record.surname} ${record.firstName}\nMobile:${record.mobile}\nMembers:${record.members}\nITN:${record.itn}\nHHR:${record.hhr}`; try { const qr = qrcode(0, 'L'); qr.addData(qrData); qr.make(); const size = 280, mod = qr.getModuleCount(), cell = Math.floor(size / mod), off = Math.floor((size - cell * mod) / 2); const canvas = document.createElement('canvas'); canvas.width = size; canvas.height = size; const ctx = canvas.getContext('2d'); ctx.fillStyle = 'white'; ctx.fillRect(0, 0, size, size); ctx.fillStyle = 'black'; for(let r = 0; r < mod; r++) for(let c = 0; c < mod; c++) if(qr.isDark(r, c)) ctx.fillRect(off + c * cell, off + r * cell, cell, cell); const modalDiv = document.createElement('div'); modalDiv.className = 'modal-overlay'; modalDiv.innerHTML = `<div class="qr-modal"><h4>Household QR Code</h4><div style="font-size:0.8rem; margin:8px 0; font-weight:bold;">${escape(record.surname)} ${escape(record.firstName)}</div><div id="modalCanvasContainer"></div><div style="font-size:0.65rem; margin-top:8px;">Token: ${escape(record.token)}</div><button class="download-btn" style="margin-top:16px;" id="modalDownloadBtn">Download QR</button><button style="margin-top:12px; margin-left:8px; background:#ccc; padding:8px 20px; border-radius:40px;" id="modalCloseBtn">Close</button></div>`; document.body.appendChild(modalDiv); modalDiv.querySelector('#modalCanvasContainer').appendChild(canvas); modalDiv.querySelector('#modalDownloadBtn').onclick = () => { const link = document.createElement('a'); link.download = `ITN_QR_${record.token || record.surname}.png`; link.href = canvas.toDataURL('image/png'); link.click(); }; modalDiv.querySelector('#modalCloseBtn').onclick = () => modalDiv.remove(); } catch(e) { alert('QR error'); } }
+  function downloadQRForRecord(record) { const qrData = `ITN_REG\nToken:${record.token}\nRegion:${record.region}\nDistrict:${record.district}\nChiefdom:${record.chiefdom}\nCommunity:${record.community}\nFacility:${record.healthFacility}\nName:${record.surname} ${record.firstName}\nMobile:${record.mobile}\nMembers:${record.members}\nITN:${record.itn}\nHHR:${record.hhr}`; try { const qr = qrcode(0, 'L'); qr.addData(qrData); qr.make(); const size = 300, mod = qr.getModuleCount(), cell = Math.floor(size / mod), off = Math.floor((size - cell * mod) / 2); const canvas = document.createElement('canvas'); canvas.width = size; canvas.height = size; const ctx = canvas.getContext('2d'); ctx.fillStyle = 'white'; ctx.fillRect(0, 0, size, size); ctx.fillStyle = 'black'; for(let r = 0; r < mod; r++) for(let c = 0; c < mod; c++) if(qr.isDark(r, c)) ctx.fillRect(off + c * cell, off + r * cell, cell, cell); const link = document.createElement('a'); link.download = `ITN_QR_${record.token || record.surname}_${Date.now()}.png`; link.href = canvas.toDataURL('image/png'); link.click(); } catch(e) { alert('Download error'); } }
+  function setupCascading() { const hierarchy=(prefix)=>{ const region=document.getElementById(prefix+'Region'), district=document.getElementById(prefix+'District'), chiefdom=document.getElementById(prefix+'Chiefdom'), community=document.getElementById(prefix+'Community'), facility=document.getElementById(prefix+'Facility'), dp=document.getElementById(prefix+'Dp'); const setOpts=(target,options)=>{ target.disabled=false; target.innerHTML=options; }; region.addEventListener('change',()=>{ setOpts(district,'<option value="">-- District --</option><option value="Port Loko">Port Loko</option><option value="Bo">Bo</option>'); chiefdom.disabled=true; community.disabled=true; facility.disabled=true; dp.disabled=true; }); district.addEventListener('change',()=>{ if(district.value){ setOpts(chiefdom,'<option value="">-- Chiefdom --</option><option value="Bureh">Bureh</option><option value="Kakua">Kakua</option>'); community.disabled=true; facility.disabled=true; dp.disabled=true; } }); chiefdom.addEventListener('change',()=>{ if(chiefdom.value){ setOpts(community,'<option value="">-- Community --</option><option value="Mambo">Mambo</option><option value="Rogbere">Rogbere</option>'); facility.disabled=true; dp.disabled=true; } }); community.addEventListener('change',()=>{ if(community.value){ setOpts(facility,'<option value="">-- Health Facility --</option><option value="Mambo CHC">Mambo CHC</option><option value="Rogbere Clinic">Rogbere Clinic</option>'); setOpts(dp,'<option value="">-- Distribution Point --</option><option value="PHU Mambo">PHU Mambo</option><option value="Rogbere CHC">Rogbere CHC</option>'); } }); }; hierarchy('manual'); hierarchy('scan'); }
+  function updateUIManual() { const s=document.querySelectorAll('#formWrapperManual .section'); s.forEach((el,i)=>el.classList.toggle('active',i===stepManual-1)); document.querySelectorAll('#formWrapperManual .step').forEach((el,i)=>el.classList.toggle('active',i<=stepManual-1)); const pb=document.getElementById('progressManual'); if(pb) pb.style.width=((stepManual-1)/4*90)+'%'; }
+  function nextStepManual(){ if(stepManual<5){ stepManual++; updateUIManual();} }
+  function prevStepManual(){ if(stepManual>1){ stepManual--; updateUIManual();} }
+  function updateUIScan() { const s=document.querySelectorAll('#formWrapperScan .section'); s.forEach((el,i)=>el.classList.toggle('active',i===stepScan-1)); document.querySelectorAll('#formWrapperScan .step').forEach((el,i)=>el.classList.toggle('active',i<=stepScan-1)); const pb=document.getElementById('progressScan'); if(pb) pb.style.width=((stepScan-1)/4*90)+'%'; }
+  function nextStepScan(){ if(stepScan<5){ stepScan++; updateUIScan();} }
+  function prevStepScan(){ if(stepScan>1){ stepScan--; updateUIScan();} }
+  function resetManualForm() { document.getElementById('manualRegion').value=''; document.getElementById('manualDistrict').innerHTML='<option>-- First select Region --</option>'; document.getElementById('manualDistrict').disabled=true; document.getElementById('manualChiefdom').innerHTML='<option>-- Select District --</option>'; document.getElementById('manualChiefdom').disabled=true; document.getElementById('manualCommunity').innerHTML='<option>-- Select Chiefdom --</option>'; document.getElementById('manualCommunity').disabled=true; document.getElementById('manualFacility').innerHTML='<option>-- Select Community --</option>'; document.getElementById('manualFacility').disabled=true; document.getElementById('manualDp').innerHTML='<option>-- Select Community --</option>'; document.getElementById('manualDp').disabled=true; document.getElementById('manualSurname').value=''; document.getElementById('manualMname').value=''; document.getElementById('manualFname').value=''; document.getElementById('manualPhone').value=''; document.getElementById('manualPeople').value=''; document.getElementById('manualPregnant').value='0'; document.getElementById('manualUnder5').value='0'; document.getElementById('manualTotal').value=''; document.getElementById('manualRegisterName').value=''; document.getElementById('manualTokenBox').style.display='none'; document.getElementById('manualQrCanvas').style.display='none'; document.getElementById('manualQrMessage').style.display='block'; document.getElementById('manualDownloadQrBtn').disabled=true; document.getElementById('manualSuccessMsg').innerHTML=''; document.getElementById('manualRegisterBtn').innerHTML='✅ Register Household'; tokenManual=''; regManualFlag=false; stepManual=1; updateUIManual(); captureGPS(); }
+  function resetScanForm() { document.getElementById('scanRegion').value=''; document.getElementById('scanDistrict').innerHTML='<option>-- First select Region --</option>'; document.getElementById('scanDistrict').disabled=true; document.getElementById('scanChiefdom').innerHTML='<option>-- Select District --</option>'; document.getElementById('scanChiefdom').disabled=true; document.getElementById('scanCommunity').innerHTML='<option>-- Select Chiefdom --</option>'; document.getElementById('scanCommunity').disabled=true; document.getElementById('scanFacility').innerHTML='<option>-- Select Community --</option>'; document.getElementById('scanFacility').disabled=true; document.getElementById('scanDp').innerHTML='<option>-- Select Community --</option>'; document.getElementById('scanDp').disabled=true; document.getElementById('scanSurname').value=''; document.getElementById('scanMname').value=''; document.getElementById('scanFname').value=''; document.getElementById('scanPhone').value=''; document.getElementById('scanPeople').value=''; document.getElementById('scanPregnant').value='0'; document.getElementById('scanUnder5').value='0'; document.getElementById('scanTotal').value=''; document.getElementById('scanRegisterName').value=''; document.getElementById('scanTokenBox').style.display='none'; document.getElementById('scanQrCanvas').style.display='none'; document.getElementById('scanQrMessage').style.display='block'; document.getElementById('scanDownloadQrBtn').disabled=true; document.getElementById('scanSuccessMsg').innerHTML=''; document.getElementById('scanRegisterBtn').innerHTML='✅ Register Household'; tokenScan=''; regScanFlag=false; stepScan=1; updateUIScan(); captureGPS(); }
+  function finalRegisterManual() { if(regManualFlag){ resetManualForm(); return; } if(!validateHouseholdManual() || !validateDemographicsManual()){ alert('Please complete all required fields before registering.'); return; } const g=id=>document.getElementById(id).value; records.unshift({ name:`${g('manualSurname')} ${g('manualFname')}`, surname:g('manualSurname'), middleName:g('manualMname'), firstName:g('manualFname'), region:g('manualRegion'), district:g('manualDistrict'), chiefdom:g('manualChiefdom'), community:g('manualCommunity'), healthFacility:g('manualFacility'), mobile:g('manualPhone'), members:g('manualPeople'), pregnant:g('manualPregnant'), under5:g('manualUnder5'), itn:g('manualTotal'), hhr:g('manualRegisterName'), token:tokenManual, gps:`${g('manualLatitude')},${g('manualLongitude')}`, date:new Date().toLocaleString() }); saveStore(); document.getElementById('manualSuccessMsg').innerHTML='✅ Registration successful!'; document.getElementById('manualRegisterBtn').innerHTML='➕ Register Another Household'; regManualFlag=true; }
+  function finalRegisterScan() { if(regScanFlag){ resetScanForm(); return; } if(!validateHouseholdScan() || !validateDemographicsScan()){ alert('Complete all required fields'); return; } const g=id=>document.getElementById(id).value; records.unshift({ name:`${g('scanSurname')} ${g('scanFname')}`, surname:g('scanSurname'), middleName:g('scanMname'), firstName:g('scanFname'), region:g('scanRegion'), district:g('scanDistrict'), chiefdom:g('scanChiefdom'), community:g('scanCommunity'), healthFacility:g('scanFacility'), mobile:g('scanPhone'), members:g('scanPeople'), pregnant:g('scanPregnant'), under5:g('scanUnder5'), itn:g('scanTotal'), hhr:g('scanRegisterName'), token:tokenScan, gps:`${g('scanLatitude')},${g('scanLongitude')}`, date:new Date().toLocaleString() }); saveStore(); document.getElementById('scanSuccessMsg').innerHTML='✅ Registration successful!'; document.getElementById('scanRegisterBtn').innerHTML='➕ Register Another Household'; regScanFlag=true; }
+  function goHome(){ document.getElementById('homeScreen').style.display='flex'; document.getElementById('formWrapperManual').classList.remove('active'); document.getElementById('formWrapperScan').classList.remove('active'); document.getElementById('recordsContainer').classList.remove('active'); document.getElementById('targetContainer').classList.remove('active'); }
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    loadStore(); captureGPS(); setupCascading(); updateUIManual(); updateUIScan();
+    document.getElementById('manualEntryBtn').addEventListener('click', () => { goHome(); document.getElementById('homeScreen').style.display = 'none'; document.getElementById('formWrapperManual').classList.add('active'); resetManualForm(); });
+    document.getElementById('scanQrBtn').addEventListener('click', () => { goHome(); document.getElementById('homeScreen').style.display = 'none'; document.getElementById('formWrapperScan').classList.add('active'); resetScanForm(); });
+    document.getElementById('targetBtn').addEventListener('click', () => { goHome(); document.getElementById('homeScreen').style.display = 'none'; document.getElementById('targetContainer').classList.add('active'); refreshTargetDashboard(); });
+    document.getElementById('recordsBtn').addEventListener('click', () => { goHome(); document.getElementById('homeScreen').style.display = 'none'; document.getElementById('recordsContainer').classList.add('active'); refreshTable(); });
+    document.querySelectorAll('.manual-back-btn, .scan-back-btn, #backFromRecordsBtn, .target-back-btn').forEach(btn => btn.addEventListener('click', goHome));
+    document.getElementById('manualPhone')?.addEventListener('input', function() { const ok = /^0\d{8}$/.test(this.value); document.getElementById('manualPhoneError').style.display = (!ok && this.value.length > 0) ? 'block' : 'none'; });
+    document.getElementById('scanPhone')?.addEventListener('input', function() { const ok = /^0\d{8}$/.test(this.value); document.getElementById('scanPhoneError').style.display = (!ok && this.value.length > 0) ? 'block' : 'none'; });
+    document.getElementById('startScannerBtn')?.addEventListener('click', () => { const html5QrCode = new Html5Qrcode("qr-reader"); const qrRegion = document.getElementById('qr-reader'); qrRegion.style.display = 'block'; html5QrCode.start({ facingMode: "environment" }, { fps: 10, qrbox: 250 }, (decoded) => { document.getElementById('scannerStatus').innerHTML = `✅ Scanned`; alert('Demo: QR data would auto-fill form.'); html5QrCode.stop(); qrRegion.style.display = 'none'; }, (err) => { }).catch(e => { document.getElementById('scannerStatus').innerHTML = 'Camera error'; }); document.getElementById('stopScannerBtn').style.display = 'inline-block'; document.getElementById('stopScannerBtn').onclick = () => { html5QrCode.stop(); qrRegion.style.display = 'none'; }; });
+  });
 </script>
 </body>
 </html>
