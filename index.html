@@ -659,7 +659,7 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== UPDATED GEO DATA FROM EXCEL ===== */
+/* ===== CLEANED GEO DATA (No trailing spaces) ===== */
 const GEO = {
   'Eastern': {
     'Kailahun': {
@@ -1152,7 +1152,7 @@ function parseQRData(text){
     const idx = line.indexOf(':');
     if(idx > 0){
       const key = line.substring(0, idx).trim().toLowerCase();
-      const val = line.substring(idx + 1).trim();
+      const val = line.substring(idx + 1).trim(); // TRIMMED to remove Excel trailing spaces
       if(val){
         if(key === 'region') result.region = val;
         else if(key === 'district') result.district = val;
@@ -1185,45 +1185,49 @@ function autoFillFromScan(data){
   
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
-    if(data.region && Array.from(mReg.options).some(o=>o.value===data.region)){
-      mReg.value = data.region;
+    const regOpt = Array.from(mReg.options).find(o => o.value.trim() === (data.region || '').trim());
+    if(regOpt){
+      mReg.value = regOpt.value;
       mReg.dispatchEvent(new Event('change'));
       
       setTimeout(()=>{
         const mDis = document.getElementById('mDis');
-        if(data.district && Array.from(mDis.options).some(o=>o.value===data.district)){
-          mDis.value = data.district;
+        const disOpt = Array.from(mDis.options).find(o => o.value.trim() === (data.district || '').trim());
+        if(disOpt){
+          mDis.value = disOpt.value;
           mDis.dispatchEvent(new Event('change'));
           
           setTimeout(()=>{
             const mChi = document.getElementById('mChi');
-            if(data.chiefdom && Array.from(mChi.options).some(o=>o.value===data.chiefdom)){
-              mChi.value = data.chiefdom;
+            const chiOpt = Array.from(mChi.options).find(o => o.value.trim() === (data.chiefdom || '').trim());
+            if(chiOpt){
+              mChi.value = chiOpt.value;
               mChi.dispatchEvent(new Event('change'));
               
               setTimeout(()=>{
                 const mCom = document.getElementById('mCom');
-                if(data.community && Array.from(mCom.options).some(o=>o.value===data.community)){
-                  mCom.value = data.community;
+                const comOpt = Array.from(mCom.options).find(o => o.value.trim() === (data.community || '').trim());
+                if(comOpt){
+                  mCom.value = comOpt.value;
                   mCom.dispatchEvent(new Event('change'));
                   
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
                     
-                    if(data.facility && Array.from(mFac.options).some(o=>o.value===data.facility)){
-                      mFac.value = data.facility;
+                    const facOpt = Array.from(mFac.options).find(o => o.value.trim() === (data.facility || '').trim());
+                    if(facOpt){
+                      mFac.value = facOpt.value;
                       mFac.dispatchEvent(new Event('change')); 
                     }
                     
-                    if(data.distPoint){
-                       setTimeout(()=>{
-                         if(Array.from(mDp.options).some(o=>o.value===data.distPoint)){
-                           mDp.value = data.distPoint;
-                         }
-                       }, 100);
-                    }
-                    toast('✅ Demographics auto-filled from QR!');
+                    setTimeout(()=>{
+                      const dpOpt = Array.from(mDp.options).find(o => o.value.trim() === (data.distPoint || '').trim());
+                      if(dpOpt){
+                        mDp.value = dpOpt.value;
+                      }
+                      toast('✅ Demographics auto-filled from QR!');
+                    }, 100);
                   }, 120);
                 } else {
                   toast('⚠ Community not found in list');
