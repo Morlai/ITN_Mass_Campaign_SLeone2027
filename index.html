@@ -15,12 +15,12 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .phone-mock{
   width:100%;height:100%;
   border-radius:40px;
-  position:relative;           /* ALL children position:absolute inside here */
-  overflow:hidden;             /* clips everything to phone shape */
+  position:relative;
+  overflow:hidden;
   background:url('background.png') center/cover no-repeat;
 }
 
-/* ===== SCREEN BASE — every screen fills phone-mock exactly ===== */
+/* ===== SCREEN BASE ===== */
 .screen{
   position:absolute;inset:0;
   display:none;flex-direction:column;
@@ -28,13 +28,12 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 }
 .screen.active{display:flex}
 
-/* scrollable inner areas */
 .scroll-y{overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none}
 .scroll-y::-webkit-scrollbar{display:none}
 
 /* ===================== LOGIN ===================== */
 #sLogin{background:url('background.png') center/cover no-repeat}
-.login-body{flex:1;display:flex;flex-direction:column;padding:22px 16px 0}
+.login-body{flex:1;display:flex;flex-direction:column;padding:22px 16px 0;min-height:0}
 .login-card{background:rgba(255,255,255,.97);border-radius:28px;padding:22px 18px 18px;text-align:center;margin-bottom:16px;box-shadow:0 10px 26px rgba(0,0,0,.13)}
 .login-card img{width:78px;border-radius:16px;margin-bottom:10px}
 .login-card h2{font-size:.78rem;font-weight:800;color:#1565C0;margin-bottom:3px}
@@ -53,12 +52,13 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .util-tile i{display:block;font-size:20px;margin-bottom:4px}
 .tu-or{background:rgba(217,95,26,.88)}.tu-bl{background:rgba(42,127,196,.88)}
 .tu-pu{background:rgba(123,63,160,.88)}.tu-te{background:rgba(27,154,138,.88)}
-.pfooter{background:#1565C0;text-align:center;padding:11px;color:#fff;font-size:9.5px;line-height:1.5;flex-shrink:0}
+.pfooter{background:#1565C0;text-align:center;padding:11px;color:#fff;font-size:9.5px;line-height:1.5;flex-shrink:0;margin-top:auto}
 .pfooter strong{color:#FFD966}
 
 /* ===================== DASHBOARD ===================== */
-#sDash{overflow-y:auto;background:#f0f2f7}
-#sDash::-webkit-scrollbar{display:none}
+#sDash{overflow:hidden;background:#f0f2f7}
+.dash-content{flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.dash-content::-webkit-scrollbar{display:none}
 .dhdr{background:#1565C0;padding:10px 13px 8px;flex-shrink:0}
 .dhdr-top{display:flex;align-items:center;gap:9px;margin-bottom:6px}
 .dhdr-logo{width:38px;height:38px;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
@@ -76,7 +76,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .plogo{background:#f8fafb;border-radius:8px;padding:2px;display:flex;align-items:center;justify-content:center;min-height:24px}
 .plogo img{max-width:20px;max-height:20px}
 .pname{font-size:.36rem;font-weight:700;color:#E65100;margin-top:1px}
-/* carousel */
 .caro{position:relative;flex-shrink:0}
 .cslides{display:flex;transition:transform .45s ease}
 .cslide{min-width:100%;flex-shrink:0}
@@ -86,7 +85,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .cdot.on{background:#FF8C42;width:15px;border-radius:3px;opacity:1}
 .carrow{position:absolute;top:46%;transform:translateY(-50%);width:26px;height:26px;background:rgba(255,255,255,.88);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;color:#FF8C42;z-index:5}
 .carrow.L{left:7px}.carrow.R{right:7px}
-/* action cards */
 .actsec{padding:8px 10px 10px}
 .actgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .acard{border-radius:15px;padding:9px 4px;text-align:center;cursor:pointer;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.09)}
@@ -107,7 +105,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 
 /* ===================== REG HOME ===================== */
 #sRegHome{background:url('background.png') center/cover no-repeat}
-.rh-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden}
+.rh-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;min-height:0}
 .rh-card{background:#fff;border-radius:0;padding:20px 16px 18px;flex:1;box-shadow:none;overflow-y:auto;scrollbar-width:none}
 .rh-card::-webkit-scrollbar{display:none}
 .rh-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid #eef2f8}
@@ -137,7 +135,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .whdr{background:linear-gradient(115deg,#1565C0,#1976d2);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .whdr h3{font-size:.75rem;font-weight:700}
 .wback{width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
-/* step bar */
 .sbar{display:flex;justify-content:space-between;padding:9px 12px 6px;background:#f0f3f8;flex-shrink:0;position:relative}
 .sbar::before{content:'';position:absolute;top:25px;left:9%;right:9%;height:3px;background:#dde4f0;border-radius:4px;z-index:0}
 .sprog{position:absolute;top:25px;left:9%;height:3px;background:#1565C0;border-radius:4px;z-index:1;transition:width .3s;width:0}
@@ -146,13 +143,11 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .sitem.son .scirc{background:#1565C0;box-shadow:0 3px 8px rgba(21,101,192,.4)}
 .slbl{font-size:.36rem;margin-top:3px;color:#5a6a7a;font-weight:600;line-height:1.2}
 .sitem.son .slbl{color:#1565C0;font-weight:800}
-/* wiz body */
 .wbody{flex:1;overflow-y:auto;background:#f0f3f8;scrollbar-width:none}
 .wbody::-webkit-scrollbar{display:none}
 .wsec{display:none;padding:10px 13px 18px;animation:fadeUp .2s ease}
 .wsec.on{display:block}
 @keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
-/* form fields */
 .fg{margin-bottom:9px}
 .fg label{font-size:.58rem;font-weight:800;color:#1e3a4c;display:block;margin-bottom:3px}
 .fg label .req{color:#e53935;margin-left:2px}
@@ -160,22 +155,18 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .fg input:focus,.fg select:focus{border-color:#1565C0;outline:none;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
 .ferr{color:#e53935;font-size:.52rem;margin-top:3px;display:none}
 .r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-/* phone input */
 .ph-wrap{display:flex;align-items:center;border:1.7px solid #cdd5e0;border-radius:18px;background:#fff;overflow:hidden}
 .ph-wrap:focus-within{border-color:#1565C0;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
 .ph-sim{background:#1565C0;color:#fff;padding:8px 9px;font-size:.55rem;font-weight:700;white-space:nowrap;flex-shrink:0}
 .ph-inp{flex:1;border:none;outline:none;padding:8px 10px;font-size:.73rem;font-weight:600;background:transparent}
-/* token */
 .tok-btn{width:100%;padding:9px;border-radius:36px;border:none;background:linear-gradient(105deg,#e9c46a,#f4a261);color:#2d3e50;font-weight:800;font-size:.68rem;cursor:pointer;margin-top:9px}
 .tok-box{margin-top:7px;background:#1565C0;color:#f4f1de;text-align:center;border-radius:20px;padding:8px;font-weight:700;display:none;font-size:.63rem;word-break:break-all}
-/* review */
 .rvbox{background:#fffdf5;padding:12px;border-radius:20px;border:1px solid #ece9e0}
 .rvbox h4{font-size:.73rem;font-weight:800;color:#0c3d5e;border-left:4px solid #1565C0;padding-left:9px;margin-bottom:9px}
 .rvsec{margin-bottom:9px}
 .rvsec h5{font-size:.6rem;font-weight:800;color:#1565C0;border-bottom:1px solid #e2e8f0;padding-bottom:2px;margin-bottom:4px}
 .rvsec p{font-size:.55rem;line-height:1.55;color:#1e293b}
 .rvedit{background:#ffedd5;display:inline-block;padding:4px 12px;border-radius:26px;font-size:.55rem;font-weight:700;cursor:pointer;margin-top:7px}
-/* qr step */
 .qrbox{background:linear-gradient(135deg,#f8fafc,#eef2f8);border-radius:22px;padding:13px;text-align:center;border:1px solid #dde4f0}
 .qrbox h4{font-size:.7rem;font-weight:800;color:#0c3d5e;margin-bottom:10px}
 .qr-wrap{background:#fff;padding:11px;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;min-width:160px;min-height:160px;box-shadow:0 4px 12px rgba(0,0,0,.08);border:1px solid #dde4f0}
@@ -184,9 +175,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .qbtn{padding:8px 15px;border-radius:36px;border:none;font-weight:700;cursor:pointer;font-size:.62rem}
 .qbtn-g{background:#1565C0;color:#fff}.qbtn-d{background:#e76f51;color:#fff}
 .qbtn-d:disabled{opacity:.45;cursor:not-allowed}
-/* success */
 .succ{background:#d9f0ec;padding:14px;border-radius:18px;text-align:center;font-weight:800;color:#1f6d5c;font-size:.73rem}
-/* nav buttons */
 .wnavs{display:flex;gap:8px;margin-top:14px}
 .wnavs button{flex:1;padding:9px;border-radius:36px;font-weight:700;border:none;cursor:pointer;font-size:.68rem}
 .wnext{background:#1565C0;color:#fff}.wprev{background:#e2e8f0;color:#1e293b}
@@ -227,13 +216,16 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .tbkdn-g{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
 .tbkdn-c h5{font-size:.55rem;font-weight:700;color:#b45309;border-bottom:1px solid #fed7aa;padding-bottom:3px;margin-bottom:4px;text-align:center}
 .tbkdn-c p{font-size:.49rem;color:#78350f;line-height:1.6}
+.tedit-input{flex:1;padding:9px 12px;border:1.7px solid #cdd5e0;border-radius:18px;font-size:.73rem;font-weight:600;text-align:center;background:#fff;color:#1e293b}
+.tedit-input:focus{border-color:#1565C0;outline:none;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
+.tedit-btn{background:linear-gradient(105deg,#1565C0,#1976d2);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;cursor:pointer;font-size:.68rem;white-space:nowrap;box-shadow:0 3px 8px rgba(21,101,192,.3)}
+.tedit-btn:active{transform:scale(.96)}
 
 /* ===================== QR MODAL ===================== */
 .qr-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;z-index:9999}
 .qr-modal-c{background:#fff;border-radius:24px;padding:20px;text-align:center;max-width:300px;width:88%}
 .qr-modal-c h4{margin-bottom:7px;font-size:.88rem}
 .qr-modal-c img{width:210px;height:210px;border-radius:12px;display:block;margin:0 auto 8px}
-/* overlay modals */
 .omodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:8888;align-items:center;justify-content:center}
 .omodal.open{display:flex}
 .ocard{background:#fff;border-radius:30px;padding:22px 18px;text-align:center;max-width:285px;width:84%}
@@ -280,8 +272,8 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
   <!-- ══════════════════════════════════════
        SCREEN 2 — DASHBOARD
   ══════════════════════════════════════ -->
-  <div class="screen scroll-y" id="sDash">
-   <div class="dhdr" style="flex-shrink:0">
+  <div class="screen" id="sDash">
+   <div class="dhdr">
     <div class="dhdr-top">
      <div class="dhdr-logo"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt=""></div>
      <div class="dhdr-txt"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
@@ -293,28 +285,30 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <span id="ubarLbl"><i class="fa fa-user-circle"></i> —</span>
     <button onclick="doLogout()"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
    </div>
-   <div class="partners">
-    <h4>IMPLEMENTING PARTNERS</h4>
-    <div class="pgrid">
-     <div class="pitem"><div class="plogo"><img src="usa.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>USA</span>'"></div><div class="pname">United States</div></div>
-     <div class="pitem"><div class="plogo"><img src="global_fund.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>GF</span>'"></div><div class="pname">Global Fund</div></div>
-     <div class="pitem"><div class="plogo"><img src="pmi_evolve.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>PMI</span>'"></div><div class="pname">PMI Evolve</div></div>
-     <div class="pitem"><div class="plogo"><img src="moh_logo.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MOH</span>'"></div><div class="pname">MOH</div></div>
-     <div class="pitem"><div class="plogo"><img src="NMCP.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>NMCP</span>'"></div><div class="pname">NMCP</div></div>
-     <div class="pitem"><div class="plogo"><img src="mbsse.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MB</span>'"></div><div class="pname">MBSSE</div></div>
+   <div class="dash-content">
+    <div class="partners">
+     <h4>IMPLEMENTING PARTNERS</h4>
+     <div class="pgrid">
+      <div class="pitem"><div class="plogo"><img src="usa.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>USA</span>'"></div><div class="pname">United States</div></div>
+      <div class="pitem"><div class="plogo"><img src="global_fund.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>GF</span>'"></div><div class="pname">Global Fund</div></div>
+      <div class="pitem"><div class="plogo"><img src="pmi_evolve.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>PMI</span>'"></div><div class="pname">PMI Evolve</div></div>
+      <div class="pitem"><div class="plogo"><img src="moh_logo.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MOH</span>'"></div><div class="pname">MOH</div></div>
+      <div class="pitem"><div class="plogo"><img src="NMCP.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>NMCP</span>'"></div><div class="pname">NMCP</div></div>
+      <div class="pitem"><div class="plogo"><img src="mbsse.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MB</span>'"></div><div class="pname">MBSSE</div></div>
+     </div>
     </div>
-   </div>
-   <div class="caro">
-    <div class="carrow L" id="cPrev">&#8249;</div>
-    <div class="carrow R" id="cNext">&#8250;</div>
-    <div class="cslides" id="cSlides">
-     <div class="cslide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231565C0%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
-     <div class="cslide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%23F57C00%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EData Collection%3C/text%3E%3C/svg%3E'"></div>
-     <div class="cslide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231B5E20%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3ECommunity Impact%3C/text%3E%3C/svg%3E'"></div>
+    <div class="caro">
+     <div class="carrow L" id="cPrev">&#8249;</div>
+     <div class="carrow R" id="cNext">&#8250;</div>
+     <div class="cslides" id="cSlides">
+      <div class="cslide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231565C0%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
+      <div class="cslide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%23F57C00%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EData Collection%3C/text%3E%3C/svg%3E'"></div>
+      <div class="cslide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231B5E20%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3ECommunity Impact%3C/text%3E%3C/svg%3E'"></div>
+     </div>
+     <div class="cdots" id="cDots"></div>
     </div>
-    <div class="cdots" id="cDots"></div>
+    <div class="actsec"><div class="actgrid" id="actGrid"></div></div>
    </div>
-   <div class="actsec"><div class="actgrid" id="actGrid"></div></div>
    <div class="dfooter"><p>Developed By <strong>Informatics Consultancy Firm-SL</strong> © 2026</p></div>
   </div>
 
@@ -325,9 +319,8 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="rh-body">
     <div class="rh-card">
      <div class="rh-hdr">
-      <img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt="ICF">
-      <div class="rh-hdr-txt"><h2>ITN REGISTRATION</h2><p>Household Registration Portal · ICF-SL</p></div>
       <button class="rh-back" onclick="go('sDash')">&#8592;</button>
+      <div class="rh-hdr-txt"><h2>ITN REGISTRATION</h2><p>Household Registration Portal · ICF-SL</p></div>
      </div>
      <div class="sc-grid">
       <div class="sc sc-or" onclick="openManual()">
@@ -370,7 +363,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div class="sitem"><div class="scirc">5</div><div class="slbl">Finish</div></div>
    </div>
    <div class="wbody">
-    <!-- step 1 -->
     <div class="wsec on" id="ms1">
      <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
      <div class="r2">
@@ -387,7 +379,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      </div>
      <div class="wnavs"><div></div><button class="wnext" onclick="ms1Next()">Next &#8594;</button></div>
     </div>
-    <!-- step 2 -->
     <div class="wsec" id="ms2">
      <div class="r2">
       <div class="fg"><label>👤 Surname<span class="req">*</span></label><input id="mSur" placeholder="Family name"><div class="ferr" id="mSurE">Required</div></div>
@@ -415,12 +406,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      <div class="tok-box" id="mTok"></div>
      <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Prev</button><button class="wnext" onclick="ms2Next()">Review &#8594;</button></div>
     </div>
-    <!-- step 3 -->
     <div class="wsec" id="ms3">
      <div class="rvbox"><h4>📋 Summary</h4><div id="mRv"></div><span class="rvedit" onclick="mNav(-1)">✏️ Edit</span></div>
      <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">QR Code &#8594;</button></div>
     </div>
-    <!-- step 4 -->
     <div class="wsec" id="ms4">
      <div class="qrbox">
       <h4>📸 Generate QR Code</h4>
@@ -432,7 +421,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      </div>
      <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">Finish &#8594;</button></div>
     </div>
-    <!-- step 5 -->
     <div class="wsec" id="ms5">
      <div class="succ" id="mSucc">&#9989; Registration Successful!</div>
      <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" id="mFinBtn" onclick="finalReg()">🏠 Register Household</button></div>
@@ -463,17 +451,28 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="tgt-body">
     <div class="tday"><div class="tday-n" id="tToday">0</div><div class="tday-l">🏠 Households Registered Today</div></div>
+
+    <!-- ADMIN TARGET SETTER (only visible to Admin) -->
+    <div class="tstat" id="tEditBox" style="display:none">
+     <h4>⚙️ SET TARGET HOUSEHOLDS</h4>
+     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure household registration target</p>
+     <div style="display:flex;gap:8px;align-items:center">
+      <input type="number" id="tTargetInput" class="tedit-input" min="1" placeholder="Enter target...">
+      <button class="tedit-btn" onclick="saveTarget()">💾 Save</button>
+     </div>
+    </div>
+
     <div class="tstat">
      <h4>🏠 HOUSEHOLD REGISTRATION COVERAGE</h4>
      <div class="trow"><span class="tlbl">📊 Total Registered (All Time)</span><span class="tval" id="tTotal">0</span></div>
      <div class="trow"><span class="tlbl">👥 Total Individuals Reached</span><span class="tval" id="tPpl">0</span></div>
-     <div class="trow"><span class="tlbl">🎯 Target Households</span><span class="tval">500</span></div>
+     <div class="trow"><span class="tlbl">🎯 Target Households</span><span class="tval" id="tTargetVal">500</span></div>
      <div class="trow"><span class="tlbl">⏳ Remaining</span><span class="tval" id="tRem">500</span></div>
      <div class="trow"><span class="tlbl">🦟 Total ITN Issued</span><span class="tval" id="tItn">0</span></div>
      <div class="tprow">
       <div class="tphdr"><span>📈 Overall Progress</span><strong id="tPct">0%</strong></div>
       <div class="tpbg"><div class="tpfill" id="tFill"></div></div>
-      <div class="tpfoot"><span id="tCurr">0</span> of 500 households registered</div>
+      <div class="tpfoot"><span id="tCurr">0</span> of <span id="tTargetTotal">500</span> households registered</div>
      </div>
     </div>
     <div class="tbkdn">
@@ -491,10 +490,9 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
- </div><!-- /phone-mock -->
-</div><!-- /phone-frame -->
+ </div>
+</div>
 
-<!-- ===== OVERLAY MODALS (outside phone, full viewport) ===== -->
 <div class="omodal" id="oAccess">
  <div class="ocard"><div class="oi">🔒</div><h3>Access Restricted</h3><p id="oAccessMsg"></p><button class="obtn" onclick="closeO('oAccess')">OK</button></div>
 </div>
@@ -503,9 +501,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-//  USER DATABASE
-// ═══════════════════════════════════════════
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -532,18 +527,12 @@ const ACTIONS=[
 ];
 const ROLES={Admin:'Full Access',HHR2027:'Registration Officer',HHD2027:'Distribution Officer',NATSUP2027:'National Supervisor',CHISUP2027:'CHI Supervisor',PHUSTAFF2027:'PHU Staff',PARTNERS2027:'Partner Viewer'};
 
-// ═══════════════════════════════════════════
-//  SCREEN ROUTER  — only operates inside phone-mock
-// ═══════════════════════════════════════════
 function go(id){
   document.querySelectorAll('#phoneMock .screen').forEach(s=>s.classList.remove('active'));
   const el=document.getElementById(id);
   if(el){el.classList.add('active');}
 }
 
-// ═══════════════════════════════════════════
-//  HELPERS
-// ═══════════════════════════════════════════
 function toast(msg){
   const t=document.createElement('div');
   Object.assign(t.style,{position:'fixed',bottom:'88px',left:'50%',transform:'translateX(-50%)',
@@ -564,9 +553,6 @@ window.toggleEye=function(){
   else{p.type='password';i.className='fa-regular fa-eye';}
 };
 
-// ═══════════════════════════════════════════
-//  LOGIN
-// ═══════════════════════════════════════════
 function doLogin(){
   const u=document.getElementById('lusr').value.trim();
   const p=document.getElementById('lpwd').value.trim();
@@ -582,9 +568,6 @@ function doLogout(){CU=null;sessionStorage.clear();go('sLogin');}
 document.getElementById('lusr').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 document.getElementById('lpwd').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 
-// ═══════════════════════════════════════════
-//  DASHBOARD
-// ═══════════════════════════════════════════
 function buildDash(){
   document.getElementById('ubarLbl').innerHTML=`<i class="fa fa-user-circle"></i> ${CU.USERNAME} (${ROLES[CU.USERNAME]||'User'})`;
   const grid=document.getElementById('actGrid');
@@ -601,9 +584,6 @@ function buildDash(){
   initCarousel();
 }
 
-// ═══════════════════════════════════════════
-//  CAROUSEL
-// ═══════════════════════════════════════════
 function initCarousel(){
   const slides=document.querySelectorAll('.cslide');
   const dotsEl=document.getElementById('cDots');
@@ -623,9 +603,6 @@ function initCarousel(){
   tmr=setInterval(()=>go2(idx+1),5000);
 }
 
-// ═══════════════════════════════════════════
-//  NETWORK CHECK
-// ═══════════════════════════════════════════
 async function checkNet(){
   let ok=false,rtt=null,ct='Unknown';
   try{const t0=Date.now();const r=await fetch('https://www.gstatic.com/generate_204',{method:'HEAD',cache:'no-cache'});rtt=Date.now()-t0;ok=r.ok||r.status===204;}catch(e){}
@@ -637,9 +614,6 @@ async function checkNet(){
   openO('oNet');
 }
 
-// ═══════════════════════════════════════════
-//  GEO CASCADE DATA
-// ═══════════════════════════════════════════
 const GEO={
   North:{
     'Port Loko':{'Bureh Kassiri':{'Kawula':['Kawula CHC','Mambo Clinic'],'Rokupr':['Rokupr Hospital','PHU Rokupr']},'Maforki':{'Port Loko Town':['Port Loko Gov Hospital'],'Lungi':['Lungi PHU']}},
@@ -672,9 +646,6 @@ function setupCascade(){
   M.onchange=()=>{const f=GEO[R.value]?.[D.value]?.[C.value]?.[M.value];if(f){fillSel(F,f,'— Facility —');fillSel(P,f.map(x=>'DP: '+x),'— Dist. Point —');}else{disSel(F,'— Facility —');disSel(P,'— Dist. Point —');}};
 }
 
-// ═══════════════════════════════════════════
-//  MANUAL WIZARD
-// ═══════════════════════════════════════════
 let mStep=1,mTok='',mDone=false;
 
 function openManual(){go('sManual');resetManual();}
@@ -784,15 +755,11 @@ function captureGPS(){
   },()=>{});
 }
 
-// phone input live validation
 document.getElementById('mPh').addEventListener('input',function(){
   const ok=/^0\d{8}$/.test(this.value);
   document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none';
 });
 
-// ═══════════════════════════════════════════
-//  RECORDS
-// ═══════════════════════════════════════════
 let RECS=[];
 function loadRecs(){const s=localStorage.getItem('itn_hh');if(s)RECS=JSON.parse(s);}
 function saveRecs(){localStorage.setItem('itn_hh',JSON.stringify(RECS));}
@@ -852,16 +819,32 @@ function showQRModal(rec){
   document.body.appendChild(d);
 }
 
-// ═══════════════════════════════════════════
-//  TARGET DASHBOARD
-// ═══════════════════════════════════════════
+/* ===== TARGET MANAGEMENT ===== */
+function getTarget(){
+  return parseInt(localStorage.getItem('itn_target')) || 500;
+}
+
+function saveTarget(){
+  const inp = document.getElementById('tTargetInput');
+  const v = parseInt(inp?.value);
+  if(!v || v <= 0){
+    toast('⚠ Enter a valid target number');
+    return;
+  }
+  localStorage.setItem('itn_target', v);
+  renderTarget();
+  toast('✅ Target set to ' + v + ' households');
+}
+
 function renderTarget(){
+  const target = getTarget();
   const total=RECS.length,itn=RECS.reduce((s,r)=>s+(parseInt(r.itn)||0),0),ppl=RECS.reduce((s,r)=>s+(parseInt(r.members)||0),0);
-  const pct=Math.min(100,Math.round(total/500*100));
+  const pct=Math.min(100,Math.round(total/target*100));
   const ts=todayStr(),todayCt=RECS.filter(r=>r.date&&r.date.includes(ts)).length;
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
   set('tToday',todayCt);set('tTotal',total);set('tPpl',ppl);
-  set('tRem',Math.max(0,500-total));set('tItn',itn);set('tPct',pct+'%');set('tCurr',total);
+  set('tTargetVal',target);set('tTargetTotal',target);
+  set('tRem',Math.max(0,target-total));set('tItn',itn);set('tPct',pct+'%');set('tCurr',total);
   const f=document.getElementById('tFill');if(f)f.style.width=pct+'%';
   const cnt=obj=>Object.entries(obj).length?Object.entries(obj).map(([k,v])=>`• ${k}: ${v}<br>`).join(''):'No data';
   const d={},c={},p={};
@@ -869,11 +852,19 @@ function renderTarget(){
   const dE=document.getElementById('tDist');if(dE)dE.innerHTML=cnt(d);
   const cE=document.getElementById('tChief');if(cE)cE.innerHTML=cnt(c);
   const pE=document.getElementById('tPhu');if(pE)pE.innerHTML=cnt(p);
+
+  // Show/hide Admin target editor
+  const editBox = document.getElementById('tEditBox');
+  if(editBox){
+    const canEdit = CU && CU.USERNAME === 'Admin';
+    editBox.style.display = canEdit ? 'block' : 'none';
+    if(canEdit){
+      const inp = document.getElementById('tTargetInput');
+      if(inp) inp.value = target;
+    }
+  }
 }
 
-// ═══════════════════════════════════════════
-//  SESSION RESTORE
-// ═══════════════════════════════════════════
 const savedU=sessionStorage.getItem('cu');
 if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
 else go('sLogin');
