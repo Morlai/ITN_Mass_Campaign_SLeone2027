@@ -351,7 +351,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
   <div class="screen" id="sManual">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
-    <h3>&#9997;&#65039; MANUAL ENTRY</h3>
+    <h3 id="mHeaderTitle">&#9997;&#65039; MANUAL ENTRY</h3>
     <div style="width:28px"></div>
    </div>
    <div class="sbar" id="mSBar">
@@ -364,12 +364,14 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="wbody">
     <div class="wsec on" id="ms1">
-     <div class="fg" style="text-align:center; margin-bottom: 16px;">
+     <!-- Scan Button Container (Hidden by default, shown only in SCAN QR mode) -->
+     <div id="scanBtnContainer" class="fg" style="text-align:center; margin-bottom: 16px; display:none;">
       <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="simulateManualScan()">
        <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
       </button>
       <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Align badge within camera frame to auto-fill</p>
      </div>
+
      <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
      <div class="r2">
       <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
@@ -654,8 +656,22 @@ function setupCascade(){
 
 let mStep=1,mTok='',mDone=false;
 
-function openManual(){go('sManual');resetManual();}
-function openManualWithScan(){go('sManual');resetManual();}
+function openManual(){
+  go('sManual');
+  resetManual();
+  // Hide scan button and set header for Manual Entry
+  document.getElementById('scanBtnContainer').style.display = 'none';
+  document.getElementById('mHeaderTitle').innerHTML = '&#9997;&#65039; MANUAL ENTRY';
+}
+
+function openManualWithScan(){
+  go('sManual');
+  resetManual();
+  // Show scan button and set header for Scan QR
+  document.getElementById('scanBtnContainer').style.display = 'block';
+  document.getElementById('mHeaderTitle').innerHTML = '&#128247; SCAN QR ENTRY';
+}
+
 function openRecords(){go('sRecords');renderRecords();}
 function openTarget(){go('sTarget');renderTarget();}
 
