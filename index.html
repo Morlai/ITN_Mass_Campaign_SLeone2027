@@ -327,7 +327,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
        <div class="sc-top"><i class="fa fa-pen-to-square"></i><span>MANUAL ENTRY</span></div>
        <div class="sc-bot"><strong>📋 Demographics</strong><p>Region → District → Chiefdom → PHU → Community → Dist. Point</p></div>
       </div>
-      <div class="sc sc-te" onclick="toast('📷 Camera integration ready')">
+      <div class="sc sc-te" onclick="openManualWithScan()">
        <div class="sc-top"><i class="fa fa-qrcode"></i><span>SCAN QR</span></div>
        <div class="sc-bot"><strong>⚡ Auto-Fill</strong><p>Scan existing QR badge to auto-populate all fields</p></div>
       </div>
@@ -364,6 +364,12 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="wbody">
     <div class="wsec on" id="ms1">
+     <div class="fg" style="text-align:center; margin-bottom: 16px;">
+      <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="simulateManualScan()">
+       <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
+      </button>
+      <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Align badge within camera frame to auto-fill</p>
+     </div>
      <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
      <div class="r2">
       <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
@@ -649,6 +655,7 @@ function setupCascade(){
 let mStep=1,mTok='',mDone=false;
 
 function openManual(){go('sManual');resetManual();}
+function openManualWithScan(){go('sManual');resetManual();}
 function openRecords(){go('sRecords');renderRecords();}
 function openTarget(){go('sTarget');renderTarget();}
 
@@ -863,6 +870,60 @@ function renderTarget(){
       if(inp) inp.value = target;
     }
   }
+}
+
+/* ===== SCAN SIMULATION ===== */
+function simulateManualScan() {
+  toast('📷 Scanning QR Code...');
+  setTimeout(() => {
+    // 1. Demographics
+    const mReg = document.getElementById('mReg');
+    mReg.value = 'North';
+    mReg.onchange();
+    
+    const mDis = document.getElementById('mDis');
+    mDis.value = 'Port Loko';
+    mDis.onchange();
+    
+    const mChi = document.getElementById('mChi');
+    mChi.value = 'Bureh Kassiri';
+    mChi.onchange();
+    
+    const mCom = document.getElementById('mCom');
+    mCom.value = 'Kawula';
+    mCom.onchange();
+    
+    document.getElementById('mFac').value = 'Kawula CHC';
+    document.getElementById('mDp').value = 'DP: Kawula CHC';
+    
+    // 2. Household
+    document.getElementById('mSur').value = 'KAMARA';
+    document.getElementById('mMid').value = '';
+    document.getElementById('mFst').value = 'AMADU';
+    
+    const mPh = document.getElementById('mPh');
+    mPh.value = '077123456';
+    mPh.dispatchEvent(new Event('input'));
+    
+    const mMem = document.getElementById('mMem');
+    mMem.value = '5';
+    mMem.dispatchEvent(new Event('input')); // triggers calcItn
+    
+    document.getElementById('mPrg').value = '1';
+    document.getElementById('mU5').value = '2';
+    document.getElementById('mHhr').value = 'SIERRA LEONE HHR';
+    document.getElementById('mLat').value = '8.465432';
+    document.getElementById('mLng').value = '-13.123456';
+    
+    // 3. Token & Review
+    genToken();
+    buildReview();
+    
+    // 4. Advance to Review Step
+    mStep = 3;
+    updateWiz();
+    toast('✅ QR Scanned & Auto-filled!');
+  }, 1200);
 }
 
 const savedU=sessionStorage.getItem('cu');
