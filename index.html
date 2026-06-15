@@ -6,6 +6,7 @@
 <title>ICF-SL | ITN Campaign Portal</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#dde4f0;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif;padding:16px}
@@ -179,6 +180,28 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .wnavs{display:flex;gap:8px;margin-top:14px}
 .wnavs button{flex:1;padding:9px;border-radius:36px;font-weight:700;border:none;cursor:pointer;font-size:.68rem}
 .wnext{background:#1565C0;color:#fff}.wprev{background:#e2e8f0;color:#1e293b}
+
+/* ===================== CAMERA SCANNER MODAL ===================== */
+.cam-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:10000;flex-direction:column}
+.cam-modal-ov.open{display:flex}
+.cam-modal-box{width:92%;max-width:360px;background:#0a0a0a;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);border:2px solid #1565C0}
+.cam-hdr{background:linear-gradient(115deg,#1565C0,#1976d2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.cam-hdr h4{font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.cam-hdr h4 i{font-size:14px}
+.cam-close{width:26px;height:26px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.cam-close:hover{background:rgba(255,255,255,.3)}
+#qr-reader{width:100%;background:#000;min-height:260px}
+#qr-reader video{border-radius:0 !important}
+#qr-reader__scan_region{min-height:260px}
+#qr-reader__dashboard{padding:10px !important;background:#1a1a1a !important;color:#fff !important}
+#qr-reader__dashboard span{color:#fff !important;font-size:11px !important}
+#qr-reader__dashboard button{background:#1565C0 !important;color:#fff !important;border:none !important;padding:6px 12px !important;border-radius:20px !important;font-weight:700 !important;cursor:pointer !important;margin:4px !important}
+#qr-reader__dashboard select{background:#2a2a2a !important;color:#fff !important;border:1px solid #444 !important;border-radius:8px !important;padding:4px !important}
+#qr-reader__dashboard span#qr-reader__status_span{color:#FFD966 !important;font-weight:600 !important}
+.cam-status{padding:10px 14px;background:#1a1a1a;color:#fff;text-align:center;font-size:.62rem;font-weight:600;border-top:1px solid #333}
+.cam-status .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.cam-status.err .pulse{background:#ef4444;animation:none}
 
 /* ===================== RECORDS ===================== */
 #sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
@@ -366,10 +389,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div class="wsec on" id="ms1">
      <!-- Scan Button Container (Hidden by default, shown only in SCAN QR mode) -->
      <div id="scanBtnContainer" class="fg" style="text-align:center; margin-bottom: 16px; display:none;">
-      <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="simulateManualScan()">
+      <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="openCameraScanner()">
        <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
       </button>
-      <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Align badge within camera frame to auto-fill</p>
+      <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Open camera to scan badge and auto-fill demographics</p>
      </div>
 
      <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
@@ -498,6 +521,22 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
+ </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     CAMERA QR SCANNER MODAL
+══════════════════════════════════════ -->
+<div class="cam-modal-ov" id="camModal">
+ <div class="cam-modal-box">
+  <div class="cam-hdr">
+   <h4><i class="fa fa-qrcode"></i> SCAN QR BADGE</h4>
+   <button class="cam-close" onclick="closeCameraScanner()"><i class="fa fa-times"></i></button>
+  </div>
+  <div id="qr-reader"></div>
+  <div class="cam-status" id="camStatus">
+   <span class="pulse"></span><span id="camStatusText">Initializing camera...</span>
+  </div>
  </div>
 </div>
 
@@ -659,7 +698,6 @@ let mStep=1,mTok='',mDone=false;
 function openManual(){
   go('sManual');
   resetManual();
-  // Hide scan button and set header for Manual Entry
   document.getElementById('scanBtnContainer').style.display = 'none';
   document.getElementById('mHeaderTitle').innerHTML = '&#9997;&#65039; MANUAL ENTRY';
 }
@@ -667,7 +705,6 @@ function openManual(){
 function openManualWithScan(){
   go('sManual');
   resetManual();
-  // Show scan button and set header for Scan QR
   document.getElementById('scanBtnContainer').style.display = 'block';
   document.getElementById('mHeaderTitle').innerHTML = '&#128247; SCAN QR ENTRY';
 }
@@ -876,7 +913,6 @@ function renderTarget(){
   const cE=document.getElementById('tChief');if(cE)cE.innerHTML=cnt(c);
   const pE=document.getElementById('tPhu');if(pE)pE.innerHTML=cnt(p);
 
-  // Show/hide Admin target editor
   const editBox = document.getElementById('tEditBox');
   if(editBox){
     const canEdit = CU && CU.USERNAME === 'Admin';
@@ -888,58 +924,269 @@ function renderTarget(){
   }
 }
 
-/* ===== SCAN SIMULATION ===== */
-function simulateManualScan() {
-  toast('📷 Scanning QR Code...');
-  setTimeout(() => {
-    // 1. Demographics
+/* ═══════════════════════════════════════════════
+   CAMERA QR SCANNER — Real Camera Integration
+   Uses html5-qrcode library to access device camera
+═══════════════════════════════════════════════ */
+let html5QrCode = null;
+let scannerActive = false;
+
+function openCameraScanner(){
+  const modal = document.getElementById('camModal');
+  const statusEl = document.getElementById('camStatus');
+  const statusText = document.getElementById('camStatusText');
+  
+  // Reset status
+  statusEl.classList.remove('err');
+  statusText.textContent = 'Initializing camera...';
+  
+  // Show modal
+  modal.classList.add('open');
+  
+  // Check if library loaded
+  if(typeof Html5Qrcode === 'undefined'){
+    statusEl.classList.add('err');
+    statusText.textContent = '❌ Scanner library failed to load';
+    setTimeout(closeCameraScanner, 2000);
+    return;
+  }
+  
+  // Clean up any previous instance
+  if(html5QrCode && scannerActive){
+    html5QrCode.stop().then(()=>{
+      html5QrCode.clear();
+      startNewScanner();
+    }).catch(()=>{
+      html5QrCode.clear();
+      startNewScanner();
+    });
+  } else {
+    startNewScanner();
+  }
+}
+
+function startNewScanner(){
+  const statusText = document.getElementById('camStatusText');
+  const statusEl = document.getElementById('camStatus');
+  
+  try {
+    html5QrCode = new Html5Qrcode("qr-reader");
+    
+    const config = { 
+      fps: 10, 
+      qrbox: { width: 220, height: 220 },
+      aspectRatio: 1.0,
+      formatsToSupport: [ 
+        Html5QrcodeSupportedFormats.QR_CODE,
+        Html5QrcodeSupportedFormats.DATA_MATRIX
+      ]
+    };
+    
+    // Try rear camera first, fallback to any camera
+    const cameraRequest = { facingMode: "environment" };
+    
+    html5QrCode.start(
+      cameraRequest,
+      config,
+      onScanSuccess,
+      onScanFailure
+    )
+    .then(()=>{
+      scannerActive = true;
+      statusEl.classList.remove('err');
+      statusText.textContent = 'Scanning... Point camera at QR badge';
+    })
+    .catch((err)=>{
+      console.warn('Rear camera failed, trying any camera:', err);
+      // Fallback: try any available camera
+      html5QrCode.start(
+        { facingMode: "user" },
+        config,
+        onScanSuccess,
+        onScanFailure
+      )
+      .then(()=>{
+        scannerActive = true;
+        statusEl.classList.remove('err');
+        statusText.textContent = 'Scanning... Point camera at QR badge';
+      })
+      .catch((err2)=>{
+        console.error('Camera access failed:', err2);
+        statusEl.classList.add('err');
+        if(err2.toString().includes('NotAllowedError') || err2.toString().includes('Permission')){
+          statusText.textContent = '🚫 Camera permission denied. Please allow camera access.';
+        } else if(err2.toString().includes('NotFoundError')){
+          statusText.textContent = '📷 No camera found on this device.';
+        } else {
+          statusText.textContent = '❌ Camera error: ' + (err2.message || 'Unable to start');
+        }
+      });
+    });
+  } catch(e){
+    console.error('Scanner init error:', e);
+    statusEl.classList.add('err');
+    statusText.textContent = '❌ Failed to initialize scanner';
+  }
+}
+
+function onScanSuccess(decodedText, decodedResult){
+  // Vibrate if supported (feedback)
+  if(navigator.vibrate) navigator.vibrate(200);
+  
+  // Stop scanner immediately to prevent multiple scans
+  stopScannerQuietly().then(()=>{
+    // Parse the QR data and auto-fill fields
+    const parsed = parseQRData(decodedText);
+    
+    if(parsed && parsed.region){
+      autoFillFromScan(parsed);
+      toast('✅ QR Scanned Successfully!');
+    } else {
+      toast('⚠ Invalid QR code format');
+      document.getElementById('camModal').classList.remove('open');
+    }
+  });
+}
+
+function onScanFailure(error){
+  // Ignore scan failures (happens on every frame without QR)
+  // Only log actual errors
+  if(error && !error.includes('NotFoundException')){
+    // silent
+  }
+}
+
+function stopScannerQuietly(){
+  return new Promise((resolve)=>{
+    if(html5QrCode && scannerActive){
+      html5QrCode.stop()
+        .then(()=>{ scannerActive = false; resolve(); })
+        .catch(()=>{ scannerActive = false; resolve(); });
+    } else {
+      resolve();
+    }
+  });
+}
+
+function closeCameraScanner(){
+  stopScannerQuietly().then(()=>{
+    if(html5QrCode){
+      try { html5QrCode.clear(); } catch(e){}
+      html5QrCode = null;
+    }
+    document.getElementById('camModal').classList.remove('open');
+  });
+}
+
+/* ===== Parse QR data into structured object ===== */
+function parseQRData(text){
+  if(!text) return null;
+  const result = {};
+  const lines = text.split(/\r?\n/);
+  
+  lines.forEach(line=>{
+    const idx = line.indexOf(':');
+    if(idx > 0){
+      const key = line.substring(0, idx).trim().toLowerCase();
+      const val = line.substring(idx + 1).trim();
+      if(val){
+        // Map known keys
+        if(key === 'region') result.region = val;
+        else if(key === 'district') result.district = val;
+        else if(key === 'chiefdom') result.chiefdom = val;
+        else if(key === 'community') result.community = val;
+        else if(key === 'facility') result.facility = val;
+        else if(key === 'dist. point' || key === 'dist_point' || key === 'distpoint' || key === 'dp') result.distPoint = val;
+        else if(key === 'name') result.name = val;
+        else if(key === 'mobile') result.mobile = val;
+        else if(key === 'members') result.members = val;
+        else if(key === 'itn') result.itn = val;
+        else if(key === 'hhr') result.hhr = val;
+        else if(key === 'token') result.token = val;
+      }
+    }
+  });
+  
+  return result;
+}
+
+/* ===== Auto-fill demographics from scanned QR ===== */
+function autoFillFromScan(data){
+  const statusText = document.getElementById('camStatusText');
+  statusText.textContent = '✅ Auto-filling demographics...';
+  
+  // Close the camera modal
+  setTimeout(()=>{
+    document.getElementById('camModal').classList.remove('open');
+  }, 400);
+  
+  // Ensure we're on step 1
+  mStep = 1;
+  updateWiz();
+  
+  // Step 1: Set Region and trigger cascade
+  setTimeout(()=>{
     const mReg = document.getElementById('mReg');
-    mReg.value = 'North';
-    mReg.onchange();
-    
-    const mDis = document.getElementById('mDis');
-    mDis.value = 'Port Loko';
-    mDis.onchange();
-    
-    const mChi = document.getElementById('mChi');
-    mChi.value = 'Bureh Kassiri';
-    mChi.onchange();
-    
-    const mCom = document.getElementById('mCom');
-    mCom.value = 'Kawula';
-    mCom.onchange();
-    
-    document.getElementById('mFac').value = 'Kawula CHC';
-    document.getElementById('mDp').value = 'DP: Kawula CHC';
-    
-    // 2. Household
-    document.getElementById('mSur').value = 'KAMARA';
-    document.getElementById('mMid').value = '';
-    document.getElementById('mFst').value = 'AMADU';
-    
-    const mPh = document.getElementById('mPh');
-    mPh.value = '077123456';
-    mPh.dispatchEvent(new Event('input'));
-    
-    const mMem = document.getElementById('mMem');
-    mMem.value = '5';
-    mMem.dispatchEvent(new Event('input')); // triggers calcItn
-    
-    document.getElementById('mPrg').value = '1';
-    document.getElementById('mU5').value = '2';
-    document.getElementById('mHhr').value = 'SIERRA LEONE HHR';
-    document.getElementById('mLat').value = '8.465432';
-    document.getElementById('mLng').value = '-13.123456';
-    
-    // 3. Token & Review
-    genToken();
-    buildReview();
-    
-    // 4. Advance to Review Step
-    mStep = 3;
-    updateWiz();
-    toast('✅ QR Scanned & Auto-filled!');
-  }, 1200);
+    if(data.region && Array.from(mReg.options).some(o=>o.value===data.region)){
+      mReg.value = data.region;
+      mReg.dispatchEvent(new Event('change'));
+      
+      // Step 2: Set District
+      setTimeout(()=>{
+        const mDis = document.getElementById('mDis');
+        if(data.district && Array.from(mDis.options).some(o=>o.value===data.district)){
+          mDis.value = data.district;
+          mDis.dispatchEvent(new Event('change'));
+          
+          // Step 3: Set Chiefdom
+          setTimeout(()=>{
+            const mChi = document.getElementById('mChi');
+            if(data.chiefdom && Array.from(mChi.options).some(o=>o.value===data.chiefdom)){
+              mChi.value = data.chiefdom;
+              mChi.dispatchEvent(new Event('change'));
+              
+              // Step 4: Set Community
+              setTimeout(()=>{
+                const mCom = document.getElementById('mCom');
+                if(data.community && Array.from(mCom.options).some(o=>o.value===data.community)){
+                  mCom.value = data.community;
+                  mCom.dispatchEvent(new Event('change'));
+                  
+                  // Step 5: Set Facility and Dist. Point
+                  setTimeout(()=>{
+                    const mFac = document.getElementById('mFac');
+                    const mDp = document.getElementById('mDp');
+                    
+                    if(data.facility && Array.from(mFac.options).some(o=>o.value===data.facility)){
+                      mFac.value = data.facility;
+                    }
+                    
+                    if(data.distPoint && Array.from(mDp.options).some(o=>o.value===data.distPoint)){
+                      mDp.value = data.distPoint;
+                    } else if(data.facility){
+                      // Try to find matching DP
+                      const dpOption = Array.from(mDp.options).find(o=>o.value.includes(data.facility));
+                      if(dpOption) mDp.value = dpOption.value;
+                    }
+                    
+                    toast('✅ Demographics auto-filled from QR!');
+                  }, 120);
+                } else {
+                  toast('⚠ Community not found in list');
+                }
+              }, 120);
+            } else {
+              toast('⚠ Chiefdom not found in list');
+            }
+          }, 120);
+        } else {
+          toast('⚠ District not found in list');
+        }
+      }, 120);
+    } else {
+      toast('⚠ Region not found in list');
+    }
+  }, 500);
 }
 
 const savedU=sessionStorage.getItem('cu');
