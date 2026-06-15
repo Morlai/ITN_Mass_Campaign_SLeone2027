@@ -1051,7 +1051,7 @@ function renderTarget() {
   regRecords.forEach(r=>{ if(r.district)d[r.district]=(d[r.district]||0)+1; if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1; if(r.healthFacility)p[r.healthFacility]=(p[r.healthFacility]||0)+1; });
   const dEl=document.getElementById('tgtDistrict'); if(dEl)dEl.innerHTML=cnt(d);
   const cEl=document.getElementById('tgtChiefdom'); if(cEl)cEl.innerHTML=cnt(c);
-  const pEl=document.getElementById('tgtPhu');      if(pEl)pEl.innerHTML=cnt(p); 
+  const pEl=document.getElementById('tgtPhu');      if(pEl)pEl.innerHTML=cnt(p);
 }
 
 // ======================== SESSION RESTORE ========================
