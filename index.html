@@ -387,7 +387,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="wbody">
     <div class="wsec on" id="ms1">
-     <!-- Scan Button Container (Hidden by default, shown only in SCAN QR mode) -->
      <div id="scanBtnContainer" class="fg" style="text-align:center; margin-bottom: 16px; display:none;">
       <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="openCameraScanner()">
        <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
@@ -483,7 +482,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="tgt-body">
     <div class="tday"><div class="tday-n" id="tToday">0</div><div class="tday-l">🏠 Households Registered Today</div></div>
 
-    <!-- ADMIN TARGET SETTER (only visible to Admin) -->
     <div class="tstat" id="tEditBox" style="display:none">
      <h4>⚙️ SET TARGET HOUSEHOLDS</h4>
      <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure household registration target</p>
@@ -661,36 +659,136 @@ async function checkNet(){
   openO('oNet');
 }
 
-const GEO={
-  North:{
-    'Port Loko':{'Bureh Kassiri':{'Kawula':['Kawula CHC','Mambo Clinic'],'Rokupr':['Rokupr Hospital','PHU Rokupr']},'Maforki':{'Port Loko Town':['Port Loko Gov Hospital'],'Lungi':['Lungi PHU']}},
-    'Bombali':{'Makeni City':{'Makeni':['Makeni Gov Hospital','Bombali PHU']}}
+/* ===== UPDATED GEO DATA FROM EXCEL ===== */
+const GEO = {
+  'Eastern': {
+    'Kailahun': {
+      'Gaura': {
+        'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]
+      }
+    },
+    'Kenema': {
+      'Dodo': {
+        'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]
+      }
+    },
+    'Kono': {
+      'Gorama Kono': {
+        'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]
+      }
+    }
   },
-  South:{
-    'Bo':{'Kakua':{'Bo Town':['Bo Gov Hospital','Bo PHU'],'Koribondo':['Koribondo CHC']},'Tikonko':{'Tikonko':['Tikonko PHC']}},
-    'Moyamba':{'Moyamba Town':{'Moyamba':['Moyamba Hospital']}}
+  'South': {
+    'Bo': {
+      'Badjia': {
+        'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]
+      }
+    },
+    'Bonthe': {
+      'Benducha': {
+        'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]
+      }
+    },
+    'Moyamba': {
+      'Banguawa': {
+        'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]
+      }
+    },
+    'Pujehun': {
+      'Barri': {
+        'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]
+      }
+    }
   },
-  East:{
-    'Kenema':{'Nongowa':{'Kenema Town':['Kenema Gov Hospital']},'Koya':{'Gbongobima':['Gbongobima CHC']}},
-    'Kono':{'Gbense':{'Koidu Town':['Koidu Gov Hospital']}}
+  'North': {
+    'Bombali': {
+      'Biriwa': {
+        'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]
+      }
+    },
+    'Tonkolili': {
+      'Dansigoia': {
+        'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]
+      }
+    },
+    'Koinadugu': {
+      'Diang': {
+        'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]
+      }
+    },
+    'Falaba': {
+      'Barawa': {
+        'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]
+      }
+    }
   },
-  West:{
-    'Western Area Urban':{'East End':{'Freetown East':['Connaught Hospital','Eastern PHU']},'West End':{'Freetown West':['Princess Christian Hospital']}},
-    'Western Area Rural':{'Waterloo':{'Waterloo Town':['Waterloo CHC']}}
+  'North_west': {
+    'Kambia': {
+      'Bramaia': {
+        'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]
+      }
+    },
+    'Port_loko': {
+      'Koya': {
+        'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]
+      },
+      'Bureh Kassiri': {
+        'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]
+      }
+    }
   }
 };
+
 function fillSel(el,opts,ph){el.innerHTML=`<option value="">${ph}</option>`+opts.map(o=>`<option>${o}</option>`).join('');el.disabled=false;}
 function disSel(el,ph){el.innerHTML=`<option value="">${ph}</option>`;el.disabled=true;}
 
 function setupCascade(){
-  const R=document.getElementById('mReg'),D=document.getElementById('mDis'),
-        C=document.getElementById('mChi'),M=document.getElementById('mCom'),
-        F=document.getElementById('mFac'),P=document.getElementById('mDp');
-  fillSel(R,Object.keys(GEO),'— Region —');
-  R.onchange=()=>{const r=GEO[R.value];r?fillSel(D,Object.keys(r),'— District —'):disSel(D,'— District —');disSel(C,'— Chiefdom —');disSel(M,'— Community —');disSel(F,'— Facility —');disSel(P,'— Dist. Point —');};
-  D.onchange=()=>{const r=GEO[R.value]?.[D.value];r?fillSel(C,Object.keys(r),'— Chiefdom —'):disSel(C,'— Chiefdom —');disSel(M,'— Community —');disSel(F,'— Facility —');disSel(P,'— Dist. Point —');};
-  C.onchange=()=>{const r=GEO[R.value]?.[D.value]?.[C.value];r?fillSel(M,Object.keys(r),'— Community —'):disSel(M,'— Community —');disSel(F,'— Facility —');disSel(P,'— Dist. Point —');};
-  M.onchange=()=>{const f=GEO[R.value]?.[D.value]?.[C.value]?.[M.value];if(f){fillSel(F,f,'— Facility —');fillSel(P,f.map(x=>'DP: '+x),'— Dist. Point —');}else{disSel(F,'— Facility —');disSel(P,'— Dist. Point —');}};
+  const R=document.getElementById('mReg'), D=document.getElementById('mDis'),
+        C=document.getElementById('mChi'), M=document.getElementById('mCom'),
+        F=document.getElementById('mFac'), P=document.getElementById('mDp');
+        
+  fillSel(R, Object.keys(GEO), '— Region —');
+  
+  R.onchange = () => {
+    const r = GEO[R.value];
+    r ? fillSel(D, Object.keys(r), '— District —') : disSel(D, '— District —');
+    disSel(C, '— Chiefdom —'); disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  D.onchange = () => {
+    const r = GEO[R.value]?.[D.value];
+    r ? fillSel(C, Object.keys(r), '— Chiefdom —') : disSel(C, '— Chiefdom —');
+    disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  C.onchange = () => {
+    const r = GEO[R.value]?.[D.value]?.[C.value];
+    r ? fillSel(M, Object.keys(r), '— Community —') : disSel(M, '— Community —');
+    disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  M.onchange = () => {
+    const facilities = GEO[R.value]?.[D.value]?.[C.value]?.[M.value];
+    if(facilities && facilities.length > 0){
+      const facNames = facilities.map(f => f.facility);
+      fillSel(F, facNames, '— Facility —');
+      disSel(P, '— Dist. Point —');
+      
+      F.onchange = () => {
+        const selectedFac = facilities.find(f => f.facility === F.value);
+        if(selectedFac){
+          fillSel(P, [selectedFac.dp], '— Dist. Point —');
+          P.value = selectedFac.dp;
+        } else {
+          disSel(P, '— Dist. Point —');
+        }
+      };
+      
+      if(F.value) F.onchange();
+    } else {
+      disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+    }
+  };
 }
 
 let mStep=1,mTok='',mDone=false;
@@ -926,7 +1024,6 @@ function renderTarget(){
 
 /* ═══════════════════════════════════════════════
    CAMERA QR SCANNER — Real Camera Integration
-   Uses html5-qrcode library to access device camera
 ═══════════════════════════════════════════════ */
 let html5QrCode = null;
 let scannerActive = false;
@@ -936,14 +1033,10 @@ function openCameraScanner(){
   const statusEl = document.getElementById('camStatus');
   const statusText = document.getElementById('camStatusText');
   
-  // Reset status
   statusEl.classList.remove('err');
   statusText.textContent = 'Initializing camera...';
-  
-  // Show modal
   modal.classList.add('open');
   
-  // Check if library loaded
   if(typeof Html5Qrcode === 'undefined'){
     statusEl.classList.add('err');
     statusText.textContent = '❌ Scanner library failed to load';
@@ -951,7 +1044,6 @@ function openCameraScanner(){
     return;
   }
   
-  // Clean up any previous instance
   if(html5QrCode && scannerActive){
     html5QrCode.stop().then(()=>{
       html5QrCode.clear();
@@ -982,36 +1074,22 @@ function startNewScanner(){
       ]
     };
     
-    // Try rear camera first, fallback to any camera
     const cameraRequest = { facingMode: "environment" };
     
-    html5QrCode.start(
-      cameraRequest,
-      config,
-      onScanSuccess,
-      onScanFailure
-    )
+    html5QrCode.start(cameraRequest, config, onScanSuccess, onScanFailure)
     .then(()=>{
       scannerActive = true;
       statusEl.classList.remove('err');
       statusText.textContent = 'Scanning... Point camera at QR badge';
     })
     .catch((err)=>{
-      console.warn('Rear camera failed, trying any camera:', err);
-      // Fallback: try any available camera
-      html5QrCode.start(
-        { facingMode: "user" },
-        config,
-        onScanSuccess,
-        onScanFailure
-      )
+      html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
       .then(()=>{
         scannerActive = true;
         statusEl.classList.remove('err');
         statusText.textContent = 'Scanning... Point camera at QR badge';
       })
       .catch((err2)=>{
-        console.error('Camera access failed:', err2);
         statusEl.classList.add('err');
         if(err2.toString().includes('NotAllowedError') || err2.toString().includes('Permission')){
           statusText.textContent = '🚫 Camera permission denied. Please allow camera access.';
@@ -1023,21 +1101,16 @@ function startNewScanner(){
       });
     });
   } catch(e){
-    console.error('Scanner init error:', e);
     statusEl.classList.add('err');
     statusText.textContent = '❌ Failed to initialize scanner';
   }
 }
 
 function onScanSuccess(decodedText, decodedResult){
-  // Vibrate if supported (feedback)
   if(navigator.vibrate) navigator.vibrate(200);
   
-  // Stop scanner immediately to prevent multiple scans
   stopScannerQuietly().then(()=>{
-    // Parse the QR data and auto-fill fields
     const parsed = parseQRData(decodedText);
-    
     if(parsed && parsed.region){
       autoFillFromScan(parsed);
       toast('✅ QR Scanned Successfully!');
@@ -1048,20 +1121,12 @@ function onScanSuccess(decodedText, decodedResult){
   });
 }
 
-function onScanFailure(error){
-  // Ignore scan failures (happens on every frame without QR)
-  // Only log actual errors
-  if(error && !error.includes('NotFoundException')){
-    // silent
-  }
-}
+function onScanFailure(error){}
 
 function stopScannerQuietly(){
   return new Promise((resolve)=>{
     if(html5QrCode && scannerActive){
-      html5QrCode.stop()
-        .then(()=>{ scannerActive = false; resolve(); })
-        .catch(()=>{ scannerActive = false; resolve(); });
+      html5QrCode.stop().then(()=>{ scannerActive = false; resolve(); }).catch(()=>{ scannerActive = false; resolve(); });
     } else {
       resolve();
     }
@@ -1078,7 +1143,6 @@ function closeCameraScanner(){
   });
 }
 
-/* ===== Parse QR data into structured object ===== */
 function parseQRData(text){
   if(!text) return null;
   const result = {};
@@ -1090,7 +1154,6 @@ function parseQRData(text){
       const key = line.substring(0, idx).trim().toLowerCase();
       const val = line.substring(idx + 1).trim();
       if(val){
-        // Map known keys
         if(key === 'region') result.region = val;
         else if(key === 'district') result.district = val;
         else if(key === 'chiefdom') result.chiefdom = val;
@@ -1106,69 +1169,60 @@ function parseQRData(text){
       }
     }
   });
-  
   return result;
 }
 
-/* ===== Auto-fill demographics from scanned QR ===== */
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
   statusText.textContent = '✅ Auto-filling demographics...';
   
-  // Close the camera modal
   setTimeout(()=>{
     document.getElementById('camModal').classList.remove('open');
   }, 400);
   
-  // Ensure we're on step 1
   mStep = 1;
   updateWiz();
   
-  // Step 1: Set Region and trigger cascade
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
     if(data.region && Array.from(mReg.options).some(o=>o.value===data.region)){
       mReg.value = data.region;
       mReg.dispatchEvent(new Event('change'));
       
-      // Step 2: Set District
       setTimeout(()=>{
         const mDis = document.getElementById('mDis');
         if(data.district && Array.from(mDis.options).some(o=>o.value===data.district)){
           mDis.value = data.district;
           mDis.dispatchEvent(new Event('change'));
           
-          // Step 3: Set Chiefdom
           setTimeout(()=>{
             const mChi = document.getElementById('mChi');
             if(data.chiefdom && Array.from(mChi.options).some(o=>o.value===data.chiefdom)){
               mChi.value = data.chiefdom;
               mChi.dispatchEvent(new Event('change'));
               
-              // Step 4: Set Community
               setTimeout(()=>{
                 const mCom = document.getElementById('mCom');
                 if(data.community && Array.from(mCom.options).some(o=>o.value===data.community)){
                   mCom.value = data.community;
                   mCom.dispatchEvent(new Event('change'));
                   
-                  // Step 5: Set Facility and Dist. Point
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
                     
                     if(data.facility && Array.from(mFac.options).some(o=>o.value===data.facility)){
                       mFac.value = data.facility;
+                      mFac.dispatchEvent(new Event('change')); 
                     }
                     
-                    if(data.distPoint && Array.from(mDp.options).some(o=>o.value===data.distPoint)){
-                      mDp.value = data.distPoint;
-                    } else if(data.facility){
-                      // Try to find matching DP
-                      const dpOption = Array.from(mDp.options).find(o=>o.value.includes(data.facility));
-                      if(dpOption) mDp.value = dpOption.value;
+                    if(data.distPoint){
+                       setTimeout(()=>{
+                         if(Array.from(mDp.options).some(o=>o.value===data.distPoint)){
+                           mDp.value = data.distPoint;
+                         }
+                       }, 100);
                     }
-                    
                     toast('✅ Demographics auto-filled from QR!');
                   }, 120);
                 } else {
