@@ -351,7 +351,92 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
   <div class="screen" id="sManual">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
-    <h3>&#9997;&#65039; MANUAL ENTRY 005</h3>
+    <h3>&#9997;&#65039; MANUAL ENTRY</h3>
+    <div style="width:28px"></div>
+   </div>
+   <div class="sbar" id="mSBar">
+    <div class="sprog" id="mProg"></div>
+    <div class="sitem son"><div class="scirc">1</div><div class="slbl">Demo-<br>graphics</div></div>
+    <div class="sitem"><div class="scirc">2</div><div class="slbl">Household<br>Details</div></div>
+    <div class="sitem"><div class="scirc">3</div><div class="slbl">Review</div></div>
+    <div class="sitem"><div class="scirc">4</div><div class="slbl">QR<br>Code</div></div>
+    <div class="sitem"><div class="scirc">5</div><div class="slbl">Finish</div></div>
+   </div>
+   <div class="wbody">
+    <div class="wsec on" id="ms1">
+
+      
+     <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
+     <div class="r2">
+      <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
+      <div class="fg"><label>🏛 District<span class="req">*</span></label><select id="mDis" disabled><option value="">— District —</option></select><div class="ferr" id="mDisE">Required</div></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>⛰ Chiefdom<span class="req">*</span></label><select id="mChi" disabled><option value="">— Chiefdom —</option></select><div class="ferr" id="mChiE">Required</div></div>
+      <div class="fg"><label>🏘 Community<span class="req">*</span></label><select id="mCom" disabled><option value="">— Community —</option></select><div class="ferr" id="mComE">Required</div></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>🏥 Facility<span class="req">*</span></label><select id="mFac" disabled><option value="">— Facility —</option></select><div class="ferr" id="mFacE">Required</div></div>
+      <div class="fg"><label>📦 Dist. Point<span class="req">*</span></label><select id="mDp" disabled><option value="">— Dist. Point —</option></select><div class="ferr" id="mDpE">Required</div></div>
+     </div>
+     <div class="wnavs"><div></div><button class="wnext" onclick="ms1Next()">Next &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms2">
+     <div class="r2">
+      <div class="fg"><label>👤 Surname<span class="req">*</span></label><input id="mSur" placeholder="Family name"><div class="ferr" id="mSurE">Required</div></div>
+      <div class="fg"><label>👤 Middle</label><input id="mMid" placeholder="Optional"></div>
+     </div>
+     <div class="fg"><label>👤 First Name<span class="req">*</span></label><input id="mFst" placeholder="Given name"><div class="ferr" id="mFstE">Required</div></div>
+     <div class="fg"><label>📞 Mobile<span class="req">*</span></label>
+      <div class="ph-wrap"><div class="ph-sim">📱 SIM</div><input type="tel" id="mPh" class="ph-inp" placeholder="071234567" maxlength="9"></div>
+      <div class="ferr" id="mPhE">Must be 9 digits starting with 0</div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn()"><div class="ferr" id="mMemE">Min 1</div></div>
+      <div class="fg"><label>🦟 ITN Alloc.</label><input id="mItn" readonly placeholder="Auto"></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>🤰 Pregnant</label><input type="number" id="mPrg" min="0" value="0"></div>
+      <div class="fg"><label>🧒 Under-5</label><input type="number" id="mU5" min="0" value="0"></div>
+     </div>
+     <div class="fg"><label>🧑‍⚕️ HHR Name<span class="req">*</span></label><input id="mHhr" placeholder="Enumerator full name"><div class="ferr" id="mHhrE">Required</div></div>
+     <div class="r2">
+      <div class="fg"><label>📍 Latitude</label><input id="mLat" readonly placeholder="GPS..."></div>
+      <div class="fg"><label>📍 Longitude</label><input id="mLng" readonly placeholder="GPS..."></div>
+     </div>
+     <button class="tok-btn" onclick="genToken()">🔐 Generate Household Token</button>
+     <div class="tok-box" id="mTok"></div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Prev</button><button class="wnext" onclick="ms2Next()">Review &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms3">
+     <div class="rvbox"><h4>📋 Summary</h4><div id="mRv"></div><span class="rvedit" onclick="mNav(-1)">✏️ Edit</span></div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">QR Code &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms4">
+     <div class="qrbox">
+      <h4>📸 Generate QR Code</h4>
+      <div class="qr-wrap"><canvas id="mQrc" style="display:none"></canvas><p id="mQrMsg">Click Generate QR</p></div>
+      <div class="qrbtns">
+       <button class="qbtn qbtn-g" onclick="genQR()">Generate QR</button>
+       <button class="qbtn qbtn-d" id="mDlBtn" disabled onclick="dlQR()">Download</button>
+      </div>
+     </div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">Finish &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms5">
+     <div class="succ" id="mSucc">&#9989; Registration Successful!</div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" id="mFinBtn" onclick="finalReg()">🏠 Register Household</button></div>
+    </div>
+   </div>
+  </div> 
+
+    <!-- ══════════════════════════════════════
+       SCREEN 44 — SCAN QR WIZARD
+  ══════════════════════════════════════ -->
+  <div class="screen" id="sManual">
+   <div class="whdr">
+    <button class="wback" onclick="go('sRegHome')">&#8592;</button>
+    <h3>&#9997;&#65039; SCAN QR</h3>
     <div style="width:28px"></div>
    </div>
    <div class="sbar" id="mSBar">
@@ -366,7 +451,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div class="wsec on" id="ms1">
      <div class="fg" style="text-align:center; margin-bottom: 16px;">
       <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="simulateManualScan()">
-       <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
+       <i class="fa fa-camera"></i> 📷 SCAN QR BADGE
       </button>
       <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Align badge within camera frame to auto-fill</p>
      </div>
@@ -433,6 +518,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     </div>
    </div>
   </div>
+
 
   <!-- ══════════════════════════════════════
        SCREEN 5 — RECORDS
