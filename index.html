@@ -4,16 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>ICF-SL | ITN Campaign Access Portal</title>
-
-<!-- Font Awesome 6 -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <style>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
     background: #eef2f9;
@@ -32,9 +26,8 @@
     background: #1a1e2c;
     border-radius: 48px;
     padding: 10px;
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 25px 45px rgba(0,0,0,0.4);
   }
-
   .phone-mock {
     width: 100%;
     height: 100%;
@@ -49,11 +42,9 @@
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
-  .phone-mock::-webkit-scrollbar {
-    display: none;
-  }
+  .phone-mock::-webkit-scrollbar { display: none; }
 
-  /* Login screen styles */
+  /* ── LOGIN ── */
   .login-screen {
     flex: 1;
     display: flex;
@@ -62,24 +53,17 @@
     position: relative;
     z-index: 2;
   }
-
   .card {
-    background: rgba(255, 255, 255, 0.98);
+    background: rgba(255,255,255,0.98);
     border-radius: 32px;
     padding: 28px 20px 26px;
     text-align: center;
     margin-bottom: 20px;
-    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 12px 28px rgba(0,0,0,0.12);
   }
-
-  .logo-area img {
-    width: 90px;
-    margin-bottom: 14px;
-    border-radius: 20px;
-  }
-
+  .logo-area img { width: 90px; margin-bottom: 14px; border-radius: 20px; }
   .field {
-    background: #ffffff;
+    background: #fff;
     border: 1.8px solid #2a7fc4;
     border-radius: 44px;
     padding: 12px 18px;
@@ -88,425 +72,250 @@
     align-items: center;
     gap: 10px;
   }
-  .field:focus-within {
-    border-color: #FF8C42;
-    box-shadow: 0 0 0 3px rgba(255,140,66,0.2);
-  }
-  .field input {
-    border: none;
-    background: transparent;
-    width: 100%;
-    outline: none;
-    font-size: 14px;
-    font-weight: 600;
-    color: #1e2f3f;
-  }
-  .field input::placeholder {
-    color: #7a8e9e;
-    font-weight: 500;
-  }
-  .eye {
-    cursor: pointer;
-    font-size: 18px;
-    color: #2a7fc4;
-  }
-
-  .error-message, .success-message, .camera-error-msg {
-    font-size: 12px;
-    font-weight: 600;
-    padding-left: 10px;
-    margin-top: -6px;
-    margin-bottom: 12px;
-    display: none;
-  }
-  .error-message { color: #d32f2f; }
-  .success-message { color: #2e7d32; }
-  .camera-error-msg { color: #f97316; text-align: center; }
+  .field:focus-within { border-color: #FF8C42; box-shadow: 0 0 0 3px rgba(255,140,66,0.2); }
+  .field input { border: none; background: transparent; width: 100%; outline: none; font-size: 14px; font-weight: 600; color: #1e2f3f; }
+  .field input::placeholder { color: #7a8e9e; font-weight: 500; }
+  .eye { cursor: pointer; font-size: 18px; color: #2a7fc4; }
+  .error-msg, .success-msg { font-size: 12px; font-weight: 600; padding-left: 10px; margin-top: -6px; margin-bottom: 12px; display: none; }
+  .error-msg { color: #d32f2f; }
+  .success-msg { color: #2e7d32; }
   .show { display: block; }
-
-  .btn {
-    width: 100%;
-    padding: 12px;
-    border-radius: 44px;
-    border: none;
-    color: white;
-    font-weight: 800;
-    font-size: 14px;
-    margin-bottom: 12px;
-    cursor: pointer;
-  }
+  .btn { width: 100%; padding: 12px; border-radius: 44px; border: none; color: white; font-weight: 800; font-size: 14px; margin-bottom: 12px; cursor: pointer; }
   .btn-login { background: #1565C0; }
   .btn-login:hover { background: #0e4f96; }
   .btn-scan { background: #2e7d64; }
-
-  .utility-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
-  }
-  .tile {
-    border-radius: 24px;
-    padding: 14px 6px;
-    text-align: center;
-    color: white;
-    font-weight: 700;
-    font-size: 11px;
-    cursor: pointer;
-    background: rgba(0, 0, 0, 0.68);
-    backdrop-filter: blur(6px);
-  }
+  .utility-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 20px; }
+  .tile { border-radius: 24px; padding: 14px 6px; text-align: center; color: white; font-weight: 700; font-size: 11px; cursor: pointer; background: rgba(0,0,0,0.68); backdrop-filter: blur(6px); }
   .tile-icon { font-size: 24px; margin-bottom: 6px; }
-  .t-orange { background: rgba(217, 95, 26, 0.88); }
-  .t-blue   { background: rgba(42, 127, 196, 0.88); }
-  .t-purple { background: rgba(123, 63, 160, 0.88); }
-  .t-teal   { background: rgba(27, 154, 138, 0.88); }
+  .t-orange { background: rgba(217,95,26,0.88); }
+  .t-blue   { background: rgba(42,127,196,0.88); }
+  .t-purple { background: rgba(123,63,160,0.88); }
+  .t-teal   { background: rgba(27,154,138,0.88); }
+  .login-footer { background: #1565C0; text-align: center; padding: 14px 12px; color: white; font-size: 10px; line-height: 1.4; width: calc(100% + 36px); margin-left: -18px; margin-top: auto; }
+  .login-footer strong { color: #FFD966; }
 
-  /* Login Footer */
-  .login-footer {
-    background: #1565C0;
-    text-align: center;
-    padding: 14px 12px;
-    color: white;
-    font-size: 10px;
-    line-height: 1.4;
-    width: calc(100% + 36px);
-    margin-left: -18px;
-    margin-right: 0;
-    margin-top: auto;
-    border-radius: 0;
-  }
-  .login-footer strong {
-    color: #FFD966;
-  }
-
-  /* Dashboard Styles */
-  .dashboard-container {
-    display: flex;
-    flex-direction: column;
-    min-height: 100%;
-  }
-
-  .app-header {
-    background-color: #1565C0;
-    padding: 0.65rem 1rem 0.5rem;
-    flex-shrink: 0;
-  }
-  .header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0.35rem;
-  }
-  .logo-row {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    gap: 0.5rem;
-  }
-  .logo-area-dash {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-  .logo-icon {
-    width: 44px;
-    height: 44px;
-    background: white;
-    border-radius: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+  /* ── DASHBOARD ── */
+  .dashboard-container { display: flex; flex-direction: column; min-height: 100%; }
+  .app-header { background-color: #1565C0; padding: 0.65rem 1rem 0.5rem; flex-shrink: 0; }
+  .header-container { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.35rem; }
+  .logo-row { display: flex; align-items: center; justify-content: center; width: 100%; gap: 0.5rem; }
+  .logo-area-dash { display: flex; align-items: center; gap: 10px; }
+  .logo-icon { width: 44px; height: 44px; background: white; border-radius: 14px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
   .logo-icon img { width: 100%; object-fit: cover; }
-  .org-info h1 {
-    font-size: 0.75rem;
-    font-weight: 800;
-    background: linear-gradient(135deg, #fff, #FFE0B5);
-    background-clip: text;
-    -webkit-background-clip: text;
-    color: transparent;
-  }
-  .org-info p {
-    font-size: 0.5rem;
-    font-weight: 500;
-    color: rgba(255, 255, 255, 0.92);
-  }
-  .nav-badge {
-    background: #FF8C42;
-    padding: 0.3rem 1rem;
-    border-radius: 40px;
-    font-weight: 700;
-    font-size: 0.55rem;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: white;
-    white-space: nowrap;
-    overflow-x: auto;
-  }
-  .campaign-sub-header {
-    color: #FFDF8C;
-    font-weight: 600;
-    font-size: 0.6rem;
-    display: inline-flex;
-    align-items: center;
-    gap: 5px;
-  }
-
-  /* USER INFO BAR */
-  .user-info-bar {
-    background: #1b8a7e;
-    padding: 10px 16px;
-    margin: 0;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    color: white;
-    font-size: 12px;
-    font-weight: 600;
-    flex-shrink: 0;
-    border-radius: 0;
-  }
-  .logout-btn {
-    background: #FF0000;
-    border: none;
-    color: white;
-    padding: 5px 14px;
-    border-radius: 30px;
-    cursor: pointer;
-    font-size: 11px;
-    font-weight: 600;
-    transition: 0.2s;
-  }
-  .logout-btn:hover {
-    background: #cc0000;
-  }
-
-  .partner-section {
-    background: white;
-    padding: 0.6rem 0.5rem 0.5rem;
-    border-bottom: 1px solid #eef2f8;
-    flex-shrink: 0;
-  }
-  .partner-title {
-    text-align: center;
-    font-size: 0.55rem;
-    font-weight: 800;
-    color: #F57C00;
-    margin-bottom: 0.5rem;
-  }
-  .partner-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 0.4rem;
-  }
+  .org-info h1 { font-size: 0.75rem; font-weight: 800; background: linear-gradient(135deg,#fff,#FFE0B5); background-clip: text; -webkit-background-clip: text; color: transparent; }
+  .org-info p { font-size: 0.5rem; font-weight: 500; color: rgba(255,255,255,0.92); }
+  .nav-badge { background: #FF8C42; padding: 0.3rem 1rem; border-radius: 40px; font-weight: 700; font-size: 0.55rem; display: flex; align-items: center; gap: 6px; color: white; white-space: nowrap; }
+  .campaign-sub-header { color: #FFDF8C; font-weight: 600; font-size: 0.6rem; display: inline-flex; align-items: center; gap: 5px; }
+  .user-info-bar { background: #1b8a7e; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; color: white; font-size: 12px; font-weight: 600; flex-shrink: 0; }
+  .logout-btn { background: #FF0000; border: none; color: white; padding: 5px 14px; border-radius: 30px; cursor: pointer; font-size: 11px; font-weight: 600; }
+  .logout-btn:hover { background: #cc0000; }
+  .partner-section { background: white; padding: 0.6rem 0.5rem 0.5rem; border-bottom: 1px solid #eef2f8; flex-shrink: 0; }
+  .partner-title { text-align: center; font-size: 0.55rem; font-weight: 800; color: #F57C00; margin-bottom: 0.5rem; }
+  .partner-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.4rem; }
   .partner-item { text-align: center; }
-  .partner-logo {
-    background: #f9fbfd;
-    border-radius: 12px;
-    padding: 0.2rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    min-height: 32px;
-  }
+  .partner-logo { background: #f9fbfd; border-radius: 12px; padding: 0.2rem; display: flex; align-items: center; justify-content: center; min-height: 32px; }
   .partner-logo img { max-width: 28px; max-height: 28px; }
   .partner-name { font-size: 0.44rem; font-weight: 700; color: #E65100; margin-top: 0.2rem; }
-
-  /* SMART SLIDER */
-  .carousel-section { 
-    width: 100%; 
-    background: transparent;
-    margin: 0;
-    padding: 0;
-  }
-  .carousel-container { 
-    position: relative; 
-    width: 100%; 
-    overflow: hidden;
-    background: #1565C0;
-    border-radius: 0;
-  }
-  .carousel-slides { 
-    display: flex; 
-    transition: transform 0.5s ease-in-out;
-  }
-  .carousel-slide { 
-    min-width: 100%; 
-    flex-shrink: 0;
-  }
-  .carousel-slide img { 
-    width: 100%;
-    height: 200px;
-    display: block;
-    object-fit: cover;
-    object-position: center;
-  }
-  .carousel-dots { 
-    display: flex; 
-    justify-content: center; 
-    gap: 8px; 
-    margin-top: 8px;
-    margin-bottom: 8px;
-    background: transparent;
-    padding: 4px 0;
-  }
-  .dot { 
-    width: 6px; 
-    height: 6px; 
-    border-radius: 50%; 
-    background-color: #ffffff; 
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.7;
-  }
-  .dot.active { 
-    background-color: #FF8C42; 
-    width: 20px; 
-    border-radius: 4px;
-    opacity: 1;
-  }
-  .carousel-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
-    background: rgba(255, 255, 255, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    font-size: 20px;
-    font-weight: bold;
-    color: #FF8C42;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    z-index: 10;
-  }
-  .carousel-arrow:hover {
-    background: white;
-    transform: translateY(-50%) scale(1.05);
-    color: #1565C0;
-  }
+  /* CAROUSEL */
+  .carousel-section { width: 100%; background: transparent; }
+  .carousel-container { position: relative; width: 100%; overflow: hidden; background: #1565C0; }
+  .carousel-slides { display: flex; transition: transform 0.5s ease-in-out; }
+  .carousel-slide { min-width: 100%; flex-shrink: 0; }
+  .carousel-slide img { width: 100%; height: 200px; display: block; object-fit: cover; }
+  .carousel-dots { display: flex; justify-content: center; gap: 8px; margin: 8px 0; }
+  .dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; cursor: pointer; opacity: 0.7; transition: all 0.3s; }
+  .dot.active { background: #FF8C42; width: 20px; border-radius: 4px; opacity: 1; }
+  .carousel-arrow { position: absolute; top: 50%; transform: translateY(-50%); width: 32px; height: 32px; background: rgba(255,255,255,0.9); border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 20px; font-weight: bold; color: #FF8C42; z-index: 10; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
+  .carousel-arrow:hover { background: white; color: #1565C0; }
   .arrow-left { left: 10px; }
   .arrow-right { right: 10px; }
-
   /* ACTION CARDS */
-  .role-actions-section { 
-    padding: 0.5rem 0.8rem; 
-    margin: 0.2rem 0.5rem;
-    flex-shrink: 0;
-  }
-  .action-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
-  .action-card {
-    border-radius: 18px;
-    padding: 0.45rem 0.2rem;
-    text-align: center;
-    cursor: pointer;
-    transition: transform 0.12s ease;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
-  }
+  .role-actions-section { padding: 0.5rem 0.8rem; margin: 0.2rem 0.5rem; flex-shrink: 0; }
+  .action-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.5rem; }
+  .action-card { border-radius: 18px; padding: 0.45rem 0.2rem; text-align: center; cursor: pointer; transition: transform 0.12s ease; box-shadow: 0 6px 12px rgba(0,0,0,0.08); }
   .action-card:active { transform: scale(0.96); }
   .action-icon { font-size: 28px; margin-bottom: 6px; }
   .action-label { font-size: 0.52rem; font-weight: 800; margin-top: 0.35rem; }
-  
-  /* Card gradient backgrounds */
-  .card-1 { background: linear-gradient(145deg, #FF6B6B, #EE5A24); color: white; }
-  .card-2 { background: linear-gradient(145deg, #4ECDC4, #2c9e92); color: white; }
-  .card-3 { background: linear-gradient(145deg, #45B7D1, #2980b9); color: white; }
-  .card-4 { background: linear-gradient(145deg, #F9CA24, #F39C12); color: #2c3e50; }
-  .card-5 { background: linear-gradient(145deg, #A55EEA, #8B5CF6); color: white; }
-  .card-6 { background: linear-gradient(145deg, #FF9FF3, #F368E0); color: white; }
-  .card-7 { background: linear-gradient(145deg, #1DD1A1, #0e9f6e); color: white; }
-  .card-8 { background: linear-gradient(145deg, #FF8C42, #E67E22); color: white; }
-  .card-9 { background: linear-gradient(145deg, #5D6D7E, #2C3E50); color: white; }
-  
-  .card-4 .action-label { color: #2c3e50; }
-  .card-4 .action-icon { color: #2c3e50; }
+  .card-1 { background: linear-gradient(145deg,#FF6B6B,#EE5A24); color: white; }
+  .card-2 { background: linear-gradient(145deg,#4ECDC4,#2c9e92); color: white; }
+  .card-3 { background: linear-gradient(145deg,#45B7D1,#2980b9); color: white; }
+  .card-4 { background: linear-gradient(145deg,#F9CA24,#F39C12); color: #2c3e50; }
+  .card-5 { background: linear-gradient(145deg,#A55EEA,#8B5CF6); color: white; }
+  .card-6 { background: linear-gradient(145deg,#FF9FF3,#F368E0); color: white; }
+  .card-7 { background: linear-gradient(145deg,#1DD1A1,#0e9f6e); color: white; }
+  .card-8 { background: linear-gradient(145deg,#FF8C42,#E67E22); color: white; }
+  .card-9 { background: linear-gradient(145deg,#5D6D7E,#2C3E50); color: white; }
+  .card-4 .action-label, .card-4 .action-icon { color: #2c3e50; }
+  .app-footer { background: #F8FAFE; margin-top: auto; flex-shrink: 0; width: 100%; }
+  .wave-wrapper { line-height: 0; width: 100%; }
+  .wave-svg { display: block; width: 100%; height: auto; }
+  .footer-bottom { background: #1565C0; padding: 0.6rem 0.8rem; text-align: center; width: 100%; }
+  .developed-by { font-size: 0.55rem; font-weight: 500; color: white; line-height: 1.4; }
+  .developed-by strong { color: #FFD966; font-weight: 800; }
 
-  /* Dashboard Footer */
-  .app-footer {
-    background: #F8FAFE;
-    margin-top: auto;
-    flex-shrink: 0;
-    width: 100%;
-  }
-  .wave-wrapper {
-    line-height: 0;
-    width: 100%;
-  }
-  .wave-svg {
-    display: block;
-    width: 100%;
-    height: auto;
-  }
-  .footer-bottom {
-    background: #1565C0;
-    padding: 0.6rem 0.8rem;
-    text-align: center;
-    width: 100%;
-  }
-  .developed-by {
-    font-size: 0.55rem;
-    font-weight: 500;
-    color: white;
-    line-height: 1.4;
-  }
-  .developed-by strong {
-    color: #FFD966;
-    font-weight: 800;
-  }
-
-  /* Modals */
-  .network-modal, .access-modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    z-index: 1100;
-    justify-content: center;
-    align-items: center;
-  }
+  /* ── MODALS ── */
+  .network-modal, .access-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 1100; justify-content: center; align-items: center; }
   .network-modal.active, .access-modal.active { display: flex; }
-  .network-card, .access-card {
-    background: white;
-    border-radius: 36px;
-    padding: 28px 22px;
-    text-align: center;
-    max-width: 310px;
-    width: 85%;
-  }
+  .network-card, .access-card { background: white; border-radius: 36px; padding: 28px 22px; text-align: center; max-width: 310px; width: 85%; }
   .network-status-icon { font-size: 58px; margin-bottom: 12px; }
   .network-status-title { font-size: 22px; font-weight: 800; margin-bottom: 12px; }
   .network-status-detail { font-size: 13px; color: #2c3e50; margin-bottom: 20px; line-height: 1.4; }
-  .network-close-btn, .access-close-btn {
-    background: #1565C0;
-    color: white;
-    border: none;
-    padding: 10px 24px;
-    border-radius: 40px;
-    font-weight: bold;
-    cursor: pointer;
+  .network-close-btn, .access-close-btn { background: #1565C0; color: white; border: none; padding: 10px 24px; border-radius: 40px; font-weight: bold; cursor: pointer; }
+
+  /* ── REGISTER MODULE (inline inside phone-mock) ── */
+  #registerModule {
+    display: none;
+    flex-direction: column;
+    flex: 1;
+    background: #f0f2f5;
+    height: 100%;
+    overflow: hidden;
   }
+  #registerModule.active { display: flex; }
+
+  /* register header */
+  .reg-header {
+    background: linear-gradient(115deg,#0a59c6,#1e6f9f);
+    padding: 14px 16px;
+    color: white;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-shrink: 0;
+  }
+  .reg-back-btn {
+    width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer;
+    background: rgba(255,255,255,0.2); color: white; font-size: 1.1rem; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .reg-title { font-size: 0.85rem; }
+
+  /* home screen of register */
+  #regHomeScreen { display: flex; flex-direction: column; flex: 1; overflow: hidden; }
+  .reg-plain-title { background: transparent; padding: 1rem 1rem 0.4rem; text-align: center; }
+  .reg-title-row { display: flex; align-items: center; justify-content: center; gap: 0.6rem; flex-wrap: wrap; }
+  .reg-title-text { font-size: 1.05rem; font-weight: 700; color: #0a59c6; background: rgba(10,89,198,0.08); padding: 0.2rem 1rem; border-radius: 40px; }
+  .reg-home-content { flex: 1; padding: 0.8rem 1rem; display: flex; justify-content: center; align-items: center; background: #f0f2f5; overflow-y: auto; }
+  .reg-cards-container { display: flex; flex-direction: row; gap: 0.7rem; justify-content: center; align-items: stretch; width: 100%; flex-wrap: wrap; }
+  .reg-action-card { background: white; border-radius: 20px; box-shadow: 0 8px 16px -5px rgba(0,0,0,0.1); flex: 1; min-width: 90px; max-width: 105px; cursor: pointer; display: flex; flex-direction: column; overflow: hidden; transition: transform 0.15s; }
+  .reg-action-card:active { transform: scale(0.97); }
+  .reg-card-manual .reg-card-hdr { background: linear-gradient(135deg,#ea580c,#f97316); }
+  .reg-card-scan .reg-card-hdr   { background: linear-gradient(135deg,#0d9488,#14b8a6); }
+  .reg-card-target .reg-card-hdr { background: linear-gradient(135deg,#dc2626,#ef4444); }
+  .reg-card-records .reg-card-hdr{ background: linear-gradient(135deg,#7c3aed,#a855f7); }
+  .reg-card-hdr { padding: 0.5rem 0.3rem; color: white; display: flex; flex-direction: column; align-items: center; gap: 0.3rem; text-align: center; }
+  .reg-card-icon { font-size: 1.2rem; background: rgba(255,255,255,0.2); width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; border-radius: 50%; }
+  .reg-card-hdr h3 { font-size: 0.62rem; font-weight: 800; }
+  .reg-card-body { padding: 0.4rem 0.5rem 0.5rem; }
+  .reg-card-desc { color: #1e293b; font-size: 0.5rem; background: #f8fafc; padding: 0.4rem; border-radius: 10px; border-left: 2.5px solid #f97316; }
+  .reg-card-desc strong { display: block; font-size: 0.55rem; margin-bottom: 2px; }
+
+  /* step wizard */
+  .form-wrapper { display: none; flex-direction: column; flex: 1; overflow: hidden; background: #f0f2f5; }
+  .form-wrapper.active { display: flex; }
+  .form-header { background: linear-gradient(115deg,#0a59c6,#1e6f9f); padding: 13px 16px; color: white; font-weight: 800; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+  .form-title { font-size: 0.82rem; font-weight: 700; }
+  .back-btn-sm { width: 34px; height: 34px; border-radius: 50%; border: none; cursor: pointer; background: rgba(255,255,255,0.2); color: white; font-size: 1rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+  .steps { position: relative; display: flex; justify-content: space-between; padding: 12px 14px 8px; background: #f0f2f5; flex-shrink: 0; }
+  .steps::before { content: ""; position: absolute; top: 29px; left: 8%; right: 8%; height: 4px; background: #e2eaf5; border-radius: 8px; z-index: 0; }
+  .progress-bar { position: absolute; top: 29px; left: 8%; height: 4px; background: #0a59c6; width: 0%; transition: width 0.3s; border-radius: 8px; z-index: 1; }
+  .step { text-align: center; width: 20%; position: relative; z-index: 2; }
+  .circle { width: 30px; height: 30px; border-radius: 50%; background: #cbd5e1; color: white; font-weight: bold; font-size: 0.75rem; line-height: 30px; margin: 0 auto; }
+  .step.active .circle { background: #0a59c6; box-shadow: 0 4px 10px rgba(10,89,198,0.4); }
+  .step-label { font-size: 0.42rem; margin-top: 4px; color: #4a5b6e; font-weight: 600; text-align: center; }
+  .step.active .step-label { color: #0a59c6; font-weight: 800; }
+  .form-scroll-area { flex: 1; overflow-y: auto; background: #f0f2f5; }
+  .section { display: none; padding: 8px 16px 20px; }
+  .section.active { display: block; animation: fadeSlide 0.25s ease; }
+  @keyframes fadeSlide { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  /* form fields */
+  .f-row { display: flex; flex-wrap: wrap; gap: 10px; }
+  .f-group { width: 100%; margin-bottom: 4px; }
+  @media (min-width: 380px) { .f-group.half { width: calc(50% - 5px); } }
+  .f-group label { font-size: 0.65rem; font-weight: 800; color: #1f3b4c; margin-bottom: 3px; display: block; }
+  .f-group label .req { color: #e63946; margin-left: 3px; }
+  .f-group input, .f-group select { width: 100%; padding: 9px 12px; border: 1.8px solid #dee6ef; border-radius: 22px; font-size: 0.8rem; background: white; color: #1e293b; }
+  .f-group input:focus, .f-group select:focus { border-color: #0a59c6; outline: none; box-shadow: 0 0 0 3px rgba(10,89,198,0.15); }
+  .f-err { color: #e63946; font-size: 0.58rem; margin-top: 3px; display: none; }
+  .phone-wrap { width: 100%; background: #f8fafd; border-radius: 44px; padding: 3px 4px 3px 14px; border: 2px solid #cbdbe2; display: flex; align-items: center; gap: 6px; }
+  .phone-sim { background: #0a59c6; border-radius: 18px; padding: 5px; color: white; font-size: 0.7rem; text-align: center; width: 40px; font-weight: bold; }
+  .phone-digit { flex: 1; border: none !important; background: transparent !important; font-size: 0.9rem; font-weight: 600; padding: 8px 0; font-family: monospace; letter-spacing: 1px; }
+  .token-btn { background: linear-gradient(105deg,#e9c46a,#f4a261); color: #2d3e50; font-weight: 800; border-radius: 44px; width: 100%; margin-top: 14px; padding: 11px; border: none; cursor: pointer; font-size: 0.78rem; }
+  .token-box { margin-top: 12px; background: #0a59c6; color: #f4f1de; text-align: center; border-radius: 28px; padding: 10px; font-weight: 700; display: none; font-size: 0.75rem; word-break: break-all; }
+  .review-box { background: #fefcf5; padding: 14px; border-radius: 28px; border: 1px solid #e9ecef; }
+  .review-title-hdr { font-weight: 800; margin-bottom: 10px; color: #0c4a6e; border-left: 4px solid #0a59c6; padding-left: 10px; font-size: 0.85rem; }
+  .review-sec { margin-bottom: 12px; }
+  .review-sec-title { font-weight: 800; font-size: 0.7rem; color: #0a59c6; margin-bottom: 4px; border-bottom: 1px solid #e2e8f0; padding-bottom: 2px; }
+  .review-content { font-size: 0.63rem; line-height: 1.5; color: #1e293b; }
+  .edit-lnk { background: #ffedd5; display: inline-block; padding: 5px 14px; border-radius: 36px; font-size: 0.62rem; font-weight: 700; cursor: pointer; margin-top: 10px; }
+  .qr-section { text-align: center; background: linear-gradient(135deg,#f8fafc,#f1f5f9); border-radius: 32px; padding: 18px 14px; width: 100%; box-shadow: 0 4px 12px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; }
+  .qr-placeholder { background: white; padding: 14px; border-radius: 22px; display: flex; align-items: center; justify-content: center; margin: 10px auto; box-shadow: 0 6px 14px rgba(0,0,0,0.08); border: 2px solid #e2e8f0; min-width: 200px; min-height: 200px; }
+  .qr-placeholder canvas { display: block; }
+  .qr-msg { font-size: 0.72rem; color: #64748b; }
+  .qr-buttons { display: flex; gap: 10px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+  .qr-btn, .dl-btn { background: #0a59c6; color: white; border: none; padding: 9px 18px; border-radius: 44px; font-weight: 700; cursor: pointer; font-size: 0.72rem; min-width: 120px; }
+  .dl-btn { background: #e76f51; }
+  .dl-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+  .wiz-btns { display: flex; gap: 10px; margin-top: 20px; }
+  .wiz-btns button { flex: 1; padding: 9px; border-radius: 44px; font-weight: 700; border: none; cursor: pointer; font-size: 0.78rem; }
+  .btn-next { background: #0a59c6; color: white; }
+  .btn-prev { background: #e2e8f0; color: #1e293b; }
+  .success-box { background: #d9f0ec; padding: 18px; border-radius: 26px; text-align: center; font-weight: 800; color: #1f6d5c; font-size: 0.82rem; }
+
+  /* records */
+  .records-container { display: none; flex-direction: column; flex: 1; background: #f0f2f5; overflow: hidden; }
+  .records-container.active { display: flex; }
+  .records-header { background: #0a59c6; color: white; padding: 14px 12px; text-align: center; font-weight: 800; display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; font-size: 0.75rem; }
+  .records-wrap { flex: 1; overflow-x: auto; overflow-y: auto; padding: 10px; }
+  .rec-table { width: 100%; border-collapse: collapse; background: white; border-radius: 14px; overflow: hidden; font-size: 0.55rem; min-width: 1400px; }
+  .rec-table th { background: #0a59c6; color: white; padding: 9px 6px; font-weight: 700; text-align: left; white-space: nowrap; }
+  .rec-table td { padding: 7px 6px; border-bottom: 1px solid #e2e8f0; color: #1e293b; white-space: nowrap; vertical-align: middle; }
+  .rec-table tr:hover { background: #f8fafc; }
+  .no-records { text-align: center; color: #64748b; padding: 40px; font-size: 0.8rem; }
+  .qr-img-sm { width: 55px; height: 55px; display: block; margin: 0 auto; cursor: pointer; border: 1px solid #ddd; border-radius: 8px; }
+  .qr-dl-sm { background: #e76f51; color: white; border: none; padding: 2px 6px; border-radius: 10px; font-size: 0.48rem; margin-top: 3px; cursor: pointer; display: block; width: 100%; }
+  .modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.8); display: flex; align-items: center; justify-content: center; z-index: 2000; }
+  .qr-modal-box { background: white; border-radius: 28px; padding: 22px; text-align: center; max-width: 320px; width: 88%; }
+
+  /* target dashboard */
+  .target-dash { display: none; flex-direction: column; flex: 1; background: #f0f2f5; overflow: hidden; }
+  .target-dash.active { display: flex; }
+  .unified-card { background: white; border-radius: 26px; padding: 18px; margin-bottom: 14px; box-shadow: 0 8px 20px rgba(0,0,0,0.07); }
+  .unified-card-title { font-size: 0.82rem; font-weight: 800; color: #0a59c6; text-align: center; padding-bottom: 12px; border-bottom: 2px solid #e2e8f0; margin-bottom: 14px; }
+  .cov-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #f0f2f5; }
+  .cov-label { font-size: 0.65rem; font-weight: 600; color: #334155; }
+  .cov-value { font-size: 0.85rem; font-weight: 800; color: #0a59c6; }
+  .prog-hdr { display: flex; justify-content: space-between; align-items: center; margin: 14px 0 8px; }
+  .prog-label { font-size: 0.65rem; font-weight: 700; color: #334155; }
+  .prog-pct { font-size: 0.82rem; font-weight: 800; color: #0a59c6; }
+  .prog-bg { background: #e2e8f0; border-radius: 20px; height: 10px; overflow: hidden; }
+  .prog-fill { background: #0a59c6; width: 0%; height: 100%; border-radius: 20px; transition: width 0.5s; }
+  .prog-foot { font-size: 0.58rem; text-align: center; margin-top: 6px; color: #475569; font-weight: 600; }
+  .bkdn-card { background: linear-gradient(135deg,#fef3c7,#fde68a); border-radius: 26px; padding: 18px; margin-bottom: 14px; }
+  .bkdn-title { font-size: 0.9rem; font-weight: 800; text-align: center; margin-bottom: 14px; color: #92400e; }
+  .bkdn-row { display: flex; flex-wrap: wrap; gap: 14px; justify-content: space-between; }
+  .bkdn-col { flex: 1; min-width: 80px; }
+  .bkdn-sub { font-weight: 700; font-size: 0.65rem; color: #b45309; margin-bottom: 6px; padding-bottom: 3px; border-bottom: 1px solid #fed7aa; text-align: center; }
+  .bkdn-stats { font-size: 0.6rem; line-height: 1.6; color: #78350f; }
+  .today-card { background: linear-gradient(135deg,#dc2626,#ef4444); border-radius: 26px; padding: 18px; margin-bottom: 14px; text-align: center; }
+  .today-num { font-size: 2.2rem; font-weight: 800; color: #fef08a; }
+  .today-lbl { font-size: 0.68rem; color: #fef9c3; margin-top: 4px; }
+  .reg-footer { background: #0a59c6; color: white; padding: 0.65rem 1rem; text-align: center; flex-shrink: 0; border-bottom-left-radius: 40px; border-bottom-right-radius: 40px; }
+  .reg-footer-text { font-size: 0.65rem; }
 </style>
 </head>
 <body>
 
 <div class="phone-frame">
   <div class="phone-mock" id="appContainer">
-    <!-- Dynamic content injected here -->
+    <!-- Dynamic content injected -->
   </div>
 </div>
+
+<!-- Register Module (hidden until REGISTER card clicked) -->
+<div id="registerModuleWrapper" style="display:none; position:fixed; top:0;left:0;width:100%;height:100%;z-index:500; pointer-events:none;"></div>
 
 <!-- Network Modal -->
 <div id="networkModal" class="network-modal">
@@ -517,20 +326,19 @@
     <button class="network-close-btn" onclick="closeNetworkModal()">OK</button>
   </div>
 </div>
-
 <!-- Access Denied Modal -->
 <div id="accessModal" class="access-modal">
   <div class="access-card">
-    <div style="font-size: 48px; margin-bottom: 12px;">🔒</div>
-    <div style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Access Restricted</div>
-    <div id="accessModalMsg" style="font-size: 13px; color: #555; margin-bottom: 20px;"></div>
+    <div style="font-size:48px;margin-bottom:12px;">🔒</div>
+    <div style="font-size:20px;font-weight:800;margin-bottom:8px;">Access Restricted</div>
+    <div id="accessModalMsg" style="font-size:13px;color:#555;margin-bottom:20px;"></div>
     <button class="access-close-btn" onclick="closeAccessModal()">OK</button>
   </div>
 </div>
 
 <script>
-  // ====================== EMBEDDED CSV USER DATABASE ======================
-  const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
+// ======================== USER DATABASE ========================
+const csvData = `USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
 HHD2027,123456,Hide,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -539,457 +347,723 @@ CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
 PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
 PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
 
-  function parseCSV(csv) {
-    const lines = csv.trim().split('\n');
-    const headers = lines[0].split(',');
-    const users = [];
-    for (let i = 1; i < lines.length; i++) {
-      const values = lines[i].split(',');
-      let user = {};
-      for (let j = 0; j < headers.length; j++) user[headers[j]] = values[j];
-      users.push(user);
-    }
-    return users;
-  }
-  
-  const usersDatabase = parseCSV(csvData);
-  
-  function findUser(username, password) {
-    return usersDatabase.find(user => user.USERNAME === username && user.PASSWORD === password);
-  }
-  
-  let currentUser = null;
-  let currentPermissions = null;
-  
-  const roleActionMap = [
-    { id: "REGISTER", label: "REGISTER", icon: "fa-id-card", color: "card-1", requires: "REGISTER" },
-    { id: "DISTRIBUTION", label: "DISTRIBUTION", icon: "fa-boxes", color: "card-2", requires: "DISTRIBUTION" },
-    { id: "MONITORING", label: "MONITORING", icon: "fa-chart-line", color: "card-3", requires: "MONITORING" },
-    { id: "STOCK", label: "STOCK", icon: "fa-warehouse", color: "card-4", requires: "STOCK" },
-    { id: "DASHBOARD", label: "DASHBOARD", icon: "fa-tachometer-alt", color: "card-5", requires: "DASHBOARD" },
-    { id: "ATTENDANCE", label: "ATTENDANCE", icon: "fa-users", color: "card-6", requires: "ATTENDANCE" },
-    { id: "DEVICE_TRACKING", label: "DEVICE TRACKING", icon: "fa-mobile-alt", color: "card-7", requires: "DEVICE_TRACKING" },
-    { id: "RECONCILIATION", label: "RECONCILIATION", icon: "fa-balance-scale", color: "card-8", requires: "RECONCILIATION" },
-    { id: "WASTE_MANAGEMENT", label: "WASTE MANAGEMENT", icon: "fa-recycle", color: "card-9", requires: "WASTE_MANAGEMENT" }
-  ];
-  
-  function hasPermission(actionKey) {
-    return currentPermissions && currentPermissions[actionKey] === "Show";
-  }
-  
-  function showToast(msg) {
-    const toast = document.createElement('div');
-    toast.style.position = 'fixed';
-    toast.style.bottom = '100px';
-    toast.style.left = '50%';
-    toast.style.transform = 'translateX(-50%)';
-    toast.style.backgroundColor = '#2e7d32';
-    toast.style.color = 'white';
-    toast.style.padding = '10px 20px';
-    toast.style.borderRadius = '40px';
-    toast.style.fontSize = '12px';
-    toast.style.fontWeight = 'bold';
-    toast.style.zIndex = '2000';
-    toast.innerText = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2500);
-  }
-  
-  function showError(msg) {
-    const errDiv = document.getElementById('errorMsg');
-    const successDiv = document.getElementById('successMsg');
-    if (successDiv) successDiv.classList.remove('show');
-    errDiv.innerText = msg;
-    errDiv.classList.add('show');
-    setTimeout(() => errDiv.classList.remove('show'), 3000);
-  }
-  
-  window.togglePasswordVisibility = function() {
-    const pwd = document.getElementById('loginPassword');
-    const icon = document.getElementById('eyeIcon');
-    if (pwd.type === 'password') {
-      pwd.type = 'text';
-      icon.classList.remove('fa-eye');
-      icon.classList.add('fa-eye-slash');
-    } else {
-      pwd.type = 'password';
-      icon.classList.remove('fa-eye-slash');
-      icon.classList.add('fa-eye');
-    }
-  };
-  
-  // NETWORK CHECK
-  async function checkNetwork() {
-    const tile = document.getElementById('networkTile');
-    const originalHTML = tile.innerHTML;
-    tile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>CHECKING...`;
-    tile.style.opacity = '0.7';
-    
-    let isConnected = false;
-    let connectionType = 'Unknown';
-    let responseTime = null;
-    const browserOnline = navigator.onLine;
-    
-    try {
-      const startTime = Date.now();
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
-      const response = await fetch('https://www.gstatic.com/generate_204', {
-        method: 'HEAD',
-        cache: 'no-cache',
-        signal: controller.signal
-      });
-      clearTimeout(timeoutId);
-      responseTime = Date.now() - startTime;
-      if (response.ok || response.status === 204) isConnected = true;
-      else isConnected = false;
-    } catch (err) {
-      try {
-        const fallbackStart = Date.now();
-        const fallbackResponse = await fetch('https://cloudflare.com/cdn-cgi/trace', {
-          method: 'HEAD',
-          cache: 'no-cache'
-        });
-        if (fallbackResponse.ok) {
-          isConnected = true;
-          responseTime = Date.now() - fallbackStart;
-        }
-      } catch (finalErr) { isConnected = false; }
-    }
-    
-    if (navigator.connection) {
-      connectionType = navigator.connection.effectiveType || navigator.connection.type || 'Unknown';
-    }
-    
-    tile.innerHTML = originalHTML;
-    tile.style.opacity = '1';
-    
-    const networkIcon = document.getElementById('networkIcon');
-    const networkTitle = document.getElementById('networkTitle');
-    const networkDetail = document.getElementById('networkDetail');
-    
-    if (isConnected) {
-      networkIcon.innerHTML = '<i class="fa fa-check-circle" style="color: #10b981;"></i>';
-      networkTitle.innerHTML = '✅ INTERNET CONNECTED';
-      networkDetail.innerHTML = `
-        Your device has active internet connectivity.<br><br>
-        📡 Connection: ${connectionType}<br>
-        ⏱️ Response: ${responseTime || 'Fast'} ms<br>
-        🌐 Status: Online
-      `;
-    } else {
-      networkIcon.innerHTML = '<i class="fa fa-wifi" style="color: #f97316;"></i>';
-      networkTitle.innerHTML = '⚠️ NO INTERNET CONNECTION';
-      networkDetail.innerHTML = `
-        Unable to detect internet connectivity.<br><br>
-        📱 Browser status: ${browserOnline ? 'Online (limited)' : 'Offline'}<br>
-        💡 Tip: Check your Wi-Fi or mobile data
-      `;
-    }
-    document.getElementById('networkModal').classList.add('active');
-  }
-  
-  window.closeNetworkModal = () => document.getElementById('networkModal').classList.remove('active');
-  window.closeAccessModal = () => document.getElementById('accessModal').classList.remove('active');
-  
-  function showAccessDenied(actionName) {
-    document.getElementById('accessModalMsg').innerHTML = `You don't have permission to access <strong>${actionName}</strong>.`;
-    document.getElementById('accessModal').classList.add('active');
-  }
-  
-  async function startCamera() {
-    showToast('📷 Camera simulation: Badge scanned successfully');
-    const mockBadges = ["ICF-BADGE-001", "NMCP-ITN-8743", "MOH-SL-5562"];
-    const scanned = mockBadges[Math.floor(Math.random() * mockBadges.length)];
-    showToast(`✓ Badge verified: ${scanned}`);
-  }
-  
-  let currentLang = 'en';
-  function toggleLanguage() {
-    currentLang = currentLang === 'en' ? 'fr' : 'en';
-    const placeholders = currentLang === 'en' ? ['USERNAME', 'PASSWORD'] : ['NOM D\'UTILISATEUR', 'MOT DE PASSE'];
-    const userField = document.getElementById('loginUsername');
-    const passField = document.getElementById('loginPassword');
-    if (userField) userField.placeholder = placeholders[0];
-    if (passField) passField.placeholder = placeholders[1];
-    const loginBtn = document.getElementById('loginBtn');
-    if (loginBtn) loginBtn.innerText = currentLang === 'en' ? 'LOGIN' : 'CONNEXION';
-    const scanBtn = document.getElementById('scanQrBtn');
-    if (scanBtn) scanBtn.innerText = currentLang === 'en' ? 'SCAN QR BADGE' : 'SCANNER QR';
-  }
-  
-  // RENDER LOGIN SCREEN
-  function renderLoginScreen() {
-    const container = document.getElementById('appContainer');
-    container.innerHTML = `
-      <div class="login-screen">
-        <div class="card">
-          <div class="logo-area">
-            <img src="ICF-SL Logo.jpg" alt="ICF-SL Logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'">
-          </div>
-          <div class="field">
-            <input type="text" id="loginUsername" placeholder="USERNAME" autocomplete="off">
-          </div>
-          <div id="errorMsg" class="error-message"></div>
-          <div id="successMsg" class="success-message"></div>
-          <div class="field">
-            <input type="password" id="loginPassword" placeholder="PASSWORD" autocomplete="off">
-            <span class="eye" onclick="togglePasswordVisibility()">
-              <i class="fa-regular fa-eye" id="eyeIcon"></i>
-            </span>
-          </div>
-          <button class="btn btn-login" id="loginBtn">LOGIN</button>
-          <button class="btn btn-scan" id="scanQrBtn">SCAN QR BADGE</button>
-          <div id="cameraErrorMsg" class="camera-error-msg"></div>
+function parseCSV(csv) {
+  const lines = csv.trim().split('\n');
+  const headers = lines[0].split(',');
+  return lines.slice(1).map(line => {
+    const vals = line.split(',');
+    let obj = {};
+    headers.forEach((h,i) => obj[h] = vals[i]);
+    return obj;
+  });
+}
+const usersDB = parseCSV(csvData);
+function findUser(u,p) { return usersDB.find(x => x.USERNAME===u && x.PASSWORD===p); }
+
+let currentUser = null, currentPerms = null;
+
+const roleActionMap = [
+  { id:"REGISTER",       label:"REGISTER",        icon:"fa-id-card",       color:"card-1", requires:"REGISTER" },
+  { id:"DISTRIBUTION",   label:"DISTRIBUTION",    icon:"fa-boxes",         color:"card-2", requires:"DISTRIBUTION" },
+  { id:"MONITORING",     label:"MONITORING",      icon:"fa-chart-line",    color:"card-3", requires:"MONITORING" },
+  { id:"STOCK",          label:"STOCK",           icon:"fa-warehouse",     color:"card-4", requires:"STOCK" },
+  { id:"DASHBOARD",      label:"DASHBOARD",       icon:"fa-tachometer-alt",color:"card-5", requires:"DASHBOARD" },
+  { id:"ATTENDANCE",     label:"ATTENDANCE",      icon:"fa-users",         color:"card-6", requires:"ATTENDANCE" },
+  { id:"DEVICE_TRACKING",label:"DEVICE TRACKING", icon:"fa-mobile-alt",    color:"card-7", requires:"DEVICE_TRACKING" },
+  { id:"RECONCILIATION", label:"RECONCILIATION",  icon:"fa-balance-scale", color:"card-8", requires:"RECONCILIATION" },
+  { id:"WASTE_MANAGEMENT",label:"WASTE MANAGEMENT",icon:"fa-recycle",      color:"card-9", requires:"WASTE_MANAGEMENT" }
+];
+
+function hasPerm(key) { return currentPerms && currentPerms[key] === "Show"; }
+function showToast(msg) {
+  const t = document.createElement('div');
+  Object.assign(t.style, { position:'fixed', bottom:'110px', left:'50%', transform:'translateX(-50%)', background:'#2e7d32', color:'white', padding:'9px 18px', borderRadius:'36px', fontSize:'12px', fontWeight:'bold', zIndex:'3000', whiteSpace:'nowrap' });
+  t.innerText = msg;
+  document.body.appendChild(t);
+  setTimeout(() => t.remove(), 2500);
+}
+window.closeNetworkModal = () => document.getElementById('networkModal').classList.remove('active');
+window.closeAccessModal  = () => document.getElementById('accessModal').classList.remove('active');
+function showAccessDenied(name) { document.getElementById('accessModalMsg').innerHTML = `You don't have permission to access <strong>${name}</strong>.`; document.getElementById('accessModal').classList.add('active'); }
+window.togglePasswordVisibility = function() {
+  const p = document.getElementById('loginPassword'), i = document.getElementById('eyeIcon');
+  if (p.type==='password') { p.type='text'; i.classList.replace('fa-eye','fa-eye-slash'); }
+  else { p.type='password'; i.classList.replace('fa-eye-slash','fa-eye'); }
+};
+async function checkNetwork() {
+  const tile = document.getElementById('networkTile');
+  if (!tile) return;
+  const orig = tile.innerHTML;
+  tile.innerHTML = `<div class="tile-icon"><i class="fa fa-spinner fa-pulse"></i></div>CHECKING...`;
+  let connected = false, rtt = null, connType = 'Unknown';
+  try {
+    const t0 = Date.now(); const r = await fetch('https://www.gstatic.com/generate_204',{method:'HEAD',cache:'no-cache'}); rtt = Date.now()-t0; connected = r.ok || r.status===204;
+  } catch(e) { try { const r2 = await fetch('https://cloudflare.com/cdn-cgi/trace',{method:'HEAD',cache:'no-cache'}); connected = r2.ok; } catch(e2){} }
+  if (navigator.connection) connType = navigator.connection.effectiveType || 'Unknown';
+  tile.innerHTML = orig;
+  document.getElementById('networkIcon').innerHTML = connected ? '<i class="fa fa-check-circle" style="color:#10b981"></i>' : '<i class="fa fa-wifi" style="color:#f97316"></i>';
+  document.getElementById('networkTitle').innerHTML = connected ? '✅ INTERNET CONNECTED' : '⚠️ NO INTERNET';
+  document.getElementById('networkDetail').innerHTML = connected ? `Active internet connectivity.<br><br>📡 ${connType}<br>⏱️ ${rtt||'Fast'} ms` : `No connection detected.<br><br>📱 Browser: ${navigator.onLine?'Online (limited)':'Offline'}`;
+  document.getElementById('networkModal').classList.add('active');
+}
+
+// ======================== LOGIN ========================
+function renderLogin() {
+  document.getElementById('appContainer').innerHTML = `
+    <div class="login-screen">
+      <div class="card">
+        <div class="logo-area"><img src="ICF-SL Logo.jpg" alt="ICF-SL" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'"></div>
+        <div class="field"><input type="text" id="loginUsername" placeholder="USERNAME" autocomplete="off"></div>
+        <div id="loginErrMsg" class="error-msg"></div>
+        <div class="field">
+          <input type="password" id="loginPassword" placeholder="PASSWORD" autocomplete="off">
+          <span class="eye" onclick="togglePasswordVisibility()"><i class="fa-regular fa-eye" id="eyeIcon"></i></span>
         </div>
-        <div class="utility-grid">
-          <div class="tile t-orange" id="networkTile">
-            <div class="tile-icon"><i class="fa fa-wifi"></i></div>
-            <span>NETWORK CHECK</span>
-          </div>
-          <div class="tile t-blue" id="exportTile">
-            <div class="tile-icon"><i class="fa fa-file-export"></i></div>
-            <span>EXPORT CAMPAIGN LOGS</span>
-          </div>
-          <div class="tile t-purple" id="verifyTile">
-            <div class="tile-icon"><i class="fa fa-fingerprint"></i></div>
-            <span>VERIFY BENEFICIARY PRINT</span>
-          </div>
-          <div class="tile t-teal" id="languageTile">
-            <div class="tile-icon"><i class="fa fa-language"></i></div>
-            <span>LANGUAGE</span>
-          </div>
-        </div>
-        <div class="login-footer">
-          Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026
-        </div>
+        <button class="btn btn-login" id="loginBtn">LOGIN</button>
+        <button class="btn btn-scan" onclick="showToast('📷 QR scan simulated')">SCAN QR BADGE</button>
       </div>
-    `;
-    
-    document.getElementById('loginBtn').addEventListener('click', performLogin);
-    document.getElementById('scanQrBtn').addEventListener('click', startCamera);
-    document.getElementById('networkTile').addEventListener('click', checkNetwork);
-    document.getElementById('exportTile').addEventListener('click', () => showToast("✓ Campaign logs exported successfully"));
-    document.getElementById('verifyTile').addEventListener('click', () => showToast("✓ Beneficiary print document verified & ready"));
-    document.getElementById('languageTile').addEventListener('click', toggleLanguage);
-    document.getElementById('loginUsername').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
-    document.getElementById('loginPassword').addEventListener('keypress', (e) => { if (e.key === 'Enter') performLogin(); });
-  }
-  
-  async function performLogin() {
-    const username = document.getElementById('loginUsername').value.trim();
-    const password = document.getElementById('loginPassword').value.trim();
-    if (!username || !password) {
-      showError('⚠ Please enter username and password');
-      return;
-    }
-    const user = findUser(username, password);
-    if (user) {
-      storeAndLogin(user);
-      renderDashboard();
-    } else {
-      showError('✗ Invalid username or password');
-    }
-  }
-  
-  function storeAndLogin(user) {
+      <div class="utility-grid">
+        <div class="tile t-orange" id="networkTile"><div class="tile-icon"><i class="fa fa-wifi"></i></div>NETWORK CHECK</div>
+        <div class="tile t-blue"   onclick="showToast('✓ Campaign logs exported')"><div class="tile-icon"><i class="fa fa-file-export"></i></div>EXPORT CAMPAIGN LOGS</div>
+        <div class="tile t-purple" onclick="showToast('✓ Beneficiary print verified')"><div class="tile-icon"><i class="fa fa-fingerprint"></i></div>VERIFY BENEFICIARY PRINT</div>
+        <div class="tile t-teal"   onclick="showToast('🌐 Language toggled')"><div class="tile-icon"><i class="fa fa-language"></i></div>LANGUAGE</div>
+      </div>
+      <div class="login-footer">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
+    </div>`;
+  document.getElementById('loginBtn').onclick = doLogin;
+  document.getElementById('networkTile').onclick = checkNetwork;
+  document.getElementById('loginUsername').onkeypress = e => { if(e.key==='Enter') doLogin(); };
+  document.getElementById('loginPassword').onkeypress = e => { if(e.key==='Enter') doLogin(); };
+}
+
+function doLogin() {
+  const u = document.getElementById('loginUsername').value.trim();
+  const p = document.getElementById('loginPassword').value.trim();
+  const err = document.getElementById('loginErrMsg');
+  if (!u||!p) { err.innerText='⚠ Please enter username and password'; err.classList.add('show'); return; }
+  const user = findUser(u,p);
+  if (user) {
     currentUser = user;
-    currentPermissions = {
+    currentPerms = {
       username: user.USERNAME,
       REGISTER: user.REGISTER, DISTRIBUTION: user.DISTRIBUTION, MONITORING: user.MONITORING,
       STOCK: user.STOCK, DASHBOARD: user.DASHBOARD, ATTENDANCE: user.ATTENDANCE,
       DEVICE_TRACKING: user["DEVICE TRACKING"], RECONCILIATION: user.RECONCILIATION,
       WASTE_MANAGEMENT: user["WASTE MANAGEMENT"]
     };
-    sessionStorage.setItem('userPermissions', JSON.stringify(currentPermissions));
+    sessionStorage.setItem('userPermissions', JSON.stringify(currentPerms));
     sessionStorage.setItem('loggedInUser', user.USERNAME);
-  }
-  
-  function logout() {
-    currentUser = null;
-    currentPermissions = null;
-    sessionStorage.removeItem('userPermissions');
-    sessionStorage.removeItem('loggedInUser');
-    renderLoginScreen();
-  }
-  
-  // Initialize carousel function
-  function initCarousel() {
-    const slidesContainer = document.getElementById('carouselSlides');
-    const dotsContainer = document.getElementById('carouselDots');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    
-    if (!slidesContainer) return;
-    
-    const slides = document.querySelectorAll('.carousel-slide');
-    if (slides.length === 0) return;
-    
-    let currentIndex = 0;
-    let autoInterval;
-    
-    function createDots() {
-      if (!dotsContainer) return;
-      dotsContainer.innerHTML = '';
-      slides.forEach((_, idx) => {
-        const dot = document.createElement('div');
-        dot.classList.add('dot');
-        if (idx === currentIndex) dot.classList.add('active');
-        dot.addEventListener('click', () => goToSlide(idx));
-        dotsContainer.appendChild(dot);
-      });
-    }
-    
-    function updateDots() {
-      const dots = document.querySelectorAll('.dot');
-      dots.forEach((dot, idx) => {
-        if (idx === currentIndex) dot.classList.add('active');
-        else dot.classList.remove('active');
-      });
-    }
-    
-    function goToSlide(index) {
-      if (index < 0) index = slides.length - 1;
-      if (index >= slides.length) index = 0;
-      currentIndex = index;
-      slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
-      updateDots();
-      resetAutoSlide();
-    }
-    
-    function nextSlide() { goToSlide(currentIndex + 1); }
-    function prevSlide() { goToSlide(currentIndex - 1); }
-    
-    function resetAutoSlide() {
-      if (autoInterval) clearInterval(autoInterval);
-      autoInterval = setInterval(() => { nextSlide(); }, 5000);
-    }
-    
-    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
-    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
-    createDots();
-    resetAutoSlide();
-    
-    const container = document.querySelector('.carousel-container');
-    if (container) {
-      container.addEventListener('mouseenter', () => clearInterval(autoInterval));
-      container.addEventListener('mouseleave', resetAutoSlide);
-    }
-  }
-  
-  // RENDER DASHBOARD
-  function renderDashboard() {
-    const container = document.getElementById('appContainer');
-    const username = currentUser?.USERNAME;
-    const roleMap = { 'Admin': 'Full Access', 'HHR2027': 'Registration Officer', 'HHD2027': 'Distribution Officer', 'NATSUP2027': 'National Supervisor', 'CHISUP2027': 'CHI Supervisor', 'PHUSTAFF2027': 'PHU Staff', 'PARTNERS2027': 'Partner Viewer' };
-    const roleDisplay = roleMap[username] || 'User';
-    
-    const allowedActions = roleActionMap.filter(action => hasPermission(action.requires));
-    let actionCardsHtml = '';
-    if (allowedActions.length === 0) {
-      actionCardsHtml = `<div style="text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 20px; color: white;">⚠️ No modules assigned. Contact admin.</div>`;
-    } else {
-      actionCardsHtml = `<div class="action-grid">` + allowedActions.map(action => `
-        <div class="action-card ${action.color}" data-role-action="${action.id}">
-          <div class="action-icon"><i class="fa ${action.icon}"></i></div>
-          <div class="action-label">${action.label}</div>
-        </div>
-      `).join('') + `</div>`;
-    }
-    
-    container.innerHTML = `
-      <div class="dashboard-container">
-        <header class="app-header">
-          <div class="header-container">
-            <div class="logo-row">
-              <div class="logo-area-dash">
-                <div class="logo-icon"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'"></div>
-                <div class="org-info"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
-              </div>
-            </div>
-            <div class="nav-badge"><span>🏠</span><span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span></div>
-            <div class="campaign-sub-header"><span>🦟</span><span>Insecticide-Treated Nets Distribution Survey - Sierra Leone</span></div>
-          </div>
-        </header>
-        
-        <div class="user-info-bar">
-          <span><i class="fa fa-user-circle"></i> ${username} (${roleDisplay})</span>
-          <button id="logoutBtnDash" class="logout-btn"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
-        </div>
-        
-        <div class="partner-section">
-          <div class="partner-title">IMPLEMENTING PARTNERS</div>
-          <div class="partner-grid">
-            <div class="partner-item"><div class="partner-logo"><img src="usa.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'14\'%3EUSA%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">United State Dep.</div></div>
-            <div class="partner-item"><div class="partner-logo"><img src="global_fund.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'12\'%3EGF%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">Global Fund</div></div>
-            <div class="partner-item"><div class="partner-logo"><img src="pmi_evolve.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'11\'%3EPMI%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">PMI Evolve</div></div>
-            <div class="partner-item"><div class="partner-logo"><img src="moh_logo.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'12\'%3EMOH%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">MOH</div></div>
-            <div class="partner-item"><div class="partner-logo"><img src="NMCP.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'10\'%3ENMCP%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">NMCP</div></div>
-            <div class="partner-item"><div class="partner-logo"><img src="mbsse.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'11\'%3EMB%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">MBSSE</div></div>
-          </div>
-        </div>
-        
-        <div class="carousel-section">
-          <div class="carousel-container">
-            <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
-            <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
-            <div class="carousel-slides" id="carouselSlides">
-              <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHousehold Registration%3C/text%3E%3C/svg%3E'"></div>
-              <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3EData Collection%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'white\' font-size=\'12\'%3EReal-time Monitoring%3C/text%3E%3C/svg%3E'"></div>
-              <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'100\' text-anchor=\'middle\' fill=\'white\' font-size=\'16\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3Ctext x=\'175\' y=\'125\' text-anchor=\'middle\' fill=\'%23FFD966\' font-size=\'12\'%3EHealth %26 Development%3C/text%3E%3C/svg%3E'"></div>
-            </div>
-            <div class="carousel-dots" id="carouselDots"></div>
-          </div>
-        </div>
-        
-        <div class="role-actions-section">
-          ${actionCardsHtml}
-        </div>
-        
-        <footer class="app-footer">
-          <div class="wave-wrapper">
-            <svg class="wave-svg" viewBox="0 0 1200 90" preserveAspectRatio="none">
-              <path d="M0,48L80,44C160,40,320,32,480,34.7C640,37,800,51,960,53.3C1120,56,1280,48,1360,44L1440,40L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0"></path>
-              <path d="M0,68L80,64C160,60,320,52,480,53.3C640,55,800,64,960,66.7C1120,69,1280,64,1360,62L1440,60L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0" fill-opacity="0.5"></path>
-            </svg>
-          </div>
-          <div class="footer-bottom">
-            <div class="developed-by">
-              Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026
-            </div>
-          </div>
-        </footer>
-      </div>
-    `;
-    
-    // Initialize carousel after DOM is ready
-    setTimeout(() => {
-      initCarousel();
-    }, 50);
-    
-    document.querySelectorAll('[data-role-action]').forEach(el => {
-      el.addEventListener('click', () => {
-        const actionId = el.getAttribute('data-role-action');
-        const action = roleActionMap.find(a => a.id === actionId);
-        if (action && hasPermission(action.requires)) showToast(`✓ ${action.label} module opened`);
-        else showAccessDenied(action?.label);
-      });
-    });
-    
-    document.getElementById('logoutBtnDash').addEventListener('click', logout);
-  }
-  
-  // Check session and start
-  const stored = sessionStorage.getItem('userPermissions');
-  const storedUser = sessionStorage.getItem('loggedInUser');
-  if (stored && storedUser && usersDatabase.find(u => u.USERNAME === storedUser)) {
-    const userRecord = usersDatabase.find(u => u.USERNAME === storedUser);
-    currentUser = userRecord;
-    currentPermissions = JSON.parse(stored);
     renderDashboard();
-  } else {
-    renderLoginScreen();
+  } else { err.innerText='✗ Invalid username or password'; err.classList.add('show'); setTimeout(()=>err.classList.remove('show'),3000); }
+}
+
+function logout() {
+  currentUser=null; currentPerms=null;
+  sessionStorage.clear();
+  renderLogin();
+}
+
+// ======================== DASHBOARD ========================
+function renderDashboard() {
+  const roleMap = { Admin:'Full Access', HHR2027:'Registration Officer', HHD2027:'Distribution Officer', NATSUP2027:'National Supervisor', CHISUP2027:'CHI Supervisor', PHUSTAFF2027:'PHU Staff', PARTNERS2027:'Partner Viewer' };
+  const uname = currentUser.USERNAME;
+  const role = roleMap[uname]||'User';
+  const allowed = roleActionMap.filter(a => hasPerm(a.requires));
+  const cardsHtml = allowed.length === 0
+    ? `<div style="text-align:center;padding:20px;background:rgba(0,0,0,0.6);border-radius:20px;color:white;">⚠️ No modules assigned. Contact admin.</div>`
+    : `<div class="action-grid">${allowed.map(a=>`
+        <div class="action-card ${a.color}" data-action="${a.id}">
+          <div class="action-icon"><i class="fa ${a.icon}"></i></div>
+          <div class="action-label">${a.label}</div>
+        </div>`).join('')}</div>`;
+
+  document.getElementById('appContainer').innerHTML = `
+    <div class="dashboard-container">
+      <header class="app-header">
+        <div class="header-container">
+          <div class="logo-row">
+            <div class="logo-area-dash">
+              <div class="logo-icon"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 100 100\'%3E%3Crect width=\'100\' height=\'100\' rx=\'20\' fill=\'white\'/%3E%3Ccircle cx=\'50\' cy=\'48\' r=\'34\' fill=\'%231565C0\'/%3E%3Ctext x=\'50\' y=\'63\' text-anchor=\'middle\' fill=\'white\' font-size=\'28\' font-weight=\'800\'%3EICF%3C/text%3E%3C/svg%3E'"></div>
+              <div class="org-info"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
+            </div>
+          </div>
+          <div class="nav-badge"><span>🏠</span><span>HOUSEHOLD ITN DISTRIBUTION CAMPAIGN - SIERRA LEONE</span></div>
+          <div class="campaign-sub-header"><span>🦟</span><span>Insecticide-Treated Nets Distribution Survey - Sierra Leone</span></div>
+        </div>
+      </header>
+      <div class="user-info-bar">
+        <span><i class="fa fa-user-circle"></i> ${uname} (${role})</span>
+        <button id="logoutBtn" class="logout-btn"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
+      </div>
+      <div class="partner-section">
+        <div class="partner-title">IMPLEMENTING PARTNERS</div>
+        <div class="partner-grid">
+          ${['usa.png|United State Dep.','global_fund.png|Global Fund','pmi_evolve.png|PMI Evolve','moh_logo.png|MOH','NMCP.png|NMCP','mbsse.png|MBSSE'].map(p=>{const[src,name]=p.split('|');return `<div class="partner-item"><div class="partner-logo"><img src="${src}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 40 40\'%3E%3Crect width=\'40\' height=\'40\' rx=\'8\' fill=\'%23EFF3F8\'/%3E%3Ctext x=\'20\' y=\'26\' text-anchor=\'middle\' fill=\'%23E65100\' font-size=\'10\'%3E${name.slice(0,4)}%3C/text%3E%3C/svg%3E'"></div><div class="partner-name">${name}</div></div>`;}).join('')}
+        </div>
+      </div>
+      <div class="carousel-section">
+        <div class="carousel-container">
+          <div class="carousel-arrow arrow-left" id="prevBtn">‹</div>
+          <div class="carousel-arrow arrow-right" id="nextBtn">›</div>
+          <div class="carousel-slides" id="carouselSlides">
+            <div class="carousel-slide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231565C0\'/%3E%3Ctext x=\'175\' y=\'110\' text-anchor=\'middle\' fill=\'white\' font-size=\'18\' font-weight=\'700\'%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
+            <div class="carousel-slide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%23F57C00\'/%3E%3Ctext x=\'175\' y=\'110\' text-anchor=\'middle\' fill=\'white\' font-size=\'18\' font-weight=\'700\'%3EData Collection%3C/text%3E%3C/svg%3E'"></div>
+            <div class="carousel-slide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 350 200\'%3E%3Crect width=\'350\' height=\'200\' fill=\'%231B5E20\'/%3E%3Ctext x=\'175\' y=\'110\' text-anchor=\'middle\' fill=\'white\' font-size=\'18\' font-weight=\'700\'%3ECommunity Impact%3C/text%3E%3C/svg%3E'"></div>
+          </div>
+          <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+      </div>
+      <div class="role-actions-section">${cardsHtml}</div>
+      <footer class="app-footer">
+        <div class="wave-wrapper"><svg class="wave-svg" viewBox="0 0 1200 90" preserveAspectRatio="none"><path d="M0,48L80,44C160,40,320,32,480,34.7C640,37,800,51,960,53.3C1120,56,1280,48,1360,44L1440,40L1440,90L1360,90C1280,90,1120,90,960,90C800,90,640,90,480,90C320,90,160,90,80,90L0,90Z" fill="#1565C0"></path></svg></div>
+        <div class="footer-bottom"><div class="developed-by">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div></div>
+      </footer>
+    </div>`;
+
+  document.getElementById('logoutBtn').onclick = logout;
+  setTimeout(() => initCarousel(), 50);
+
+  // Action card clicks
+  document.querySelectorAll('[data-action]').forEach(el => {
+    el.onclick = () => {
+      const id = el.dataset.action;
+      if (id === 'REGISTER') { openRegisterModule(); return; }
+      const act = roleActionMap.find(a=>a.id===id);
+      if (act && hasPerm(act.requires)) showToast(`✓ ${act.label} module opened`);
+      else showAccessDenied(act?.label||id);
+    };
+  });
+}
+
+function initCarousel() {
+  const slides = document.querySelectorAll('.carousel-slide');
+  const dotsC = document.getElementById('carouselDots');
+  const prev = document.getElementById('prevBtn');
+  const next = document.getElementById('nextBtn');
+  if (!slides.length || !dotsC) return;
+  let idx = 0, timer;
+  dotsC.innerHTML = Array.from(slides).map((_,i)=>`<div class="dot${i===0?' active':''}"></div>`).join('');
+  const dots = dotsC.querySelectorAll('.dot');
+  function go(n) { if(n<0)n=slides.length-1; if(n>=slides.length)n=0; idx=n; document.getElementById('carouselSlides').style.transform=`translateX(-${idx*100}%)`; dots.forEach((d,i)=>d.classList.toggle('active',i===idx)); reset(); }
+  function reset() { clearInterval(timer); timer=setInterval(()=>go(idx+1),5000); }
+  if(prev) prev.onclick=()=>go(idx-1);
+  if(next) next.onclick=()=>go(idx+1);
+  dots.forEach((d,i)=>d.onclick=()=>go(i));
+  reset();
+}
+
+// ======================== REGISTER MODULE ========================
+let regRecords = [];
+function loadRegRecords() { const s=localStorage.getItem('itn_hh'); if(s) regRecords=JSON.parse(s); }
+function saveRegRecords() { localStorage.setItem('itn_hh',JSON.stringify(regRecords)); }
+function escHtml(s) { if(!s)return''; return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+function getTodayStr() { return new Date().toISOString().split('T')[0]; }
+
+loadRegRecords();
+
+// current wizard state
+let wizStep = 1, wizToken = '', wizRegistered = false;
+
+function openRegisterModule() {
+  // Inject the register module overlay into the phone-mock
+  const phoneMock = document.getElementById('appContainer');
+  // Build the entire register module as a sibling to dashboard
+  let mod = document.getElementById('regMod');
+  if (!mod) {
+    mod = document.createElement('div');
+    mod.id = 'regMod';
+    mod.style.cssText = 'position:absolute;top:0;left:0;width:100%;height:100%;background:#f0f2f5;border-radius:40px;display:flex;flex-direction:column;overflow:hidden;z-index:100;';
+    phoneMock.parentNode.appendChild(mod);
   }
+  mod.innerHTML = buildRegisterHTML();
+  mod.style.display = 'flex';
+  initRegisterModule();
+}
+
+function closeRegisterModule() {
+  const mod = document.getElementById('regMod');
+  if (mod) mod.style.display = 'none';
+}
+
+function buildRegisterHTML() {
+  return `
+    <!-- REG HOME -->
+    <div id="regHomeScreen" style="display:flex;flex-direction:column;flex:1;overflow:hidden;">
+      <div class="reg-header">
+        <button class="reg-back-btn" id="regHomeBackBtn">←</button>
+        <span class="reg-title">📋 ITN REGISTRATION</span>
+        <div style="width:34px;"></div>
+      </div>
+      <div style="flex:1;overflow-y:auto;background:#f0f2f5;padding:0.9rem 0.9rem 0.5rem;">
+        <div style="display:flex;flex-direction:row;gap:0.7rem;justify-content:center;align-items:stretch;flex-wrap:wrap;">
+          <div class="reg-action-card reg-card-manual" id="regManualBtn">
+            <div class="reg-card-hdr"><div class="reg-card-icon">✍️</div><h3>MANUAL<br>ENTRY</h3></div>
+            <div class="reg-card-body"><div class="reg-card-desc"><strong>📋 Demographics Info</strong>Region → District → Chiefdom → PHU → Community → Distribution Point</div></div>
+          </div>
+          <div class="reg-action-card reg-card-scan" id="regScanBtn">
+            <div class="reg-card-hdr"><div class="reg-card-icon">📷</div><h3>SCAN<br>QR</h3></div>
+            <div class="reg-card-body"><div class="reg-card-desc"><strong>⚡ Auto-Fill</strong>Scan QR & populate fields</div></div>
+          </div>
+          <div class="reg-action-card reg-card-target" id="regTargetBtn">
+            <div class="reg-card-hdr"><div class="reg-card-icon">🎯</div><h3>DAILY<br>TARGET</h3></div>
+            <div class="reg-card-body"><div class="reg-card-desc"><strong>📊 HHR Goals</strong>Track daily target progress</div></div>
+          </div>
+          <div class="reg-action-card reg-card-records" id="regRecordsBtn">
+            <div class="reg-card-hdr"><div class="reg-card-icon">📋</div><h3>RECORDS</h3></div>
+            <div class="reg-card-body"><div class="reg-card-desc"><strong>📁 Manage</strong>View & download QR codes</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="reg-footer"><div class="reg-footer-text">Informatics Consultancy Firm-SL © 2026</div></div>
+    </div>
+
+    <!-- MANUAL ENTRY WIZARD -->
+    <div id="regManualWiz" class="form-wrapper">
+      <div class="form-header">
+        <button class="back-btn-sm" id="manWizBackBtn">←</button>
+        <span class="form-title">✍️ MANUAL ENTRY</span>
+        <div style="width:34px;"></div>
+      </div>
+      <div class="steps" id="manSteps">
+        <div class="progress-bar" id="manProgressBar"></div>
+        <div class="step active"><div class="circle">1</div><div class="step-label">Demo-<br>graphics</div></div>
+        <div class="step"><div class="circle">2</div><div class="step-label">Household<br>Details</div></div>
+        <div class="step"><div class="circle">3</div><div class="step-label">Review</div></div>
+        <div class="step"><div class="circle">4</div><div class="step-label">QR<br>Code</div></div>
+        <div class="step"><div class="circle">5</div><div class="step-label">Finish</div></div>
+      </div>
+      <div class="form-scroll-area">
+        <!-- Step 1: Demographics -->
+        <div class="section active" id="manSec1">
+          <div class="f-group"><label>📅 Date</label><input id="mDate" readonly value="${getTodayStr()}"></div>
+          <div class="f-row">
+            <div class="f-group half"><label>🌍 Region <span class="req">*</span></label><select id="mRegion"><option value="">-- Region --</option><option>North</option><option>South</option><option>East</option><option>West</option></select><div class="f-err" id="mRegionErr">Region required</div></div>
+            <div class="f-group half"><label>🏛️ District <span class="req">*</span></label><select id="mDistrict" disabled><option value="">-- District --</option></select><div class="f-err" id="mDistrictErr">District required</div></div>
+            <div class="f-group half"><label>⛰️ Chiefdom <span class="req">*</span></label><select id="mChiefdom" disabled><option value="">-- Chiefdom --</option></select><div class="f-err" id="mChiefdomErr">Chiefdom required</div></div>
+            <div class="f-group half"><label>🏘️ Community <span class="req">*</span></label><select id="mCommunity" disabled><option value="">-- Community --</option></select><div class="f-err" id="mCommunityErr">Community required</div></div>
+            <div class="f-group half"><label>🏥 Health Facility <span class="req">*</span></label><select id="mFacility" disabled><option value="">-- Facility --</option></select><div class="f-err" id="mFacilityErr">Facility required</div></div>
+            <div class="f-group half"><label>📦 Distribution Point <span class="req">*</span></label><select id="mDp" disabled><option value="">-- Dist. Point --</option></select><div class="f-err" id="mDpErr">Distribution Point required</div></div>
+          </div>
+          <div class="wiz-btns"><div></div><button class="btn-next" onclick="manStep1Next()">Next →</button></div>
+        </div>
+
+        <!-- Step 2: Household -->
+        <div class="section" id="manSec2">
+          <div class="f-row">
+            <div class="f-group half"><label>👤 Surname <span class="req">*</span></label><input id="mSurname" placeholder="Family name"><div class="f-err" id="mSurnameErr">Surname required</div></div>
+            <div class="f-group half"><label>👤 Middle Name</label><input id="mMname" placeholder="Optional"></div>
+            <div class="f-group half"><label>👤 First Name <span class="req">*</span></label><input id="mFname" placeholder="Given name"><div class="f-err" id="mFnameErr">First name required</div></div>
+            <div class="f-group"><label>📞 Mobile <span class="req">*</span></label><div class="phone-wrap"><div class="phone-sim">📱SIM</div><input type="tel" id="mPhone" class="phone-digit" placeholder="071234567" maxlength="9" inputmode="numeric"></div><div class="f-err" id="mPhoneErr">Must be 9 digits starting with 0</div></div>
+            <div class="f-group half"><label>👥 Total Members <span class="req">*</span></label><input type="number" id="mMembers" min="1" placeholder="e.g. 5" oninput="calcItn('m')"><div class="f-err" id="mMembersErr">Min 1 member</div></div>
+            <div class="f-group half"><label>🤰 Pregnant Women</label><input type="number" id="mPregnant" min="0" value="0"></div>
+            <div class="f-group half"><label>🧒 Under-5 Children</label><input type="number" id="mUnder5" min="0" value="0"></div>
+            <div class="f-group half"><label>🦟 ITN Allocation</label><input id="mItn" readonly placeholder="Auto-calculated"></div>
+            <div class="f-group"><label>🧑‍⚕️ HHR Name <span class="req">*</span></label><input id="mHhr" placeholder="Full name of enumerator"><div class="f-err" id="mHhrErr">HHR name required</div></div>
+            <div class="f-group half"><label>📍 Latitude</label><input id="mLat" readonly placeholder="Auto GPS..."></div>
+            <div class="f-group half"><label>📍 Longitude</label><input id="mLng" readonly placeholder="Auto GPS..."></div>
+          </div>
+          <button class="token-btn" onclick="genToken('m')">🔐 Generate Household Token</button>
+          <div class="token-box" id="mTokenBox"></div>
+          <div class="wiz-btns"><button class="btn-prev" onclick="manNav(-1)">← Previous</button><button class="btn-next" onclick="manStep2Next()">Review →</button></div>
+        </div>
+
+        <!-- Step 3: Review -->
+        <div class="section" id="manSec3">
+          <div class="review-box">
+            <div class="review-title-hdr">📋 Summary</div>
+            <div id="manReviewContent"></div>
+            <div class="edit-lnk" onclick="manNav(-1)">✏️ Edit Information</div>
+          </div>
+          <div class="wiz-btns"><button class="btn-prev" onclick="manNav(-1)">← Back</button><button class="btn-next" onclick="manNav(1)">Proceed to QR →</button></div>
+        </div>
+
+        <!-- Step 4: QR -->
+        <div class="section" id="manSec4">
+          <div class="qr-section">
+            <div class="review-title-hdr">📸 Generate QR Code</div>
+            <div class="qr-placeholder"><canvas id="mQrCanvas" style="display:none;"></canvas><div id="mQrMsg" class="qr-msg">Click button below to generate QR</div></div>
+            <div class="qr-buttons">
+              <button class="qr-btn" onclick="genQR('m')">Generate QR</button>
+              <button class="dl-btn" id="mDlBtn" disabled onclick="dlQR('m')">Download QR</button>
+            </div>
+          </div>
+          <div class="wiz-btns"><button class="btn-prev" onclick="manNav(-1)">← Back</button><button class="btn-next" onclick="manNav(1)">Finish →</button></div>
+        </div>
+
+        <!-- Step 5: Done -->
+        <div class="section" id="manSec5">
+          <div class="success-box" id="manSuccessBox">✅ Registration successful!</div>
+          <div class="wiz-btns"><button class="btn-prev" onclick="manNav(-1)">← Back</button><button class="btn-next" id="manFinalBtn" onclick="finalReg('m')">🏠 Register Household</button></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RECORDS PANEL -->
+    <div id="regRecordsPanel" class="records-container">
+      <div class="records-header">
+        <button class="back-btn-sm" id="recBackBtn">←</button>
+        <span>HOUSEHOLD REGISTRY WITH QR</span>
+        <div style="width:34px;"></div>
+      </div>
+      <div class="records-wrap"><div id="recTableWrapper"></div></div>
+    </div>
+
+    <!-- TARGET DASHBOARD -->
+    <div id="regTargetPanel" class="target-dash">
+      <div class="form-header">
+        <button class="back-btn-sm" id="tgtBackBtn">←</button>
+        <span class="form-title">📊 DAILY HHR TARGET DASHBOARD</span>
+        <div style="width:34px;"></div>
+      </div>
+      <div class="form-scroll-area" style="padding:16px;">
+        <div class="today-card"><div class="today-num" id="tgtTodayNum">0</div><div class="today-lbl">🏠 Households Registered Today</div></div>
+        <div class="unified-card">
+          <div class="unified-card-title">🏠 HOUSEHOLD REGISTRATION COVERAGE</div>
+          <div class="cov-item"><span class="cov-label">📊 Total Registered (All Time)</span><span class="cov-value" id="tgtTotal">0</span></div>
+          <div class="cov-item"><span class="cov-label">👥 Total Individuals Reached</span><span class="cov-value" id="tgtPeople">0</span></div>
+          <div class="cov-item"><span class="cov-label">🎯 Target Households</span><span class="cov-value">500</span></div>
+          <div class="cov-item"><span class="cov-label">⏳ Remaining</span><span class="cov-value" id="tgtRemain">500</span></div>
+          <div class="cov-item"><span class="cov-label">🦟 Total ITN Issued</span><span class="cov-value" id="tgtItn">0</span></div>
+          <div class="prog-hdr"><span class="prog-label">📈 Overall Progress</span><span class="prog-pct" id="tgtPct">0%</span></div>
+          <div class="prog-bg"><div class="prog-fill" id="tgtFill"></div></div>
+          <div class="prog-foot"><span id="tgtCurrent">0</span> of 500 households registered</div>
+        </div>
+        <div class="bkdn-card">
+          <div class="bkdn-title">🗺️ DISTRICT, CHIEFDOM & PHU BREAKDOWN</div>
+          <div class="bkdn-row">
+            <div class="bkdn-col"><div class="bkdn-sub">📌 District</div><div class="bkdn-stats" id="tgtDistrict">No data</div></div>
+            <div class="bkdn-col"><div class="bkdn-sub">⛰️ Chiefdom</div><div class="bkdn-stats" id="tgtChiefdom">No data</div></div>
+            <div class="bkdn-col"><div class="bkdn-sub">🏥 PHU</div><div class="bkdn-stats" id="tgtPhu">No data</div></div>
+          </div>
+        </div>
+        <div class="wiz-btns"><button class="btn-prev" onclick="showRegHome()">← Home</button><button class="btn-next" onclick="renderTarget()">🔄 Refresh</button></div>
+      </div>
+    </div>
+  `;
+}
+
+function initRegisterModule() {
+  wizStep=1; wizToken=''; wizRegistered=false;
+  updateManWiz();
+  setupCascade();
+  captureGPS();
+
+  document.getElementById('regHomeBackBtn').onclick = closeRegisterModule;
+  document.getElementById('manWizBackBtn').onclick = showRegHome;
+  document.getElementById('recBackBtn').onclick = showRegHome;
+  document.getElementById('tgtBackBtn').onclick = showRegHome;
+  document.getElementById('regManualBtn').onclick = openManualWiz;
+  document.getElementById('regScanBtn').onclick = () => showToast('📷 Scan QR: camera integration ready');
+  document.getElementById('regTargetBtn').onclick = openTargetDash;
+  document.getElementById('regRecordsBtn').onclick = openRecordsPanel;
+
+  // Phone input validation
+  const mPhone = document.getElementById('mPhone');
+  if (mPhone) mPhone.oninput = function() {
+    const ok = /^0\d{8}$/.test(this.value);
+    document.getElementById('mPhoneErr').style.display = (!ok && this.value.length>0) ? 'block' : 'none';
+  };
+}
+
+function showRegHome() {
+  setVisible('regHomeScreen',true);
+  setVisible('regManualWiz',false);
+  setVisible('regRecordsPanel',false);
+  setVisible('regTargetPanel',false);
+}
+function openManualWiz() {
+  setVisible('regHomeScreen',false);
+  setVisible('regManualWiz',true);
+  wizStep=1; wizToken=''; wizRegistered=false;
+  resetManualFields();
+  updateManWiz();
+  captureGPS();
+}
+function openRecordsPanel() {
+  setVisible('regHomeScreen',false);
+  setVisible('regRecordsPanel',true);
+  renderRecordsTable();
+}
+function openTargetDash() {
+  setVisible('regHomeScreen',false);
+  setVisible('regTargetPanel',true);
+  renderTarget();
+}
+
+function setVisible(id, show) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  if (show) {
+    el.style.display = 'flex';
+    el.classList.add('active');
+  } else {
+    el.style.display = 'none';
+    el.classList.remove('active');
+  }
+}
+
+// ---- CASCADING DROPDOWNS ----
+const cascadeData = {
+  North: { 'Port Loko': { 'Bureh Kassiri': { 'Kawula': ['Kawula CHC','Mambo Clinic'], 'Rokupr': ['Rokupr Hospital','PHU Rokupr'] }, 'Maforki': { 'Port Loko Town':['Port Loko Gov Hospital'], 'Lungi':['Lungi PHU'] } }, 'Bombali': { 'Makeni City': { 'Makeni': ['Makeni Gov Hospital','Bombali PHU'] } } },
+  South: { 'Bo': { 'Kakua': { 'Bo Town': ['Bo Gov Hospital','Bo PHU'], 'Koribondo': ['Koribondo CHC'] }, 'Tikonko': { 'Tikonko': ['Tikonko PHC'] } }, 'Moyamba': { 'Moyamba Town': { 'Moyamba': ['Moyamba Hospital'] } } },
+  East: { 'Kenema': { 'Nongowa': { 'Kenema Town': ['Kenema Gov Hospital','Kenema PHC'] }, 'Koya': { 'Gbongobima': ['Gbongobima CHC'] } }, 'Kono': { 'Gbense': { 'Koidu Town': ['Koidu Gov Hospital'] } } },
+  West: { 'Western Area Urban': { 'East End': { 'Freetown East': ['Connaught Hospital','Eastern PHU'] }, 'West End': { 'Freetown West': ['Princess Christian Hospital'] } }, 'Western Area Rural': { 'Waterloo': { 'Waterloo Town': ['Waterloo CHC'] } } }
+};
+
+function setupCascade() {
+  const reg = document.getElementById('mRegion');
+  const dis = document.getElementById('mDistrict');
+  const chi = document.getElementById('mChiefdom');
+  const com = document.getElementById('mCommunity');
+  const fac = document.getElementById('mFacility');
+  const dp  = document.getElementById('mDp');
+  if (!reg) return;
+
+  function fill(sel, opts, placeholder) {
+    sel.innerHTML = `<option value="">${placeholder}</option>` + opts.map(o=>`<option>${o}</option>`).join('');
+    sel.disabled = false;
+  }
+  function disable(sel, placeholder) { sel.innerHTML=`<option value="">${placeholder}</option>`; sel.disabled=true; }
+
+  reg.onchange = () => {
+    const r = cascadeData[reg.value];
+    if (r) fill(dis, Object.keys(r), '-- District --'); else disable(dis,'-- District --');
+    disable(chi,'-- Chiefdom --'); disable(com,'-- Community --'); disable(fac,'-- Facility --'); disable(dp,'-- Dist. Point --');
+  };
+  dis.onchange = () => {
+    const r = cascadeData[reg.value]?.[dis.value];
+    if (r) fill(chi, Object.keys(r), '-- Chiefdom --'); else disable(chi,'-- Chiefdom --');
+    disable(com,'-- Community --'); disable(fac,'-- Facility --'); disable(dp,'-- Dist. Point --');
+  };
+  chi.onchange = () => {
+    const r = cascadeData[reg.value]?.[dis.value]?.[chi.value];
+    if (r) fill(com, Object.keys(r), '-- Community --'); else disable(com,'-- Community --');
+    disable(fac,'-- Facility --'); disable(dp,'-- Dist. Point --');
+  };
+  com.onchange = () => {
+    const r = cascadeData[reg.value]?.[dis.value]?.[chi.value]?.[com.value];
+    if (r) { fill(fac, r, '-- Facility --'); fill(dp, r.map(f=>`DP: ${f}`), '-- Dist. Point --'); }
+    else { disable(fac,'-- Facility --'); disable(dp,'-- Dist. Point --'); }
+  };
+}
+
+function calcItn(prefix) {
+  const t = parseInt(document.getElementById(prefix==='m'?'mMembers':'sMembers')?.value)||0;
+  const el = document.getElementById(prefix==='m'?'mItn':'sItn');
+  if (el) el.value = t<=2?1:t<=4?2:3;
+}
+
+function captureGPS() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(pos => {
+    ['mLat','sLat'].forEach(id => { const el=document.getElementById(id); if(el) el.value=pos.coords.latitude.toFixed(6); });
+    ['mLng','sLng'].forEach(id => { const el=document.getElementById(id); if(el) el.value=pos.coords.longitude.toFixed(6); });
+  }, ()=>{});
+}
+
+function genToken(prefix) {
+  const f = (document.getElementById(prefix==='m'?'mFname':'sFname')?.value||'X').slice(0,3).toUpperCase();
+  const m = (document.getElementById(prefix==='m'?'mMname':'sMname')?.value||'X').slice(0,3).toUpperCase();
+  const s = (document.getElementById(prefix==='m'?'mSurname':'sSurname')?.value||'X').slice(0,3).toUpperCase();
+  const p = document.getElementById(prefix==='m'?'mPhone':'sPhone')?.value.trim();
+  const tok = `${f}_${m}_${s}_${/^0\d{8}$/.test(p)?p:'000000000'}`;
+  if (prefix==='m') { wizToken=tok; const tb=document.getElementById('mTokenBox'); if(tb){tb.style.display='block';tb.innerText=`🔑 TOKEN: ${tok}`;} }
+}
+
+// ---- MANUAL WIZARD NAV ----
+function updateManWiz() {
+  const secs = ['manSec1','manSec2','manSec3','manSec4','manSec5'];
+  secs.forEach((id,i) => { const el=document.getElementById(id); if(el) el.classList.toggle('active',i===wizStep-1); });
+  const steps = document.querySelectorAll('#manSteps .step');
+  steps.forEach((s,i) => s.classList.toggle('active',i<wizStep));
+  const pb = document.getElementById('manProgressBar');
+  if (pb) pb.style.width = ((wizStep-1)/4*90)+'%';
+}
+function manNav(dir) { wizStep = Math.max(1,Math.min(5,wizStep+dir)); updateManWiz(); }
+
+function validateDemog() {
+  let ok=true;
+  ['mRegion','mDistrict','mChiefdom','mCommunity','mFacility','mDp'].forEach(id => {
+    const el=document.getElementById(id), err=document.getElementById(id.replace('m','m')+'Err');
+    const errId = {'mRegion':'mRegionErr','mDistrict':'mDistrictErr','mChiefdom':'mChiefdomErr','mCommunity':'mCommunityErr','mFacility':'mFacilityErr','mDp':'mDpErr'}[id];
+    if (!el?.value) { const e=document.getElementById(errId); if(e)e.style.display='block'; ok=false; }
+    else { const e=document.getElementById(errId); if(e)e.style.display='none'; }
+  });
+  return ok;
+}
+function validateHousehold() {
+  let ok=true;
+  const checks = [
+    ['mSurname','mSurnameErr', v=>!!v.trim()],
+    ['mFname','mFnameErr', v=>!!v.trim()],
+    ['mPhone','mPhoneErr', v=>/^0\d{8}$/.test(v.trim())],
+    ['mMembers','mMembersErr', v=>parseInt(v)>=1],
+    ['mHhr','mHhrErr', v=>!!v.trim()]
+  ];
+  checks.forEach(([id,eid,fn]) => {
+    const val = document.getElementById(id)?.value||'';
+    const errEl = document.getElementById(eid);
+    if (!fn(val)) { if(errEl)errEl.style.display='block'; ok=false; }
+    else { if(errEl)errEl.style.display='none'; }
+  });
+  return ok;
+}
+function manStep1Next() { if(validateDemog()) manNav(1); else showToast('⚠ Fill all required demographic fields'); }
+function manStep2Next() {
+  if (!validateHousehold()) { showToast('⚠ Fill all required household fields'); return; }
+  if (!wizToken) genToken('m');
+  buildReview();
+  manNav(1);
+}
+
+function buildReview() {
+  const g = id => document.getElementById(id)?.value||'';
+  document.getElementById('manReviewContent').innerHTML = `
+    <div class="review-sec"><div class="review-sec-title">📍 Demographics Info</div><div class="review-content">
+      Region: ${escHtml(g('mRegion'))}<br>District: ${escHtml(g('mDistrict'))}<br>
+      Chiefdom: ${escHtml(g('mChiefdom'))}<br>Community: ${escHtml(g('mCommunity'))}<br>
+      Health Facility: ${escHtml(g('mFacility'))}<br>Distribution Point: ${escHtml(g('mDp'))}
+    </div></div>
+    <div class="review-sec"><div class="review-sec-title">🏠 Household Details</div><div class="review-content">
+      Full Name: ${escHtml(g('mSurname'))} ${escHtml(g('mMname'))} ${escHtml(g('mFname'))}<br>
+      Mobile: ${escHtml(g('mPhone'))}<br>Total Members: ${escHtml(g('mMembers'))}<br>
+      Pregnant: ${escHtml(g('mPregnant'))}<br>Under-5: ${escHtml(g('mUnder5'))}<br>
+      ITN Allocation: ${escHtml(g('mItn'))} nets<br>Enumerator: ${escHtml(g('mHhr'))}<br>
+      GPS: ${escHtml(g('mLat'))}, ${escHtml(g('mLng'))}<br>Token: ${escHtml(wizToken)}
+    </div></div>`;
+}
+
+function genQR(prefix) {
+  const g = id => document.getElementById(id)?.value||'';
+  const token = wizToken;
+  const data = `ITN_REG\nToken:${token}\nRegion:${g('mRegion')}\nDistrict:${g('mDistrict')}\nChiefdom:${g('mChiefdom')}\nCommunity:${g('mCommunity')}\nFacility:${g('mFacility')}\nName:${g('mSurname')} ${g('mFname')}\nMobile:${g('mPhone')}\nMembers:${g('mMembers')}\nITN:${g('mItn')}\nHHR:${g('mHhr')}`;
+  try {
+    const qr = qrcode(0,'L'); qr.addData(data); qr.make();
+    const canvas = document.getElementById('mQrCanvas');
+    const size=220, mod=qr.getModuleCount(), cell=Math.floor(size/mod), off=Math.floor((size-cell*mod)/2);
+    canvas.width=size; canvas.height=size;
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='white'; ctx.fillRect(0,0,size,size);
+    ctx.fillStyle='black';
+    for(let r=0;r<mod;r++) for(let c=0;c<mod;c++) if(qr.isDark(r,c)) ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
+    canvas.style.display='block';
+    document.getElementById('mQrMsg').style.display='none';
+    document.getElementById('mDlBtn').disabled=false;
+  } catch(e) { showToast('QR generation error'); }
+}
+
+function dlQR(prefix) {
+  const canvas = document.getElementById('mQrCanvas');
+  if (!canvas || canvas.style.display==='none') { showToast('Generate QR first'); return; }
+  const a=document.createElement('a'); a.href=canvas.toDataURL('image/png'); a.download=`ITN_${wizToken||'QR'}.png`; a.click();
+}
+
+function finalReg(prefix) {
+  if (wizRegistered) { openManualWiz(); return; }
+  if (!validateHousehold() || !validateDemog()) { showToast('⚠ Complete all required fields'); return; }
+  const g = id => document.getElementById(id)?.value||'';
+  regRecords.unshift({
+    name: `${g('mSurname')} ${g('mFname')}`, surname:g('mSurname'), middleName:g('mMname'), firstName:g('mFname'),
+    region:g('mRegion'), district:g('mDistrict'), chiefdom:g('mChiefdom'), community:g('mCommunity'),
+    healthFacility:g('mFacility'), dp:g('mDp'), mobile:g('mPhone'),
+    members:g('mMembers'), pregnant:g('mPregnant'), under5:g('mUnder5'), itn:g('mItn'),
+    hhr:g('mHhr'), token:wizToken, gps:`${g('mLat')},${g('mLng')}`, date:new Date().toLocaleString()
+  });
+  saveRegRecords();
+  document.getElementById('manSuccessBox').innerHTML = `✅ Registration successful!<br><small style="font-size:0.7rem;font-weight:400;">Token: ${wizToken}</small>`;
+  document.getElementById('manFinalBtn').innerHTML = '➕ Register Another Household';
+  wizRegistered = true;
+}
+
+function resetManualFields() {
+  ['mRegion','mSurname','mMname','mFname','mPhone','mMembers','mItn','mHhr'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+  ['mPregnant','mUnder5'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value='0'; });
+  ['mDistrict','mChiefdom','mCommunity','mFacility','mDp'].forEach(id=>{ const el=document.getElementById(id); if(el){el.innerHTML=`<option value="">-- Select --</option>`;el.disabled=true;} });
+  const tb=document.getElementById('mTokenBox'); if(tb)tb.style.display='none';
+  const cv=document.getElementById('mQrCanvas'); if(cv)cv.style.display='none';
+  const qm=document.getElementById('mQrMsg'); if(qm){qm.style.display='block';qm.innerText='Click button below to generate QR';}
+  const dlb=document.getElementById('mDlBtn'); if(dlb)dlb.disabled=true;
+  wizToken=''; wizRegistered=false;
+}
+
+// ---- RECORDS TABLE ----
+function renderRecordsTable() {
+  const wrapper = document.getElementById('recTableWrapper');
+  if (!wrapper) return;
+  if (regRecords.length===0) { wrapper.innerHTML='<div class="no-records">No registrations yet</div>'; return; }
+  wrapper.innerHTML = `<table class="rec-table">
+    <thead><tr><th>Name</th><th>Surname</th><th>First</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Mobile</th><th>Members</th><th>Pregnant</th><th>U5</th><th>ITN</th><th>HHR</th><th>Token</th><th>GPS</th><th>Date</th><th>QR</th><th>Action</th></tr></thead>
+    <tbody>${regRecords.map((r,i)=>{
+      const qrUrl = buildQRUrl(r,70);
+      return `<tr>
+        <td>${escHtml(r.name)}</td><td>${escHtml(r.surname)}</td><td>${escHtml(r.firstName)}</td>
+        <td>${escHtml(r.region)}</td><td>${escHtml(r.district)}</td><td>${escHtml(r.chiefdom)}</td>
+        <td>${escHtml(r.community)}</td><td>${escHtml(r.healthFacility)}</td><td>${escHtml(r.mobile)}</td>
+        <td>${r.members}</td><td>${r.pregnant||0}</td><td>${r.under5||0}</td><td>${r.itn}</td>
+        <td>${escHtml(r.hhr)}</td><td style="font-size:0.5rem">${escHtml(r.token)}</td>
+        <td>${escHtml(r.gps)}</td><td>${r.date}</td>
+        <td style="text-align:center"><img src="${qrUrl}" class="qr-img-sm" data-idx="${i}"></td>
+        <td style="text-align:center"><button class="qr-dl-sm" data-idx="${i}">⬇️ Download</button></td>
+      </tr>`;
+    }).join('')}</tbody>
+  </table>`;
+  wrapper.querySelectorAll('.qr-img-sm').forEach(img=>img.onclick=()=>showQRModal(regRecords[+img.dataset.idx]));
+  wrapper.querySelectorAll('.qr-dl-sm').forEach(btn=>btn.onclick=()=>downloadQRRecord(regRecords[+btn.dataset.idx]));
+}
+
+function buildQRUrl(record, size) {
+  const data = `ITN_REG\nToken:${record.token}\nRegion:${record.region}\nDistrict:${record.district}\nChiefdom:${record.chiefdom}\nCommunity:${record.community}\nFacility:${record.healthFacility}\nName:${record.surname} ${record.firstName}\nMobile:${record.mobile}\nMembers:${record.members}\nITN:${record.itn}\nHHR:${record.hhr}`;
+  try {
+    const qr=qrcode(0,'L'); qr.addData(data); qr.make();
+    const mod=qr.getModuleCount(), cell=Math.floor(size/mod), off=Math.floor((size-cell*mod)/2);
+    const canvas=document.createElement('canvas'); canvas.width=size; canvas.height=size;
+    const ctx=canvas.getContext('2d'); ctx.fillStyle='white'; ctx.fillRect(0,0,size,size); ctx.fillStyle='black';
+    for(let r=0;r<mod;r++) for(let c=0;c<mod;c++) if(qr.isDark(r,c)) ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
+    return canvas.toDataURL('image/png');
+  } catch(e) { return ''; }
+}
+
+function showQRModal(record) {
+  const url = buildQRUrl(record, 260);
+  const div = document.createElement('div');
+  div.className='modal-overlay';
+  div.innerHTML=`<div class="qr-modal-box"><h4 style="margin-bottom:8px">Household QR Code</h4><div style="font-size:0.8rem;font-weight:bold;margin-bottom:6px">${escHtml(record.surname)} ${escHtml(record.firstName)}</div><img src="${url}" style="width:240px;height:240px;border-radius:14px;display:block;margin:0 auto"><div style="font-size:0.6rem;margin:10px 0;color:#555">Token: ${escHtml(record.token)}</div><button style="background:#0a59c6;color:white;border:none;padding:8px 20px;border-radius:36px;font-weight:700;cursor:pointer;margin-right:8px" id="modalDlBtn">Download</button><button style="background:#ddd;border:none;padding:8px 20px;border-radius:36px;font-weight:700;cursor:pointer" id="modalCloseBtn">Close</button></div>`;
+  document.body.appendChild(div);
+  div.querySelector('#modalDlBtn').onclick=()=>{ const a=document.createElement('a');a.href=url;a.download=`ITN_QR_${record.token}.png`;a.click(); };
+  div.querySelector('#modalCloseBtn').onclick=()=>div.remove();
+}
+function downloadQRRecord(record) { const url=buildQRUrl(record,300); const a=document.createElement('a');a.href=url;a.download=`ITN_QR_${record.token||record.surname}.png`;a.click(); }
+
+// ---- TARGET DASHBOARD ----
+function renderTarget() {
+  const total=regRecords.length;
+  const totalItn=regRecords.reduce((s,r)=>s+(parseInt(r.itn)||0),0);
+  const totalPeople=regRecords.reduce((s,r)=>s+(parseInt(r.members)||0),0);
+  const pct=Math.min(100,Math.round((total/500)*100));
+  const todayStr=getTodayStr();
+  const todayCount=regRecords.filter(r=>r.date&&r.date.includes(todayStr)).length;
+  const set=(id,v)=>{ const e=document.getElementById(id); if(e)e.innerText=v; };
+  set('tgtTodayNum',todayCount); set('tgtTotal',total); set('tgtPeople',totalPeople);
+  set('tgtRemain',Math.max(0,500-total)); set('tgtItn',totalItn); set('tgtPct',pct+'%'); set('tgtCurrent',total);
+  const f=document.getElementById('tgtFill'); if(f)f.style.width=pct+'%';
+  const cnt=obj=>Object.entries(obj).map(([k,v])=>`<div>• ${k}: ${v}</div>`).join('')||'<div>No data</div>';
+  const d={},c={},p={};
+  regRecords.forEach(r=>{ if(r.district)d[r.district]=(d[r.district]||0)+1; if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1; if(r.healthFacility)p[r.healthFacility]=(p[r.healthFacility]||0)+1; });
+  const dEl=document.getElementById('tgtDistrict'); if(dEl)dEl.innerHTML=cnt(d);
+  const cEl=document.getElementById('tgtChiefdom'); if(cEl)cEl.innerHTML=cnt(c);
+  const pEl=document.getElementById('tgtPhu');      if(pEl)pEl.innerHTML=cnt(p); 
+}
+
+// ======================== SESSION RESTORE ========================
+const storedPerms = sessionStorage.getItem('userPermissions');
+const storedUser  = sessionStorage.getItem('loggedInUser');
+if (storedPerms && storedUser) {
+  const u = usersDB.find(x=>x.USERNAME===storedUser);
+  if (u) { currentUser=u; currentPerms=JSON.parse(storedPerms); renderDashboard(); }
+  else renderLogin();
+} else {
+  renderLogin();
+}
 </script>
 </body>
 </html>
