@@ -659,81 +659,81 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== GEO DATA FROM EXCEL ===== */
+/* ===== EXACT GEO DATA FROM district.xlsx ===== */
 const GEO = {
   'Eastern': {
     'Kailahun': {
       'Gaura': {
-        'Sandaru(Gaura)': [{ facility: 'Sandaru(Gaura)MCHP', dp: 'Sandaru(Gaura)MCHPDP' }]
+        'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]
       }
     },
     'Kenema': {
       'Dodo': {
-        'Dodo': [{ facility: 'DodoCHC', dp: 'DodoCHCDP' }]
+        'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]
       }
     },
     'Kono': {
-      'GoramaKono': {
-        'Kangama(GoramaKono)': [{ facility: 'Kangama(GoramaKono)CHC', dp: 'Kangama(GoramaKono)CHCDP' }]
+      'Gorama Kono': {
+        'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]
       }
     }
   },
   'South': {
     'Bo': {
       'Badjia': {
-        'Jokibu': [{ facility: 'NjandamaMCHP', dp: 'NjandamaMCHPDP' }]
+        'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]
       }
     },
     'Bonthe': {
       'Benducha': {
-        'Bendu(BenduCha)': [{ facility: 'Bendu(BenduCha)CHC', dp: 'Bendu(BenduCha)CHCDP' }]
+        'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]
       }
     },
     'Moyamba': {
       'Banguawa': {
-        'Benkeh': [{ facility: 'BenkehMCHP', dp: 'BenkehMCHPDP' }]
+        'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]
       }
     },
     'Pujehun': {
       'Barri': {
-        'Bandasuma(Barri)': [{ facility: 'Bandasuma(Barri)CHC', dp: 'Bandasuma(Barri)CHCDP' }]
+        'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]
       }
     }
   },
   'North': {
     'Bombali': {
       'Biriwa': {
-        'Bumban': [{ facility: 'BumbanCHP', dp: 'BumbanCHPDP' }]
+        'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]
       }
     },
     'Tonkolili': {
       'Dansigoia': {
-        'Bassaia': [{ facility: 'BassaiaMCHP', dp: 'BassaiaMCHPDP' }]
+        'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]
       }
     },
     'Koinadugu': {
       'Diang': {
-        'Badala': [{ facility: 'BadalaMCHP', dp: 'BadalaMCHPDP' }]
+        'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]
       }
     },
     'Falaba': {
       'Barawa': {
-        'Banadakafaia': [{ facility: 'BanadakafaiaCHP', dp: 'BanadakafaiaCHPDP' }]
+        'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]
       }
     }
   },
   'North_west': {
     'Kambia': {
       'Bramaia': {
-        'Gbolon': [{ facility: 'GbolonMCHP', dp: 'GbolonMCHPDP' }]
+        'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]
       }
     },
-    'PortLoko': {
+    'Port_loko': {
       'Koya': {
-        'KissyKoya': [{ facility: 'KissyKoyaMCHP', dp: 'KissyKoyaMCHPDP' }]
+        'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]
       },
-      'BurehKassiri': {
-        'Kawula': [{ facility: 'KawulaCHC', dp: 'KawulaCHCDP' }]
+      'Bureh Kassiri': {
+        'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]
       }
     }
   }
@@ -1152,7 +1152,7 @@ function parseQRData(text){
     const idx = line.indexOf(':');
     if(idx > 0){
       const key = line.substring(0, idx).trim().toLowerCase();
-      const val = line.substring(idx + 1).trim(); // TRIMMED to remove Excel trailing spaces
+      const val = line.substring(idx + 1).trim();
       if(val){
         if(key === 'region') result.region = val;
         else if(key === 'district') result.district = val;
@@ -1172,8 +1172,11 @@ function parseQRData(text){
   return result;
 }
 
+// Enhanced normalize function to strip ALL non-alphanumeric characters
+// This ensures "Port_loko", "Port Loko", and "PortLoko" all match perfectly
 function normalize(str) {
-  return str ? str.trim().toLowerCase().replace(/\s+/g, '') : '';
+  if (!str) return '';
+  return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
 function autoFillFromScan(data){
@@ -1223,7 +1226,7 @@ function autoFillFromScan(data){
                   mCom.value = comOpt.value;
                   mCom.dispatchEvent(new Event('change'));
                   
-                  // Increased timeout to ensure Facility dropdown is populated
+                  // Increased timeout to 200ms to ensure Facility dropdown is fully populated
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
@@ -1234,13 +1237,6 @@ function autoFillFromScan(data){
                     if(facOpt){
                       mFac.value = facOpt.value;
                       mFac.dispatchEvent(new Event('change')); 
-                    } else {
-                      // If exact match fails, try partial match
-                      const facPartial = Array.from(mFac.options).find(o => o.value.toLowerCase().includes(facNorm) || facNorm.includes(o.value.toLowerCase()));
-                      if(facPartial) {
-                        mFac.value = facPartial.value;
-                        mFac.dispatchEvent(new Event('change'));
-                      }
                     }
                     
                     setTimeout(()=>{
@@ -1249,28 +1245,22 @@ function autoFillFromScan(data){
                       
                       if(dpOpt){
                         mDp.value = dpOpt.value;
-                      } else {
-                         // If exact match fails, try partial match
-                        const dpPartial = Array.from(mDp.options).find(o => o.value.toLowerCase().includes(dpNorm) || dpNorm.includes(o.value.toLowerCase()));
-                        if(dpPartial) {
-                          mDp.value = dpPartial.value;
-                        }
                       }
                       toast('✅ Demographics auto-filled from QR!');
-                    }, 150);
-                  }, 150);
+                    }, 200);
+                  }, 200);
                 } else {
                   toast('⚠ Community not found in list');
                 }
-              }, 120);
+              }, 200);
             } else {
               toast('⚠ Chiefdom not found in list');
             }
-          }, 120);
+          }, 200);
         } else {
           toast('⚠ District not found in list');
         }
-      }, 120);
+      }, 200);
     } else {
       toast('⚠ Region not found in list');
     }
