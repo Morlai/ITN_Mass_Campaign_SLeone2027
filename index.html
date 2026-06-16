@@ -659,7 +659,7 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== UPDATED GEO DATA FROM EXCEL ===== */
+/* ===== GEO DATA FROM EXCEL ===== */
 const GEO = {
   'Eastern': {
     'Kailahun': {
@@ -1172,6 +1172,10 @@ function parseQRData(text){
   return result;
 }
 
+function normalize(str) {
+  return str ? str.trim().toLowerCase().replace(/\s+/g, '') : '';
+}
+
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
   statusText.textContent = '✅ Auto-filling demographics...';
@@ -1185,50 +1189,76 @@ function autoFillFromScan(data){
   
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
-    const regOpt = Array.from(mReg.options).find(o => o.value.trim() === (data.region || '').trim());
+    const regNorm = normalize(data.region);
+    const regOpt = Array.from(mReg.options).find(o => normalize(o.value) === regNorm);
+    
     if(regOpt){
       mReg.value = regOpt.value;
       mReg.dispatchEvent(new Event('change'));
       
       setTimeout(()=>{
         const mDis = document.getElementById('mDis');
-        const disOpt = Array.from(mDis.options).find(o => o.value.trim() === (data.district || '').trim());
+        const disNorm = normalize(data.district);
+        const disOpt = Array.from(mDis.options).find(o => normalize(o.value) === disNorm);
+        
         if(disOpt){
           mDis.value = disOpt.value;
           mDis.dispatchEvent(new Event('change'));
           
           setTimeout(()=>{
             const mChi = document.getElementById('mChi');
-            const chiOpt = Array.from(mChi.options).find(o => o.value.trim() === (data.chiefdom || '').trim());
+            const chiNorm = normalize(data.chiefdom);
+            const chiOpt = Array.from(mChi.options).find(o => normalize(o.value) === chiNorm);
+            
             if(chiOpt){
               mChi.value = chiOpt.value;
               mChi.dispatchEvent(new Event('change'));
               
               setTimeout(()=>{
                 const mCom = document.getElementById('mCom');
-                const comOpt = Array.from(mCom.options).find(o => o.value.trim() === (data.community || '').trim());
+                const comNorm = normalize(data.community);
+                const comOpt = Array.from(mCom.options).find(o => normalize(o.value) === comNorm);
+                
                 if(comOpt){
                   mCom.value = comOpt.value;
                   mCom.dispatchEvent(new Event('change'));
                   
+                  // Increased timeout to ensure Facility dropdown is populated
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
                     
-                    const facOpt = Array.from(mFac.options).find(o => o.value.trim() === (data.facility || '').trim());
+                    const facNorm = normalize(data.facility);
+                    const facOpt = Array.from(mFac.options).find(o => normalize(o.value) === facNorm);
+                    
                     if(facOpt){
                       mFac.value = facOpt.value;
                       mFac.dispatchEvent(new Event('change')); 
+                    } else {
+                      // If exact match fails, try partial match
+                      const facPartial = Array.from(mFac.options).find(o => o.value.toLowerCase().includes(facNorm) || facNorm.includes(o.value.toLowerCase()));
+                      if(facPartial) {
+                        mFac.value = facPartial.value;
+                        mFac.dispatchEvent(new Event('change'));
+                      }
                     }
                     
                     setTimeout(()=>{
-                      const dpOpt = Array.from(mDp.options).find(o => o.value.trim() === (data.distPoint || '').trim());
+                      const dpNorm = normalize(data.distPoint);
+                      const dpOpt = Array.from(mDp.options).find(o => normalize(o.value) === dpNorm);
+                      
                       if(dpOpt){
                         mDp.value = dpOpt.value;
+                      } else {
+                         // If exact match fails, try partial match
+                        const dpPartial = Array.from(mDp.options).find(o => o.value.toLowerCase().includes(dpNorm) || dpNorm.includes(o.value.toLowerCase()));
+                        if(dpPartial) {
+                          mDp.value = dpPartial.value;
+                        }
                       }
                       toast('✅ Demographics auto-filled from QR!');
-                    }, 100);
-                  }, 120);
+                    }, 150);
+                  }, 150);
                 } else {
                   toast('⚠ Community not found in list');
                 }
