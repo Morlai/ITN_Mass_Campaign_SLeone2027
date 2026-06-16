@@ -887,7 +887,8 @@ function buildReview(){
 }
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
-  const data=`ITN_REG\nToken:${mTok}\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nName:${g('mSur')} ${g('mFst')}\nMobile:${g('mPh')}\nMembers:${g('mMem')}\nITN:${g('mItn')}\nHHR:${g('mHhr')}`;
+  // ADDED Dist. Point to the generated QR code so future scans have complete data
+  const data=`ITN_REG\nToken:${mTok}\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nDist. Point:${g('mDp')}\nName:${g('mSur')} ${g('mFst')}\nMobile:${g('mPh')}\nMembers:${g('mMem')}\nITN:${g('mItn')}\nHHR:${g('mHhr')}`;
   try{
     const qr=qrcode(0,'L');qr.addData(data);qr.make();
     const cv=document.getElementById('mQrc');
@@ -1226,25 +1227,37 @@ function autoFillFromScan(data){
                   mCom.value = comOpt.value;
                   mCom.dispatchEvent(new Event('change'));
                   
-                  // Increased timeout to 200ms to ensure Facility dropdown is fully populated
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
                     
                     const facNorm = normalize(data.facility);
-                    const facOpt = Array.from(mFac.options).find(o => normalize(o.value) === facNorm);
+                    let facOpt = Array.from(mFac.options).find(o => normalize(o.value) === facNorm);
                     
+                    // Fallback to partial match if exact normalized match fails
+                    if (!facOpt && data.facility) {
+                       facOpt = Array.from(mFac.options).find(o => normalize(o.value).includes(facNorm) || facNorm.includes(normalize(o.value)));
+                    }
+
                     if(facOpt){
                       mFac.value = facOpt.value;
                       mFac.dispatchEvent(new Event('change')); 
                     }
                     
                     setTimeout(()=>{
-                      const dpNorm = normalize(data.distPoint);
-                      const dpOpt = Array.from(mDp.options).find(o => normalize(o.value) === dpNorm);
-                      
-                      if(dpOpt){
-                        mDp.value = dpOpt.value;
+                      // ONLY attempt to match Dist. Point if it was actually in the QR code
+                      // Otherwise, rely on the Facility onchange event to have populated it
+                      if (data.distPoint) {
+                        const dpNorm = normalize(data.distPoint);
+                        let dpOpt = Array.from(mDp.options).find(o => normalize(o.value) === dpNorm);
+                        
+                        if (!dpOpt && data.distPoint) {
+                          dpOpt = Array.from(mDp.options).find(o => normalize(o.value).includes(dpNorm) || dpNorm.includes(normalize(o.value)));
+                        }
+
+                        if(dpOpt && dpOpt.value !== ''){
+                          mDp.value = dpOpt.value;
+                        }
                       }
                       toast('✅ Demographics auto-filled from QR!');
                     }, 200);
