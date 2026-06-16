@@ -659,81 +659,81 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== EXACT GEO DATA FROM district.xlsx ===== */
+/* ===== GEO DATA FROM EXCEL ===== */
 const GEO = {
   'Eastern': {
     'Kailahun': {
       'Gaura': {
-        'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]
+        'Sandaru(Gaura)': [{ facility: 'Sandaru(Gaura)MCHP', dp: 'Sandaru(Gaura)MCHPDP' }]
       }
     },
     'Kenema': {
       'Dodo': {
-        'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]
+        'Dodo': [{ facility: 'DodoCHC', dp: 'DodoCHCDP' }]
       }
     },
     'Kono': {
-      'Gorama Kono': {
-        'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]
+      'GoramaKono': {
+        'Kangama(GoramaKono)': [{ facility: 'Kangama(GoramaKono)CHC', dp: 'Kangama(GoramaKono)CHCDP' }]
       }
     }
   },
   'South': {
     'Bo': {
       'Badjia': {
-        'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]
+        'Jokibu': [{ facility: 'NjandamaMCHP', dp: 'NjandamaMCHPDP' }]
       }
     },
     'Bonthe': {
       'Benducha': {
-        'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]
+        'Bendu(BenduCha)': [{ facility: 'Bendu(BenduCha)CHC', dp: 'Bendu(BenduCha)CHCDP' }]
       }
     },
     'Moyamba': {
       'Banguawa': {
-        'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]
+        'Benkeh': [{ facility: 'BenkehMCHP', dp: 'BenkehMCHPDP' }]
       }
     },
     'Pujehun': {
       'Barri': {
-        'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]
+        'Bandasuma(Barri)': [{ facility: 'Bandasuma(Barri)CHC', dp: 'Bandasuma(Barri)CHCDP' }]
       }
     }
   },
   'North': {
     'Bombali': {
       'Biriwa': {
-        'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]
+        'Bumban': [{ facility: 'BumbanCHP', dp: 'BumbanCHPDP' }]
       }
     },
     'Tonkolili': {
       'Dansigoia': {
-        'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]
+        'Bassaia': [{ facility: 'BassaiaMCHP', dp: 'BassaiaMCHPDP' }]
       }
     },
     'Koinadugu': {
       'Diang': {
-        'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]
+        'Badala': [{ facility: 'BadalaMCHP', dp: 'BadalaMCHPDP' }]
       }
     },
     'Falaba': {
       'Barawa': {
-        'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]
+        'Banadakafaia': [{ facility: 'BanadakafaiaCHP', dp: 'BanadakafaiaCHPDP' }]
       }
     }
   },
   'North_west': {
     'Kambia': {
       'Bramaia': {
-        'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]
+        'Gbolon': [{ facility: 'GbolonMCHP', dp: 'GbolonMCHPDP' }]
       }
     },
-    'Port_loko': {
+    'PortLoko': {
       'Koya': {
-        'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]
+        'KissyKoya': [{ facility: 'KissyKoyaMCHP', dp: 'KissyKoyaMCHPDP' }]
       },
-      'Bureh Kassiri': {
-        'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]
+      'BurehKassiri': {
+        'Kawula': [{ facility: 'KawulaCHC', dp: 'KawulaCHCDP' }]
       }
     }
   }
@@ -1172,6 +1172,10 @@ function parseQRData(text){
   return result;
 }
 
+function normalize(str) {
+  return str ? str.trim().toLowerCase().replace(/\s+/g, '') : '';
+}
+
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
   statusText.textContent = '✅ Auto-filling demographics...';
@@ -1185,62 +1189,88 @@ function autoFillFromScan(data){
   
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
-    const regOpt = Array.from(mReg.options).find(o => o.value.trim() === (data.region || '').trim());
+    const regNorm = normalize(data.region);
+    const regOpt = Array.from(mReg.options).find(o => normalize(o.value) === regNorm);
+    
     if(regOpt){
       mReg.value = regOpt.value;
       mReg.dispatchEvent(new Event('change'));
       
       setTimeout(()=>{
         const mDis = document.getElementById('mDis');
-        const disOpt = Array.from(mDis.options).find(o => o.value.trim() === (data.district || '').trim());
+        const disNorm = normalize(data.district);
+        const disOpt = Array.from(mDis.options).find(o => normalize(o.value) === disNorm);
+        
         if(disOpt){
           mDis.value = disOpt.value;
           mDis.dispatchEvent(new Event('change'));
           
           setTimeout(()=>{
             const mChi = document.getElementById('mChi');
-            const chiOpt = Array.from(mChi.options).find(o => o.value.trim() === (data.chiefdom || '').trim());
+            const chiNorm = normalize(data.chiefdom);
+            const chiOpt = Array.from(mChi.options).find(o => normalize(o.value) === chiNorm);
+            
             if(chiOpt){
               mChi.value = chiOpt.value;
               mChi.dispatchEvent(new Event('change'));
               
               setTimeout(()=>{
                 const mCom = document.getElementById('mCom');
-                const comOpt = Array.from(mCom.options).find(o => o.value.trim() === (data.community || '').trim());
+                const comNorm = normalize(data.community);
+                const comOpt = Array.from(mCom.options).find(o => normalize(o.value) === comNorm);
+                
                 if(comOpt){
                   mCom.value = comOpt.value;
                   mCom.dispatchEvent(new Event('change'));
                   
+                  // Increased timeout to ensure Facility dropdown is populated
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
                     
-                    const facOpt = Array.from(mFac.options).find(o => o.value.trim() === (data.facility || '').trim());
+                    const facNorm = normalize(data.facility);
+                    const facOpt = Array.from(mFac.options).find(o => normalize(o.value) === facNorm);
+                    
                     if(facOpt){
                       mFac.value = facOpt.value;
                       mFac.dispatchEvent(new Event('change')); 
+                    } else {
+                      // If exact match fails, try partial match
+                      const facPartial = Array.from(mFac.options).find(o => o.value.toLowerCase().includes(facNorm) || facNorm.includes(o.value.toLowerCase()));
+                      if(facPartial) {
+                        mFac.value = facPartial.value;
+                        mFac.dispatchEvent(new Event('change'));
+                      }
                     }
                     
                     setTimeout(()=>{
-                      const dpOpt = Array.from(mDp.options).find(o => o.value.trim() === (data.distPoint || '').trim());
+                      const dpNorm = normalize(data.distPoint);
+                      const dpOpt = Array.from(mDp.options).find(o => normalize(o.value) === dpNorm);
+                      
                       if(dpOpt){
                         mDp.value = dpOpt.value;
+                      } else {
+                         // If exact match fails, try partial match
+                        const dpPartial = Array.from(mDp.options).find(o => o.value.toLowerCase().includes(dpNorm) || dpNorm.includes(o.value.toLowerCase()));
+                        if(dpPartial) {
+                          mDp.value = dpPartial.value;
+                        }
                       }
                       toast('✅ Demographics auto-filled from QR!');
-                    }, 150); // Increased to 150ms to ensure F.onchange has fully populated P
+                    }, 150);
                   }, 150);
                 } else {
                   toast('⚠ Community not found in list');
                 }
-              }, 150);
+              }, 120);
             } else {
               toast('⚠ Chiefdom not found in list');
             }
-          }, 150);
+          }, 120);
         } else {
           toast('⚠ District not found in list');
         }
-      }, 150);
+      }, 120);
     } else {
       toast('⚠ Region not found in list');
     }
