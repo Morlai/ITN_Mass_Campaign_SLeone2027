@@ -207,7 +207,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 #sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
 .rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
 .rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
-.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2300px}
+.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2400px}
 .rtable th{background:#1565C0;color:#fff;padding:7px 5px;font-weight:700;text-align:left;white-space:nowrap}
 .rtable td{padding:6px 5px;border-bottom:1px solid #e8edf5;color:#1e293b;white-space:nowrap;vertical-align:middle}
 .rtable tr:hover{background:#f5f8ff}
@@ -958,7 +958,7 @@ function renderRecords(){
   if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.<br>Complete Manual Entry to see records.</div>';return;}
   wrap.innerHTML=`<table class="rtable">
     <thead><tr>
-      <th>#</th><th>Date</th><th>Region</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th>
+      <th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th>
       <th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th>
       <th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th>
       <th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th>
@@ -976,6 +976,7 @@ function renderRecords(){
         <td>${i+1}</td>
         <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
         <td>${esc(r.region)}</td>
+        <td>${esc(r.district)}</td>
         <td>${esc(r.chiefdom)}</td>
         <td>${esc(r.community)}</td>
         <td>${esc(r.healthFacility)}</td>
