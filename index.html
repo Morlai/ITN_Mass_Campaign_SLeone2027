@@ -207,7 +207,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 #sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
 .rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
 .rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
-.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:1050px}
+.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2200px}
 .rtable th{background:#1565C0;color:#fff;padding:7px 5px;font-weight:700;text-align:left;white-space:nowrap}
 .rtable td{padding:6px 5px;border-bottom:1px solid #e8edf5;color:#1e293b;white-space:nowrap;vertical-align:middle}
 .rtable tr:hover{background:#f5f8ff}
@@ -951,25 +951,49 @@ function qrDataUrl(rec,sz){
     return cv.toDataURL('image/png');
   }catch(e){return '';}
 }
+
 function renderRecords(){
   const wrap=document.getElementById('recWrap');
   if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.<br>Complete Manual Entry to see records.</div>';return;}
   wrap.innerHTML=`<table class="rtable">
-    <thead><tr><th>#</th><th>Surname</th><th>First</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Mobile</th><th>Mbrs</th><th>Prg</th><th>U5</th><th>ITN</th><th>HHR</th><th>Token</th><th>Date</th><th>QR</th><th>&#8595;</th></tr></thead>
-    <tbody>${RECS.map((r,i)=>{const u=qrDataUrl(r,52);return`<tr>
-      <td>${i+1}</td><td>${esc(r.surname)}</td><td>${esc(r.firstName)}</td>
-      <td>${esc(r.region)}</td><td>${esc(r.district)}</td><td>${esc(r.chiefdom)}</td>
-      <td>${esc(r.community)}</td><td>${esc(r.healthFacility)}</td><td>${esc(r.mobile)}</td>
-      <td>${r.members}</td><td>${r.pregnant||0}</td><td>${r.under5||0}</td>
-      <td>${r.itn}</td><td>${esc(r.hhr)}</td>
-      <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
-      <td style="font-size:.42rem">${r.date}</td>
-      <td><img src="${u}" class="qsm" data-i="${i}"></td>
-      <td><button class="dlsm" data-i="${i}">&#8595; DL</button></td>
-    </tr>`;}).join('')}</tbody></table>`;
+    <thead><tr>
+      <th>#</th><th>Date</th><th>Region</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th>
+      <th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th>
+      <th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th>
+      <th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th>
+    </tr></thead>
+    <tbody>${RECS.map((r,i)=>{
+      const u=qrDataUrl(r,52);
+      const [lat,lng]=(r.gps||'').split(',');
+      return`<tr>
+        <td>${i+1}</td>
+        <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
+        <td>${esc(r.region)}</td>
+        <td>${esc(r.chiefdom)}</td>
+        <td>${esc(r.community)}</td>
+        <td>${esc(r.healthFacility)}</td>
+        <td>${esc(r.dp)}</td>
+        <td>${esc(r.surname)}</td>
+        <td>${esc(r.middleName||'')}</td>
+        <td>${esc(r.firstName)}</td>
+        <td>${esc(r.mobile)}</td>
+        <td>${r.members}</td>
+        <td>${r.pregnant||0}</td>
+        <td>${r.under5||0}</td>
+        <td>${r.itn}</td>
+        <td>${esc(r.hhr)}</td>
+        <td style="font-size:.42rem">${esc(lat||'')}</td>
+        <td style="font-size:.42rem">${esc(lng||'')}</td>
+        <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
+        <td><img src="${u}" class="qsm" data-i="${i}"></td>
+        <td><span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700">${r.status||'Registered'}</span></td>
+        <td><button class="dlsm" data-i="${i}">&#8595; DL</button></td>
+      </tr>`;
+    }).join('')}</tbody></table>`;
   wrap.querySelectorAll('.qsm').forEach(img=>img.onclick=()=>showQRModal(RECS[+img.dataset.i]));
   wrap.querySelectorAll('.dlsm').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
 }
+
 function showQRModal(rec){
   const u=qrDataUrl(rec,220);
   const d=document.createElement('div');d.className='qr-modal-ov';
