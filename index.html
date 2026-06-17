@@ -968,10 +968,9 @@ function renderRecords(){
       const [lat,lng]=(r.gps||'').split(',');
       
       const isDist = r.status === 'Distributed';
-      const statusBadge = `<span style="background:${isDist?'#d1fae5':'#ffedd5'};color:${isDist?'#065f46':'#c2410c'};padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;margin-bottom:3px;">${isDist?'Distributed':'Pending'}</span>`;
-      const distBtn = isDist 
-        ? `<div style="font-size:.4rem;color:#10b981;font-weight:700;text-align:center;">✓ Completed</div>`
-        : `<button class="dlsm dist-btn" style="background:#f97316;" data-i="${i}">Mark Dist.</button>`;
+      const statusBadge = isDist 
+        ? `<span class="status-badge dist" style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
+        : `<span class="status-badge pend" style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;box-shadow:0 0 0 1px #fdba74;" data-i="${i}" title="Click to mark as Distributed">Pending</span>`;
       
       return`<tr>
         <td>${i+1}</td>
@@ -994,19 +993,23 @@ function renderRecords(){
         <td style="font-size:.42rem">${esc(lng||'')}</td>
         <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
         <td><img src="${u}" class="qsm" data-i="${i}"></td>
-        <td style="text-align:center; min-width: 90px;">${statusBadge}<br>${distBtn}</td>
+        <td style="text-align:center; min-width: 90px;">${statusBadge}</td>
         <td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td>
       </tr>`;
     }).join('')}</tbody></table>`;
   
   wrap.querySelectorAll('.qsm').forEach(img=>img.onclick=()=>showQRModal(RECS[+img.dataset.i]));
   wrap.querySelectorAll('.dl-btn').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
-  wrap.querySelectorAll('.dist-btn').forEach(btn=>btn.onclick=()=>{
-    const idx = +btn.dataset.i;
-    RECS[idx].status = 'Distributed';
-    saveRecs();
-    renderRecords();
-    toast('✅ Record marked as Distributed');
+  
+  // Make Pending status badges clickable to mark as Distributed
+  wrap.querySelectorAll('.status-badge.pend').forEach(badge => {
+    badge.onclick = () => {
+      const idx = +badge.dataset.i;
+      RECS[idx].status = 'Distributed';
+      saveRecs();
+      renderRecords();
+      toast('✅ Record marked as Distributed');
+    };
   });
 }
 
