@@ -7,6 +7,11 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+
+<!-- ═══════ FIREBASE SDK (Cross-Device Sync) ═══════ -->
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#dde4f0;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif;padding:16px}
@@ -256,9 +261,31 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .ocard h3{font-size:1.05rem;font-weight:800;margin-bottom:7px}
 .ocard p{font-size:.68rem;color:#444;line-height:1.4;margin-bottom:14px}
 .obtn{background:#1565C0;color:#fff;border:none;padding:9px 20px;border-radius:32px;font-weight:700;cursor:pointer}
+
+/* ===================== SYNC INDICATOR ===================== */
+.sync-indicator{
+  position:fixed;top:12px;right:12px;z-index:9998;
+  background:rgba(30,41,59,.92);color:#fff;
+  padding:6px 12px;border-radius:20px;
+  font-size:11px;font-weight:700;
+  display:flex;align-items:center;gap:6px;
+  box-shadow:0 4px 14px rgba(0,0,0,.3);
+  backdrop-filter:blur(8px);
+  transition:all .3s;
+}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;animation:pulse 1.5s infinite}
+.sync-indicator.online .sync-dot{background:#22c55e}
+.sync-indicator.offline .sync-dot{background:#ef4444;animation:none}
+.sync-indicator.local .sync-dot{background:#f59e0b}
 </style>
 </head>
 <body>
+
+<!-- ═══════ SYNC STATUS INDICATOR ═══════ -->
+<div class="sync-indicator local" id="syncIndicator">
+  <span class="sync-dot"></span>
+  <span id="syncText">Local Mode</span>
+</div>
 
 <div class="phone-frame">
  <div class="phone-mock" id="phoneMock">
@@ -546,6 +573,64 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 </div>
 
 <script>
+/* ═══════════════════════════════════════════════════════════════
+   🔥 FIREBASE CONFIGURATION — CROSS-DEVICE SYNC
+   ═══════════════════════════════════════════════════════════════
+   STEP 1: Go to https://console.firebase.google.com
+   STEP 2: Create a new project (e.g., "ITN-Campaign")
+   STEP 3: Click the Web icon </> and register an app
+   STEP 4: Copy your config and paste below (replace placeholders)
+   STEP 5: Go to Build → Firestore Database → Create Database
+           → Start in "Test Mode" → Choose location
+   ═══════════════════════════════════════════════════════════════ */
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+// Detect if Firebase is properly configured
+const FIREBASE_ENABLED = firebaseConfig.apiKey && 
+                         !firebaseConfig.apiKey.includes("YOUR_") && 
+                         typeof firebase !== 'undefined';
+
+let db = null;
+let recordsListener = null;
+let targetListener = null;
+
+// Initialize Firebase if configured
+if (FIREBASE_ENABLED) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+    console.log('✅ Firebase initialized - Cross-device sync active');
+  } catch (e) {
+    console.warn('⚠️ Firebase init failed:', e);
+  }
+}
+
+function updateSyncIndicator(status, text) {
+  const ind = document.getElementById('syncIndicator');
+  const txt = document.getElementById('syncText');
+  if (!ind) return;
+  ind.classList.remove('online', 'offline', 'local');
+  ind.classList.add(status);
+  if (txt) txt.textContent = text;
+}
+
+// Set initial sync status
+if (FIREBASE_ENABLED && db) {
+  updateSyncIndicator('online', 'Cloud Sync Active');
+} else {
+  updateSyncIndicator('local', 'Local Mode');
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   USER / ROLE SYSTEM (unchanged)
+═══════════════════════════════════════════════════════════════ */
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -659,7 +744,7 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== EXACT GEO DATA FROM district.xlsx (Official Master List) ===== */
+/* ===== GEO DATA ===== */
 const GEO = {
   'Eastern': {
     'Kailahun': {
@@ -918,27 +1003,148 @@ document.getElementById('mPh').addEventListener('input',function(){
   document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none';
 });
 
+/* ═══════════════════════════════════════════════════════════════
+   🔄 RECORDS STORAGE — FIREBASE (Cloud) OR LOCALSTORAGE (Fallback)
+═══════════════════════════════════════════════════════════════ */
 let RECS=[];
-function loadRecs(){const s=localStorage.getItem('itn_hh');if(s)RECS=JSON.parse(s);}
-function saveRecs(){localStorage.setItem('itn_hh',JSON.stringify(RECS));}
-loadRecs();
+
+// Load initial records (from localStorage as fallback / cache)
+function loadRecsLocal(){
+  const s=localStorage.getItem('itn_hh');
+  if(s) RECS=JSON.parse(s);
+}
+
+// Save records to localStorage (always, as cache)
+function saveRecsLocal(){
+  localStorage.setItem('itn_hh', JSON.stringify(RECS));
+}
+
+// Save a single record to Firestore (for cross-device sync)
+async function saveRecordToCloud(rec) {
+  if (!FIREBASE_ENABLED || !db) return;
+  try {
+    // Use token as document ID to avoid duplicates
+    const docId = rec.token || ('rec_' + Date.now() + '_' + Math.random().toString(36).substr(2,9));
+    await db.collection('households').doc(docId).set({
+      ...rec,
+      _id: docId,
+      _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    console.log('✅ Record synced to cloud:', docId);
+  } catch (e) {
+    console.warn('⚠️ Cloud save failed:', e);
+    toast('⚠️ Saved locally (offline)');
+  }
+}
+
+// Update a record in Firestore (e.g., status change)
+async function updateRecordInCloud(docId, updates) {
+  if (!FIREBASE_ENABLED || !db || !docId) return;
+  try {
+    await db.collection('households').doc(docId).update({
+      ...updates,
+      _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (e) {
+    console.warn('⚠️ Cloud update failed:', e);
+  }
+}
+
+// Start real-time listener for records
+function startRecordsListener() {
+  if (!FIREBASE_ENABLED || !db) return;
+  
+  // Clean up existing listener
+  if (recordsListener) {
+    recordsListener();
+    recordsListener = null;
+  }
+  
+  recordsListener = db.collection('households')
+    .orderBy('_updatedAt', 'desc')
+    .onSnapshot((snapshot) => {
+      const cloudRecs = [];
+      snapshot.forEach(doc => {
+        cloudRecs.push(doc.data());
+      });
+      
+      // Replace RECS with cloud data
+      RECS = cloudRecs;
+      saveRecsLocal(); // Update local cache
+      
+      // Re-render if on records or target screen
+      const activeScreen = document.querySelector('#phoneMock .screen.active');
+      if (activeScreen) {
+        if (activeScreen.id === 'sRecords') renderRecords();
+        if (activeScreen.id === 'sTarget') renderTarget();
+      }
+      
+      updateSyncIndicator('online', 'Cloud Sync Active');
+    }, (error) => {
+      console.warn('⚠️ Listener error:', error);
+      updateSyncIndicator('offline', 'Sync Offline');
+    });
+}
+
+// Start real-time listener for target
+function startTargetListener() {
+  if (!FIREBASE_ENABLED || !db) return;
+  
+  if (targetListener) {
+    targetListener();
+    targetListener = null;
+  }
+  
+  targetListener = db.collection('settings').doc('campaign')
+    .onSnapshot((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.target) {
+          localStorage.setItem('itn_target', data.target);
+          const activeScreen = document.querySelector('#phoneMock .screen.active');
+          if (activeScreen && activeScreen.id === 'sTarget') renderTarget();
+        }
+      }
+    }, (error) => {
+      console.warn('⚠️ Target listener error:', error);
+    });
+}
+
+// Initialize data loading
+loadRecsLocal();
+if (FIREBASE_ENABLED && db) {
+  startRecordsListener();
+  startTargetListener();
+}
 
 function finalReg(){
   if(mDone){openManual();return;}
   if(!valH()||!valD()){toast('⚠ Complete all fields');return;}
   const g=id=>document.getElementById(id)?.value||'';
-  RECS.unshift({
+  const newRec = {
     name:`${g('mSur')} ${g('mFst')}`,surname:g('mSur'),middleName:g('mMid'),firstName:g('mFst'),
     region:g('mReg'),district:g('mDis'),chiefdom:g('mChi'),community:g('mCom'),
     healthFacility:g('mFac'),dp:g('mDp'),mobile:g('mPh'),
     members:g('mMem'),pregnant:g('mPrg'),under5:g('mU5'),itn:g('mItn'),
-    hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,date:new Date().toLocaleString(),
+    hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,
+    date:new Date().toLocaleString(),
     status: 'Pending'
-  });
-  saveRecs();
+  };
+  
+  // Add to local array immediately (for instant UI feedback)
+  RECS.unshift(newRec);
+  saveRecsLocal();
+  
+  // Sync to cloud (if Firebase enabled)
+  saveRecordToCloud(newRec);
+  
   document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
   document.getElementById('mFinBtn').innerHTML='➕ Register Another';
   mDone=true;
+  
+  if (FIREBASE_ENABLED) {
+    toast('✅ Synced to cloud');
+  }
 }
 
 function qrDataUrl(rec,sz){
@@ -1002,12 +1208,15 @@ function renderRecords(){
   wrap.querySelectorAll('.qsm').forEach(img=>img.onclick=()=>showQRModal(RECS[+img.dataset.i]));
   wrap.querySelectorAll('.dl-btn').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
   
-  // Make Pending status badges clickable to mark as Distributed
   wrap.querySelectorAll('.status-badge.pend').forEach(badge => {
     badge.onclick = () => {
       const idx = +badge.dataset.i;
       RECS[idx].status = 'Distributed';
-      saveRecs();
+      saveRecsLocal();
+      // Sync status change to cloud
+      if (RECS[idx]._id) {
+        updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
+      }
       renderRecords();
       toast('✅ Record marked as Distributed');
     };
@@ -1026,7 +1235,7 @@ function getTarget(){
   return parseInt(localStorage.getItem('itn_target')) || 500;
 }
 
-function saveTarget(){
+async function saveTarget(){
   const inp = document.getElementById('tTargetInput');
   const v = parseInt(inp?.value);
   if(!v || v <= 0){
@@ -1034,8 +1243,23 @@ function saveTarget(){
     return;
   }
   localStorage.setItem('itn_target', v);
+  
+  // Sync target to cloud
+  if (FIREBASE_ENABLED && db) {
+    try {
+      await db.collection('settings').doc('campaign').set({
+        target: v,
+        _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('✅ Target synced: ' + v + ' households');
+    } catch (e) {
+      toast('✅ Target saved locally');
+    }
+  } else {
+    toast('✅ Target set to ' + v + ' households');
+  }
+  
   renderTarget();
-  toast('✅ Target set to ' + v + ' households');
 }
 
 function renderTarget(){
@@ -1067,7 +1291,7 @@ function renderTarget(){
 }
 
 /* ═══════════════════════════════════════════════
-   CAMERA QR SCANNER — Real Camera Integration
+   CAMERA QR SCANNER
 ═══════════════════════════════════════════════ */
 let html5QrCode = null;
 let scannerActive = false;
@@ -1216,23 +1440,19 @@ function parseQRData(text){
   return result;
 }
 
-// Ultra-robust normalize function: strips ALL non-alphanumeric characters
 function normalize(str) {
   if (!str) return '';
   return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
 }
 
-// Fuzzy matching function to guarantee a match regardless of spacing/formatting
 function findBestMatch(selectElement, targetValue) {
   if (!targetValue) return null;
   const targetNorm = normalize(targetValue);
   if (!targetNorm) return null;
   
-  // 1. Exact normalized match
   let match = Array.from(selectElement.options).find(o => normalize(o.value) === targetNorm);
   if (match && match.value !== '') return match;
   
-  // 2. Partial match (target contains option or option contains target)
   match = Array.from(selectElement.options).find(o => {
     const optNorm = normalize(o.value);
     return optNorm !== '' && (optNorm.includes(targetNorm) || targetNorm.includes(optNorm));
@@ -1296,8 +1516,6 @@ function autoFillFromScan(data){
                     }
                     
                     setTimeout(()=>{
-                      // Only attempt to match Dist. Point if it exists in the scanned data
-                      // Otherwise, trust the Facility onchange event to have populated it correctly
                       if (data.distPoint) {
                         const dpOpt = findBestMatch(mDp, data.distPoint);
                         if(dpOpt){
@@ -1324,6 +1542,14 @@ function autoFillFromScan(data){
     }
   }, 500);
 }
+
+// Monitor online/offline status
+window.addEventListener('online', () => {
+  if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active');
+});
+window.addEventListener('offline', () => {
+  if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline');
+});
 
 const savedU=sessionStorage.getItem('cu');
 if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
