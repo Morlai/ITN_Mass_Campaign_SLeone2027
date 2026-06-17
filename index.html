@@ -207,7 +207,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 #sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
 .rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
 .rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
-.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2200px}
+.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2300px}
 .rtable th{background:#1565C0;color:#fff;padding:7px 5px;font-weight:700;text-align:left;white-space:nowrap}
 .rtable td{padding:6px 5px;border-bottom:1px solid #e8edf5;color:#1e293b;white-space:nowrap;vertical-align:middle}
 .rtable tr:hover{background:#f5f8ff}
@@ -932,7 +932,8 @@ function finalReg(){
     region:g('mReg'),district:g('mDis'),chiefdom:g('mChi'),community:g('mCom'),
     healthFacility:g('mFac'),dp:g('mDp'),mobile:g('mPh'),
     members:g('mMem'),pregnant:g('mPrg'),under5:g('mU5'),itn:g('mItn'),
-    hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,date:new Date().toLocaleString()
+    hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,date:new Date().toLocaleString(),
+    status: 'Pending'
   });
   saveRecs();
   document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
@@ -965,6 +966,13 @@ function renderRecords(){
     <tbody>${RECS.map((r,i)=>{
       const u=qrDataUrl(r,52);
       const [lat,lng]=(r.gps||'').split(',');
+      
+      const isDist = r.status === 'Distributed';
+      const statusBadge = `<span style="background:${isDist?'#d1fae5':'#ffedd5'};color:${isDist?'#065f46':'#c2410c'};padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;margin-bottom:3px;">${isDist?'Distributed':'Pending'}</span>`;
+      const distBtn = isDist 
+        ? `<div style="font-size:.4rem;color:#10b981;font-weight:700;text-align:center;">✓ Completed</div>`
+        : `<button class="dlsm dist-btn" style="background:#f97316;" data-i="${i}">Mark Dist.</button>`;
+      
       return`<tr>
         <td>${i+1}</td>
         <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
@@ -986,12 +994,20 @@ function renderRecords(){
         <td style="font-size:.42rem">${esc(lng||'')}</td>
         <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
         <td><img src="${u}" class="qsm" data-i="${i}"></td>
-        <td><span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700">${r.status||'Registered'}</span></td>
-        <td><button class="dlsm" data-i="${i}">&#8595; DL</button></td>
+        <td style="text-align:center; min-width: 90px;">${statusBadge}<br>${distBtn}</td>
+        <td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td>
       </tr>`;
     }).join('')}</tbody></table>`;
+  
   wrap.querySelectorAll('.qsm').forEach(img=>img.onclick=()=>showQRModal(RECS[+img.dataset.i]));
-  wrap.querySelectorAll('.dlsm').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
+  wrap.querySelectorAll('.dl-btn').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
+  wrap.querySelectorAll('.dist-btn').forEach(btn=>btn.onclick=()=>{
+    const idx = +btn.dataset.i;
+    RECS[idx].status = 'Distributed';
+    saveRecs();
+    renderRecords();
+    toast('✅ Record marked as Distributed');
+  });
 }
 
 function showQRModal(rec){
