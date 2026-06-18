@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>  
+<html lang="en"> 
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
@@ -970,9 +970,31 @@ function buildReview(){
       Token: ${esc(mTok)}
     </p></div>`;
 }
+
+// ═══════════════════════════════════════════════════════════════
+// 🔑 UPDATED QR CODE GENERATION - INCLUDES ALL FIELDS
+// ═══════════════════════════════════════════════════════════════
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
-  const data=`ITN_REG\nToken:${mTok}\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nDist. Point:${g('mDp')}\nName:${g('mSur')} ${g('mFst')}\nMobile:${g('mPh')}\nMembers:${g('mMem')}\nITN:${g('mItn')}\nHHR:${g('mHhr')}`;
+  const data=`ITN_REG
+Region:${g('mReg')}
+District:${g('mDis')}
+Chiefdom:${g('mChi')}
+Community:${g('mCom')}
+Facility:${g('mFac')}
+Dist. Point:${g('mDp')}
+Surname:${g('mSur')}
+Middle Name:${g('mMid')}
+First Name:${g('mFst')}
+Mobile:${g('mPh')}
+Members:${g('mMem')}
+ITN Alloc:${g('mItn')}
+Pregnant:${g('mPrg')}
+Under-5:${g('mU5')}
+HHR Name:${g('mHhr')}
+Latitude:${g('mLat')}
+Longitude:${g('mLng')}
+Token:${mTok}`;
   try{
     const qr=qrcode(0,'L');qr.addData(data);qr.make();
     const cv=document.getElementById('mQrc');
@@ -984,11 +1006,13 @@ function genQR(){
     document.getElementById('mDlBtn').disabled=false;
   }catch(e){toast('QR error');}
 }
+
 function dlQR(){
   const cv=document.getElementById('mQrc');
   if(!cv||cv.style.display==='none'){toast('Generate QR first');return;}
   const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=`ITN_${mTok||'QR'}.png`;a.click();
 }
+
 function captureGPS(){
   if(!navigator.geolocation)return;
   navigator.geolocation.getCurrentPosition(pos=>{
@@ -1147,8 +1171,30 @@ function finalReg(){
   }
 }
 
+// ═══════════════════════════════════════════════════════════════
+// 🔑 UPDATED QR CODE GENERATION FOR RECORDS TABLE - INCLUDES ALL FIELDS
+// ═══════════════════════════════════════════════════════════════
 function qrDataUrl(rec,sz){
-  const data=`ITN_REG\nToken:${rec.token}\nRegion:${rec.region}\nDistrict:${rec.district}\nFacility:${rec.healthFacility}\nName:${rec.surname} ${rec.firstName}\nMobile:${rec.mobile}\nMembers:${rec.members}\nITN:${rec.itn}`;
+  const [lat,lng]=(rec.gps||'').split(',');
+  const data=`ITN_REG
+Region:${rec.region}
+District:${rec.district}
+Chiefdom:${rec.chiefdom}
+Community:${rec.community}
+Facility:${rec.healthFacility}
+Dist. Point:${rec.dp}
+Surname:${rec.surname}
+Middle Name:${rec.middleName||''}
+First Name:${rec.firstName}
+Mobile:${rec.mobile}
+Members:${rec.members}
+ITN Alloc:${rec.itn}
+Pregnant:${rec.pregnant||0}
+Under-5:${rec.under5||0}
+HHR Name:${rec.hhr}
+Latitude:${lat||''}
+Longitude:${lng||''}
+Token:${rec.token}`;
   try{
     const qr=qrcode(0,'L');qr.addData(data);qr.make();
     const mod=qr.getModuleCount(),cell=Math.floor(sz/mod),off=Math.floor((sz-cell*mod)/2);
@@ -1411,6 +1457,9 @@ function closeCameraScanner(){
   });
 }
 
+// ═══════════════════════════════════════════════════════════════
+// 🔑 UPDATED QR PARSER - HANDLES ALL FIELDS
+// ═══════════════════════════════════════════════════════════════
 function parseQRData(text){
   if(!text) return null;
   const result = {};
@@ -1428,11 +1477,27 @@ function parseQRData(text){
         else if(key === 'community') result.community = val;
         else if(key === 'facility' || key === 'health facility' || key === 'healthfacility') result.facility = val;
         else if(key === 'dist. point' || key === 'dist_point' || key === 'distpoint' || key === 'dp' || key === 'distribution point' || key === 'distributionpoint') result.distPoint = val;
-        else if(key === 'name') result.name = val;
+        else if(key === 'surname') result.surname = val;
+        else if(key === 'middle name' || key === 'middlename' || key === 'middle') result.middleName = val;
+        else if(key === 'first name' || key === 'firstname' || key === 'first') result.firstName = val;
+        else if(key === 'name') {
+          // Handle legacy format "Name: Surname Firstname"
+          const parts = val.split(' ');
+          if(parts.length >= 2) {
+            result.surname = parts[0];
+            result.firstName = parts.slice(1).join(' ');
+          } else {
+            result.surname = val;
+          }
+        }
         else if(key === 'mobile') result.mobile = val;
         else if(key === 'members') result.members = val;
-        else if(key === 'itn') result.itn = val;
-        else if(key === 'hhr') result.hhr = val;
+        else if(key === 'itn alloc' || key === 'itn_alloc' || key === 'itnalloc' || key === 'itn') result.itn = val;
+        else if(key === 'pregnant') result.pregnant = val;
+        else if(key === 'under-5' || key === 'under5' || key === 'under_5' || key === 'u5') result.under5 = val;
+        else if(key === 'hhr name' || key === 'hhr_name' || key === 'hhrname' || key === 'hhr') result.hhr = val;
+        else if(key === 'latitude' || key === 'lat') result.latitude = val;
+        else if(key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
         else if(key === 'token') result.token = val;
       }
     }
@@ -1462,9 +1527,12 @@ function findBestMatch(selectElement, targetValue) {
   return null;
 }
 
+// ═══════════════════════════════════════════════════════════════
+// 🔑 UPDATED AUTO-FILL - FILLS ALL FIELDS FROM QR
+// ═══════════════════════════════════════════════════════════════
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
-  statusText.textContent = '✅ Auto-filling demographics...';
+  statusText.textContent = '✅ Auto-filling form data...';
   
   setTimeout(()=>{
     document.getElementById('camModal').classList.remove('open');
@@ -1473,6 +1541,7 @@ function autoFillFromScan(data){
   mStep = 1;
   updateWiz();
   
+  // Fill demographics
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
     const regOpt = findBestMatch(mReg, data.region);
@@ -1522,25 +1591,62 @@ function autoFillFromScan(data){
                           mDp.value = dpOpt.value;
                         }
                       }
-                      toast('✅ Demographics auto-filled from QR!');
+                      
+                      // Now fill personal details
+                      fillPersonalDetails(data);
+                      
+                      toast('✅ Form auto-filled from QR!');
                     }, 300);
                   }, 300);
                 } else {
                   toast('⚠ Community not found in list');
+                  fillPersonalDetails(data);
                 }
               }, 300);
             } else {
               toast('⚠ Chiefdom not found in list');
+              fillPersonalDetails(data);
             }
           }, 300);
         } else {
           toast('⚠ District not found in list');
+          fillPersonalDetails(data);
         }
       }, 300);
     } else {
       toast('⚠ Region not found in list');
+      fillPersonalDetails(data);
     }
   }, 500);
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🔑 NEW FUNCTION - FILLS PERSONAL DETAILS FROM QR
+// ═══════════════════════════════════════════════════════════════
+function fillPersonalDetails(data){
+  if(data.surname) document.getElementById('mSur').value = data.surname;
+  if(data.middleName) document.getElementById('mMid').value = data.middleName;
+  if(data.firstName) document.getElementById('mFst').value = data.firstName;
+  if(data.mobile) document.getElementById('mPh').value = data.mobile;
+  if(data.members) {
+    document.getElementById('mMem').value = data.members;
+    // Only calculate ITN if not provided in QR
+    if(!data.itn) calcItn();
+  }
+  if(data.itn) document.getElementById('mItn').value = data.itn;
+  if(data.pregnant) document.getElementById('mPrg').value = data.pregnant;
+  if(data.under5) document.getElementById('mU5').value = data.under5;
+  if(data.hhr) document.getElementById('mHhr').value = data.hhr;
+  if(data.latitude) document.getElementById('mLat').value = data.latitude;
+  if(data.longitude) document.getElementById('mLng').value = data.longitude;
+  if(data.token) {
+    mTok = data.token;
+    const tb = document.getElementById('mTok');
+    if(tb){
+      tb.style.display = 'block';
+      tb.textContent = '🔑 TOKEN: ' + mTok;
+    }
+  }
 }
 
 // Monitor online/offline status
