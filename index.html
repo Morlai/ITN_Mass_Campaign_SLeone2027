@@ -575,14 +575,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 <script>
 /* ═══════════════════════════════════════════════════════════════
    🔥 FIREBASE CONFIGURATION — CROSS-DEVICE SYNC
-   ═══════════════════════════════════════════════════════════════
-   STEP 1: Go to https://console.firebase.google.com
-   STEP 2: Create a new project (e.g., "ITN-Campaign")
-   STEP 3: Click the Web icon </> and register an app
-   STEP 4: Copy your config and paste below (replace placeholders)
-   STEP 5: Go to Build → Firestore Database → Create Database
-           → Start in "Test Mode" → Choose location
-   ═══════════════════════════════════════════════════════════════ */
+═══════════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -592,7 +585,6 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID"
 };
 
-// Detect if Firebase is properly configured
 const FIREBASE_ENABLED = firebaseConfig.apiKey && 
                          !firebaseConfig.apiKey.includes("YOUR_") && 
                          typeof firebase !== 'undefined';
@@ -601,7 +593,6 @@ let db = null;
 let recordsListener = null;
 let targetListener = null;
 
-// Initialize Firebase if configured
 if (FIREBASE_ENABLED) {
   try {
     firebase.initializeApp(firebaseConfig);
@@ -621,7 +612,6 @@ function updateSyncIndicator(status, text) {
   if (txt) txt.textContent = text;
 }
 
-// Set initial sync status
 if (FIREBASE_ENABLED && db) {
   updateSyncIndicator('online', 'Cloud Sync Active');
 } else {
@@ -629,7 +619,7 @@ if (FIREBASE_ENABLED && db) {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   USER / ROLE SYSTEM (unchanged)
+   USER / ROLE SYSTEM
 ═══════════════════════════════════════════════════════════════ */
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
@@ -972,7 +962,7 @@ function buildReview(){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 🔑 UPDATED QR CODE GENERATION - INCLUDES ALL FIELDS
+// 🔑 FIXED QR CODE GENERATION - REMOVED DUPLICATE CATCH BLOCK
 // ═══════════════════════════════════════════════════════════════
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
@@ -996,7 +986,7 @@ Latitude:${g('mLat')}
 Longitude:${g('mLng')}
 Token:${mTok}`;
   try{
-    const qr=qrcode(0,'L');qr.addData(data);qr.make();
+    const qr=qrcode(0,'M');qr.addData(data);qr.make();
     const cv=document.getElementById('mQrc');
     const sz=170,mod=qr.getModuleCount(),cell=Math.floor(sz/mod),off=Math.floor((sz-cell*mod)/2);
     cv.width=sz;cv.height=sz;
@@ -1004,7 +994,10 @@ Token:${mTok}`;
     for(let r=0;r<mod;r++)for(let c=0;c<mod;c++)if(qr.isDark(r,c))ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
     cv.style.display='block';document.getElementById('mQrMsg').style.display='none';
     document.getElementById('mDlBtn').disabled=false;
-  }catch(e){toast('QR error');}
+  }catch(e){
+    console.error('QR Generation Error:', e);
+    toast('⚠️ QR generation failed');
+  }
 }
 
 function dlQR(){
@@ -1028,26 +1021,22 @@ document.getElementById('mPh').addEventListener('input',function(){
 });
 
 /* ═══════════════════════════════════════════════════════════════
-   🔄 RECORDS STORAGE — FIREBASE (Cloud) OR LOCALSTORAGE (Fallback)
+   🔄 RECORDS STORAGE
 ═══════════════════════════════════════════════════════════════ */
 let RECS=[];
 
-// Load initial records (from localStorage as fallback / cache)
 function loadRecsLocal(){
   const s=localStorage.getItem('itn_hh');
   if(s) RECS=JSON.parse(s);
 }
 
-// Save records to localStorage (always, as cache)
 function saveRecsLocal(){
   localStorage.setItem('itn_hh', JSON.stringify(RECS));
 }
 
-// Save a single record to Firestore (for cross-device sync)
 async function saveRecordToCloud(rec) {
   if (!FIREBASE_ENABLED || !db) return;
   try {
-    // Use token as document ID to avoid duplicates
     const docId = rec.token || ('rec_' + Date.now() + '_' + Math.random().toString(36).substr(2,9));
     await db.collection('households').doc(docId).set({
       ...rec,
@@ -1061,7 +1050,6 @@ async function saveRecordToCloud(rec) {
   }
 }
 
-// Update a record in Firestore (e.g., status change)
 async function updateRecordInCloud(docId, updates) {
   if (!FIREBASE_ENABLED || !db || !docId) return;
   try {
@@ -1074,11 +1062,9 @@ async function updateRecordInCloud(docId, updates) {
   }
 }
 
-// Start real-time listener for records
 function startRecordsListener() {
   if (!FIREBASE_ENABLED || !db) return;
   
-  // Clean up existing listener
   if (recordsListener) {
     recordsListener();
     recordsListener = null;
@@ -1092,11 +1078,9 @@ function startRecordsListener() {
         cloudRecs.push(doc.data());
       });
       
-      // Replace RECS with cloud data
       RECS = cloudRecs;
-      saveRecsLocal(); // Update local cache
+      saveRecsLocal();
       
-      // Re-render if on records or target screen
       const activeScreen = document.querySelector('#phoneMock .screen.active');
       if (activeScreen) {
         if (activeScreen.id === 'sRecords') renderRecords();
@@ -1110,7 +1094,6 @@ function startRecordsListener() {
     });
 }
 
-// Start real-time listener for target
 function startTargetListener() {
   if (!FIREBASE_ENABLED || !db) return;
   
@@ -1134,7 +1117,6 @@ function startTargetListener() {
     });
 }
 
-// Initialize data loading
 loadRecsLocal();
 if (FIREBASE_ENABLED && db) {
   startRecordsListener();
@@ -1155,11 +1137,9 @@ function finalReg(){
     status: 'Pending'
   };
   
-  // Add to local array immediately (for instant UI feedback)
   RECS.unshift(newRec);
   saveRecsLocal();
   
-  // Sync to cloud (if Firebase enabled)
   saveRecordToCloud(newRec);
   
   document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
@@ -1172,94 +1152,136 @@ function finalReg(){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 🔑 UPDATED QR CODE GENERATION FOR RECORDS TABLE - INCLUDES ALL FIELDS
+// 🔑 FIXED QR CODE GENERATION FOR RECORDS TABLE
 // ═══════════════════════════════════════════════════════════════
 function qrDataUrl(rec,sz){
-  const [lat,lng]=(rec.gps||'').split(',');
-  const data=`ITN_REG
-Region:${rec.region}
-District:${rec.district}
-Chiefdom:${rec.chiefdom}
-Community:${rec.community}
-Facility:${rec.healthFacility}
-Dist. Point:${rec.dp}
-Surname:${rec.surname}
+  try {
+    const [lat,lng]=(rec.gps||'').split(',');
+    const data=`ITN_REG
+Region:${rec.region||''}
+District:${rec.district||''}
+Chiefdom:${rec.chiefdom||''}
+Community:${rec.community||''}
+Facility:${rec.healthFacility||''}
+Dist. Point:${rec.dp||''}
+Surname:${rec.surname||''}
 Middle Name:${rec.middleName||''}
-First Name:${rec.firstName}
-Mobile:${rec.mobile}
-Members:${rec.members}
-ITN Alloc:${rec.itn}
+First Name:${rec.firstName||''}
+Mobile:${rec.mobile||''}
+Members:${rec.members||''}
+ITN Alloc:${rec.itn||''}
 Pregnant:${rec.pregnant||0}
 Under-5:${rec.under5||0}
-HHR Name:${rec.hhr}
+HHR Name:${rec.hhr||''}
 Latitude:${lat||''}
 Longitude:${lng||''}
-Token:${rec.token}`;
-  try{
-    const qr=qrcode(0,'L');qr.addData(data);qr.make();
-    const mod=qr.getModuleCount(),cell=Math.floor(sz/mod),off=Math.floor((sz-cell*mod)/2);
-    const cv=document.createElement('canvas');cv.width=sz;cv.height=sz;
-    const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,sz,sz);ctx.fillStyle='#000';
-    for(let r=0;r<mod;r++)for(let c=0;c<mod;c++)if(qr.isDark(r,c))ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
+Token:${rec.token||''}`;
+    
+    const qr=qrcode(0,'M');
+    qr.addData(data);
+    qr.make();
+    
+    const mod=qr.getModuleCount();
+    const cell=Math.floor(sz/mod);
+    const off=Math.floor((sz-cell*mod)/2);
+    const cv=document.createElement('canvas');
+    cv.width=sz;
+    cv.height=sz;
+    const ctx=cv.getContext('2d');
+    ctx.fillStyle='#fff';
+    ctx.fillRect(0,0,sz,sz);
+    ctx.fillStyle='#000';
+    for(let r=0;r<mod;r++){
+      for(let c=0;c<mod;c++){
+        if(qr.isDark(r,c)){
+          ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
+        }
+      }
+    }
     return cv.toDataURL('image/png');
-  }catch(e){return '';}
+  } catch(e) {
+    console.error('QR Data URL Error:', e, rec);
+    return '';
+  }
 }
 
 function renderRecords(){
   const wrap=document.getElementById('recWrap');
   if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.<br>Complete Manual Entry to see records.</div>';return;}
-  wrap.innerHTML=`<table class="rtable">
+  
+  let tableHTML=`<table class="rtable">
     <thead><tr>
       <th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th>
       <th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th>
       <th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th>
       <th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th>
     </tr></thead>
-    <tbody>${RECS.map((r,i)=>{
-      const u=qrDataUrl(r,52);
-      const [lat,lng]=(r.gps||'').split(',');
-      
-      const isDist = r.status === 'Distributed';
-      const statusBadge = isDist 
-        ? `<span class="status-badge dist" style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
-        : `<span class="status-badge pend" style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;box-shadow:0 0 0 1px #fdba74;" data-i="${i}" title="Click to mark as Distributed">Pending</span>`;
-      
-      return`<tr>
-        <td>${i+1}</td>
-        <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
-        <td>${esc(r.region)}</td>
-        <td>${esc(r.district)}</td>
-        <td>${esc(r.chiefdom)}</td>
-        <td>${esc(r.community)}</td>
-        <td>${esc(r.healthFacility)}</td>
-        <td>${esc(r.dp)}</td>
-        <td>${esc(r.surname)}</td>
-        <td>${esc(r.middleName||'')}</td>
-        <td>${esc(r.firstName)}</td>
-        <td>${esc(r.mobile)}</td>
-        <td>${r.members}</td>
-        <td>${r.pregnant||0}</td>
-        <td>${r.under5||0}</td>
-        <td>${r.itn}</td>
-        <td>${esc(r.hhr)}</td>
-        <td style="font-size:.42rem">${esc(lat||'')}</td>
-        <td style="font-size:.42rem">${esc(lng||'')}</td>
-        <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
-        <td><img src="${u}" class="qsm" data-i="${i}"></td>
-        <td style="text-align:center; min-width: 90px;">${statusBadge}</td>
-        <td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td>
-      </tr>`;
-    }).join('')}</tbody></table>`;
+    <tbody>`;
   
-  wrap.querySelectorAll('.qsm').forEach(img=>img.onclick=()=>showQRModal(RECS[+img.dataset.i]));
-  wrap.querySelectorAll('.dl-btn').forEach(btn=>btn.onclick=()=>{const u=qrDataUrl(RECS[+btn.dataset.i],300);const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();});
+  RECS.forEach((r,i)=>{
+    const u=qrDataUrl(r,52);
+    const [lat,lng]=(r.gps||'').split(',');
+    
+    const isDist = r.status === 'Distributed';
+    const statusBadge = isDist 
+      ? `<span class="status-badge dist" style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
+      : `<span class="status-badge pend" style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;box-shadow:0 0 0 1px #fdba74;" data-i="${i}" title="Click to mark as Distributed">Pending</span>`;
+    
+    const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
+    
+    tableHTML+=`<tr>
+      <td>${i+1}</td>
+      <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
+      <td>${esc(r.region)}</td>
+      <td>${esc(r.district)}</td>
+      <td>${esc(r.chiefdom)}</td>
+      <td>${esc(r.community)}</td>
+      <td>${esc(r.healthFacility)}</td>
+      <td>${esc(r.dp)}</td>
+      <td>${esc(r.surname)}</td>
+      <td>${esc(r.middleName||'')}</td>
+      <td>${esc(r.firstName)}</td>
+      <td>${esc(r.mobile)}</td>
+      <td>${r.members}</td>
+      <td>${r.pregnant||0}</td>
+      <td>${r.under5||0}</td>
+      <td>${r.itn}</td>
+      <td>${esc(r.hhr)}</td>
+      <td style="font-size:.42rem">${esc(lat||'')}</td>
+      <td style="font-size:.42rem">${esc(lng||'')}</td>
+      <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
+      <td>${qrCell}</td>
+      <td style="text-align:center; min-width: 90px;">${statusBadge}</td>
+      <td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td>
+    </tr>`;
+  });
+  
+  tableHTML+=`</tbody></table>`;
+  wrap.innerHTML=tableHTML;
+  
+  wrap.querySelectorAll('.qsm').forEach(img=>{
+    img.onclick=()=>showQRModal(RECS[+img.dataset.i]);
+  });
+  
+  wrap.querySelectorAll('.dl-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      const u=qrDataUrl(RECS[+btn.dataset.i],300);
+      if(u){
+        const a=document.createElement('a');
+        a.href=u;
+        a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;
+        a.click();
+      } else {
+        toast('⚠️ QR code not available');
+      }
+    };
+  });
   
   wrap.querySelectorAll('.status-badge.pend').forEach(badge => {
     badge.onclick = () => {
       const idx = +badge.dataset.i;
       RECS[idx].status = 'Distributed';
       saveRecsLocal();
-      // Sync status change to cloud
       if (RECS[idx]._id) {
         updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
       }
@@ -1271,6 +1293,10 @@ function renderRecords(){
 
 function showQRModal(rec){
   const u=qrDataUrl(rec,220);
+  if(!u){
+    toast('⚠️ QR code not available');
+    return;
+  }
   const d=document.createElement('div');d.className='qr-modal-ov';
   d.innerHTML=`<div class="qr-modal-c"><h4>🏠 Household QR</h4><div style="font-size:.75rem;font-weight:700;margin-bottom:5px">${esc(rec.surname)} ${esc(rec.firstName)}</div><img src="${u}"><div style="font-size:.55rem;color:#555;margin-bottom:12px">Token: ${esc(rec.token)}</div><button style="background:#1565C0;color:#fff;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer;margin-right:7px" onclick="const a=document.createElement('a');a.href='${u}';a.download='ITN_${rec.token}.png';a.click()">Download</button><button style="background:#ddd;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="this.closest('.qr-modal-ov').remove()">Close</button></div>`;
   document.body.appendChild(d);
@@ -1290,7 +1316,6 @@ async function saveTarget(){
   }
   localStorage.setItem('itn_target', v);
   
-  // Sync target to cloud
   if (FIREBASE_ENABLED && db) {
     try {
       await db.collection('settings').doc('campaign').set({
@@ -1457,9 +1482,6 @@ function closeCameraScanner(){
   });
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 🔑 UPDATED QR PARSER - HANDLES ALL FIELDS
-// ═══════════════════════════════════════════════════════════════
 function parseQRData(text){
   if(!text) return null;
   const result = {};
@@ -1481,7 +1503,6 @@ function parseQRData(text){
         else if(key === 'middle name' || key === 'middlename' || key === 'middle') result.middleName = val;
         else if(key === 'first name' || key === 'firstname' || key === 'first') result.firstName = val;
         else if(key === 'name') {
-          // Handle legacy format "Name: Surname Firstname"
           const parts = val.split(' ');
           if(parts.length >= 2) {
             result.surname = parts[0];
@@ -1527,9 +1548,6 @@ function findBestMatch(selectElement, targetValue) {
   return null;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 🔑 UPDATED AUTO-FILL - FILLS ALL FIELDS FROM QR
-// ═══════════════════════════════════════════════════════════════
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
   statusText.textContent = '✅ Auto-filling form data...';
@@ -1541,7 +1559,6 @@ function autoFillFromScan(data){
   mStep = 1;
   updateWiz();
   
-  // Fill demographics
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
     const regOpt = findBestMatch(mReg, data.region);
@@ -1592,7 +1609,6 @@ function autoFillFromScan(data){
                         }
                       }
                       
-                      // Now fill personal details
                       fillPersonalDetails(data);
                       
                       toast('✅ Form auto-filled from QR!');
@@ -1620,9 +1636,6 @@ function autoFillFromScan(data){
   }, 500);
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 🔑 NEW FUNCTION - FILLS PERSONAL DETAILS FROM QR
-// ═══════════════════════════════════════════════════════════════
 function fillPersonalDetails(data){
   if(data.surname) document.getElementById('mSur').value = data.surname;
   if(data.middleName) document.getElementById('mMid').value = data.middleName;
@@ -1630,7 +1643,6 @@ function fillPersonalDetails(data){
   if(data.mobile) document.getElementById('mPh').value = data.mobile;
   if(data.members) {
     document.getElementById('mMem').value = data.members;
-    // Only calculate ITN if not provided in QR
     if(!data.itn) calcItn();
   }
   if(data.itn) document.getElementById('mItn').value = data.itn;
@@ -1649,7 +1661,6 @@ function fillPersonalDetails(data){
   }
 }
 
-// Monitor online/offline status
 window.addEventListener('online', () => {
   if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active');
 });
