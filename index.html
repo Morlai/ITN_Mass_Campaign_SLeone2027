@@ -41,7 +41,6 @@ body {
     color: var(--ink);
 }
 
-/* PHONE FRAME */
 .phone {
     width:375px;
     height:95vh;
@@ -63,7 +62,6 @@ body {
     z-index:6;
 }
 
-/* SCREEN */
 .screen {
     background: var(--sand);
     flex: 1;
@@ -85,9 +83,7 @@ body {
     flex-direction: column;
 }
 
-.container {
-    flex: 1;
-}
+.container { flex: 1; }
 
 /* ============ HEADER ============ */
 .app-header {
@@ -105,11 +101,13 @@ body {
         repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px),
         repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px);
     pointer-events: none;
+    z-index: 1;
 }
 .app-mark {
     position: relative;
     width: 46px; height: 46px;
     margin: 0 auto 10px;
+    z-index: 2;
 }
 .main-title {
     position: relative;
@@ -118,6 +116,7 @@ body {
     letter-spacing: 0.3px;
     font-size: 1.05rem;
     margin: 0 0 4px;
+    z-index: 2;
 }
 .sub-title {
     position: relative;
@@ -125,48 +124,59 @@ body {
     font-weight: 500;
     font-size: 0.78rem;
     margin: 0;
+    z-index: 2;
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🔑 SINGLE BACK BUTTON — Top-Left of Header
-   Directly navigates to index.html (main dashboard) where
-   Admin & HHD2027 can click LOGOUT
+   🔑 BACK BUTTON — Uses <a> tag for 100% reliability
+   Works even if JavaScript fails to load
 ═══════════════════════════════════════════════════════════════ */
 .back-to-dashboard {
     position: absolute;
     top: 14px;
     left: 14px;
-    z-index: 10;
+    z-index: 100;
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.35);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
     color: #fff;
-    padding: 7px 14px;
+    padding: 8px 16px;
     border-radius: 24px;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     font-weight: 700;
     text-decoration: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     font-family: inherit;
     line-height: 1;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: rgba(255,255,255,0.3);
+    user-select: none;
+    min-height: 36px;
+    min-width: 44px;
 }
 .back-to-dashboard:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.4);
     color: #fff;
     transform: translateX(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    text-decoration: none;
 }
 .back-to-dashboard:active {
     transform: scale(0.95);
+    background: rgba(255, 255, 255, 0.5);
+}
+.back-to-dashboard:focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 2px;
 }
 .back-to-dashboard i {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
 }
 
 /* ============ STEP PROGRESS TRACKER ============ */
@@ -326,7 +336,7 @@ body {
 .btn-secondary { background-color: var(--mist); border-color: var(--mist); color: var(--dusk); }
 .btn-secondary:hover { background-color: var(--muted); border-color: var(--muted); color: #fff; }
 
-/* ============ BENEFICIARY TABS (segmented control) ============ */
+/* ============ BENEFICIARY TABS ============ */
 #beneficiaryTab {
     background: var(--sand);
     border: none;
@@ -446,12 +456,11 @@ body {
 }
 .custom-footer strong { color: #fff; }
 
-/* ============ ACCESSIBILITY / QUALITY FLOOR ============ */
+/* ============ ACCESSIBILITY ============ */
 .btn:focus-visible,
 .nav-link:focus-visible,
 .form-control:focus-visible,
-input[type="checkbox"]:focus-visible,
-.back-to-dashboard:focus-visible {
+input[type="checkbox"]:focus-visible {
     outline: 3px solid var(--amber);
     outline-offset: 2px;
 }
@@ -488,20 +497,19 @@ input[type="checkbox"]:focus-visible,
 <div class="notch"></div>
 <div class="screen">
 
-<!-- Scrollable Content Area -->
 <div class="content-wrapper">
 
 <!-- HEADER -->
 <div class="app-header">
     <!-- ═══════════════════════════════════════════════════════════
-         🔑 SINGLE BACK BUTTON
-         Directly navigates to index.html (main dashboard)
-         where Admin & HHD2027 can click LOGOUT
+         🔑 BACK BUTTON — Uses <a> tag with direct href
+         This is 100% reliable — works even without JavaScript
+         because the browser handles <a href> natively
     ═══════════════════════════════════════════════════════════ -->
-    <button type="button" class="back-to-dashboard" id="backToDashboard">
+    <a href="index.html" class="back-to-dashboard" onclick="window.location.href='index.html'; return true;">
         <i class="fas fa-arrow-left"></i>
         <span>Dashboard</span>
-    </button>
+    </a>
 
     <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
         <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
@@ -750,7 +758,7 @@ input[type="checkbox"]:focus-visible,
         </div>
     </div>
 
-    <!-- STEP 4: HEALTH TALKS GUIDE ONLY -->
+    <!-- STEP 4: HEALTH TALKS -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -812,7 +820,7 @@ input[type="checkbox"]:focus-visible,
         </div>
     </div>
 
-    <!-- STEP 5: BENEFICIARY CONFIRMATION -->
+    <!-- STEP 5: CONFIRMATION -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -861,7 +869,7 @@ input[type="checkbox"]:focus-visible,
 </div>
 </div>
 
-<!-- NAVIGATION BUTTONS (Fixed at bottom above footer) -->
+<!-- NAVIGATION BUTTONS -->
 <div class="nav-buttons d-flex justify-content-between">
     <button type="button" class="btn btn-secondary px-4" id="prevBtn" style="visibility: hidden;">
         <i class="fas fa-arrow-left me-1"></i> Previous
@@ -886,14 +894,11 @@ Developed By<br>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
-   🔑 SINGLE BACK BUTTON — DIRECT NAVIGATION
-   No modal, no confirmation, no floating button.
-   Click → immediately go to index.html (main dashboard)
-   where Admin & HHD2027 can click LOGOUT.
+   🔑 BACK BUTTON — NO JAVASCRIPT NEEDED
+   The <a href="index.html"> tag handles navigation natively.
+   The browser does the work — no JS event listeners required.
+   This guarantees it works 100% of the time.
 ═══════════════════════════════════════════════════════════════ */
-document.getElementById('backToDashboard').addEventListener('click', function() {
-    window.location.href = 'index.html';
-});
 
 const steps = document.querySelectorAll('.step');
 const prevBtn = document.getElementById('prevBtn');
