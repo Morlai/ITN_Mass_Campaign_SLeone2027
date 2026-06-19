@@ -8,7 +8,6 @@
 <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
 <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-<!-- ═══════ FIREBASE SDK (Cross-Device Sync) ═══════ -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
@@ -16,28 +15,15 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#dde4f0;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif;padding:16px}
 
-/* ===== PHONE SHELL ===== */
 .phone-frame{width:390px;height:760px;background:#1a1e2c;border-radius:48px;padding:10px;box-shadow:0 28px 50px rgba(0,0,0,0.45);flex-shrink:0}
-.phone-mock{
-  width:100%;height:100%;
-  border-radius:40px;
-  position:relative;
-  overflow:hidden;
-  background:url('background.png') center/cover no-repeat;
-}
+.phone-mock{width:100%;height:100%;border-radius:40px;position:relative;overflow:hidden;background:url('background.png') center/cover no-repeat}
 
-/* ===== SCREEN BASE ===== */
-.screen{
-  position:absolute;inset:0;
-  display:none;flex-direction:column;
-  overflow:hidden;
-}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
 .screen.active{display:flex}
 
 .scroll-y{overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none}
 .scroll-y::-webkit-scrollbar{display:none}
 
-/* ===================== LOGIN ===================== */
 #sLogin{background:url('background.png') center/cover no-repeat}
 .login-body{flex:1;display:flex;flex-direction:column;padding:22px 16px 0;min-height:0}
 .login-card{background:rgba(255,255,255,.97);border-radius:28px;padding:22px 18px 18px;text-align:center;margin-bottom:16px;box-shadow:0 10px 26px rgba(0,0,0,.13)}
@@ -61,7 +47,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .pfooter{background:#1565C0;text-align:center;padding:11px;color:#fff;font-size:9.5px;line-height:1.5;flex-shrink:0;margin-top:auto}
 .pfooter strong{color:#FFD966}
 
-/* ===================== DASHBOARD ===================== */
 #sDash{overflow:hidden;background:#f0f2f7}
 .dash-content{flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
 .dash-content::-webkit-scrollbar{display:none}
@@ -109,7 +94,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dfooter{background:#1565C0;padding:7px;text-align:center;flex-shrink:0}
 .dfooter p{font-size:.47rem;color:#fff}.dfooter strong{color:#FFD966}
 
-/* ===================== REG HOME ===================== */
 #sRegHome{background:url('background.png') center/cover no-repeat}
 .rh-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;min-height:0}
 .rh-card{background:#fff;border-radius:0;padding:20px 16px 18px;flex:1;box-shadow:none;overflow-y:auto;scrollbar-width:none}
@@ -133,11 +117,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .sc-te .sc-top{background:linear-gradient(135deg,#0d9488,#14b8a6)}.sc-te .sc-bot{border-color:#14b8a6}.sc-te .sc-bot strong{color:#0f766e}
 .sc-rd .sc-top{background:linear-gradient(135deg,#dc2626,#ef4444)}.sc-rd .sc-bot{border-color:#ef4444}.sc-rd .sc-bot strong{color:#b91c1c}
 .sc-pu .sc-top{background:linear-gradient(135deg,#7c3aed,#a855f7)}.sc-pu .sc-bot{border-color:#a855f7}.sc-pu .sc-bot strong{color:#6b21a8}
-.rh-util{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
-.rh-tile{border-radius:18px;padding:11px 6px;text-align:center;color:#fff;font-weight:700;font-size:10px;cursor:pointer;backdrop-filter:blur(6px)}
-.rh-tile i{display:block;font-size:19px;margin-bottom:4px}
 
-/* ===================== WIZARD SHARED ===================== */
 .whdr{background:linear-gradient(115deg,#1565C0,#1976d2);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .whdr h3{font-size:.75rem;font-weight:700}
 .wback{width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
@@ -186,7 +166,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .wnavs button{flex:1;padding:9px;border-radius:36px;font-weight:700;border:none;cursor:pointer;font-size:.68rem}
 .wnext{background:#1565C0;color:#fff}.wprev{background:#e2e8f0;color:#1e293b}
 
-/* ===================== CAMERA SCANNER MODAL ===================== */
 .cam-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:10000;flex-direction:column}
 .cam-modal-ov.open{display:flex}
 .cam-modal-box{width:92%;max-width:360px;background:#0a0a0a;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);border:2px solid #1565C0}
@@ -194,7 +173,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .cam-hdr h4{font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:6px}
 .cam-hdr h4 i{font-size:14px}
 .cam-close{width:26px;height:26px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
-.cam-close:hover{background:rgba(255,255,255,.3)}
 #qr-reader{width:100%;background:#000;min-height:260px}
 #qr-reader video{border-radius:0 !important}
 #qr-reader__scan_region{min-height:260px}
@@ -202,13 +180,11 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 #qr-reader__dashboard span{color:#fff !important;font-size:11px !important}
 #qr-reader__dashboard button{background:#1565C0 !important;color:#fff !important;border:none !important;padding:6px 12px !important;border-radius:20px !important;font-weight:700 !important;cursor:pointer !important;margin:4px !important}
 #qr-reader__dashboard select{background:#2a2a2a !important;color:#fff !important;border:1px solid #444 !important;border-radius:8px !important;padding:4px !important}
-#qr-reader__dashboard span#qr-reader__status_span{color:#FFD966 !important;font-weight:600 !important}
 .cam-status{padding:10px 14px;background:#1a1a1a;color:#fff;text-align:center;font-size:.62rem;font-weight:600;border-top:1px solid #333}
 .cam-status .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;animation:pulse 1.5s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .cam-status.err .pulse{background:#ef4444;animation:none}
 
-/* ===================== RECORDS ===================== */
 #sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
 .rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
 .rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
@@ -217,10 +193,24 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .rtable td{padding:6px 5px;border-bottom:1px solid #e8edf5;color:#1e293b;white-space:nowrap;vertical-align:middle}
 .rtable tr:hover{background:#f5f8ff}
 .no-rec{text-align:center;padding:30px;color:#64748b;font-size:.72rem}
-.qsm{width:48px;height:48px;display:block;margin:0 auto;cursor:pointer;border:1px solid #ddd;border-radius:7px}
+
+/* ═══════════════════════════════════════════════════════════
+   🔑 FIX: Larger canvas size, CSS scales it down to 60x60 display
+   ═══════════════════════════════════════════════════════════ */
+.qsm{
+  width:60px;
+  height:60px;
+  display:block;
+  margin:0 auto;
+  cursor:pointer;
+  border:1px solid #ddd;
+  border-radius:7px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
+}
 .dlsm{background:#e76f51;color:#fff;border:none;padding:2px 5px;border-radius:7px;font-size:.43rem;margin-top:3px;cursor:pointer;display:block;width:100%}
 
-/* ===================== TARGET ===================== */
 #sTarget .tgt-body{flex:1;overflow-y:auto;padding:11px;background:#f0f3f8;scrollbar-width:none}
 #sTarget .tgt-body::-webkit-scrollbar{display:none}
 .tday{background:linear-gradient(135deg,#dc2626,#ef4444);border-radius:20px;padding:15px;text-align:center;margin-bottom:11px}
@@ -249,7 +239,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .tedit-btn{background:linear-gradient(105deg,#1565C0,#1976d2);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;cursor:pointer;font-size:.68rem;white-space:nowrap;box-shadow:0 3px 8px rgba(21,101,192,.3)}
 .tedit-btn:active{transform:scale(.96)}
 
-/* ===================== QR MODAL ===================== */
 .qr-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;z-index:9999}
 .qr-modal-c{background:#fff;border-radius:24px;padding:20px;text-align:center;max-width:300px;width:88%}
 .qr-modal-c h4{margin-bottom:7px;font-size:.88rem}
@@ -262,17 +251,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .ocard p{font-size:.68rem;color:#444;line-height:1.4;margin-bottom:14px}
 .obtn{background:#1565C0;color:#fff;border:none;padding:9px 20px;border-radius:32px;font-weight:700;cursor:pointer}
 
-/* ===================== SYNC INDICATOR ===================== */
-.sync-indicator{
-  position:fixed;top:12px;right:12px;z-index:9998;
-  background:rgba(30,41,59,.92);color:#fff;
-  padding:6px 12px;border-radius:20px;
-  font-size:11px;font-weight:700;
-  display:flex;align-items:center;gap:6px;
-  box-shadow:0 4px 14px rgba(0,0,0,.3);
-  backdrop-filter:blur(8px);
-  transition:all .3s;
-}
+.sync-indicator{position:fixed;top:12px;right:12px;z-index:9998;background:rgba(30,41,59,.92);color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.3);backdrop-filter:blur(8px);transition:all .3s}
 .sync-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;animation:pulse 1.5s infinite}
 .sync-indicator.online .sync-dot{background:#22c55e}
 .sync-indicator.offline .sync-dot{background:#ef4444;animation:none}
@@ -281,7 +260,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 </head>
 <body>
 
-<!-- ═══════ SYNC STATUS INDICATOR ═══════ -->
 <div class="sync-indicator local" id="syncIndicator">
   <span class="sync-dot"></span>
   <span id="syncText">Local Mode</span>
@@ -290,9 +268,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 <div class="phone-frame">
  <div class="phone-mock" id="phoneMock">
 
-  <!-- ══════════════════════════════════════
-       SCREEN 1 — LOGIN
-  ══════════════════════════════════════ -->
   <div class="screen active" id="sLogin">
    <div class="login-body scroll-y">
     <div class="login-card">
@@ -319,9 +294,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCREEN 2 — DASHBOARD
-  ══════════════════════════════════════ -->
   <div class="screen" id="sDash">
    <div class="dhdr">
     <div class="dhdr-top">
@@ -362,9 +334,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="dfooter"><p>Developed By <strong>Informatics Consultancy Firm-SL</strong> © 2026</p></div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCREEN 3 — REG HOME
-  ══════════════════════════════════════ -->
   <div class="screen" id="sRegHome">
    <div class="rh-body">
     <div class="rh-card">
@@ -395,9 +364,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCREEN 4 — MANUAL ENTRY WIZARD
-  ══════════════════════════════════════ -->
   <div class="screen" id="sManual">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -420,7 +386,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       </button>
       <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Open camera to scan badge and auto-fill demographics</p>
      </div>
-
      <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
      <div class="r2">
       <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
@@ -485,9 +450,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCREEN 5 — RECORDS
-  ══════════════════════════════════════ -->
   <div class="screen" id="sRecords">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -497,9 +459,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="rtable-wrap" id="recWrap"></div>
   </div>
 
-  <!-- ══════════════════════════════════════
-       SCREEN 6 — TARGET DASHBOARD
-  ══════════════════════════════════════ -->
   <div class="screen" id="sTarget">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -508,7 +467,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="tgt-body">
     <div class="tday"><div class="tday-n" id="tToday">0</div><div class="tday-l">🏠 Households Registered Today</div></div>
-
     <div class="tstat" id="tEditBox" style="display:none">
      <h4>⚙️ SET TARGET HOUSEHOLDS</h4>
      <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure household registration target</p>
@@ -517,7 +475,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <button class="tedit-btn" onclick="saveTarget()">💾 Save</button>
      </div>
     </div>
-
     <div class="tstat">
      <h4>🏠 HOUSEHOLD REGISTRATION COVERAGE</h4>
      <div class="trow"><span class="tlbl">📊 Total Registered (All Time)</span><span class="tval" id="tTotal">0</span></div>
@@ -549,9 +506,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
  </div>
 </div>
 
-<!-- ══════════════════════════════════════
-     CAMERA QR SCANNER MODAL
-══════════════════════════════════════ -->
 <div class="cam-modal-ov" id="camModal">
  <div class="cam-modal-box">
   <div class="cam-hdr">
@@ -573,9 +527,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 </div>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   🔥 FIREBASE CONFIGURATION — CROSS-DEVICE SYNC
-═══════════════════════════════════════════════════════════════ */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -597,10 +548,7 @@ if (FIREBASE_ENABLED) {
   try {
     firebase.initializeApp(firebaseConfig);
     db = firebase.firestore();
-    console.log('✅ Firebase initialized - Cross-device sync active');
-  } catch (e) {
-    console.warn('⚠️ Firebase init failed:', e);
-  }
+  } catch (e) { console.warn('Firebase init failed:', e); }
 }
 
 function updateSyncIndicator(status, text) {
@@ -612,15 +560,9 @@ function updateSyncIndicator(status, text) {
   if (txt) txt.textContent = text;
 }
 
-if (FIREBASE_ENABLED && db) {
-  updateSyncIndicator('online', 'Cloud Sync Active');
-} else {
-  updateSyncIndicator('local', 'Local Mode');
-}
+if (FIREBASE_ENABLED && db) updateSyncIndicator('online', 'Cloud Sync Active');
+else updateSyncIndicator('local', 'Local Mode');
 
-/* ═══════════════════════════════════════════════════════════════
-   USER / ROLE SYSTEM
-═══════════════════════════════════════════════════════════════ */
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -635,22 +577,22 @@ const USERS=parseUsers(CSV);
 let CU=null;
 
 const ACTIONS=[
-  {id:'REGISTER',       lbl:'REGISTER',         ic:'fa-id-card',        cl:'a1',pk:'REGISTER'},
-  {id:'DISTRIBUTION',   lbl:'DISTRIBUTION',     ic:'fa-boxes',          cl:'a2',pk:'DISTRIBUTION'},
-  {id:'MONITORING',     lbl:'MONITORING',        ic:'fa-chart-line',     cl:'a3',pk:'MONITORING'},
-  {id:'STOCK',          lbl:'STOCK',             ic:'fa-warehouse',      cl:'a4',pk:'STOCK'},
-  {id:'DASHBOARD',      lbl:'DASHBOARD',         ic:'fa-gauge-high',     cl:'a5',pk:'DASHBOARD'},
-  {id:'ATTENDANCE',     lbl:'ATTENDANCE',        ic:'fa-users',          cl:'a6',pk:'ATTENDANCE'},
-  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',  ic:'fa-mobile-screen',  cl:'a7',pk:'DEVICE TRACKING'},
-  {id:'RECONCILIATION', lbl:'RECONCILIATION',   ic:'fa-scale-balanced', cl:'a8',pk:'RECONCILIATION'},
-  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',        cl:'a9',pk:'WASTE MANAGEMENT'},
+  {id:'REGISTER',lbl:'REGISTER',ic:'fa-id-card',cl:'a1',pk:'REGISTER'},
+  {id:'DISTRIBUTION',lbl:'DISTRIBUTION',ic:'fa-boxes',cl:'a2',pk:'DISTRIBUTION'},
+  {id:'MONITORING',lbl:'MONITORING',ic:'fa-chart-line',cl:'a3',pk:'MONITORING'},
+  {id:'STOCK',lbl:'STOCK',ic:'fa-warehouse',cl:'a4',pk:'STOCK'},
+  {id:'DASHBOARD',lbl:'DASHBOARD',ic:'fa-gauge-high',cl:'a5',pk:'DASHBOARD'},
+  {id:'ATTENDANCE',lbl:'ATTENDANCE',ic:'fa-users',cl:'a6',pk:'ATTENDANCE'},
+  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE TRACKING'},
+  {id:'RECONCILIATION',lbl:'RECONCILIATION',ic:'fa-scale-balanced',cl:'a8',pk:'RECONCILIATION'},
+  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE MANAGEMENT'},
 ];
 const ROLES={Admin:'Full Access',HHR2027:'Registration Officer',HHD2027:'Distribution Officer',NATSUP2027:'National Supervisor',CHISUP2027:'CHI Supervisor',PHUSTAFF2027:'PHU Staff',PARTNERS2027:'Partner Viewer'};
 
 function go(id){
   document.querySelectorAll('#phoneMock .screen').forEach(s=>s.classList.remove('active'));
   const el=document.getElementById(id);
-  if(el){el.classList.add('active');}
+  if(el) el.classList.add('active');
 }
 
 function toast(msg){
@@ -734,82 +676,29 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ===== GEO DATA ===== */
 const GEO = {
   'Eastern': {
-    'Kailahun': {
-      'Gaura': {
-        'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]
-      }
-    },
-    'Kenema': {
-      'Dodo': {
-        'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]
-      }
-    },
-    'Kono': {
-      'Gorama Kono': {
-        'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]
-      }
-    }
+    'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
+    'Kenema': {'Dodo': {'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]}},
+    'Kono': {'Gorama Kono': {'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]}}
   },
   'South': {
-    'Bo': {
-      'Badjia': {
-        'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]
-      }
-    },
-    'Bonthe': {
-      'Benducha': {
-        'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]
-      }
-    },
-    'Moyamba': {
-      'Banguawa': {
-        'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]
-      }
-    },
-    'Pujehun': {
-      'Barri': {
-        'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]
-      }
-    }
+    'Bo': {'Badjia': {'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]}},
+    'Bonthe': {'Benducha': {'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]}},
+    'Moyamba': {'Banguawa': {'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]}},
+    'Pujehun': {'Barri': {'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]}}
   },
   'North': {
-    'Bombali': {
-      'Biriwa': {
-        'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]
-      }
-    },
-    'Tonkolili': {
-      'Dansigoia': {
-        'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]
-      }
-    },
-    'Koinadugu': {
-      'Diang': {
-        'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]
-      }
-    },
-    'Falaba': {
-      'Barawa': {
-        'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]
-      }
-    }
+    'Bombali': {'Biriwa': {'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]}},
+    'Tonkolili': {'Dansigoia': {'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]}},
+    'Koinadugu': {'Diang': {'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]}},
+    'Falaba': {'Barawa': {'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]}}
   },
   'North_west': {
-    'Kambia': {
-      'Bramaia': {
-        'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]
-      }
-    },
+    'Kambia': {'Bramaia': {'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]}},
     'Port_loko': {
-      'Koya': {
-        'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]
-      },
-      'Bureh Kassiri': {
-        'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]
-      }
+      'Koya': {'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]},
+      'Bureh Kassiri': {'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]}
     }
   }
 };
@@ -962,8 +851,58 @@ function buildReview(){
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 🔑 FIXED QR CODE GENERATION - REMOVED DUPLICATE CATCH BLOCK
+// 🔑 CORE FIX: Generate QR at a LARGE canvas size (250x250)
+// The CSS .qsm class then scales it down to 60x60 for display.
+// This ensures each QR module has multiple pixels, so the QR
+// actually renders visibly instead of as a blank white square.
 // ═══════════════════════════════════════════════════════════════
+function buildQRCanvas(data, canvasSize) {
+  try {
+    // Use error correction level 'L' (lowest) to maximize data capacity
+    // With 18 fields (~350+ chars), we need ~Type 17 QR (85 modules)
+    // At canvasSize=250, each module gets ~2-3 pixels (250/85 ≈ 2.9)
+    const qr = qrcode(0, 'L');
+    qr.addData(data);
+    qr.make();
+    
+    const modCount = qr.getModuleCount();
+    const cell = Math.floor(canvasSize / modCount);
+    
+    // SAFETY CHECK: If cell is 0, the canvas is too small for this data
+    if (cell < 1) {
+      console.error('QR canvas too small. Need at least', modCount, 'pixels, got', canvasSize);
+      return null;
+    }
+    
+    const actualSize = cell * modCount;
+    const off = Math.floor((canvasSize - actualSize) / 2);
+    
+    const cv = document.createElement('canvas');
+    cv.width = canvasSize;
+    cv.height = canvasSize;
+    const ctx = cv.getContext('2d');
+    
+    // White background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
+    
+    // Draw QR modules
+    ctx.fillStyle = '#000000';
+    for (let r = 0; r < modCount; r++) {
+      for (let c = 0; c < modCount; c++) {
+        if (qr.isDark(r, c)) {
+          ctx.fillRect(off + c * cell, off + r * cell, cell, cell);
+        }
+      }
+    }
+    
+    return cv;
+  } catch (e) {
+    console.error('QR generation error:', e);
+    return null;
+  }
+}
+
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
   const data=`ITN_REG
@@ -985,17 +924,17 @@ HHR Name:${g('mHhr')}
 Latitude:${g('mLat')}
 Longitude:${g('mLng')}
 Token:${mTok}`;
-  try{
-    const qr=qrcode(0,'M');qr.addData(data);qr.make();
-    const cv=document.getElementById('mQrc');
-    const sz=170,mod=qr.getModuleCount(),cell=Math.floor(sz/mod),off=Math.floor((sz-cell*mod)/2);
-    cv.width=sz;cv.height=sz;
-    const ctx=cv.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,sz,sz);ctx.fillStyle='#000';
-    for(let r=0;r<mod;r++)for(let c=0;c<mod;c++)if(qr.isDark(r,c))ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
-    cv.style.display='block';document.getElementById('mQrMsg').style.display='none';
-    document.getElementById('mDlBtn').disabled=false;
-  }catch(e){
-    console.error('QR Generation Error:', e);
+  
+  const cv = buildQRCanvas(data, 250);
+  if (cv) {
+    const target = document.getElementById('mQrc');
+    target.width = 250;
+    target.height = 250;
+    target.getContext('2d').drawImage(cv, 0, 0);
+    target.style.display = 'block';
+    document.getElementById('mQrMsg').style.display = 'none';
+    document.getElementById('mDlBtn').disabled = false;
+  } else {
     toast('⚠️ QR generation failed');
   }
 }
@@ -1020,9 +959,6 @@ document.getElementById('mPh').addEventListener('input',function(){
   document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none';
 });
 
-/* ═══════════════════════════════════════════════════════════════
-   🔄 RECORDS STORAGE
-═══════════════════════════════════════════════════════════════ */
 let RECS=[];
 
 function loadRecsLocal(){
@@ -1043,11 +979,7 @@ async function saveRecordToCloud(rec) {
       _id: docId,
       _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    console.log('✅ Record synced to cloud:', docId);
-  } catch (e) {
-    console.warn('⚠️ Cloud save failed:', e);
-    toast('⚠️ Saved locally (offline)');
-  }
+  } catch (e) { console.warn('Cloud save failed:', e); }
 }
 
 async function updateRecordInCloud(docId, updates) {
@@ -1057,51 +989,34 @@ async function updateRecordInCloud(docId, updates) {
       ...updates,
       _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-  } catch (e) {
-    console.warn('⚠️ Cloud update failed:', e);
-  }
+  } catch (e) { console.warn('Cloud update failed:', e); }
 }
 
 function startRecordsListener() {
   if (!FIREBASE_ENABLED || !db) return;
-  
-  if (recordsListener) {
-    recordsListener();
-    recordsListener = null;
-  }
-  
+  if (recordsListener) { recordsListener(); recordsListener = null; }
   recordsListener = db.collection('households')
     .orderBy('_updatedAt', 'desc')
     .onSnapshot((snapshot) => {
       const cloudRecs = [];
-      snapshot.forEach(doc => {
-        cloudRecs.push(doc.data());
-      });
-      
+      snapshot.forEach(doc => { cloudRecs.push(doc.data()); });
       RECS = cloudRecs;
       saveRecsLocal();
-      
       const activeScreen = document.querySelector('#phoneMock .screen.active');
       if (activeScreen) {
         if (activeScreen.id === 'sRecords') renderRecords();
         if (activeScreen.id === 'sTarget') renderTarget();
       }
-      
       updateSyncIndicator('online', 'Cloud Sync Active');
     }, (error) => {
-      console.warn('⚠️ Listener error:', error);
+      console.warn('Listener error:', error);
       updateSyncIndicator('offline', 'Sync Offline');
     });
 }
 
 function startTargetListener() {
   if (!FIREBASE_ENABLED || !db) return;
-  
-  if (targetListener) {
-    targetListener();
-    targetListener = null;
-  }
-  
+  if (targetListener) { targetListener(); targetListener = null; }
   targetListener = db.collection('settings').doc('campaign')
     .onSnapshot((doc) => {
       if (doc.exists) {
@@ -1112,16 +1027,11 @@ function startTargetListener() {
           if (activeScreen && activeScreen.id === 'sTarget') renderTarget();
         }
       }
-    }, (error) => {
-      console.warn('⚠️ Target listener error:', error);
     });
 }
 
 loadRecsLocal();
-if (FIREBASE_ENABLED && db) {
-  startRecordsListener();
-  startTargetListener();
-}
+if (FIREBASE_ENABLED && db) { startRecordsListener(); startTargetListener(); }
 
 function finalReg(){
   if(mDone){openManual();return;}
@@ -1139,25 +1049,22 @@ function finalReg(){
   
   RECS.unshift(newRec);
   saveRecsLocal();
-  
   saveRecordToCloud(newRec);
   
   document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
   document.getElementById('mFinBtn').innerHTML='➕ Register Another';
   mDone=true;
   
-  if (FIREBASE_ENABLED) {
-    toast('✅ Synced to cloud');
-  }
+  if (FIREBASE_ENABLED) toast('✅ Synced to cloud');
 }
 
 // ═══════════════════════════════════════════════════════════════
-// 🔑 FIXED QR CODE GENERATION FOR RECORDS TABLE
+// 🔑 Generate QR data URL at a LARGE canvas size (250x250)
+// CSS will scale it down to 60x60 display in the table
 // ═══════════════════════════════════════════════════════════════
-function qrDataUrl(rec,sz){
-  try {
-    const [lat,lng]=(rec.gps||'').split(',');
-    const data=`ITN_REG
+function qrDataUrl(rec, displaySize){
+  const [lat,lng]=(rec.gps||'').split(',');
+  const data=`ITN_REG
 Region:${rec.region||''}
 District:${rec.district||''}
 Chiefdom:${rec.chiefdom||''}
@@ -1176,33 +1083,11 @@ HHR Name:${rec.hhr||''}
 Latitude:${lat||''}
 Longitude:${lng||''}
 Token:${rec.token||''}`;
-    
-    const qr=qrcode(0,'M');
-    qr.addData(data);
-    qr.make();
-    
-    const mod=qr.getModuleCount();
-    const cell=Math.floor(sz/mod);
-    const off=Math.floor((sz-cell*mod)/2);
-    const cv=document.createElement('canvas');
-    cv.width=sz;
-    cv.height=sz;
-    const ctx=cv.getContext('2d');
-    ctx.fillStyle='#fff';
-    ctx.fillRect(0,0,sz,sz);
-    ctx.fillStyle='#000';
-    for(let r=0;r<mod;r++){
-      for(let c=0;c<mod;c++){
-        if(qr.isDark(r,c)){
-          ctx.fillRect(off+c*cell,off+r*cell,cell,cell);
-        }
-      }
-    }
-    return cv.toDataURL('image/png');
-  } catch(e) {
-    console.error('QR Data URL Error:', e, rec);
-    return '';
-  }
+  
+  // Always generate at 250x250 for crisp display when CSS scales it down
+  const cv = buildQRCanvas(data, 250);
+  if (!cv) return '';
+  return cv.toDataURL('image/png');
 }
 
 function renderRecords(){
@@ -1219,7 +1104,7 @@ function renderRecords(){
     <tbody>`;
   
   RECS.forEach((r,i)=>{
-    const u=qrDataUrl(r,52);
+    const u=qrDataUrl(r, 60);
     const [lat,lng]=(r.gps||'').split(',');
     
     const isDist = r.status === 'Distributed';
@@ -1227,7 +1112,7 @@ function renderRecords(){
       ? `<span class="status-badge dist" style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
       : `<span class="status-badge pend" style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;box-shadow:0 0 0 1px #fdba74;" data-i="${i}" title="Click to mark as Distributed">Pending</span>`;
     
-    const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
+    const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}" alt="QR Code">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
     
     tableHTML+=`<tr>
       <td>${i+1}</td>
@@ -1265,7 +1150,7 @@ function renderRecords(){
   
   wrap.querySelectorAll('.dl-btn').forEach(btn=>{
     btn.onclick=()=>{
-      const u=qrDataUrl(RECS[+btn.dataset.i],300);
+      const u=qrDataUrl(RECS[+btn.dataset.i], 300);
       if(u){
         const a=document.createElement('a');
         a.href=u;
@@ -1282,9 +1167,7 @@ function renderRecords(){
       const idx = +badge.dataset.i;
       RECS[idx].status = 'Distributed';
       saveRecsLocal();
-      if (RECS[idx]._id) {
-        updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
-      }
+      if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
       renderRecords();
       toast('✅ Record marked as Distributed');
     };
@@ -1292,30 +1175,20 @@ function renderRecords(){
 }
 
 function showQRModal(rec){
-  const u=qrDataUrl(rec,220);
-  if(!u){
-    toast('⚠️ QR code not available');
-    return;
-  }
+  const u=qrDataUrl(rec, 220);
+  if(!u){ toast('⚠️ QR code not available'); return; }
   const d=document.createElement('div');d.className='qr-modal-ov';
   d.innerHTML=`<div class="qr-modal-c"><h4>🏠 Household QR</h4><div style="font-size:.75rem;font-weight:700;margin-bottom:5px">${esc(rec.surname)} ${esc(rec.firstName)}</div><img src="${u}"><div style="font-size:.55rem;color:#555;margin-bottom:12px">Token: ${esc(rec.token)}</div><button style="background:#1565C0;color:#fff;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer;margin-right:7px" onclick="const a=document.createElement('a');a.href='${u}';a.download='ITN_${rec.token}.png';a.click()">Download</button><button style="background:#ddd;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="this.closest('.qr-modal-ov').remove()">Close</button></div>`;
   document.body.appendChild(d);
 }
 
-/* ===== TARGET MANAGEMENT ===== */
-function getTarget(){
-  return parseInt(localStorage.getItem('itn_target')) || 500;
-}
+function getTarget(){ return parseInt(localStorage.getItem('itn_target')) || 500; }
 
 async function saveTarget(){
   const inp = document.getElementById('tTargetInput');
   const v = parseInt(inp?.value);
-  if(!v || v <= 0){
-    toast('⚠ Enter a valid target number');
-    return;
-  }
+  if(!v || v <= 0){ toast('⚠ Enter a valid target number'); return; }
   localStorage.setItem('itn_target', v);
-  
   if (FIREBASE_ENABLED && db) {
     try {
       await db.collection('settings').doc('campaign').set({
@@ -1323,13 +1196,8 @@ async function saveTarget(){
         _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
       });
       toast('✅ Target synced: ' + v + ' households');
-    } catch (e) {
-      toast('✅ Target saved locally');
-    }
-  } else {
-    toast('✅ Target set to ' + v + ' households');
-  }
-  
+    } catch (e) { toast('✅ Target saved locally'); }
+  } else { toast('✅ Target set to ' + v + ' households'); }
   renderTarget();
 }
 
@@ -1361,9 +1229,6 @@ function renderTarget(){
   }
 }
 
-/* ═══════════════════════════════════════════════
-   CAMERA QR SCANNER
-═══════════════════════════════════════════════ */
 let html5QrCode = null;
 let scannerActive = false;
 
@@ -1371,7 +1236,6 @@ function openCameraScanner(){
   const modal = document.getElementById('camModal');
   const statusEl = document.getElementById('camStatus');
   const statusText = document.getElementById('camStatusText');
-  
   statusEl.classList.remove('err');
   statusText.textContent = 'Initializing camera...';
   modal.classList.add('open');
@@ -1384,100 +1248,54 @@ function openCameraScanner(){
   }
   
   if(html5QrCode && scannerActive){
-    html5QrCode.stop().then(()=>{
-      html5QrCode.clear();
-      startNewScanner();
-    }).catch(()=>{
-      html5QrCode.clear();
-      startNewScanner();
-    });
-  } else {
-    startNewScanner();
-  }
+    html5QrCode.stop().then(()=>{ html5QrCode.clear(); startNewScanner(); })
+    .catch(()=>{ html5QrCode.clear(); startNewScanner(); });
+  } else { startNewScanner(); }
 }
 
 function startNewScanner(){
   const statusText = document.getElementById('camStatusText');
   const statusEl = document.getElementById('camStatus');
-  
   try {
     html5QrCode = new Html5Qrcode("qr-reader");
-    
-    const config = { 
-      fps: 10, 
-      qrbox: { width: 220, height: 220 },
-      aspectRatio: 1.0,
-      formatsToSupport: [ 
-        Html5QrcodeSupportedFormats.QR_CODE,
-        Html5QrcodeSupportedFormats.DATA_MATRIX
-      ]
-    };
-    
+    const config = { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 };
     const cameraRequest = { facingMode: "environment" };
-    
     html5QrCode.start(cameraRequest, config, onScanSuccess, onScanFailure)
-    .then(()=>{
-      scannerActive = true;
-      statusEl.classList.remove('err');
-      statusText.textContent = 'Scanning... Point camera at QR badge';
-    })
+    .then(()=>{ scannerActive = true; statusEl.classList.remove('err'); statusText.textContent = 'Scanning... Point camera at QR badge'; })
     .catch((err)=>{
       html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
-      .then(()=>{
-        scannerActive = true;
-        statusEl.classList.remove('err');
-        statusText.textContent = 'Scanning... Point camera at QR badge';
-      })
+      .then(()=>{ scannerActive = true; statusEl.classList.remove('err'); statusText.textContent = 'Scanning... Point camera at QR badge'; })
       .catch((err2)=>{
         statusEl.classList.add('err');
-        if(err2.toString().includes('NotAllowedError') || err2.toString().includes('Permission')){
-          statusText.textContent = '🚫 Camera permission denied. Please allow camera access.';
-        } else if(err2.toString().includes('NotFoundError')){
-          statusText.textContent = '📷 No camera found on this device.';
-        } else {
-          statusText.textContent = '❌ Camera error: ' + (err2.message || 'Unable to start');
-        }
+        if(err2.toString().includes('NotAllowedError')) statusText.textContent = '🚫 Camera permission denied.';
+        else if(err2.toString().includes('NotFoundError')) statusText.textContent = '📷 No camera found.';
+        else statusText.textContent = '❌ Camera error: ' + (err2.message || 'Unable to start');
       });
     });
-  } catch(e){
-    statusEl.classList.add('err');
-    statusText.textContent = '❌ Failed to initialize scanner';
-  }
+  } catch(e){ statusEl.classList.add('err'); statusText.textContent = '❌ Failed to initialize scanner'; }
 }
 
-function onScanSuccess(decodedText, decodedResult){
+function onScanSuccess(decodedText){
   if(navigator.vibrate) navigator.vibrate(200);
-  
   stopScannerQuietly().then(()=>{
     const parsed = parseQRData(decodedText);
-    if(parsed && parsed.region){
-      autoFillFromScan(parsed);
-      toast('✅ QR Scanned Successfully!');
-    } else {
-      toast('⚠ Invalid QR code format');
-      document.getElementById('camModal').classList.remove('open');
-    }
+    if(parsed && parsed.region){ autoFillFromScan(parsed); toast('✅ QR Scanned Successfully!'); }
+    else { toast('⚠ Invalid QR code format'); document.getElementById('camModal').classList.remove('open'); }
   });
 }
-
 function onScanFailure(error){}
 
 function stopScannerQuietly(){
   return new Promise((resolve)=>{
     if(html5QrCode && scannerActive){
       html5QrCode.stop().then(()=>{ scannerActive = false; resolve(); }).catch(()=>{ scannerActive = false; resolve(); });
-    } else {
-      resolve();
-    }
+    } else { resolve(); }
   });
 }
 
 function closeCameraScanner(){
   stopScannerQuietly().then(()=>{
-    if(html5QrCode){
-      try { html5QrCode.clear(); } catch(e){}
-      html5QrCode = null;
-    }
+    if(html5QrCode){ try { html5QrCode.clear(); } catch(e){} html5QrCode = null; }
     document.getElementById('camModal').classList.remove('open');
   });
 }
@@ -1486,7 +1304,6 @@ function parseQRData(text){
   if(!text) return null;
   const result = {};
   const lines = text.split(/\r?\n/);
-  
   lines.forEach(line=>{
     const idx = line.indexOf(':');
     if(idx > 0){
@@ -1497,26 +1314,22 @@ function parseQRData(text){
         else if(key === 'district') result.district = val;
         else if(key === 'chiefdom') result.chiefdom = val;
         else if(key === 'community') result.community = val;
-        else if(key === 'facility' || key === 'health facility' || key === 'healthfacility') result.facility = val;
-        else if(key === 'dist. point' || key === 'dist_point' || key === 'distpoint' || key === 'dp' || key === 'distribution point' || key === 'distributionpoint') result.distPoint = val;
+        else if(key === 'facility' || key === 'health facility') result.facility = val;
+        else if(key === 'dist. point' || key === 'dist_point' || key === 'dp' || key === 'distribution point') result.distPoint = val;
         else if(key === 'surname') result.surname = val;
-        else if(key === 'middle name' || key === 'middlename' || key === 'middle') result.middleName = val;
-        else if(key === 'first name' || key === 'firstname' || key === 'first') result.firstName = val;
+        else if(key === 'middle name' || key === 'middlename') result.middleName = val;
+        else if(key === 'first name' || key === 'firstname') result.firstName = val;
         else if(key === 'name') {
           const parts = val.split(' ');
-          if(parts.length >= 2) {
-            result.surname = parts[0];
-            result.firstName = parts.slice(1).join(' ');
-          } else {
-            result.surname = val;
-          }
+          if(parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
+          else result.surname = val;
         }
         else if(key === 'mobile') result.mobile = val;
         else if(key === 'members') result.members = val;
-        else if(key === 'itn alloc' || key === 'itn_alloc' || key === 'itnalloc' || key === 'itn') result.itn = val;
+        else if(key === 'itn alloc' || key === 'itn') result.itn = val;
         else if(key === 'pregnant') result.pregnant = val;
-        else if(key === 'under-5' || key === 'under5' || key === 'under_5' || key === 'u5') result.under5 = val;
-        else if(key === 'hhr name' || key === 'hhr_name' || key === 'hhrname' || key === 'hhr') result.hhr = val;
+        else if(key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
+        else if(key === 'hhr name' || key === 'hhr') result.hhr = val;
         else if(key === 'latitude' || key === 'lat') result.latitude = val;
         else if(key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
         else if(key === 'token') result.token = val;
@@ -1535,104 +1348,63 @@ function findBestMatch(selectElement, targetValue) {
   if (!targetValue) return null;
   const targetNorm = normalize(targetValue);
   if (!targetNorm) return null;
-  
   let match = Array.from(selectElement.options).find(o => normalize(o.value) === targetNorm);
   if (match && match.value !== '') return match;
-  
   match = Array.from(selectElement.options).find(o => {
     const optNorm = normalize(o.value);
     return optNorm !== '' && (optNorm.includes(targetNorm) || targetNorm.includes(optNorm));
   });
   if (match && match.value !== '') return match;
-  
   return null;
 }
 
 function autoFillFromScan(data){
   const statusText = document.getElementById('camStatusText');
   statusText.textContent = '✅ Auto-filling form data...';
-  
-  setTimeout(()=>{
-    document.getElementById('camModal').classList.remove('open');
-  }, 400);
-  
-  mStep = 1;
-  updateWiz();
+  setTimeout(()=>{ document.getElementById('camModal').classList.remove('open'); }, 400);
+  mStep = 1; updateWiz();
   
   setTimeout(()=>{
     const mReg = document.getElementById('mReg');
     const regOpt = findBestMatch(mReg, data.region);
-    
     if(regOpt){
-      mReg.value = regOpt.value;
-      mReg.dispatchEvent(new Event('change'));
-      
+      mReg.value = regOpt.value; mReg.dispatchEvent(new Event('change'));
       setTimeout(()=>{
         const mDis = document.getElementById('mDis');
         const disOpt = findBestMatch(mDis, data.district);
-        
         if(disOpt){
-          mDis.value = disOpt.value;
-          mDis.dispatchEvent(new Event('change'));
-          
+          mDis.value = disOpt.value; mDis.dispatchEvent(new Event('change'));
           setTimeout(()=>{
             const mChi = document.getElementById('mChi');
             const chiOpt = findBestMatch(mChi, data.chiefdom);
-            
             if(chiOpt){
-              mChi.value = chiOpt.value;
-              mChi.dispatchEvent(new Event('change'));
-              
+              mChi.value = chiOpt.value; mChi.dispatchEvent(new Event('change'));
               setTimeout(()=>{
                 const mCom = document.getElementById('mCom');
                 const comOpt = findBestMatch(mCom, data.community);
-                
                 if(comOpt){
-                  mCom.value = comOpt.value;
-                  mCom.dispatchEvent(new Event('change'));
-                  
+                  mCom.value = comOpt.value; mCom.dispatchEvent(new Event('change'));
                   setTimeout(()=>{
                     const mFac = document.getElementById('mFac');
                     const mDp = document.getElementById('mDp');
-                    
                     const facOpt = findBestMatch(mFac, data.facility);
-                    if(facOpt){
-                      mFac.value = facOpt.value;
-                      mFac.dispatchEvent(new Event('change')); 
-                    }
-                    
+                    if(facOpt){ mFac.value = facOpt.value; mFac.dispatchEvent(new Event('change')); }
                     setTimeout(()=>{
                       if (data.distPoint) {
                         const dpOpt = findBestMatch(mDp, data.distPoint);
-                        if(dpOpt){
-                          mDp.value = dpOpt.value;
-                        }
+                        if(dpOpt) mDp.value = dpOpt.value;
                       }
-                      
                       fillPersonalDetails(data);
-                      
                       toast('✅ Form auto-filled from QR!');
                     }, 300);
                   }, 300);
-                } else {
-                  toast('⚠ Community not found in list');
-                  fillPersonalDetails(data);
-                }
+                } else { toast('⚠ Community not found'); fillPersonalDetails(data); }
               }, 300);
-            } else {
-              toast('⚠ Chiefdom not found in list');
-              fillPersonalDetails(data);
-            }
+            } else { toast('⚠ Chiefdom not found'); fillPersonalDetails(data); }
           }, 300);
-        } else {
-          toast('⚠ District not found in list');
-          fillPersonalDetails(data);
-        }
+        } else { toast('⚠ District not found'); fillPersonalDetails(data); }
       }, 300);
-    } else {
-      toast('⚠ Region not found in list');
-      fillPersonalDetails(data);
-    }
+    } else { toast('⚠ Region not found'); fillPersonalDetails(data); }
   }, 500);
 }
 
@@ -1654,19 +1426,12 @@ function fillPersonalDetails(data){
   if(data.token) {
     mTok = data.token;
     const tb = document.getElementById('mTok');
-    if(tb){
-      tb.style.display = 'block';
-      tb.textContent = '🔑 TOKEN: ' + mTok;
-    }
+    if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; }
   }
 }
 
-window.addEventListener('online', () => {
-  if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active');
-});
-window.addEventListener('offline', () => {
-  if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline');
-});
+window.addEventListener('online', () => { if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active'); });
+window.addEventListener('offline', () => { if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline'); });
 
 const savedU=sessionStorage.getItem('cu');
 if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
