@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICF-SL ITN CAMPAIGN PORTAL</title>
+<title>ICF-SL ITN CAMPAIGN PORTAL — Distribution</title>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -71,6 +71,7 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .screen::-webkit-scrollbar, .content-wrapper::-webkit-scrollbar {
@@ -126,9 +127,10 @@ body {
     margin: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════
-   🔑 BACK TO DASHBOARD BUTTON
-   ═══════════════════════════════════════════════════════════ */
+/* ═══════════════════════════════════════════════════════════════
+   🔑 BACK TO DASHBOARD BUTTON (TOP-LEFT IN HEADER)
+   Returns Admin & HHD2027 to index.html where they can Logout
+═══════════════════════════════════════════════════════════════ */
 .back-to-dashboard {
     position: absolute;
     top: 14px;
@@ -162,6 +164,138 @@ body {
 }
 .back-to-dashboard i {
     font-size: 0.8rem;
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FLOATING BACK BUTTON (BOTTOM-LEFT) - Always accessible
+═══════════════════════════════════════════════════════════════ */
+.floating-back-btn {
+    position: fixed;
+    bottom: 90px;
+    left: calc(50% - 177px); /* align with phone frame */
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: linear-gradient(135deg, var(--coral) 0%, #b94132 100%);
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 30px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-decoration: none;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 6px 18px rgba(217, 87, 74, 0.45);
+    transition: all 0.2s ease;
+    animation: pulse-shadow 2s infinite;
+}
+.floating-back-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(217, 87, 74, 0.55);
+    color: #fff;
+}
+.floating-back-btn:active {
+    transform: scale(0.95);
+}
+.floating-back-btn i {
+    font-size: 0.85rem;
+}
+.floating-back-btn .logout-hint {
+    font-size: 0.58rem;
+    opacity: 0.9;
+    font-weight: 500;
+    margin-left: 2px;
+}
+
+@keyframes pulse-shadow {
+    0%, 100% { box-shadow: 0 6px 18px rgba(217, 87, 74, 0.45); }
+    50% { box-shadow: 0 6px 18px rgba(217, 87, 74, 0.75), 0 0 0 4px rgba(217, 87, 74, 0.15); }
+}
+
+@media (max-width: 430px) {
+    .floating-back-btn {
+        left: 16px;
+        bottom: 80px;
+    }
+}
+
+/* ============ CONFIRM MODAL ============ */
+.confirm-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(4px);
+}
+.confirm-backdrop.show {
+    display: flex;
+    animation: fadeIn 0.2s ease;
+}
+.confirm-box {
+    background: #fff;
+    border-radius: 20px;
+    padding: 24px;
+    max-width: 300px;
+    width: 90%;
+    text-align: center;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+.confirm-box .confirm-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--canopy-tint);
+    color: var(--brand-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 14px;
+}
+.confirm-box h4 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--ink);
+    margin: 0 0 6px;
+}
+.confirm-box p {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin: 0 0 18px;
+    line-height: 1.4;
+}
+.confirm-box .confirm-btns {
+    display: flex;
+    gap: 8px;
+}
+.confirm-box .confirm-btns button {
+    flex: 1;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+.confirm-box .btn-cancel {
+    background: var(--mist);
+    color: var(--dusk);
+}
+.confirm-box .btn-cancel:hover {
+    background: var(--muted);
+    color: #fff;
+}
+.confirm-box .btn-leave {
+    background: var(--brand-blue);
+    color: #fff;
+}
+.confirm-box .btn-leave:hover {
+    background: var(--brand-blue-dark);
 }
 
 /* ============ STEP PROGRESS TRACKER ============ */
@@ -446,7 +580,8 @@ body {
 .nav-link:focus-visible,
 .form-control:focus-visible,
 input[type="checkbox"]:focus-visible,
-.back-to-dashboard:focus-visible {
+.back-to-dashboard:focus-visible,
+.floating-back-btn:focus-visible {
     outline: 3px solid var(--amber);
     outline-offset: 2px;
 }
@@ -489,10 +624,10 @@ input[type="checkbox"]:focus-visible,
 <!-- HEADER -->
 <div class="app-header">
     <!-- ═══════════════════════════════════════════════════════════
-         🔑 BACK TO DASHBOARD BUTTON
-         Navigates Admin & HHD2027 back to index.html (main dashboard)
+         🔑 BACK TO DASHBOARD BUTTON (Top-Left)
+         Admin & HHD2027 return to index.html to Logout
     ═══════════════════════════════════════════════════════════ -->
-    <a href="index.html" class="back-to-dashboard" title="Back to Dashboard">
+    <a href="#" class="back-to-dashboard" id="backToDashboard" title="Return to main dashboard to logout">
         <i class="fas fa-arrow-left"></i>
         <span>Dashboard</span>
     </a>
@@ -874,6 +1009,34 @@ Developed By<br>
 </div>
 </div>
 
+<!-- ═══════════════════════════════════════════════════════════════
+     🔑 FLOATING BACK BUTTON — Always visible while scrolling
+═══════════════════════════════════════════════════════════════ -->
+<a href="#" class="floating-back-btn" id="floatingBackBtn" title="Back to dashboard to logout">
+    <i class="fas fa-sign-out-alt"></i>
+    <span>Back</span>
+    <span class="logout-hint">(to Logout)</span>
+</a>
+
+<!-- ═══════════════════════════════════════════════════════════════
+     🔑 CONFIRMATION MODAL — Prevents accidental loss of data
+═══════════════════════════════════════════════════════════════ -->
+<div class="confirm-backdrop" id="confirmBackdrop">
+    <div class="confirm-box">
+        <div class="confirm-icon">
+            <i class="fas fa-sign-out-alt"></i>
+        </div>
+        <h4>Leave Distribution?</h4>
+        <p id="confirmMessage">You will be returned to the main dashboard where you can logout safely.</p>
+        <div class="confirm-btns">
+            <button class="btn-cancel" id="confirmCancel">Stay</button>
+            <button class="btn-leave" id="confirmLeave">
+                <i class="fas fa-arrow-left me-1"></i> Leave
+            </button>
+        </div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
@@ -891,6 +1054,64 @@ let verifierPad = null;
 let distributorPad = null;
 let html5QrcodeScanner = null;
 let isScannerRunning = false;
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 BACK TO DASHBOARD LOGIC
+   Both the header button and floating button trigger this.
+   If user has unsaved data (past step 1), shows confirmation.
+   Otherwise, immediately returns to index.html (main dashboard)
+   where Admin / HHD2027 can click LOGOUT.
+═══════════════════════════════════════════════════════════════ */
+function hasUnsavedData() {
+    // Check if any meaningful form data has been entered beyond step 1
+    if (currentStep > 0) return true;
+    
+    const token = document.getElementById('beneficiaryToken').value;
+    const verifierName = document.getElementById('verifierName').value;
+    const distributorName = document.getElementById('distributorName').value;
+    
+    return !!(token || verifierName || distributorName);
+}
+
+function goBackToDashboard() {
+    // Return to main dashboard (index.html) where user can LOGOUT
+    window.location.href = 'index.html';
+}
+
+function handleBackClick(e) {
+    e.preventDefault();
+    
+    if (hasUnsavedData()) {
+        // Show confirmation modal
+        document.getElementById('confirmMessage').textContent = 
+            'You have unsaved data. Returning to the dashboard will lose your progress. You can logout from there.';
+        document.getElementById('confirmBackdrop').classList.add('show');
+    } else {
+        // No unsaved data — go straight back
+        goBackToDashboard();
+    }
+}
+
+// Attach handlers to both back buttons
+document.getElementById('backToDashboard').addEventListener('click', handleBackClick);
+document.getElementById('floatingBackBtn').addEventListener('click', handleBackClick);
+
+// Confirmation modal handlers
+document.getElementById('confirmCancel').addEventListener('click', () => {
+    document.getElementById('confirmBackdrop').classList.remove('show');
+});
+
+document.getElementById('confirmLeave').addEventListener('click', () => {
+    document.getElementById('confirmBackdrop').classList.remove('show');
+    goBackToDashboard();
+});
+
+// Close modal on backdrop click
+document.getElementById('confirmBackdrop').addEventListener('click', (e) => {
+    if (e.target.id === 'confirmBackdrop') {
+        document.getElementById('confirmBackdrop').classList.remove('show');
+    }
+});
 
 function updateProgress(n) {
     document.querySelectorAll('.progress-step').forEach((dot, index) => {
