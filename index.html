@@ -285,14 +285,48 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-health-topic{display:flex;gap:12px;align-items:flex-start;background:#F4F7F2;padding:12px 14px;margin-bottom:10px;border-radius:12px;font-size:.85rem;color:#16242A}
 .dist-topic-number{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:#1565c0;color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .dist-health-topic strong{color:#16324F;display:block;margin-bottom:2px}
-.dist-qr-frame{position:relative}
-.dist-qr-frame #dist-qr-reader{width:100%!important;height:240px!important;border-radius:14px;overflow:hidden;background:#0E2238}
+
+/* 🔑 FIXED: QR Scanner container - explicit dimensions */
+.dist-qr-frame{position:relative;width:100%;min-height:240px}
+#dist-qr-reader{
+  width:100% !important;
+  height:240px !important;
+  min-height:240px !important;
+  border-radius:14px;
+  overflow:hidden;
+  background:#0E2238;
+  position:relative;
+}
+#dist-qr-reader video{
+  width:100% !important;
+  height:100% !important;
+  object-fit:cover !important;
+  border-radius:14px;
+}
+#dist-qr-reader__scan_region{
+  min-height:240px !important;
+}
 .dist-qr-corner{position:absolute;width:26px;height:26px;border:3px solid #E8A33D;opacity:0;transition:opacity .2s ease;pointer-events:none}
 .dist-qr-frame.scanning .dist-qr-corner{opacity:1}
 .dist-qr-corner-tl{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:6px 0 0 0}
 .dist-qr-corner-tr{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 6px 0 0}
 .dist-qr-corner-bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 6px}
 .dist-qr-corner-br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 6px 0}
+
+/* 🔑 FIXED: Force tab content to be visible with dimensions */
+#dist-qr.tab-pane,
+#dist-qr.fade,
+#dist-qr.fade.show{
+  display:block !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  width:100%;
+  min-height:240px;
+}
+#dist-qr:not(.show){
+  display:none !important;
+}
+
 .dist-beneficiary-tab{background:#F4F7F2;border:none;border-radius:12px;padding:4px;gap:4px;display:flex;margin-bottom:12px}
 .dist-beneficiary-tab .nav-link{border:none;border-radius:9px;color:#5B6B6E;font-weight:600;font-size:.85rem;padding:8px 0;flex:1;text-align:center;background:transparent;cursor:pointer}
 .dist-beneficiary-tab .nav-link.active{background:#fff;color:#1565c0;box-shadow:0 1px 4px rgba(22,50,79,.12)}
@@ -302,7 +336,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-recs-header{background:linear-gradient(115deg,#A55EEA,#8B5CF6);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .dist-recs-header h3{font-size:.75rem;font-weight:700}
 
-/* 🔑 Token field highlight styling */
 .dist-token-display{
   background:linear-gradient(135deg, #E8F5E9, #C8E6C9);
   border:1.5px solid #4CAF50;
@@ -695,6 +728,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
          <button type="button" class="dist-btn dist-btn-next" onclick="distAutoFillData()">Auto-Fill</button>
         </div>
        </div>
+       <!-- 🔑 FIXED: Removed Bootstrap fade class to prevent display:none issues -->
        <div id="dist-qr" class="dist-tab-content" style="display:none">
         <div class="dist-qr-frame" id="distQrFrame">
          <div id="dist-qr-reader"></div>
@@ -750,7 +784,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <div class="col-4"><label class="dist-form-label">Under-5</label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly></div>
        </div>
        <hr>
-       <!-- 🔑 NEW: Token field added above GPS -->
        <h6 class="dist-sub-title"><i class="fas fa-key me-2"></i>Token</h6>
        <div class="mb-3">
         <label class="dist-form-label">Beneficiary Token</label>
@@ -1567,13 +1600,54 @@ function distChangeStep(n){
   if (distCurrentStep < 0) distCurrentStep = 0;
   updateDistStep();
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FIXED: switchDistTab - ensures container is visible before
+   scanner can be started. Uses direct display toggle instead of
+   Bootstrap fade to avoid display:none issues.
+═══════════════════════════════════════════════════════════════ */
 function switchDistTab(tabId){
-  document.querySelectorAll('#distBeneficiaryTab .nav-link').forEach(btn=>{ btn.classList.toggle('active', btn.dataset.tab === tabId); });
-  document.getElementById('dist-token').style.display = (tabId === 'dist-token') ? 'block' : 'none';
-  document.getElementById('dist-qr').style.display = (tabId === 'dist-qr') ? 'block' : 'none';
-  if (tabId !== 'dist-qr') stopDistScanner();
+  // Update tab button active state
+  document.querySelectorAll('#distBeneficiaryTab .nav-link').forEach(btn=>{ 
+    btn.classList.toggle('active', btn.dataset.tab === tabId); 
+  });
+  
+  // Direct display toggle (no Bootstrap fade)
+  const tokenPane = document.getElementById('dist-token');
+  const qrPane = document.getElementById('dist-qr');
+  
+  if (tabId === 'dist-token') {
+    tokenPane.style.display = 'block';
+    qrPane.style.display = 'none';
+    // Stop scanner when switching away from QR tab
+    stopDistScanner();
+  } else {
+    tokenPane.style.display = 'none';
+    // 🔑 CRITICAL: Make QR pane visible FIRST, then wait for layout
+    qrPane.style.display = 'block';
+    
+    // 🔑 Wait for the container to be fully rendered before allowing scan
+    setTimeout(() => {
+      const qrReader = document.getElementById('dist-qr-reader');
+      if (qrReader) {
+        // Force a reflow to ensure dimensions are calculated
+        const rect = qrReader.getBoundingClientRect();
+        console.log('QR Reader dimensions:', rect.width, 'x', rect.height);
+        
+        // If dimensions are 0, try to fix by setting explicit dimensions
+        if (rect.width === 0 || rect.height === 0) {
+          qrReader.style.width = '100%';
+          qrReader.style.height = '240px';
+          qrReader.style.minHeight = '240px';
+        }
+      }
+    }, 50);
+  }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FIXED: distAutoFillData - Token lookup
+═══════════════════════════════════════════════════════════════ */
 function distAutoFillData(){
   const token = document.getElementById('distBeneficiaryToken').value.trim();
   if (!token) {
@@ -1592,37 +1666,25 @@ function distAutoFillData(){
   toast('✅ Beneficiary data loaded from registration');
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 FILL DISTRIBUTION FORM FROM RECORD
-   Populates ALL beneficiary information fields INCLUDING the
-   new Token display field from a record object
-═══════════════════════════════════════════════════════════════ */
 function fillDistFormFromRecord(rec){
-  // 🔑 Token (new display field)
-  if (rec.token) document.getElementById('distTokenDisplay').value = rec.token;
-  if (rec.token) document.getElementById('distBeneficiaryToken').value = rec.token;
-  
-  // Location
+  if (rec.token) {
+    document.getElementById('distTokenDisplay').value = rec.token;
+    document.getElementById('distBeneficiaryToken').value = rec.token;
+  }
   if (rec.region) document.getElementById('distRegion').value = rec.region;
   if (rec.district) document.getElementById('distDistrict').value = rec.district;
   if (rec.chiefdom) document.getElementById('distChiefdom').value = rec.chiefdom;
   if (rec.community) document.getElementById('distCommunity').value = rec.community;
   if (rec.healthFacility) document.getElementById('distFacility').value = rec.healthFacility;
   if (rec.dp) document.getElementById('distDistPoint').value = rec.dp;
-  
-  // Personal
   if (rec.surname) document.getElementById('distSurname').value = rec.surname;
   if (rec.middleName) document.getElementById('distMiddleName').value = rec.middleName;
   if (rec.firstName) document.getElementById('distFirstName').value = rec.firstName;
   if (rec.mobile) document.getElementById('distMobile').value = rec.mobile;
   if (rec.hhr) document.getElementById('distHhrName').value = rec.hhr;
-  
-  // ITN Allocation
   if (rec.itn !== undefined && rec.itn !== null) document.getElementById('distItnAlloc').value = rec.itn;
   if (rec.pregnant !== undefined && rec.pregnant !== null) document.getElementById('distPregnant').value = rec.pregnant;
   if (rec.under5 !== undefined && rec.under5 !== null) document.getElementById('distUnder5').value = rec.under5;
-  
-  // GPS
   if (rec.gps) {
     const [lat, lng] = rec.gps.split(',');
     if (lat) document.getElementById('distBeneficiaryLat').value = lat;
@@ -1630,85 +1692,202 @@ function fillDistFormFromRecord(rec){
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FIXED: startDistScanner - Now properly waits for container
+   to be visible and has dimensions before starting the scanner.
+   Includes better error handling and status messages.
+═══════════════════════════════════════════════════════════════ */
 function startDistScanner(){
-  if (distScannerRunning) return;
+  if (distScannerRunning) {
+    console.log('Scanner already running');
+    return;
+  }
+  
+  // 🔑 Check if library is loaded
   if (typeof Html5Qrcode === 'undefined') { 
-    document.getElementById('distQrStatus').innerText = '❌ Scanner library failed to load.'; 
+    document.getElementById('distQrStatus').innerText = '❌ Scanner library failed to load. Please refresh the page.';
+    document.getElementById('distQrStatus').style.color = '#c62828';
     return; 
   }
-  document.getElementById('distQrStatus').innerText = 'Requesting camera...';
-  distHtml5Qrcode = new Html5Qrcode("dist-qr-reader");
-  const config = { fps: 10, qrbox: { width: 200, height: 200 } };
   
-  const onSuccess = (decodedText) => {
-    const parsed = parseQRData(decodedText);
-    if (parsed) {
-      fillDistFormFromParsedQR(parsed);
-      const name = (parsed.firstName || '') + ' ' + (parsed.surname || '');
-      const token = parsed.token || 'N/A';
-      const displayText = `${name.trim()} (Token: ${token})`;
-      document.getElementById('distAutoFillText').innerText = displayText;
-      document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-      document.getElementById('distQrStatus').innerText = '✅ All beneficiary data auto-filled!';
-      toast('✅ QR scanned - all fields filled!');
-    } else {
-      document.getElementById('distBeneficiaryToken').value = decodedText;
-      document.getElementById('distQrStatus').innerText = 'Token scanned. Other fields not in QR.';
-      toast('⚠️ Only token captured');
+  // 🔑 Verify container is visible and has dimensions
+  const qrReader = document.getElementById('dist-qr-reader');
+  if (!qrReader) {
+    document.getElementById('distQrStatus').innerText = '❌ Scanner container not found.';
+    return;
+  }
+  
+  const rect = qrReader.getBoundingClientRect();
+  console.log('Starting scanner. Container size:', rect.width, 'x', rect.height);
+  
+  if (rect.width === 0 || rect.height === 0) {
+    // Container not visible yet - wait and retry
+    document.getElementById('distQrStatus').innerText = '⏳ Preparing camera...';
+    setTimeout(() => startDistScanner(), 200);
+    return;
+  }
+  
+  document.getElementById('distQrStatus').innerText = '📷 Requesting camera access...';
+  document.getElementById('distQrStatus').style.color = '#5B6B6E';
+  
+  // 🔑 Clean up any previous scanner instance
+  if (distHtml5Qrcode) {
+    try {
+      distHtml5Qrcode.stop().then(() => {
+        distHtml5Qrcode.clear();
+        distHtml5Qrcode = null;
+        initNewScanner();
+      }).catch(() => {
+        distHtml5Qrcode = null;
+        initNewScanner();
+      });
+    } catch(e) {
+      distHtml5Qrcode = null;
+      initNewScanner();
     }
-    stopDistScanner();
-  };
-  const onFailure = () => {};
-  
-  distHtml5Qrcode.start({ facingMode: "environment" }, config, onSuccess, onFailure)
-    .then(() => {
+  } else {
+    initNewScanner();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 NEW: initNewScanner - Separate function to initialize a
+   fresh scanner instance
+═══════════════════════════════════════════════════════════════ */
+function initNewScanner(){
+  try {
+    distHtml5Qrcode = new Html5Qrcode("dist-qr-reader", {
+      verbose: false
+    });
+    
+    const config = { 
+      fps: 10, 
+      qrbox: { width: 200, height: 200 },
+      aspectRatio: 1.0,
+      formatsToSupport: [
+        Html5QrcodeSupportedFormats.QR_CODE
+      ]
+    };
+    
+    const onSuccess = (decodedText) => {
+      console.log('QR scanned:', decodedText);
+      if (navigator.vibrate) navigator.vibrate(200);
+      
+      const parsed = parseQRData(decodedText);
+      if (parsed && (parsed.token || parsed.region || parsed.surname)) {
+        fillDistFormFromParsedQR(parsed);
+        const name = ((parsed.firstName || '') + ' ' + (parsed.surname || '')).trim();
+        const token = parsed.token || 'N/A';
+        const displayText = name ? `${name} (Token: ${token})` : `Token: ${token}`;
+        document.getElementById('distAutoFillText').innerText = displayText;
+        document.getElementById('distAutoFillDisplay').classList.remove('d-none');
+        document.getElementById('distQrStatus').innerText = '✅ All beneficiary data auto-filled!';
+        document.getElementById('distQrStatus').style.color = '#2e7d64';
+        toast('✅ QR scanned - all fields filled!');
+      } else {
+        // Treat as plain token
+        document.getElementById('distBeneficiaryToken').value = decodedText;
+        document.getElementById('distTokenDisplay').value = decodedText;
+        document.getElementById('distQrStatus').innerText = 'ℹ️ Token captured. Other fields not in QR.';
+        document.getElementById('distQrStatus').style.color = '#f57c00';
+        toast('⚠️ Only token captured');
+      }
+      stopDistScanner();
+    };
+    
+    const onFailure = (error) => {
+      // Silent - this fires every frame when no QR is detected
+    };
+    
+    // 🔑 Try rear camera first, then fall back to any camera
+    distHtml5Qrcode.start(
+      { facingMode: "environment" }, 
+      config, 
+      onSuccess, 
+      onFailure
+    ).then(() => {
       distScannerRunning = true;
       document.getElementById('distStartScanBtn').style.display = 'none';
       document.getElementById('distStopScanBtn').style.display = 'inline-block';
       document.getElementById('distQrFrame').classList.add('scanning');
-      document.getElementById('distQrStatus').innerText = "Point camera at beneficiary QR code.";
-    })
-    .catch((err) => {
+      document.getElementById('distQrStatus').innerText = '📷 Camera active. Point at QR code.';
+      document.getElementById('distQrStatus').style.color = '#2e7d64';
+      console.log('Scanner started successfully');
+    }).catch((err) => {
+      console.warn('Rear camera failed, trying default:', err);
+      // Try with default camera
       distHtml5Qrcode.start({}, config, onSuccess, onFailure)
         .then(() => {
           distScannerRunning = true;
           document.getElementById('distStartScanBtn').style.display = 'none';
           document.getElementById('distStopScanBtn').style.display = 'inline-block';
           document.getElementById('distQrFrame').classList.add('scanning');
-          document.getElementById('distQrStatus').innerText = "Point camera at beneficiary QR code.";
+          document.getElementById('distQrStatus').innerText = '📷 Camera active. Point at QR code.';
+          document.getElementById('distQrStatus').style.color = '#2e7d64';
         })
-        .catch((err2) => { document.getElementById('distQrStatus').innerText = '❌ Camera unavailable.'; });
+        .catch((err2) => {
+          console.error('Camera start failed:', err2);
+          let errorMsg = '❌ Camera error: ';
+          if (err2.toString().includes('NotAllowedError') || err2.toString().includes('Permission')) {
+            errorMsg += 'Permission denied. Please allow camera access in your browser settings.';
+          } else if (err2.toString().includes('NotFoundError')) {
+            errorMsg += 'No camera found on this device.';
+          } else if (err2.toString().includes('NotReadableError')) {
+            errorMsg += 'Camera is being used by another application.';
+          } else {
+            errorMsg += err2.message || 'Unable to start camera.';
+          }
+          document.getElementById('distQrStatus').innerText = errorMsg;
+          document.getElementById('distQrStatus').style.color = '#c62828';
+          toast('❌ Camera failed to start');
+        });
     });
+  } catch(e) {
+    console.error('Scanner initialization error:', e);
+    document.getElementById('distQrStatus').innerText = '❌ Failed to initialize scanner: ' + e.message;
+    document.getElementById('distQrStatus').style.color = '#c62828';
+  }
 }
 
+function stopDistScanner(){
+  if (distHtml5Qrcode && distScannerRunning) {
+    distHtml5Qrcode.stop().then(() => {
+      try { distHtml5Qrcode.clear(); } catch(e) {}
+      distScannerRunning = false;
+      document.getElementById('distStartScanBtn').style.display = 'inline-block';
+      document.getElementById('distStopScanBtn').style.display = 'none';
+      document.getElementById('distQrFrame').classList.remove('scanning');
+    }).catch(err => {
+      console.log("Stop error:", err);
+      distScannerRunning = false;
+      document.getElementById('distStartScanBtn').style.display = 'inline-block';
+      document.getElementById('distStopScanBtn').style.display = 'none';
+      document.getElementById('distQrFrame').classList.remove('scanning');
+    });
+  }
+}
+
+function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
+
 /* ═══════════════════════════════════════════════════════════════
-   🔑 FILL DISTRIBUTION FORM FROM PARSED QR DATA
-   Populates ALL beneficiary fields INCLUDING the new Token
-   display field above GPS
+   🔑 fillDistFormFromParsedQR - Fills all fields from parsed QR
 ═══════════════════════════════════════════════════════════════ */
 function fillDistFormFromParsedQR(data){
-  // 🔑 Token (new display field above GPS)
   if (data.token) {
     document.getElementById('distTokenDisplay').value = data.token;
     document.getElementById('distBeneficiaryToken').value = data.token;
   }
-  
-  // Location Information
   if (data.region) document.getElementById('distRegion').value = data.region;
   if (data.district) document.getElementById('distDistrict').value = data.district;
   if (data.chiefdom) document.getElementById('distChiefdom').value = data.chiefdom;
   if (data.community) document.getElementById('distCommunity').value = data.community;
   if (data.facility) document.getElementById('distFacility').value = data.facility;
   if (data.distPoint) document.getElementById('distDistPoint').value = data.distPoint;
-  
-  // Personal Information
   if (data.surname) document.getElementById('distSurname').value = data.surname;
   if (data.middleName) document.getElementById('distMiddleName').value = data.middleName;
   if (data.firstName) document.getElementById('distFirstName').value = data.firstName;
   if (data.mobile) document.getElementById('distMobile').value = data.mobile;
   if (data.hhr) document.getElementById('distHhrName').value = data.hhr;
-  
-  // ITN Allocation
   if (data.itn !== undefined && data.itn !== null && data.itn !== '') {
     document.getElementById('distItnAlloc').value = data.itn;
   }
@@ -1718,24 +1897,9 @@ function fillDistFormFromParsedQR(data){
   if (data.under5 !== undefined && data.under5 !== null && data.under5 !== '') {
     document.getElementById('distUnder5').value = data.under5;
   }
-  
-  // GPS Coordinates
   if (data.latitude) document.getElementById('distBeneficiaryLat').value = data.latitude;
   if (data.longitude) document.getElementById('distBeneficiaryLng').value = data.longitude;
 }
-
-function stopDistScanner(){
-  if (distHtml5Qrcode && distScannerRunning) {
-    distHtml5Qrcode.stop().then(() => {
-      distHtml5Qrcode.clear(); distScannerRunning = false;
-      document.getElementById('distStartScanBtn').style.display = 'inline-block';
-      document.getElementById('distStopScanBtn').style.display = 'none';
-      document.getElementById('distQrFrame').classList.remove('scanning');
-    }).catch(err => console.log("Stop error:", err));
-  }
-}
-
-function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
 
 function submitDistribution(e){
   e.preventDefault();
