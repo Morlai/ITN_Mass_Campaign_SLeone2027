@@ -194,9 +194,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .rtable tr:hover{background:#f5f8ff}
 .no-rec{text-align:center;padding:30px;color:#64748b;font-size:.72rem}
 
-/* ═══════════════════════════════════════════════════════════
-   🔑 FIX: Larger canvas size, CSS scales it down to 60x60 display
-   ═══════════════════════════════════════════════════════════ */
 .qsm{
   width:60px;
   height:60px;
@@ -639,6 +636,13 @@ function buildDash(){
   grid.querySelectorAll('.acard').forEach(c=>{
     c.onclick=()=>{
       const aid=c.dataset.aid;
+      // ═══════════════════════════════════════════════════════════════
+      // 🔑 DISTRIBUTION MODULE - Navigate to distribution.html
+      // ═══════════════════════════════════════════════════════════════
+      if(aid==='DISTRIBUTION'){
+        window.location.href = 'distribution.html';
+        return;
+      }
       if(aid==='REGISTER'){go('sRegHome');return;}
       toast('✓ '+ACTIONS.find(a=>a.id===aid)?.lbl+' module opened');
     };
@@ -850,17 +854,8 @@ function buildReview(){
     </p></div>`;
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 🔑 CORE FIX: Generate QR at a LARGE canvas size (250x250)
-// The CSS .qsm class then scales it down to 60x60 for display.
-// This ensures each QR module has multiple pixels, so the QR
-// actually renders visibly instead of as a blank white square.
-// ═══════════════════════════════════════════════════════════════
 function buildQRCanvas(data, canvasSize) {
   try {
-    // Use error correction level 'L' (lowest) to maximize data capacity
-    // With 18 fields (~350+ chars), we need ~Type 17 QR (85 modules)
-    // At canvasSize=250, each module gets ~2-3 pixels (250/85 ≈ 2.9)
     const qr = qrcode(0, 'L');
     qr.addData(data);
     qr.make();
@@ -868,7 +863,6 @@ function buildQRCanvas(data, canvasSize) {
     const modCount = qr.getModuleCount();
     const cell = Math.floor(canvasSize / modCount);
     
-    // SAFETY CHECK: If cell is 0, the canvas is too small for this data
     if (cell < 1) {
       console.error('QR canvas too small. Need at least', modCount, 'pixels, got', canvasSize);
       return null;
@@ -882,11 +876,9 @@ function buildQRCanvas(data, canvasSize) {
     cv.height = canvasSize;
     const ctx = cv.getContext('2d');
     
-    // White background
     ctx.fillStyle = '#ffffff';
     ctx.fillRect(0, 0, canvasSize, canvasSize);
     
-    // Draw QR modules
     ctx.fillStyle = '#000000';
     for (let r = 0; r < modCount; r++) {
       for (let c = 0; c < modCount; c++) {
@@ -1058,10 +1050,6 @@ function finalReg(){
   if (FIREBASE_ENABLED) toast('✅ Synced to cloud');
 }
 
-// ═══════════════════════════════════════════════════════════════
-// 🔑 Generate QR data URL at a LARGE canvas size (250x250)
-// CSS will scale it down to 60x60 display in the table
-// ═══════════════════════════════════════════════════════════════
 function qrDataUrl(rec, displaySize){
   const [lat,lng]=(rec.gps||'').split(',');
   const data=`ITN_REG
@@ -1084,7 +1072,6 @@ Latitude:${lat||''}
 Longitude:${lng||''}
 Token:${rec.token||''}`;
   
-  // Always generate at 250x250 for crisp display when CSS scales it down
   const cv = buildQRCanvas(data, 250);
   if (!cv) return '';
   return cv.toDataURL('image/png');
