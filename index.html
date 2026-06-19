@@ -1,1215 +1,1441 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html>  
+<html lang="en"> 
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICF-SL ITN CAMPAIGN PORTAL</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+<title>ICF-SL | ITN Campaign Portal</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+<script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
 
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <style>
-:root {
-    --canopy: #0E7C66;
-    --canopy-dark: #0A5C4C;
-    --canopy-tint: #E4F3EE;
-    --dusk: #16324F;
-    --dusk-deep: #0E2238;
-    --amber: #E8A33D;
-    --amber-dark: #C97F1E;
-    --coral: #D9594A;
-    --sand: #F4F7F2;
-    --ink: #16242A;
-    --paper: #FFFFFF;
-    --mist: #DCE7E2;
-    --muted: #5B6B6E;
-    --brand-blue: #1565c0;
-    --brand-blue-dark: #0d47a1;
-    --brand-blue-light: #1976d2;
-}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#dde4f0;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif;padding:16px}
 
-* { box-sizing: border-box; }
+.phone-frame{width:390px;height:760px;background:#1a1e2c;border-radius:48px;padding:10px;box-shadow:0 28px 50px rgba(0,0,0,0.45);flex-shrink:0}
+.phone-mock{width:100%;height:100%;border-radius:40px;position:relative;overflow:hidden;background:url('background.png') center/cover no-repeat}
 
-body {
-    background: radial-gradient(circle at 28% 18%, #1a3a5c 0%, #0d2137 48%, #050d14 100%);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    min-height:100vh;
-    margin:0;
-    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
-    color: var(--ink);
-}
+.screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
+.screen.active{display:flex}
 
-/* PHONE FRAME */
-.phone {
-    width:375px;
-    height:95vh;
-    background: linear-gradient(165deg, #1c2c38, #0c1218);
-    border-radius:42px;
-    padding:10px;
-    box-shadow: 0 30px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04) inset;
-    position:relative;
-    display: flex;
-    flex-direction: column;
-}
-.notch {
-    position:absolute;
-    top:8px; left:50%;
-    transform:translateX(-50%);
-    width:74px; height:14px;
-    background:#0a0f14;
-    border-radius:0 0 14px 14px;
-    z-index:6;
-}
+.scroll-y{overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.scroll-y::-webkit-scrollbar{display:none}
 
-/* SCREEN */
-.screen {
-    background: var(--sand);
-    flex: 1;
-    border-radius:32px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
+#sLogin{background:url('background.png') center/cover no-repeat}
+.login-body{flex:1;display:flex;flex-direction:column;padding:22px 16px 0;min-height:0}
+.login-card{background:rgba(255,255,255,.97);border-radius:28px;padding:22px 18px 18px;text-align:center;margin-bottom:16px;box-shadow:0 10px 26px rgba(0,0,0,.13)}
+.login-card img{width:78px;border-radius:16px;margin-bottom:10px}
+.login-card h2{font-size:.78rem;font-weight:800;color:#1565C0;margin-bottom:3px}
+.login-card p{font-size:.48rem;color:#546e7a;margin-bottom:14px}
+.lfield{background:#fff;border:1.8px solid #2a7fc4;border-radius:40px;padding:10px 16px;margin-bottom:11px;display:flex;align-items:center;gap:9px}
+.lfield:focus-within{border-color:#FF8C42;box-shadow:0 0 0 3px rgba(255,140,66,.2)}
+.lfield input{border:none;background:transparent;width:100%;outline:none;font-size:13px;font-weight:600;color:#1e2f3f}
+.lfield input::placeholder{color:#8a9eb0;font-weight:500}
+.eye-btn{cursor:pointer;font-size:16px;color:#2a7fc4}
+.lerr{color:#c62828;font-size:11px;font-weight:600;padding-left:10px;margin:-6px 0 10px;display:none}
+.lerr.show{display:block}
+.lbtn{width:100%;padding:11px;border-radius:40px;border:none;color:#fff;font-weight:800;font-size:13px;margin-bottom:10px;cursor:pointer}
+.lbtn-blue{background:#1565C0}.lbtn-green{background:#2e7d64}
+.util-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.util-tile{border-radius:20px;padding:12px 6px;text-align:center;color:#fff;font-weight:700;font-size:10px;cursor:pointer;backdrop-filter:blur(6px)}
+.util-tile i{display:block;font-size:20px;margin-bottom:4px}
+.tu-or{background:rgba(217,95,26,.88)}.tu-bl{background:rgba(42,127,196,.88)}
+.tu-pu{background:rgba(123,63,160,.88)}.tu-te{background:rgba(27,154,138,.88)}
+.pfooter{background:#1565C0;text-align:center;padding:11px;color:#fff;font-size:9.5px;line-height:1.5;flex-shrink:0;margin-top:auto}
+.pfooter strong{color:#FFD966}
 
-.screen::-webkit-scrollbar, .content-wrapper::-webkit-scrollbar {
-    display:none;
-}
+#sDash{overflow:hidden;background:#f0f2f7}
+.dash-content{flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.dash-content::-webkit-scrollbar{display:none}
+.dhdr{background:#1565C0;padding:10px 13px 8px;flex-shrink:0}
+.dhdr-top{display:flex;align-items:center;gap:9px;margin-bottom:6px}
+.dhdr-logo{width:38px;height:38px;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
+.dhdr-logo img{width:100%;object-fit:cover}
+.dhdr-txt h1{font-size:.65rem;font-weight:800;background:linear-gradient(135deg,#fff,#FFE0B5);-webkit-background-clip:text;background-clip:text;color:transparent}
+.dhdr-txt p{font-size:.44rem;color:rgba(255,255,255,.88)}
+.dbadge{background:#FF8C42;padding:4px 10px;border-radius:36px;font-size:.48rem;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
+.dsub{color:#FFDF8C;font-size:.46rem;font-weight:600;text-align:center}
+.ubar{background:#1b8a7e;padding:7px 12px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:10.5px;font-weight:600;flex-shrink:0}
+.ubar button{background:#e53935;border:none;color:#fff;padding:4px 11px;border-radius:24px;cursor:pointer;font-size:10px;font-weight:700}
+.partners{background:#fff;padding:6px 8px;border-bottom:1px solid #eef2f8;flex-shrink:0}
+.partners h4{text-align:center;font-size:.48rem;font-weight:800;color:#F57C00;margin-bottom:4px}
+.pgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
+.pitem{text-align:center}
+.plogo{background:#f8fafb;border-radius:8px;padding:2px;display:flex;align-items:center;justify-content:center;min-height:24px}
+.plogo img{max-width:20px;max-height:20px}
+.pname{font-size:.36rem;font-weight:700;color:#E65100;margin-top:1px}
+.caro{position:relative;flex-shrink:0}
+.cslides{display:flex;transition:transform .45s ease}
+.cslide{min-width:100%;flex-shrink:0}
+.cslide img{width:100%;height:140px;display:block;object-fit:cover}
+.cdots{display:flex;justify-content:center;gap:6px;padding:5px;background:#1565C0}
+.cdot{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.6;cursor:pointer;transition:all .3s}
+.cdot.on{background:#FF8C42;width:15px;border-radius:3px;opacity:1}
+.carrow{position:absolute;top:46%;transform:translateY(-50%);width:26px;height:26px;background:rgba(255,255,255,.88);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;color:#FF8C42;z-index:5}
+.carrow.L{left:7px}.carrow.R{right:7px}
+.actsec{padding:8px 10px 10px}
+.actgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.acard{border-radius:15px;padding:9px 4px;text-align:center;cursor:pointer;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.09)}
+.acard:active{transform:scale(.95)}
+.acard i{font-size:22px;display:block;margin-bottom:4px}
+.acard span{font-size:.43rem;font-weight:800}
+.a1{background:linear-gradient(145deg,#FF6B6B,#EE5A24);color:#fff}
+.a2{background:linear-gradient(145deg,#4ECDC4,#2c9e92);color:#fff}
+.a3{background:linear-gradient(145deg,#45B7D1,#2980b9);color:#fff}
+.a4{background:linear-gradient(145deg,#F9CA24,#F39C12);color:#2c3e50}
+.a5{background:linear-gradient(145deg,#A55EEA,#8B5CF6);color:#fff}
+.a6{background:linear-gradient(145deg,#FF9FF3,#F368E0);color:#fff}
+.a7{background:linear-gradient(145deg,#1DD1A1,#0e9f6e);color:#fff}
+.a8{background:linear-gradient(145deg,#FF8C42,#E67E22);color:#fff}
+.a9{background:linear-gradient(145deg,#5D6D7E,#2C3E50);color:#fff}
+.dfooter{background:#1565C0;padding:7px;text-align:center;flex-shrink:0}
+.dfooter p{font-size:.47rem;color:#fff}.dfooter strong{color:#FFD966}
 
-.content-wrapper {
-    flex: 1;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-}
+#sRegHome{background:url('background.png') center/cover no-repeat}
+.rh-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;min-height:0}
+.rh-card{background:#fff;border-radius:0;padding:20px 16px 18px;flex:1;box-shadow:none;overflow-y:auto;scrollbar-width:none}
+.rh-card::-webkit-scrollbar{display:none}
+.rh-hdr{display:flex;align-items:center;gap:10px;margin-bottom:18px;padding-bottom:14px;border-bottom:2px solid #eef2f8}
+.rh-hdr img{width:46px;height:46px;border-radius:12px;object-fit:cover;flex-shrink:0}
+.rh-hdr-txt{flex:1}
+.rh-hdr-txt h2{font-size:.75rem;font-weight:800;color:#1565C0}
+.rh-hdr-txt p{font-size:.46rem;color:#546e7a;margin-top:1px}
+.rh-back{width:28px;height:28px;border-radius:50%;border:2px solid #1565C0;background:transparent;color:#1565C0;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.sc{border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.13);transition:transform .12s}
+.sc:active{transform:scale(.96)}
+.sc-top{padding:18px 8px 13px;text-align:center}
+.sc-top i{font-size:28px;color:#fff;display:block;margin-bottom:5px}
+.sc-top span{font-size:.65rem;font-weight:800;color:#fff;letter-spacing:.3px}
+.sc-bot{background:#fff;padding:9px 11px 11px;border-top:3px solid transparent}
+.sc-bot strong{display:block;font-size:.5rem;margin-bottom:3px}
+.sc-bot p{font-size:.44rem;color:#334155;line-height:1.45}
+.sc-or .sc-top{background:linear-gradient(135deg,#ea580c,#f97316)}.sc-or .sc-bot{border-color:#f97316}.sc-or .sc-bot strong{color:#c2410c}
+.sc-te .sc-top{background:linear-gradient(135deg,#0d9488,#14b8a6)}.sc-te .sc-bot{border-color:#14b8a6}.sc-te .sc-bot strong{color:#0f766e}
+.sc-rd .sc-top{background:linear-gradient(135deg,#dc2626,#ef4444)}.sc-rd .sc-bot{border-color:#ef4444}.sc-rd .sc-bot strong{color:#b91c1c}
+.sc-pu .sc-top{background:linear-gradient(135deg,#7c3aed,#a855f7)}.sc-pu .sc-bot{border-color:#a855f7}.sc-pu .sc-bot strong{color:#6b21a8}
 
-.container {
-    flex: 1;
-}
+.whdr{background:linear-gradient(115deg,#1565C0,#1976d2);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.whdr h3{font-size:.75rem;font-weight:700}
+.wback{width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.sbar{display:flex;justify-content:space-between;padding:9px 12px 6px;background:#f0f3f8;flex-shrink:0;position:relative}
+.sbar::before{content:'';position:absolute;top:25px;left:9%;right:9%;height:3px;background:#dde4f0;border-radius:4px;z-index:0}
+.sprog{position:absolute;top:25px;left:9%;height:3px;background:#1565C0;border-radius:4px;z-index:1;transition:width .3s;width:0}
+.sitem{text-align:center;width:20%;position:relative;z-index:2}
+.scirc{width:26px;height:26px;border-radius:50%;background:#c5cfe0;color:#fff;font-weight:700;font-size:.65rem;line-height:26px;margin:0 auto}
+.sitem.son .scirc{background:#1565C0;box-shadow:0 3px 8px rgba(21,101,192,.4)}
+.slbl{font-size:.36rem;margin-top:3px;color:#5a6a7a;font-weight:600;line-height:1.2}
+.sitem.son .slbl{color:#1565C0;font-weight:800}
+.wbody{flex:1;overflow-y:auto;background:#f0f3f8;scrollbar-width:none}
+.wbody::-webkit-scrollbar{display:none}
+.wsec{display:none;padding:10px 13px 18px;animation:fadeUp .2s ease}
+.wsec.on{display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.fg{margin-bottom:9px}
+.fg label{font-size:.58rem;font-weight:800;color:#1e3a4c;display:block;margin-bottom:3px}
+.fg label .req{color:#e53935;margin-left:2px}
+.fg input,.fg select{width:100%;padding:8px 11px;border:1.7px solid #cdd5e0;border-radius:18px;font-size:.73rem;background:#fff;color:#1e293b}
+.fg input:focus,.fg select:focus{border-color:#1565C0;outline:none;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
+.ferr{color:#e53935;font-size:.52rem;margin-top:3px;display:none}
+.r2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.ph-wrap{display:flex;align-items:center;border:1.7px solid #cdd5e0;border-radius:18px;background:#fff;overflow:hidden}
+.ph-wrap:focus-within{border-color:#1565C0;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
+.ph-sim{background:#1565C0;color:#fff;padding:8px 9px;font-size:.55rem;font-weight:700;white-space:nowrap;flex-shrink:0}
+.ph-inp{flex:1;border:none;outline:none;padding:8px 10px;font-size:.73rem;font-weight:600;background:transparent}
+.tok-btn{width:100%;padding:9px;border-radius:36px;border:none;background:linear-gradient(105deg,#e9c46a,#f4a261);color:#2d3e50;font-weight:800;font-size:.68rem;cursor:pointer;margin-top:9px}
+.tok-box{margin-top:7px;background:#1565C0;color:#f4f1de;text-align:center;border-radius:20px;padding:8px;font-weight:700;display:none;font-size:.63rem;word-break:break-all}
+.rvbox{background:#fffdf5;padding:12px;border-radius:20px;border:1px solid #ece9e0}
+.rvbox h4{font-size:.73rem;font-weight:800;color:#0c3d5e;border-left:4px solid #1565C0;padding-left:9px;margin-bottom:9px}
+.rvsec{margin-bottom:9px}
+.rvsec h5{font-size:.6rem;font-weight:800;color:#1565C0;border-bottom:1px solid #e2e8f0;padding-bottom:2px;margin-bottom:4px}
+.rvsec p{font-size:.55rem;line-height:1.55;color:#1e293b}
+.rvedit{background:#ffedd5;display:inline-block;padding:4px 12px;border-radius:26px;font-size:.55rem;font-weight:700;cursor:pointer;margin-top:7px}
+.qrbox{background:linear-gradient(135deg,#f8fafc,#eef2f8);border-radius:22px;padding:13px;text-align:center;border:1px solid #dde4f0}
+.qrbox h4{font-size:.7rem;font-weight:800;color:#0c3d5e;margin-bottom:10px}
+.qr-wrap{background:#fff;padding:11px;border-radius:15px;display:inline-flex;align-items:center;justify-content:center;min-width:160px;min-height:160px;box-shadow:0 4px 12px rgba(0,0,0,.08);border:1px solid #dde4f0}
+.qr-wrap p{font-size:.58rem;color:#64748b}
+.qrbtns{display:flex;gap:8px;justify-content:center;margin-top:11px}
+.qbtn{padding:8px 15px;border-radius:36px;border:none;font-weight:700;cursor:pointer;font-size:.62rem}
+.qbtn-g{background:#1565C0;color:#fff}.qbtn-d{background:#e76f51;color:#fff}
+.qbtn-d:disabled{opacity:.45;cursor:not-allowed}
+.succ{background:#d9f0ec;padding:14px;border-radius:18px;text-align:center;font-weight:800;color:#1f6d5c;font-size:.73rem}
+.wnavs{display:flex;gap:8px;margin-top:14px}
+.wnavs button{flex:1;padding:9px;border-radius:36px;font-weight:700;border:none;cursor:pointer;font-size:.68rem}
+.wnext{background:#1565C0;color:#fff}.wprev{background:#e2e8f0;color:#1e293b}
 
-/* ============ HEADER ============ */
-.app-header {
-    position: relative;
-    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-dark) 100%);
-    padding: 22px 20px 20px;
-    text-align: center;
-    overflow: hidden;
-}
-.app-header::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image:
-        repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px),
-        repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px);
-    pointer-events: none;
-}
-.app-mark {
-    position: relative;
-    width: 46px; height: 46px;
-    margin: 0 auto 10px;
-}
-.main-title {
-    position: relative;
-    color: #fff;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    font-size: 1.05rem;
-    margin: 0 0 4px;
-}
-.sub-title {
-    position: relative;
-    color: rgba(255,255,255,0.85);
-    font-weight: 500;
-    font-size: 0.78rem;
-    margin: 0;
-}
+.cam-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.95);display:none;align-items:center;justify-content:center;z-index:10000;flex-direction:column}
+.cam-modal-ov.open{display:flex}
+.cam-modal-box{width:92%;max-width:360px;background:#0a0a0a;border-radius:22px;overflow:hidden;box-shadow:0 20px 50px rgba(0,0,0,.6);border:2px solid #1565C0}
+.cam-hdr{background:linear-gradient(115deg,#1565C0,#1976d2);padding:10px 14px;display:flex;align-items:center;justify-content:space-between;color:#fff}
+.cam-hdr h4{font-size:.75rem;font-weight:700;display:flex;align-items:center;gap:6px}
+.cam-hdr h4 i{font-size:14px}
+.cam-close{width:26px;height:26px;border-radius:50%;border:none;background:rgba(255,255,255,.2);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center}
+#qr-reader{width:100%;background:#000;min-height:260px}
+#qr-reader video{border-radius:0 !important}
+#qr-reader__scan_region{min-height:260px}
+#qr-reader__dashboard{padding:10px !important;background:#1a1a1a !important;color:#fff !important}
+#qr-reader__dashboard span{color:#fff !important;font-size:11px !important}
+#qr-reader__dashboard button{background:#1565C0 !important;color:#fff !important;border:none !important;padding:6px 12px !important;border-radius:20px !important;font-weight:700 !important;cursor:pointer !important;margin:4px !important}
+#qr-reader__dashboard select{background:#2a2a2a !important;color:#fff !important;border:1px solid #444 !important;border-radius:8px !important;padding:4px !important}
+.cam-status{padding:10px 14px;background:#1a1a1a;color:#fff;text-align:center;font-size:.62rem;font-weight:600;border-top:1px solid #333}
+.cam-status .pulse{display:inline-block;width:8px;height:8px;border-radius:50%;background:#22c55e;margin-right:6px;animation:pulse 1.5s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.cam-status.err .pulse{background:#ef4444;animation:none}
 
-/* ============ DASHBOARD / MODULE MENU ============ */
-.module-menu {
-    background: var(--paper);
-    padding: 16px;
-    border-radius: 16px;
-    margin-bottom: 16px;
-    box-shadow: 0 4px 14px rgba(22,50,79,0.07);
-}
-.module-menu-title {
-    font-size: 0.9rem;
-    font-weight: 700;
-    color: var(--dusk);
-    margin-bottom: 12px;
-    text-align: center;
-}
-.module-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
-}
-.module-card {
-    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-light) 100%);
-    color: #fff;
-    border-radius: 12px;
-    padding: 14px 10px;
-    text-align: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    border: none;
-    text-decoration: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 6px;
-}
-.module-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(21,101,192,0.3);
-    color: #fff;
-}
-.module-card:active {
-    transform: scale(0.96);
-}
-.module-card i {
-    font-size: 1.4rem;
-}
-.module-card span {
-    font-size: 0.72rem;
-    font-weight: 700;
-    letter-spacing: 0.3px;
-}
-.module-card.distribution {
-    background: linear-gradient(135deg, #4ECDC4 0%, #2c9e92 100%);
-}
-.module-card.monitoring {
-    background: linear-gradient(135deg, #45B7D1 0%, #2980b9 100%);
-}
-.module-card.stock {
-    background: linear-gradient(135deg, #F9CA24 0%, #F39C12 100%);
-    color: #2c3e50;
-}
-.module-card.records {
-    background: linear-gradient(135deg, #A55EEA 0%, #8B5CF6 100%);
-}
-.module-card.target {
-    background: linear-gradient(135deg, #FF8C42 0%, #E67E22 100%);
-}
+#sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
+.rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
+.rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
+.rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2400px}
+.rtable th{background:#1565C0;color:#fff;padding:7px 5px;font-weight:700;text-align:left;white-space:nowrap}
+.rtable td{padding:6px 5px;border-bottom:1px solid #e8edf5;color:#1e293b;white-space:nowrap;vertical-align:middle}
+.rtable tr:hover{background:#f5f8ff}
+.no-rec{text-align:center;padding:30px;color:#64748b;font-size:.72rem}
 
-/* ============ STEP PROGRESS TRACKER ============ */
-.step-progress {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    margin: 18px 6px 8px;
-    padding: 0 3px;
+/* ═══════════════════════════════════════════════════════════
+   🔑 FIX: Larger canvas size, CSS scales it down to 60x60 display
+   ═══════════════════════════════════════════════════════════ */
+.qsm{
+  width:60px;
+  height:60px;
+  display:block;
+  margin:0 auto;
+  cursor:pointer;
+  border:1px solid #ddd;
+  border-radius:7px;
+  image-rendering: pixelated;
+  image-rendering: -moz-crisp-edges;
+  image-rendering: crisp-edges;
 }
-.progress-track {
-    position: absolute;
-    top: 13px; left: 17px; right: 17px;
-    height: 3px;
-    background: var(--mist);
-    border-radius: 2px;
-    z-index: 0;
-}
-.progress-fill {
-    position: absolute;
-    top: 13px; left: 17px;
-    height: 3px;
-    width: 0%;
-    background: var(--brand-blue);
-    border-radius: 2px;
-    z-index: 0;
-    transition: width 0.3s ease;
-}
-.progress-step {
-    position: relative;
-    z-index: 1;
-    width: 28px; height: 28px;
-    border-radius: 50%;
-    background: var(--paper);
-    border: 2px solid var(--mist);
-    color: var(--muted);
-    font-size: 0.72rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.25s ease;
-}
-.progress-step.completed {
-    background: var(--brand-blue);
-    border-color: var(--brand-blue);
-    color: #fff;
-}
-.progress-step.active {
-    background: var(--amber);
-    border-color: var(--amber);
-    color: var(--dusk-deep);
-    box-shadow: 0 0 0 4px rgba(232,163,61,0.25);
-    transform: scale(1.1);
-}
+.dlsm{background:#e76f51;color:#fff;border:none;padding:2px 5px;border-radius:7px;font-size:.43rem;margin-top:3px;cursor:pointer;display:block;width:100%}
 
-/* ============ STEP CARDS ============ */
-.step-card {
-    background: var(--paper);
-    border-radius: 16px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 4px 14px rgba(22,50,79,0.07);
-    border: 1px solid rgba(22,50,79,0.04);
-}
-.step-header {
-    display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    margin-bottom: 18px;
-    padding-bottom: 14px;
-    border-bottom: 1px solid var(--mist);
-}
-.step-icon {
-    flex: 0 0 auto;
-    width: 38px; height: 38px;
-    border-radius: 11px;
-    background: var(--canopy-tint);
-    color: var(--canopy);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-}
-.step-eyebrow {
-    display: block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    color: var(--brand-blue);
-    margin-bottom: 2px;
-}
-.step-title {
-    margin: 0;
-    font-size: 1.02rem;
-    font-weight: 700;
-    color: var(--ink);
-}
+#sTarget .tgt-body{flex:1;overflow-y:auto;padding:11px;background:#f0f3f8;scrollbar-width:none}
+#sTarget .tgt-body::-webkit-scrollbar{display:none}
+.tday{background:linear-gradient(135deg,#dc2626,#ef4444);border-radius:20px;padding:15px;text-align:center;margin-bottom:11px}
+.tday-n{font-size:2rem;font-weight:800;color:#fef08a}
+.tday-l{font-size:.58rem;color:#fef9c3;margin-top:2px}
+.tstat{background:#fff;border-radius:20px;padding:13px;margin-bottom:11px;box-shadow:0 5px 14px rgba(0,0,0,.07)}
+.tstat h4{font-size:.68rem;font-weight:800;color:#1565C0;text-align:center;margin-bottom:9px;border-bottom:2px solid #e8edf5;padding-bottom:7px}
+.trow{display:flex;justify-content:space-between;align-items:center;padding:5px 0;border-bottom:1px solid #f0f3f8}
+.trow:last-child{border:none}
+.tlbl{font-size:.55rem;font-weight:600;color:#334155}
+.tval{font-size:.73rem;font-weight:800;color:#1565C0}
+.tprow{margin-top:9px}
+.tphdr{display:flex;justify-content:space-between;margin-bottom:4px}
+.tphdr span{font-size:.55rem;font-weight:700;color:#334155}
+.tphdr strong{font-size:.7rem;font-weight:800;color:#1565C0}
+.tpbg{background:#e2e8f0;border-radius:16px;height:8px;overflow:hidden}
+.tpfill{background:#1565C0;height:100%;border-radius:16px;transition:width .5s;width:0}
+.tpfoot{font-size:.5rem;text-align:center;margin-top:4px;color:#475569;font-weight:600}
+.tbkdn{background:linear-gradient(135deg,#fef3c7,#fde68a);border-radius:20px;padding:13px;margin-bottom:11px}
+.tbkdn h4{font-size:.68rem;font-weight:800;color:#92400e;text-align:center;margin-bottom:9px}
+.tbkdn-g{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.tbkdn-c h5{font-size:.55rem;font-weight:700;color:#b45309;border-bottom:1px solid #fed7aa;padding-bottom:3px;margin-bottom:4px;text-align:center}
+.tbkdn-c p{font-size:.49rem;color:#78350f;line-height:1.6}
+.tedit-input{flex:1;padding:9px 12px;border:1.7px solid #cdd5e0;border-radius:18px;font-size:.73rem;font-weight:600;text-align:center;background:#fff;color:#1e293b}
+.tedit-input:focus{border-color:#1565C0;outline:none;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
+.tedit-btn{background:linear-gradient(105deg,#1565C0,#1976d2);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;cursor:pointer;font-size:.68rem;white-space:nowrap;box-shadow:0 3px 8px rgba(21,101,192,.3)}
+.tedit-btn:active{transform:scale(.96)}
 
-.sub-section-title {
-    color: var(--dusk);
-    font-weight: 600;
-    text-transform: uppercase;
-    font-size: 0.78rem;
-    letter-spacing: 0.5px;
-}
-.sub-section-title i { color: var(--brand-blue); }
+.qr-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;z-index:9999}
+.qr-modal-c{background:#fff;border-radius:24px;padding:20px;text-align:center;max-width:300px;width:88%}
+.qr-modal-c h4{margin-bottom:7px;font-size:.88rem}
+.qr-modal-c img{width:210px;height:210px;border-radius:12px;display:block;margin:0 auto 8px}
+.omodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:8888;align-items:center;justify-content:center}
+.omodal.open{display:flex}
+.ocard{background:#fff;border-radius:30px;padding:22px 18px;text-align:center;max-width:285px;width:84%}
+.ocard .oi{font-size:48px;margin-bottom:9px}
+.ocard h3{font-size:1.05rem;font-weight:800;margin-bottom:7px}
+.ocard p{font-size:.68rem;color:#444;line-height:1.4;margin-bottom:14px}
+.obtn{background:#1565C0;color:#fff;border:none;padding:9px 20px;border-radius:32px;font-weight:700;cursor:pointer}
 
-/* ============ FORMS ============ */
-.form-label {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--dusk);
-    margin-bottom: 5px;
-}
-.form-control {
-    border-radius: 10px;
-    border: 1px solid var(--mist);
-    padding: 0.55rem 0.8rem;
-}
-.form-control:focus {
-    border-color: var(--brand-blue);
-    box-shadow: 0 0 0 0.2rem rgba(21,101,192,0.16);
-}
-.form-control[readonly] { background-color: var(--sand); color: var(--muted); }
-.form-check-input:checked {
-    background-color: var(--brand-blue);
-    border-color: var(--brand-blue);
-}
-.form-check-input:focus {
-    border-color: var(--brand-blue);
-    box-shadow: 0 0 0 0.2rem rgba(21,101,192,0.16);
-}
-.text-muted { color: var(--muted) !important; }
-.text-success { color: var(--canopy) !important; }
-.text-danger { color: var(--coral) !important; }
-.alert-success {
-    background-color: var(--canopy-tint);
-    border-color: rgba(14,124,102,0.25);
-    color: var(--canopy-dark);
-    border-radius: 10px;
-}
-
-/* ============ BUTTONS ============ */
-.btn { border-radius: 12px; font-weight: 600; }
-.btn-primary { background-color: var(--brand-blue); border-color: var(--brand-blue); }
-.btn-primary:hover, .btn-primary:focus { background-color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
-.btn-success { background-color: var(--brand-blue); border-color: var(--brand-blue); }
-.btn-success:hover, .btn-success:focus { background-color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
-.btn-outline-primary { color: var(--brand-blue); border-color: var(--brand-blue); }
-.btn-outline-primary:hover { background-color: var(--brand-blue); border-color: var(--brand-blue); }
-.btn-outline-secondary { color: var(--dusk); border-color: var(--mist); }
-.btn-outline-secondary:hover { background-color: var(--dusk); border-color: var(--dusk); }
-.btn-outline-danger { color: var(--coral); border-color: var(--coral); }
-.btn-outline-danger:hover { background-color: var(--coral); border-color: var(--coral); }
-.btn-secondary { background-color: var(--mist); border-color: var(--mist); color: var(--dusk); }
-.btn-secondary:hover { background-color: var(--muted); border-color: var(--muted); color: #fff; }
-
-/* ============ BENEFICIARY TABS (segmented control) ============ */
-#beneficiaryTab {
-    background: var(--sand);
-    border: none;
-    border-radius: 12px;
-    padding: 4px;
-    gap: 4px;
-}
-#beneficiaryTab .nav-link {
-    border: none;
-    border-radius: 9px;
-    color: var(--muted);
-    font-weight: 600;
-    font-size: 0.85rem;
-    padding: 8px 0;
-}
-#beneficiaryTab .nav-link.active {
-    background: var(--paper);
-    color: var(--brand-blue);
-    box-shadow: 0 1px 4px rgba(22,50,79,0.12);
-}
-
-/* ============ QR SCANNER ============ */
-.qr-frame { position: relative; }
-#qr-reader {
-    width: 100% !important;
-    height: 250px !important;
-    border-radius: 14px;
-    overflow: hidden;
-    background: var(--dusk-deep);
-}
-#qr-reader video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-}
-.qr-corner {
-    position: absolute;
-    width: 26px; height: 26px;
-    border: 3px solid var(--amber);
-    opacity: 0;
-    transition: opacity 0.2s ease;
-    pointer-events: none;
-}
-.qr-frame.scanning .qr-corner { opacity: 1; }
-.qr-corner-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
-.qr-corner-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 6px 0 0; }
-.qr-corner-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 6px; }
-.qr-corner-br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
-
-/* ============ MULTI-STEP WIZARD ============ */
-.step { display: none; }
-.step.active { display: block; animation: fadeIn 0.3s ease; }
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateX(10px); }
-    to { opacity: 1; transform: translateX(0); }
-}
-
-/* ============ NAVIGATION BUTTONS ============ */
-.nav-buttons {
-    background: var(--paper);
-    border-top: 1px solid var(--mist);
-    box-shadow: 0 -2px 8px rgba(22,50,79,0.05);
-    z-index: 10;
-    padding: 12px 15px;
-}
-
-/* ============ SIGNATURE PAD ============ */
-.signature-pad {
-    border: 2px dashed var(--mist);
-    border-radius: 12px;
-    width: 100%;
-    height: 150px;
-    background: #fff;
-    touch-action: none;
-    cursor: crosshair;
-}
-
-/* ============ HEALTH TALKS ============ */
-.health-topic-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    background-color: var(--sand);
-    padding: 12px 14px;
-    margin-bottom: 10px;
-    border-radius: 12px;
-    font-size: 0.85rem;
-    color: var(--ink);
-}
-.topic-number {
-    flex: 0 0 auto;
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    background: var(--brand-blue);
-    color: #fff;
-    font-size: 0.72rem;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 1px;
-}
-.health-topic-item strong {
-    color: var(--dusk);
-    display: block;
-    margin-bottom: 2px;
-}
-
-/* ============ FOOTER ============ */
-.custom-footer {
-    background-color: var(--brand-blue);
-    color: rgba(255,255,255,0.85);
-    text-align: center;
-    padding: 14px 0;
-    font-size: 0.8rem;
-    margin: 0;
-}
-.custom-footer strong { color: #fff; }
-
-/* ============ ACCESSIBILITY / QUALITY FLOOR ============ */
-.btn:focus-visible,
-.nav-link:focus-visible,
-.form-control:focus-visible,
-input[type="checkbox"]:focus-visible,
-.module-card:focus-visible {
-    outline: 3px solid var(--amber);
-    outline-offset: 2px;
-}
-
-@media (prefers-reduced-motion: reduce) {
-    *, *::before, *::after {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-        scroll-behavior: auto !important;
-    }
-}
-
-@media (max-width: 430px) {
-    body { background: var(--brand-blue-dark); }
-    .phone {
-        width: 100%;
-        height: 100vh;
-        height: 100dvh;
-        border-radius: 0;
-        padding: 0;
-        box-shadow: none;
-        background: none;
-    }
-    .notch { display: none; }
-    .screen { border-radius: 0; }
-}
+.sync-indicator{position:fixed;top:12px;right:12px;z-index:9998;background:rgba(30,41,59,.92);color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.3);backdrop-filter:blur(8px);transition:all .3s}
+.sync-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;animation:pulse 1.5s infinite}
+.sync-indicator.online .sync-dot{background:#22c55e}
+.sync-indicator.offline .sync-dot{background:#ef4444;animation:none}
+.sync-indicator.local .sync-dot{background:#f59e0b}
 </style>
 </head>
-
 <body>
 
-<div class="phone">
-<div class="notch"></div>
-<div class="screen">
-
-<!-- Scrollable Content Area -->
-<div class="content-wrapper">
-
-<!-- HEADER -->
-<div class="app-header">
-    <div class="app-header-mesh"></div>
-    <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-        <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
-            <path d="M9 13 L22 26 M22 13 L9 26"/>
-            <path d="M22 13 L35 26 M35 13 L22 26"/>
-            <path d="M9 26 L22 35"/>
-            <path d="M22 26 L35 35"/>
-        </g>
-        <circle cx="22" cy="19.5" r="3.4" fill="#E8A33D"/>
-    </svg>
-    <h5 class="main-title">ICF-SL ITN Campaign Portal</h5>
-    <p class="sub-title">Insecticide-Treated Net Distribution &middot; Sierra Leone</p>
+<div class="sync-indicator local" id="syncIndicator">
+  <span class="sync-dot"></span>
+  <span id="syncText">Local Mode</span>
 </div>
 
-<div class="container p-3">
+<div class="phone-frame">
+ <div class="phone-mock" id="phoneMock">
 
-<!-- MODULE MENU / DASHBOARD -->
-<div class="module-menu" id="moduleMenu">
-    <h3 class="module-menu-title"><i class="fas fa-th-large me-2"></i>Modules</h3>
-    <div class="module-grid">
-        <a href="distribution.html" class="module-card distribution">
-            <i class="fas fa-boxes-stacked"></i>
-            <span>DISTRIBUTION</span>
-        </a>
-        <a href="#" class="module-card monitoring" onclick="showToast('Monitoring module coming soon'); return false;">
-            <i class="fas fa-chart-line"></i>
-            <span>MONITORING</span>
-        </a>
-        <a href="#" class="module-card stock" onclick="showToast('Stock module coming soon'); return false;">
-            <i class="fas fa-warehouse"></i>
-            <span>STOCK</span>
-        </a>
-        <a href="#" class="module-card records" onclick="showToast('Records module coming soon'); return false;">
-            <i class="fas fa-table-list"></i>
-            <span>RECORDS</span>
-        </a>
-        <a href="#" class="module-card target" onclick="showToast('Target module coming soon'); return false;">
-            <i class="fas fa-bullseye"></i>
-            <span>TARGET</span>
-        </a>
-        <a href="#" class="module-card" onclick="showToast('Settings module coming soon'); return false;">
-            <i class="fas fa-gear"></i>
-            <span>SETTINGS</span>
-        </a>
+  <div class="screen active" id="sLogin">
+   <div class="login-body scroll-y">
+    <div class="login-card">
+     <img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt="ICF">
+     <h2>ICF-SL ITN CAMPAIGN PORTAL</h2>
+     <p>Insecticide-Treated Net Distribution · Sierra Leone</p>
+     <div class="lfield"><i class="fa fa-user" style="color:#2a7fc4"></i><input type="text" id="lusr" placeholder="USERNAME" autocomplete="off"></div>
+     <div id="lerr" class="lerr"></div>
+     <div class="lfield">
+      <i class="fa fa-lock" style="color:#2a7fc4"></i>
+      <input type="password" id="lpwd" placeholder="PASSWORD" autocomplete="off">
+      <span class="eye-btn" onclick="toggleEye()"><i class="fa-regular fa-eye" id="eyeI"></i></span>
+     </div>
+     <button class="lbtn lbtn-blue" onclick="doLogin()">LOGIN</button>
+     <button class="lbtn lbtn-green" onclick="toast('📷 QR scan simulated')">SCAN QR BADGE</button>
     </div>
-</div>
-
-<!-- STEP PROGRESS TRACKER -->
-<div class="step-progress" id="stepProgress">
-    <div class="progress-track"></div>
-    <div class="progress-fill" id="progressFill"></div>
-    <div class="progress-step"><span>1</span></div>
-    <div class="progress-step"><span>2</span></div>
-    <div class="progress-step"><span>3</span></div>
-    <div class="progress-step"><span>4</span></div>
-    <div class="progress-step"><span>5</span></div>
-    <div class="progress-step"><span>6</span></div>
-</div>
-
-<form id="distributionForm">
-
-    <!-- STEP 1: DATE -->
-    <div class="step active">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-calendar-days"></i></span>
-                <div>
-                    <span class="step-eyebrow"></span>
-                    <h2 class="step-title">Date</h2>
-                </div>
-            </div>
-            <input type="date" class="form-control" id="distDate" required>
-        </div>
+    <div class="util-grid">
+     <div class="util-tile tu-or" onclick="checkNet()"><i class="fa fa-wifi"></i>NETWORK CHECK</div>
+     <div class="util-tile tu-bl" onclick="toast('✓ Logs exported')"><i class="fa fa-file-export"></i>EXPORT LOGS</div>
+     <div class="util-tile tu-pu" onclick="toast('✓ Print verified')"><i class="fa fa-fingerprint"></i>VERIFY PRINT</div>
+     <div class="util-tile tu-te" onclick="toast('🌐 Language toggled')"><i class="fa fa-language"></i>LANGUAGE</div>
     </div>
+   </div>
+   <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
+  </div>
 
-    <!-- STEP 2: BENEFICIARY -->
-    <div class="step">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-id-card"></i></span>
-                <div>
-                    <span class="step-eyebrow">Household</span>
-                    <h2 class="step-title">Beneficiary Details</h2>
-                </div>
-            </div>
-            <ul class="nav nav-tabs mb-3" id="beneficiaryTab">
-                <li class="nav-item flex-fill text-center">
-                    <button class="nav-link active w-100" data-bs-toggle="tab" data-bs-target="#token" type="button">Type Token</button>
-                </li>
-                <li class="nav-item flex-fill text-center">
-                    <button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#qr" type="button">Scan QR</button>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div class="tab-pane fade show active" id="token">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="beneficiaryToken" placeholder="Enter Token ID">
-                        <button class="btn btn-primary" type="button" onclick="autoFillData()">Auto-Fill</button>
-                    </div>
-                </div>
-                <div class="tab-pane fade" id="qr">
-                    <div class="qr-frame" id="qrFrame">
-                        <div id="qr-reader"></div>
-                        <span class="qr-corner qr-corner-tl"></span>
-                        <span class="qr-corner qr-corner-tr"></span>
-                        <span class="qr-corner qr-corner-bl"></span>
-                        <span class="qr-corner qr-corner-br"></span>
-                    </div>
-                    <div class="d-flex gap-2 mt-2">
-                        <button type="button" class="btn btn-primary w-100" id="startScanBtn" onclick="startScanner()">
-                            <i class="fas fa-camera me-1"></i> Start Scanning
-                        </button>
-                        <button type="button" class="btn btn-outline-danger w-100 d-none" id="stopScanBtn" onclick="stopScanner()">
-                            <i class="fas fa-stop-circle me-1"></i> Stop Scanning
-                        </button>
-                    </div>
-                    <p class="text-muted text-center mt-2 small" id="qr-status">Tap "Start Scanning" to use the camera.</p>
-                </div>
-            </div>
-            <div id="autoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
-                <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="autoFillText"></span>
-            </div>
-        </div>
-
-        <!-- Beneficiary Details Section -->
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-user"></i></span>
-                <div>
-                    <span class="step-eyebrow">Beneficiary Information</span>
-                    <h2 class="step-title">Personal Details</h2>
-                </div>
-            </div>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-map-marker-alt me-2"></i>Location Information</h6>
-            
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                    <label class="form-label" for="region">Region</label>
-                    <input type="text" class="form-control" id="region" placeholder="Region" readonly>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" for="district">District</label>
-                    <input type="text" class="form-control" id="district" placeholder="District" readonly>
-                </div>
-            </div>
-
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                    <label class="form-label" for="chiefdom">Chiefdom</label>
-                    <input type="text" class="form-control" id="chiefdom" placeholder="Chiefdom" readonly>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" for="community">Community</label>
-                    <input type="text" class="form-control" id="community" placeholder="Community" readonly>
-                </div>
-            </div>
-
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                    <label class="form-label" for="facility">Facility</label>
-                    <input type="text" class="form-control" id="facility" placeholder="Facility" readonly>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" for="distPoint">Dist. Point</label>
-                    <input type="text" class="form-control" id="distPoint" placeholder="Dist. Point" readonly>
-                </div>
-            </div>
-
-            <hr>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-user-circle me-2"></i>Personal Information</h6>
-
-            <div class="row g-2 mb-3">
-                <div class="col-4">
-                    <label class="form-label" for="surname">Surname</label>
-                    <input type="text" class="form-control" id="surname" placeholder="Surname" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="middleName">Middle Name</label>
-                    <input type="text" class="form-control" id="middleName" placeholder="Middle" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="firstName">First Name</label>
-                    <input type="text" class="form-control" id="firstName" placeholder="First" readonly>
-                </div>
-            </div>
-
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                    <label class="form-label" for="mobile">Mobile</label>
-                    <input type="tel" class="form-control" id="mobile" placeholder="Mobile" readonly>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" for="hhrName">HHR Name</label>
-                    <input type="text" class="form-control" id="hhrName" placeholder="HHR Name" readonly>
-                </div>
-            </div>
-
-            <hr>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-box me-2"></i>ITN Allocation</h6>
-
-            <div class="row g-2 mb-3">
-                <div class="col-4">
-                    <label class="form-label" for="itnAlloc">ITN Alloc</label>
-                    <input type="number" class="form-control" id="itnAlloc" placeholder="0" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="pregnant">Pregnant</label>
-                    <input type="number" class="form-control" id="pregnant" placeholder="0" readonly>
-                </div>
-                <div class="col-4">
-                    <label class="form-label" for="under5">Under-5</label>
-                    <input type="number" class="form-control" id="under5" placeholder="0" readonly>
-                </div>
-            </div>
-
-            <hr>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-location-crosshairs me-2"></i>GPS Coordinates</h6>
-
-            <div class="row g-2 mb-3">
-                <div class="col-6">
-                    <label class="form-label" for="beneficiaryLat">Latitude</label>
-                    <input type="text" class="form-control" id="beneficiaryLat" placeholder="Latitude" readonly>
-                </div>
-                <div class="col-6">
-                    <label class="form-label" for="beneficiaryLng">Longitude</label>
-                    <input type="text" class="form-control" id="beneficiaryLng" placeholder="Longitude" readonly>
-                </div>
-            </div>
-        </div>
+  <div class="screen" id="sDash">
+   <div class="dhdr">
+    <div class="dhdr-top">
+     <div class="dhdr-logo"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt=""></div>
+     <div class="dhdr-txt"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
     </div>
-
-    <!-- STEP 3: TEAM DETAILS & SIGNATURES -->
-    <div class="step">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-file-signature"></i></span>
-                <div>
-                    <span class="step-eyebrow"></span>
-                    <h2 class="step-title">Team Members</h2>
-                </div>
-            </div>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-user-check me-2"></i>Voucher Verifier</h6>
-
-            <label class="form-label" for="verifierName">Name of Voucher Verifier</label>
-            <input type="text" class="form-control mb-3" id="verifierName" placeholder="Enter full name" required>
-
-            <label class="form-label" for="verifierMobile">Mobile Number</label>
-            <input type="tel" class="form-control mb-3" id="verifierMobile" placeholder="e.g., 07XXXXXXXX" required>
-
-            <label class="form-label">Signature of Voucher Verifier</label>
-            <canvas id="verifierSignature" width="300" height="150" class="signature-pad mb-2"></canvas>
-            <button type="button" class="btn btn-sm btn-outline-secondary mb-4" onclick="clearSignature('verifier')">
-                <i class="fas fa-eraser me-1"></i> Clear Signature
-            </button>
-
-            <hr>
-
-            <h6 class="sub-section-title mb-3"><i class="fas fa-user-shield me-2"></i>ITN Distributor</h6>
-
-            <label class="form-label" for="distributorName">Name of ITN Distributor</label>
-            <input type="text" class="form-control mb-3" id="distributorName" placeholder="Enter full name" required>
-
-            <label class="form-label" for="distributorMobile">Mobile Number</label>
-            <input type="tel" class="form-control mb-3" id="distributorMobile" placeholder="e.g., 07XXXXXXXX" required>
-
-            <label class="form-label">Signature of ITN Distributor</label>
-            <canvas id="distributorSignature" width="300" height="150" class="signature-pad mb-2"></canvas>
-            <button type="button" class="btn btn-sm btn-outline-secondary mb-2" onclick="clearSignature('distributor')">
-                <i class="fas fa-eraser me-1"></i> Clear Signature
-            </button>
-        </div>
+    <div class="dbadge">🏠 HOUSEHOLD ITN DISTRIBUTION CAMPAIGN — SIERRA LEONE</div>
+    <div class="dsub">🦟 Insecticide-Treated Nets Distribution Survey — Sierra Leone</div>
+   </div>
+   <div class="ubar">
+    <span id="ubarLbl"><i class="fa fa-user-circle"></i> —</span>
+    <button onclick="doLogout()"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
+   </div>
+   <div class="dash-content">
+    <div class="partners">
+     <h4>IMPLEMENTING PARTNERS</h4>
+     <div class="pgrid">
+      <div class="pitem"><div class="plogo"><img src="usa.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>USA</span>'"></div><div class="pname">United States</div></div>
+      <div class="pitem"><div class="plogo"><img src="global_fund.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>GF</span>'"></div><div class="pname">Global Fund</div></div>
+      <div class="pitem"><div class="plogo"><img src="pmi_evolve.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>PMI</span>'"></div><div class="pname">PMI Evolve</div></div>
+      <div class="pitem"><div class="plogo"><img src="moh_logo.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MOH</span>'"></div><div class="pname">MOH</div></div>
+      <div class="pitem"><div class="plogo"><img src="NMCP.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>NMCP</span>'"></div><div class="pname">NMCP</div></div>
+      <div class="pitem"><div class="plogo"><img src="mbsse.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MB</span>'"></div><div class="pname">MBSSE</div></div>
+     </div>
     </div>
-
-    <!-- STEP 4: HEALTH TALKS GUIDE ONLY -->
-    <div class="step">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-book-medical"></i></span>
-                <div>
-                    <span class="step-eyebrow"></span>
-                    <h2 class="step-title">Health Talks</h2>
-                </div>
-            </div>
-
-            <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#healthTalksContent" aria-expanded="false" aria-controls="healthTalksContent">
-                <i class="fas fa-book-medical me-2"></i> Given Health Talks
-            </button>
-
-            <div class="collapse" id="healthTalksContent">
-                <div class="health-topic-item">
-                    <span class="topic-number">1</span>
-                    <div>
-                        <strong>Proper Hanging</strong>
-                        Hang the net over the sleeping area every evening. Ensure it is tucked securely under the mattress or mat on all sides.
-                    </div>
-                </div>
-                <div class="health-topic-item">
-                    <span class="topic-number">2</span>
-                    <div>
-                        <strong>Consistent Usage</strong>
-                        Sleep under the ITN every night, even during short afternoon naps. Mosquitoes bite mostly between dusk and dawn.
-                    </div>
-                </div>
-                <div class="health-topic-item">
-                    <span class="topic-number">3</span>
-                    <div>
-                        <strong>Protect Vulnerable Groups</strong>
-                        Ensure all children (especially under 5 years) and pregnant women sleep under ITNs every night.
-                    </div>
-                </div>
-                <div class="health-topic-item">
-                    <span class="topic-number">4</span>
-                    <div>
-                        <strong>Washing &amp; Care</strong>
-                        Wash gently with mild soap and cold water. Hang to dry in the shade, never in direct sunlight. Limit washing to 3 times per year.
-                    </div>
-                </div>
-                <div class="health-topic-item">
-                    <span class="topic-number">5</span>
-                    <div>
-                        <strong>Important Don'ts</strong>
-                        Do not use the net for fishing, fencing, or gardening. Do not store the net when it is wet.
-                    </div>
-                </div>
-                <div class="health-topic-item">
-                    <span class="topic-number">6</span>
-                    <div>
-                        <strong>Replacement</strong>
-                        Replace the ITN every 3 years, or sooner if it develops large holes. Report damaged nets to community health workers.
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="caro">
+     <div class="carrow L" id="cPrev">&#8249;</div>
+     <div class="carrow R" id="cNext">&#8250;</div>
+     <div class="cslides" id="cSlides">
+      <div class="cslide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231565C0%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
+      <div class="cslide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%23F57C00%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EData Collection%3C/text%3E%3C/svg%3E'"></div>
+      <div class="cslide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231B5E20%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3ECommunity Impact%3C/text%3E%3C/svg%3E'"></div>
+     </div>
+     <div class="cdots" id="cDots"></div>
     </div>
+    <div class="actsec"><div class="actgrid" id="actGrid"></div></div>
+   </div>
+   <div class="dfooter"><p>Developed By <strong>Informatics Consultancy Firm-SL</strong> © 2026</p></div>
+  </div>
 
-    <!-- STEP 5: BENEFICIARY CONFIRMATION -->
-    <div class="step">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-clipboard-check"></i></span>
-                <div>
-                    <span class="step-eyebrow"></span>
-                    <h2 class="step-title">Beneficiary Confirmation</h2>
-                </div>
-            </div>
-            <div class="d-flex align-items-start mt-3">
-                <input class="form-check-input mt-1" type="checkbox" id="healthTalkGiven" required style="transform: scale(1.3);">
-                <label class="form-check-label ms-3 fw-bold" for="healthTalkGiven" style="font-size: 0.95rem; line-height: 1.4;">
-                    I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.
-                </label>
-            </div>
-        </div>
+  <div class="screen" id="sRegHome">
+   <div class="rh-body">
+    <div class="rh-card">
+     <div class="rh-hdr">
+      <button class="rh-back" onclick="go('sDash')">&#8592;</button>
+      <div class="rh-hdr-txt"><h2>ITN REGISTRATION</h2><p>Household Registration Portal · ICF-SL</p></div>
+     </div>
+     <div class="sc-grid">
+      <div class="sc sc-or" onclick="openManual()">
+       <div class="sc-top"><i class="fa fa-pen-to-square"></i><span>MANUAL ENTRY</span></div>
+       <div class="sc-bot"><strong>📋 Demographics</strong><p>Region → District → Chiefdom → PHU → Community → Dist. Point</p></div>
+      </div>
+      <div class="sc sc-te" onclick="openManualWithScan()">
+       <div class="sc-top"><i class="fa fa-qrcode"></i><span>SCAN QR</span></div>
+       <div class="sc-bot"><strong>⚡ Auto-Fill</strong><p>Scan existing QR badge to auto-populate all fields</p></div>
+      </div>
+      <div class="sc sc-rd" onclick="openTarget()">
+       <div class="sc-top"><i class="fa fa-bullseye"></i><span>DAILY TARGET</span></div>
+       <div class="sc-bot"><strong>📊 HHR Goals</strong><p>Track daily household registration target &amp; progress</p></div>
+      </div>
+      <div class="sc sc-pu" onclick="openRecords()">
+       <div class="sc-top"><i class="fa fa-table-list"></i><span>RECORDS</span></div>
+       <div class="sc-bot"><strong>📁 Manage</strong><p>View all households &amp; download QR codes</p></div>
+      </div>
+     </div>
     </div>
+   </div>
+   <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
+  </div>
 
-    <!-- STEP 6: GPS & SUBMIT -->
-    <div class="step">
-        <div class="step-card">
-            <div class="step-header">
-                <span class="step-icon"><i class="fas fa-location-dot"></i></span>
-                <div>
-                    <span class="step-eyebrow"></span>
-                    <h2 class="step-title">GPS Coordinates</h2>
-                </div>
-            </div>
-            <label class="form-label" for="gpsLat">Latitude</label>
-            <input type="text" class="form-control mb-3" id="gpsLat" placeholder="Latitude" readonly>
-
-            <label class="form-label" for="gpsLng">Longitude</label>
-            <input type="text" class="form-control mb-2" id="gpsLng" placeholder="Longitude" readonly>
-
-            <small class="text-muted mt-2 d-block" id="gpsStatus">
-                <i class="fas fa-spinner fa-spin me-1"></i> Auto-capturing location...
-            </small>
-        </div>
-        <button type="submit" class="btn btn-success w-100 mb-3 py-3 fw-bold">
-            <i class="fas fa-check-circle me-2"></i> Submit Record
-        </button>
+  <div class="screen" id="sManual">
+   <div class="whdr">
+    <button class="wback" onclick="go('sRegHome')">&#8592;</button>
+    <h3 id="mHeaderTitle">&#9997;&#65039; MANUAL ENTRY</h3>
+    <div style="width:28px"></div>
+   </div>
+   <div class="sbar" id="mSBar">
+    <div class="sprog" id="mProg"></div>
+    <div class="sitem son"><div class="scirc">1</div><div class="slbl">Demo-<br>graphics</div></div>
+    <div class="sitem"><div class="scirc">2</div><div class="slbl">Household<br>Details</div></div>
+    <div class="sitem"><div class="scirc">3</div><div class="slbl">Review</div></div>
+    <div class="sitem"><div class="scirc">4</div><div class="slbl">QR<br>Code</div></div>
+    <div class="sitem"><div class="scirc">5</div><div class="slbl">Finish</div></div>
+   </div>
+   <div class="wbody">
+    <div class="wsec on" id="ms1">
+     <div id="scanBtnContainer" class="fg" style="text-align:center; margin-bottom: 16px; display:none;">
+      <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px; box-shadow:0 4px 12px rgba(21,101,192,.25);" onclick="openCameraScanner()">
+       <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
+      </button>
+      <p style="font-size:.48rem; color:#64748b; margin-top:6px;">Open camera to scan badge and auto-fill demographics</p>
+     </div>
+     <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
+     <div class="r2">
+      <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
+      <div class="fg"><label>🏛 District<span class="req">*</span></label><select id="mDis" disabled><option value="">— District —</option></select><div class="ferr" id="mDisE">Required</div></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>⛰ Chiefdom<span class="req">*</span></label><select id="mChi" disabled><option value="">— Chiefdom —</option></select><div class="ferr" id="mChiE">Required</div></div>
+      <div class="fg"><label>🏘 Community<span class="req">*</span></label><select id="mCom" disabled><option value="">— Community —</option></select><div class="ferr" id="mComE">Required</div></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>🏥 Facility<span class="req">*</span></label><select id="mFac" disabled><option value="">— Facility —</option></select><div class="ferr" id="mFacE">Required</div></div>
+      <div class="fg"><label>📦 Dist. Point<span class="req">*</span></label><select id="mDp" disabled><option value="">— Dist. Point —</option></select><div class="ferr" id="mDpE">Required</div></div>
+     </div>
+     <div class="wnavs"><div></div><button class="wnext" onclick="ms1Next()">Next &#8594;</button></div>
     </div>
+    <div class="wsec" id="ms2">
+     <div class="r2">
+      <div class="fg"><label>👤 Surname<span class="req">*</span></label><input id="mSur" placeholder="Family name"><div class="ferr" id="mSurE">Required</div></div>
+      <div class="fg"><label>👤 Middle</label><input id="mMid" placeholder="Optional"></div>
+     </div>
+     <div class="fg"><label>👤 First Name<span class="req">*</span></label><input id="mFst" placeholder="Given name"><div class="ferr" id="mFstE">Required</div></div>
+     <div class="fg"><label>📞 Mobile<span class="req">*</span></label>
+      <div class="ph-wrap"><div class="ph-sim">📱 SIM</div><input type="tel" id="mPh" class="ph-inp" placeholder="071234567" maxlength="9"></div>
+      <div class="ferr" id="mPhE">Must be 9 digits starting with 0</div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn()"><div class="ferr" id="mMemE">Min 1</div></div>
+      <div class="fg"><label>🦟 ITN Alloc.</label><input id="mItn" readonly placeholder="Auto"></div>
+     </div>
+     <div class="r2">
+      <div class="fg"><label>🤰 Pregnant</label><input type="number" id="mPrg" min="0" value="0"></div>
+      <div class="fg"><label>🧒 Under-5</label><input type="number" id="mU5" min="0" value="0"></div>
+     </div>
+     <div class="fg"><label>🧑‍⚕️ HHR Name<span class="req">*</span></label><input id="mHhr" placeholder="Enumerator full name"><div class="ferr" id="mHhrE">Required</div></div>
+     <div class="r2">
+      <div class="fg"><label>📍 Latitude</label><input id="mLat" readonly placeholder="GPS..."></div>
+      <div class="fg"><label>📍 Longitude</label><input id="mLng" readonly placeholder="GPS..."></div>
+     </div>
+     <button class="tok-btn" onclick="genToken()">🔐 Generate Household Token</button>
+     <div class="tok-box" id="mTok"></div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Prev</button><button class="wnext" onclick="ms2Next()">Review &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms3">
+     <div class="rvbox"><h4>📋 Summary</h4><div id="mRv"></div><span class="rvedit" onclick="mNav(-1)">✏️ Edit</span></div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">QR Code &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms4">
+     <div class="qrbox">
+      <h4>📸 Generate QR Code</h4>
+      <div class="qr-wrap"><canvas id="mQrc" style="display:none"></canvas><p id="mQrMsg">Click Generate QR</p></div>
+      <div class="qrbtns">
+       <button class="qbtn qbtn-g" onclick="genQR()">Generate QR</button>
+       <button class="qbtn qbtn-d" id="mDlBtn" disabled onclick="dlQR()">Download</button>
+      </div>
+     </div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" onclick="mNav(1)">Finish &#8594;</button></div>
+    </div>
+    <div class="wsec" id="ms5">
+     <div class="succ" id="mSucc">&#9989; Registration Successful!</div>
+     <div class="wnavs"><button class="wprev" onclick="mNav(-1)">&#8592; Back</button><button class="wnext" id="mFinBtn" onclick="finalReg()">🏠 Register Household</button></div>
+    </div>
+   </div>
+  </div>
 
-</form>
+  <div class="screen" id="sRecords">
+   <div class="whdr">
+    <button class="wback" onclick="go('sRegHome')">&#8592;</button>
+    <h3>📋 HOUSEHOLD REGISTRY WITH QR</h3>
+    <div style="width:28px"></div>
+   </div>
+   <div class="rtable-wrap" id="recWrap"></div>
+  </div>
 
-</div>
+  <div class="screen" id="sTarget">
+   <div class="whdr">
+    <button class="wback" onclick="go('sRegHome')">&#8592;</button>
+    <h3>📊 DAILY HHR TARGET</h3>
+    <div style="width:28px"></div>
+   </div>
+   <div class="tgt-body">
+    <div class="tday"><div class="tday-n" id="tToday">0</div><div class="tday-l">🏠 Households Registered Today</div></div>
+    <div class="tstat" id="tEditBox" style="display:none">
+     <h4>⚙️ SET TARGET HOUSEHOLDS</h4>
+     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure household registration target</p>
+     <div style="display:flex;gap:8px;align-items:center">
+      <input type="number" id="tTargetInput" class="tedit-input" min="1" placeholder="Enter target...">
+      <button class="tedit-btn" onclick="saveTarget()">💾 Save</button>
+     </div>
+    </div>
+    <div class="tstat">
+     <h4>🏠 HOUSEHOLD REGISTRATION COVERAGE</h4>
+     <div class="trow"><span class="tlbl">📊 Total Registered (All Time)</span><span class="tval" id="tTotal">0</span></div>
+     <div class="trow"><span class="tlbl">👥 Total Individuals Reached</span><span class="tval" id="tPpl">0</span></div>
+     <div class="trow"><span class="tlbl">🎯 Target Households</span><span class="tval" id="tTargetVal">500</span></div>
+     <div class="trow"><span class="tlbl">⏳ Remaining</span><span class="tval" id="tRem">500</span></div>
+     <div class="trow"><span class="tlbl">🦟 Total ITN Issued</span><span class="tval" id="tItn">0</span></div>
+     <div class="tprow">
+      <div class="tphdr"><span>📈 Overall Progress</span><strong id="tPct">0%</strong></div>
+      <div class="tpbg"><div class="tpfill" id="tFill"></div></div>
+      <div class="tpfoot"><span id="tCurr">0</span> of <span id="tTargetTotal">500</span> households registered</div>
+     </div>
+    </div>
+    <div class="tbkdn">
+     <h4>🗺️ BREAKDOWN BY AREA</h4>
+     <div class="tbkdn-g">
+      <div class="tbkdn-c"><h5>📌 District</h5><p id="tDist">No data</p></div>
+      <div class="tbkdn-c"><h5>⛰️ Chiefdom</h5><p id="tChief">No data</p></div>
+      <div class="tbkdn-c"><h5>🏥 PHU</h5><p id="tPhu">No data</p></div>
+     </div>
+    </div>
+    <div class="wnavs">
+     <button class="wprev" onclick="go('sRegHome')">&#8592; Home</button>
+     <button class="wnext" onclick="renderTarget()">🔄 Refresh</button>
+    </div>
+   </div>
+  </div>
+
+ </div>
 </div>
 
-<!-- NAVIGATION BUTTONS (Fixed at bottom above footer) -->
-<div class="nav-buttons d-flex justify-content-between">
-    <button type="button" class="btn btn-secondary px-4" id="prevBtn" style="visibility: hidden;">
-        <i class="fas fa-arrow-left me-1"></i> Previous
-    </button>
-    <button type="button" class="btn btn-primary px-4 ms-auto" id="nextBtn">
-        Next <i class="fas fa-arrow-right ms-1"></i>
-    </button>
+<div class="cam-modal-ov" id="camModal">
+ <div class="cam-modal-box">
+  <div class="cam-hdr">
+   <h4><i class="fa fa-qrcode"></i> SCAN QR BADGE</h4>
+   <button class="cam-close" onclick="closeCameraScanner()"><i class="fa fa-times"></i></button>
+  </div>
+  <div id="qr-reader"></div>
+  <div class="cam-status" id="camStatus">
+   <span class="pulse"></span><span id="camStatusText">Initializing camera...</span>
+  </div>
+ </div>
 </div>
 
-<footer class="custom-footer">
-Developed By<br>
-<strong>Informatics Consultancy Firm-SL</strong> &copy; 2026
-</footer>
-
+<div class="omodal" id="oAccess">
+ <div class="ocard"><div class="oi">🔒</div><h3>Access Restricted</h3><p id="oAccessMsg"></p><button class="obtn" onclick="closeO('oAccess')">OK</button></div>
 </div>
+<div class="omodal" id="oNet">
+ <div class="ocard"><div class="oi" id="oNetI"></div><h3 id="oNetT"></h3><p id="oNetD"></p><button class="obtn" onclick="closeO('oNet')">OK</button></div>
 </div>
-
-<!-- Scripts -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/5.1.1/signature_pad.umd.min.js"></script>
 
 <script>
-const steps = document.querySelectorAll('.step');
-const prevBtn = document.getElementById('prevBtn');
-const nextBtn = document.getElementById('nextBtn');
-const verifierCanvas = document.getElementById('verifierSignature');
-const distributorCanvas = document.getElementById('distributorSignature');
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY_HERE",
+  authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_PROJECT_ID.appspot.com",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
 
-let currentStep = 0;
-let verifierPad = null;
-let distributorPad = null;
-let html5QrcodeScanner = null;
-let isScannerRunning = false;
+const FIREBASE_ENABLED = firebaseConfig.apiKey && 
+                         !firebaseConfig.apiKey.includes("YOUR_") && 
+                         typeof firebase !== 'undefined';
 
-function updateProgress(n) {
-    document.querySelectorAll('.progress-step').forEach((dot, index) => {
-        dot.classList.toggle('completed', index < n);
-        dot.classList.toggle('active', index === n);
-    });
-    const fill = document.getElementById('progressFill');
-    if (fill) {
-        fill.style.width = (steps.length > 1 ? (n / (steps.length - 1)) * 100 : 0) + '%';
-    }
+let db = null;
+let recordsListener = null;
+let targetListener = null;
+
+if (FIREBASE_ENABLED) {
+  try {
+    firebase.initializeApp(firebaseConfig);
+    db = firebase.firestore();
+  } catch (e) { console.warn('Firebase init failed:', e); }
 }
 
-function showStep(n) {
-    steps.forEach((step, index) => {
-        step.classList.toggle('active', index === n);
-    });
-
-    prevBtn.style.visibility = (n === 0) ? 'hidden' : 'visible';
-    nextBtn.style.display = (n === steps.length - 1) ? 'none' : 'inline-block';
-
-    updateProgress(n);
-
-    document.querySelector('.content-wrapper').scrollTop = 0;
-
-    if (n === 2) {
-        setTimeout(() => {
-            resizeSignatureCanvas(verifierCanvas, verifierPad);
-            resizeSignatureCanvas(distributorCanvas, distributorPad);
-        }, 50);
-    }
-
-    if (n !== 1) {
-        stopScanner();
-    }
+function updateSyncIndicator(status, text) {
+  const ind = document.getElementById('syncIndicator');
+  const txt = document.getElementById('syncText');
+  if (!ind) return;
+  ind.classList.remove('online', 'offline', 'local');
+  ind.classList.add(status);
+  if (txt) txt.textContent = text;
 }
 
-function changeStep(n) {
-    currentStep += n;
-    if (currentStep >= steps.length) currentStep = steps.length - 1;
-    if (currentStep < 0) currentStep = 0;
-    showStep(currentStep);
+if (FIREBASE_ENABLED && db) updateSyncIndicator('online', 'Cloud Sync Active');
+else updateSyncIndicator('local', 'Local Mode');
+
+const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
+Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
+HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+HHD2027,123456,Hide,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide
+NATSUP2027,1234567,Hide,Hide,Show,Hide,Show,Show,Hide,Hide,Show
+CHISUP2027,12345678,Hide,Hide,Hide,Hide,Hide,Show,Show,Hide,Hide
+PHUSTAFF2027,123456789,Hide,Hide,Hide,Show,Hide,Hide,Hide,Show,Hide
+PARTNERS2027,123,Hide,Hide,Hide,Hide,Show,Hide,Hide,Show,Show`;
+
+function parseUsers(c){const L=c.trim().split('\n'),H=L[0].split(',');return L.slice(1).map(l=>{const v=l.split(',');let o={};H.forEach((h,i)=>o[h]=v[i]);return o;});}
+const USERS=parseUsers(CSV);
+let CU=null;
+
+const ACTIONS=[
+  {id:'REGISTER',lbl:'REGISTER',ic:'fa-id-card',cl:'a1',pk:'REGISTER'},
+  {id:'DISTRIBUTION',lbl:'DISTRIBUTION',ic:'fa-boxes',cl:'a2',pk:'DISTRIBUTION'},
+  {id:'MONITORING',lbl:'MONITORING',ic:'fa-chart-line',cl:'a3',pk:'MONITORING'},
+  {id:'STOCK',lbl:'STOCK',ic:'fa-warehouse',cl:'a4',pk:'STOCK'},
+  {id:'DASHBOARD',lbl:'DASHBOARD',ic:'fa-gauge-high',cl:'a5',pk:'DASHBOARD'},
+  {id:'ATTENDANCE',lbl:'ATTENDANCE',ic:'fa-users',cl:'a6',pk:'ATTENDANCE'},
+  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE TRACKING'},
+  {id:'RECONCILIATION',lbl:'RECONCILIATION',ic:'fa-scale-balanced',cl:'a8',pk:'RECONCILIATION'},
+  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE MANAGEMENT'},
+];
+const ROLES={Admin:'Full Access',HHR2027:'Registration Officer',HHD2027:'Distribution Officer',NATSUP2027:'National Supervisor',CHISUP2027:'CHI Supervisor',PHUSTAFF2027:'PHU Staff',PARTNERS2027:'Partner Viewer'};
+
+function go(id){
+  document.querySelectorAll('#phoneMock .screen').forEach(s=>s.classList.remove('active'));
+  const el=document.getElementById(id);
+  if(el) el.classList.add('active');
 }
 
-function resizeSignatureCanvas(canvas, pad) {
-    if (!pad) return;
-    const ratio = Math.max(window.devicePixelRatio || 1, 1);
-    const rect = canvas.getBoundingClientRect();
-    if (rect.width === 0 || rect.height === 0) return;
-    canvas.width = rect.width * ratio;
-    canvas.height = rect.height * ratio;
-    canvas.getContext('2d').scale(ratio, ratio);
-    pad.clear();
+function toast(msg){
+  const t=document.createElement('div');
+  Object.assign(t.style,{position:'fixed',bottom:'88px',left:'50%',transform:'translateX(-50%)',
+    background:'#1b5e20',color:'#fff',padding:'8px 18px',borderRadius:'28px',
+    fontSize:'12px',fontWeight:'700',zIndex:'9999',whiteSpace:'nowrap',
+    boxShadow:'0 4px 14px rgba(0,0,0,.3)'});
+  t.innerText=msg; document.body.appendChild(t);
+  setTimeout(()=>t.remove(),2400);
 }
+function openO(id){document.getElementById(id).classList.add('open');}
+function closeO(id){document.getElementById(id).classList.remove('open');}
+function esc(s){if(!s)return'';return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+function todayStr(){return new Date().toISOString().split('T')[0];}
 
-function clearSignature(role) {
-    if (role === 'verifier' && verifierPad) verifierPad.clear();
-    if (role === 'distributor' && distributorPad) distributorPad.clear();
+window.toggleEye=function(){
+  const p=document.getElementById('lpwd'),i=document.getElementById('eyeI');
+  if(p.type==='password'){p.type='text';i.className='fa-regular fa-eye-slash';}
+  else{p.type='password';i.className='fa-regular fa-eye';}
+};
+
+function doLogin(){
+  const u=document.getElementById('lusr').value.trim();
+  const p=document.getElementById('lpwd').value.trim();
+  const err=document.getElementById('lerr');
+  if(!u||!p){err.textContent='⚠ Enter username and password';err.classList.add('show');return;}
+  const user=USERS.find(x=>x.USERNAME===u&&x.PASSWORD===p);
+  if(!user){err.textContent='✗ Invalid username or password';err.classList.add('show');setTimeout(()=>err.classList.remove('show'),3000);return;}
+  CU=user;
+  sessionStorage.setItem('cu',u);
+  buildDash();go('sDash');
 }
+function doLogout(){CU=null;sessionStorage.clear();go('sLogin');}
+document.getElementById('lusr').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
+document.getElementById('lpwd').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 
-function setScannerUI(running) {
-    document.getElementById('startScanBtn').classList.toggle('d-none', running);
-    document.getElementById('stopScanBtn').classList.toggle('d-none', !running);
-    const frame = document.getElementById('qrFrame');
-    if (frame) frame.classList.toggle('scanning', running);
-}
-
-function setScannerStatus(text, variant) {
-    const statusEl = document.getElementById('qr-status');
-    statusEl.innerText = text;
-    statusEl.className = `text-${variant} text-center mt-2 small`;
-}
-
-function startScanner() {
-    if (isScannerRunning) return;
-
-    if (typeof Html5Qrcode === 'undefined') {
-        setScannerStatus('QR scanner library failed to load. Use "Type Token" instead.', 'danger');
-        return;
-    }
-
-    setScannerStatus('Requesting camera access...', 'muted');
-
-    html5QrcodeScanner = new Html5Qrcode("qr-reader");
-    const config = { fps: 10, qrbox: { width: 200, height: 200 } };
-
-    const onScanSuccess = (decodedText) => {
-        parseAndFillBeneficiaryData(decodedText);
-        stopScanner();
+function buildDash(){
+  document.getElementById('ubarLbl').innerHTML=`<i class="fa fa-user-circle"></i> ${CU.USERNAME} (${ROLES[CU.USERNAME]||'User'})`;
+  const grid=document.getElementById('actGrid');
+  const allowed=ACTIONS.filter(a=>CU[a.pk]==='Show');
+  if(!allowed.length){grid.innerHTML='<div style="grid-column:span 3;text-align:center;padding:18px;color:#555;font-size:.68rem;">⚠️ No modules assigned.</div>';return;}
+  grid.innerHTML=allowed.map(a=>`<div class="acard ${a.cl}" data-aid="${a.id}"><i class="fa ${a.ic}"></i><span>${a.lbl}</span></div>`).join('');
+  grid.querySelectorAll('.acard').forEach(c=>{
+    c.onclick=()=>{
+      const aid=c.dataset.aid;
+      if(aid==='REGISTER'){go('sRegHome');return;}
+      toast('✓ '+ACTIONS.find(a=>a.id===aid)?.lbl+' module opened');
     };
-    const onScanFailure = () => { };
-
-    html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
-        .then(() => {
-            isScannerRunning = true;
-            setScannerUI(true);
-            setScannerStatus("Point the camera at the beneficiary's QR code.", 'muted');
-        })
-        .catch((err) => {
-            console.warn('Rear camera unavailable, trying default camera:', err);
-            html5QrcodeScanner.start({}, config, onScanSuccess, onScanFailure)
-                .then(() => {
-                    isScannerRunning = true;
-                    setScannerUI(true);
-                    setScannerStatus("Point the camera at the beneficiary's QR code.", 'muted');
-                })
-                .catch((err2) => {
-                    console.error('QR Start Error:', err2);
-                    isScannerRunning = false;
-                    setScannerUI(false);
-                    setScannerStatus('Camera unavailable. Check permissions or use "Type Token" instead.', 'danger');
-                });
-        });
+  });
+  initCarousel();
 }
 
-function stopScanner() {
-    if (html5QrcodeScanner && isScannerRunning) {
-        html5QrcodeScanner.stop().then(() => {
-            html5QrcodeScanner.clear();
-            isScannerRunning = false;
-            setScannerUI(false);
-            setScannerStatus('Tap "Start Scanning" to use the camera.', 'muted');
-        }).catch((err) => console.log("Stop error:", err));
+function initCarousel(){
+  const slides=document.querySelectorAll('.cslide');
+  const dotsEl=document.getElementById('cDots');
+  if(!slides.length||!dotsEl)return;
+  let idx=0,tmr;
+  dotsEl.innerHTML=Array.from(slides).map((_,i)=>`<div class="cdot${i===0?' on':''}"></div>`).join('');
+  const dots=dotsEl.querySelectorAll('.cdot');
+  const go2=n=>{
+    if(n<0)n=slides.length-1;if(n>=slides.length)n=0;idx=n;
+    document.getElementById('cSlides').style.transform=`translateX(-${idx*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
+    clearInterval(tmr);tmr=setInterval(()=>go2(idx+1),5000);
+  };
+  document.getElementById('cPrev').onclick=()=>go2(idx-1);
+  document.getElementById('cNext').onclick=()=>go2(idx+1);
+  dots.forEach((d,i)=>d.onclick=()=>go2(i));
+  tmr=setInterval(()=>go2(idx+1),5000);
+}
+
+async function checkNet(){
+  let ok=false,rtt=null,ct='Unknown';
+  try{const t0=Date.now();const r=await fetch('https://www.gstatic.com/generate_204',{method:'HEAD',cache:'no-cache'});rtt=Date.now()-t0;ok=r.ok||r.status===204;}catch(e){}
+  if(!ok)try{const r=await fetch('https://cloudflare.com/cdn-cgi/trace',{method:'HEAD',cache:'no-cache'});ok=r.ok;}catch(e){}
+  if(navigator.connection)ct=navigator.connection.effectiveType||'Unknown';
+  document.getElementById('oNetI').innerText=ok?'✅':'📵';
+  document.getElementById('oNetT').innerText=ok?'INTERNET CONNECTED':'NO CONNECTION';
+  document.getElementById('oNetD').innerHTML=ok?`Active connectivity.<br>📡 ${ct} | ⏱️ ${rtt||'Fast'} ms`:`No connection.<br>📱 ${navigator.onLine?'Online (limited)':'Offline'}`;
+  openO('oNet');
+}
+
+const GEO = {
+  'Eastern': {
+    'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
+    'Kenema': {'Dodo': {'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]}},
+    'Kono': {'Gorama Kono': {'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]}}
+  },
+  'South': {
+    'Bo': {'Badjia': {'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]}},
+    'Bonthe': {'Benducha': {'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]}},
+    'Moyamba': {'Banguawa': {'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]}},
+    'Pujehun': {'Barri': {'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]}}
+  },
+  'North': {
+    'Bombali': {'Biriwa': {'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]}},
+    'Tonkolili': {'Dansigoia': {'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]}},
+    'Koinadugu': {'Diang': {'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]}},
+    'Falaba': {'Barawa': {'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]}}
+  },
+  'North_west': {
+    'Kambia': {'Bramaia': {'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]}},
+    'Port_loko': {
+      'Koya': {'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]},
+      'Bureh Kassiri': {'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]}
     }
-}
+  }
+};
 
-function parseAndFillBeneficiaryData(qrData) {
-    try {
-        let data = JSON.parse(qrData);
+function fillSel(el,opts,ph){el.innerHTML=`<option value="">${ph}</option>`+opts.map(o=>`<option>${o}</option>`).join('');el.disabled=false;}
+function disSel(el,ph){el.innerHTML=`<option value="">${ph}</option>`;el.disabled=true;}
+
+function setupCascade(){
+  const R=document.getElementById('mReg'), D=document.getElementById('mDis'),
+        C=document.getElementById('mChi'), M=document.getElementById('mCom'),
+        F=document.getElementById('mFac'), P=document.getElementById('mDp');
         
-        const fieldMapping = {
-            'token': 'beneficiaryToken',
-            'region': 'region',
-            'district': 'district',
-            'chiefdom': 'chiefdom',
-            'community': 'community',
-            'facility': 'facility',
-            'distPoint': 'distPoint',
-            'distributionPoint': 'distPoint',
-            'surname': 'surname',
-            'middleName': 'middleName',
-            'firstName': 'firstName',
-            'mobile': 'mobile',
-            'hhrName': 'hhrName',
-            'itnAlloc': 'itnAlloc',
-            'itnAllocation': 'itnAlloc',
-            'pregnant': 'pregnant',
-            'under5': 'under5',
-            'underFive': 'under5',
-            'latitude': 'beneficiaryLat',
-            'longitude': 'beneficiaryLng'
-        };
-
-        let filledCount = 0;
-        for (const [qrField, formField] of Object.entries(fieldMapping)) {
-            if (data[qrField] !== undefined && data[qrField] !== null) {
-                const element = document.getElementById(formField);
-                if (element) {
-                    element.value = data[qrField];
-                    filledCount++;
-                }
-            }
+  fillSel(R, Object.keys(GEO), '— Region —');
+  
+  R.onchange = () => {
+    const r = GEO[R.value];
+    r ? fillSel(D, Object.keys(r), '— District —') : disSel(D, '— District —');
+    disSel(C, '— Chiefdom —'); disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  D.onchange = () => {
+    const r = GEO[R.value]?.[D.value];
+    r ? fillSel(C, Object.keys(r), '— Chiefdom —') : disSel(C, '— Chiefdom —');
+    disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  C.onchange = () => {
+    const r = GEO[R.value]?.[D.value]?.[C.value];
+    r ? fillSel(M, Object.keys(r), '— Community —') : disSel(M, '— Community —');
+    disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
+  };
+  
+  M.onchange = () => {
+    const facilities = GEO[R.value]?.[D.value]?.[C.value]?.[M.value];
+    if(facilities && facilities.length > 0){
+      const facNames = facilities.map(f => f.facility);
+      fillSel(F, facNames, '— Facility —');
+      disSel(P, '— Dist. Point —');
+      
+      F.onchange = () => {
+        const selectedFac = facilities.find(f => f.facility === F.value);
+        if(selectedFac){
+          fillSel(P, [selectedFac.dp], '— Dist. Point —');
+          P.value = selectedFac.dp;
+        } else {
+          disSel(P, '— Dist. Point —');
         }
-
-        const displayText = data.firstName && data.surname 
-            ? `${data.firstName} ${data.surname} (Token: ${data.token || 'N/A'})`
-            : `Token: ${data.token || 'Scanned successfully'}`;
-        
-        document.getElementById('autoFillText').innerText = displayText;
-        document.getElementById('autoFillDisplay').classList.remove('d-none');
-        
-        setScannerStatus(`Successfully filled ${filledCount} fields.`, 'success');
-        
-    } catch (error) {
-        console.log('QR data is not JSON, treating as plain token:', error);
-        
-        document.getElementById('beneficiaryToken').value = qrData;
-        document.getElementById('autoFillText').innerText = `Token: ${qrData}`;
-        document.getElementById('autoFillDisplay').classList.remove('d-none');
-        
-        setScannerStatus('Token scanned. Other fields not available in QR code.', 'warning');
-    }
-}
-
-function autoFillData() {
-    const token = document.getElementById('beneficiaryToken').value;
-    if (token) {
-        document.getElementById('autoFillText').innerText = `Token: ${token}`;
-        document.getElementById('autoFillDisplay').classList.remove('d-none');
+      };
+      
+      if(F.value) F.onchange();
     } else {
-        alert("Please enter a token ID.");
+      disSel(F, '— Facility —'); disSel(P, '— Dist. Point —');
     }
+  };
 }
 
-// Toast notification function for module cards
-function showToast(message) {
-    const toast = document.createElement('div');
-    toast.style.cssText = `
-        position: fixed;
-        bottom: 80px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(22, 36, 42, 0.95);
-        color: #fff;
-        padding: 10px 20px;
-        border-radius: 24px;
-        font-size: 0.85rem;
-        font-weight: 600;
-        z-index: 9999;
-        box-shadow: 0 4px 14px rgba(0,0,0,0.3);
-        animation: fadeIn 0.3s ease;
-    `;
-    toast.textContent = message;
-    document.body.appendChild(toast);
-    setTimeout(() => {
-        toast.style.opacity = '0';
-        toast.style.transition = 'opacity 0.3s ease';
-        setTimeout(() => toast.remove(), 300);
-    }, 2000);
+let mStep=1,mTok='',mDone=false;
+
+function openManual(){
+  go('sManual');
+  resetManual();
+  document.getElementById('scanBtnContainer').style.display = 'none';
+  document.getElementById('mHeaderTitle').innerHTML = '&#9997;&#65039; MANUAL ENTRY';
 }
 
-if (typeof SignaturePad !== 'undefined') {
-    verifierPad = new SignaturePad(verifierCanvas, {
-        backgroundColor: 'rgb(255, 255, 255)',
-        penColor: 'rgb(22, 36, 42)'
+function openManualWithScan(){
+  go('sManual');
+  resetManual();
+  document.getElementById('scanBtnContainer').style.display = 'block';
+  document.getElementById('mHeaderTitle').innerHTML = '&#128247; SCAN QR ENTRY';
+}
+
+function openRecords(){go('sRecords');renderRecords();}
+function openTarget(){go('sTarget');renderTarget();}
+
+function resetManual(){
+  mStep=1;mTok='';mDone=false;
+  document.getElementById('mDate').value=todayStr();
+  ['mSur','mMid','mFst','mPh','mMem','mItn','mHhr'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='';});
+  ['mPrg','mU5'].forEach(id=>{const e=document.getElementById(id);if(e)e.value='0';});
+  setupCascade();
+  ['mDis','mChi','mCom','mFac','mDp'].forEach(id=>{const e=document.getElementById(id);if(e){e.innerHTML='<option value="">—</option>';e.disabled=true;}});
+  const tb=document.getElementById('mTok');if(tb)tb.style.display='none';
+  const cv=document.getElementById('mQrc');if(cv)cv.style.display='none';
+  const qm=document.getElementById('mQrMsg');if(qm){qm.style.display='block';qm.textContent='Click Generate QR';}
+  const dl=document.getElementById('mDlBtn');if(dl)dl.disabled=true;
+  document.getElementById('mSucc').innerHTML='✅ Registration Successful!';
+  document.getElementById('mFinBtn').innerHTML='🏠 Register Household';
+  updateWiz();captureGPS();
+}
+function updateWiz(){
+  ['ms1','ms2','ms3','ms4','ms5'].forEach((id,i)=>{const e=document.getElementById(id);if(e)e.classList.toggle('on',i===mStep-1);});
+  document.querySelectorAll('#mSBar .sitem').forEach((s,i)=>s.classList.toggle('son',i<mStep));
+  const p=document.getElementById('mProg');if(p)p.style.width=((mStep-1)/4*88)+'%';
+}
+function mNav(d){mStep=Math.max(1,Math.min(5,mStep+d));updateWiz();}
+
+function valD(){
+  let ok=true;
+  [['mReg','mRegE'],['mDis','mDisE'],['mChi','mChiE'],['mCom','mComE'],['mFac','mFacE'],['mDp','mDpE']].forEach(([f,e])=>{
+    const v=document.getElementById(f)?.value,el=document.getElementById(e);
+    if(!v){if(el)el.style.display='block';ok=false;}else{if(el)el.style.display='none';}
+  });
+  return ok;
+}
+function valH(){
+  let ok=true;
+  [['mSur','mSurE',v=>!!v.trim()],['mFst','mFstE',v=>!!v.trim()],
+   ['mPh','mPhE',v=>/^0\d{8}$/.test(v.trim())],['mMem','mMemE',v=>parseInt(v)>=1],
+   ['mHhr','mHhrE',v=>!!v.trim()]].forEach(([f,e,fn])=>{
+    const v=document.getElementById(f)?.value||'',el=document.getElementById(e);
+    if(!fn(v)){if(el)el.style.display='block';ok=false;}else{if(el)el.style.display='none';}
+  });
+  return ok;
+}
+function ms1Next(){if(valD())mNav(1);else toast('⚠ Fill all required fields');}
+function ms2Next(){
+  if(!valH()){toast('⚠ Fill all required fields');return;}
+  if(!mTok)genToken();
+  buildReview();mNav(1);
+}
+function calcItn(){
+  const t=parseInt(document.getElementById('mMem')?.value)||0;
+  const e=document.getElementById('mItn');if(e)e.value=t<=2?1:t<=4?2:3;
+}
+function genToken(){
+  const f=(document.getElementById('mFst')?.value||'X').slice(0,3).toUpperCase();
+  const m=(document.getElementById('mMid')?.value||'X').slice(0,3).toUpperCase();
+  const s=(document.getElementById('mSur')?.value||'X').slice(0,3).toUpperCase();
+  const p=document.getElementById('mPh')?.value.trim()||'';
+  mTok=`${f}_${m}_${s}_${/^0\d{8}$/.test(p)?p:'000000000'}`;
+  const tb=document.getElementById('mTok');if(tb){tb.style.display='block';tb.textContent='🔑 TOKEN: '+mTok;}
+}
+function buildReview(){
+  const g=id=>document.getElementById(id)?.value||'';
+  document.getElementById('mRv').innerHTML=`
+    <div class="rvsec"><h5>📍 Demographics</h5><p>
+      Region: ${esc(g('mReg'))} | District: ${esc(g('mDis'))}<br>
+      Chiefdom: ${esc(g('mChi'))} | Community: ${esc(g('mCom'))}<br>
+      Facility: ${esc(g('mFac'))} | Dist. Point: ${esc(g('mDp'))}
+    </p></div>
+    <div class="rvsec"><h5>🏠 Household</h5><p>
+      Name: ${esc(g('mSur'))} ${esc(g('mMid'))} ${esc(g('mFst'))}<br>
+      Mobile: ${esc(g('mPh'))} | Members: ${esc(g('mMem'))}<br>
+      Pregnant: ${esc(g('mPrg'))} | Under-5: ${esc(g('mU5'))}<br>
+      ITN: ${esc(g('mItn'))} nets | HHR: ${esc(g('mHhr'))}<br>
+      GPS: ${esc(g('mLat'))}, ${esc(g('mLng'))}<br>
+      Token: ${esc(mTok)}
+    </p></div>`;
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🔑 CORE FIX: Generate QR at a LARGE canvas size (250x250)
+// The CSS .qsm class then scales it down to 60x60 for display.
+// This ensures each QR module has multiple pixels, so the QR
+// actually renders visibly instead of as a blank white square.
+// ═══════════════════════════════════════════════════════════════
+function buildQRCanvas(data, canvasSize) {
+  try {
+    // Use error correction level 'L' (lowest) to maximize data capacity
+    // With 18 fields (~350+ chars), we need ~Type 17 QR (85 modules)
+    // At canvasSize=250, each module gets ~2-3 pixels (250/85 ≈ 2.9)
+    const qr = qrcode(0, 'L');
+    qr.addData(data);
+    qr.make();
+    
+    const modCount = qr.getModuleCount();
+    const cell = Math.floor(canvasSize / modCount);
+    
+    // SAFETY CHECK: If cell is 0, the canvas is too small for this data
+    if (cell < 1) {
+      console.error('QR canvas too small. Need at least', modCount, 'pixels, got', canvasSize);
+      return null;
+    }
+    
+    const actualSize = cell * modCount;
+    const off = Math.floor((canvasSize - actualSize) / 2);
+    
+    const cv = document.createElement('canvas');
+    cv.width = canvasSize;
+    cv.height = canvasSize;
+    const ctx = cv.getContext('2d');
+    
+    // White background
+    ctx.fillStyle = '#ffffff';
+    ctx.fillRect(0, 0, canvasSize, canvasSize);
+    
+    // Draw QR modules
+    ctx.fillStyle = '#000000';
+    for (let r = 0; r < modCount; r++) {
+      for (let c = 0; c < modCount; c++) {
+        if (qr.isDark(r, c)) {
+          ctx.fillRect(off + c * cell, off + r * cell, cell, cell);
+        }
+      }
+    }
+    
+    return cv;
+  } catch (e) {
+    console.error('QR generation error:', e);
+    return null;
+  }
+}
+
+function genQR(){
+  const g=id=>document.getElementById(id)?.value||'';
+  const data=`ITN_REG
+Region:${g('mReg')}
+District:${g('mDis')}
+Chiefdom:${g('mChi')}
+Community:${g('mCom')}
+Facility:${g('mFac')}
+Dist. Point:${g('mDp')}
+Surname:${g('mSur')}
+Middle Name:${g('mMid')}
+First Name:${g('mFst')}
+Mobile:${g('mPh')}
+Members:${g('mMem')}
+ITN Alloc:${g('mItn')}
+Pregnant:${g('mPrg')}
+Under-5:${g('mU5')}
+HHR Name:${g('mHhr')}
+Latitude:${g('mLat')}
+Longitude:${g('mLng')}
+Token:${mTok}`;
+  
+  const cv = buildQRCanvas(data, 250);
+  if (cv) {
+    const target = document.getElementById('mQrc');
+    target.width = 250;
+    target.height = 250;
+    target.getContext('2d').drawImage(cv, 0, 0);
+    target.style.display = 'block';
+    document.getElementById('mQrMsg').style.display = 'none';
+    document.getElementById('mDlBtn').disabled = false;
+  } else {
+    toast('⚠️ QR generation failed');
+  }
+}
+
+function dlQR(){
+  const cv=document.getElementById('mQrc');
+  if(!cv||cv.style.display==='none'){toast('Generate QR first');return;}
+  const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=`ITN_${mTok||'QR'}.png`;a.click();
+}
+
+function captureGPS(){
+  if(!navigator.geolocation)return;
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const la=pos.coords.latitude.toFixed(6),lo=pos.coords.longitude.toFixed(6);
+    const l=document.getElementById('mLat'),g=document.getElementById('mLng');
+    if(l)l.value=la;if(g)g.value=lo;
+  },()=>{});
+}
+
+document.getElementById('mPh').addEventListener('input',function(){
+  const ok=/^0\d{8}$/.test(this.value);
+  document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none';
+});
+
+let RECS=[];
+
+function loadRecsLocal(){
+  const s=localStorage.getItem('itn_hh');
+  if(s) RECS=JSON.parse(s);
+}
+
+function saveRecsLocal(){
+  localStorage.setItem('itn_hh', JSON.stringify(RECS));
+}
+
+async function saveRecordToCloud(rec) {
+  if (!FIREBASE_ENABLED || !db) return;
+  try {
+    const docId = rec.token || ('rec_' + Date.now() + '_' + Math.random().toString(36).substr(2,9));
+    await db.collection('households').doc(docId).set({
+      ...rec,
+      _id: docId,
+      _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
     });
-    distributorPad = new SignaturePad(distributorCanvas, {
-        backgroundColor: 'rgb(255, 255, 255)',
-        penColor: 'rgb(22, 36, 42)'
-    });
-} else {
-    console.error('SignaturePad library failed to load - signature fields will be disabled.');
+  } catch (e) { console.warn('Cloud save failed:', e); }
 }
 
-prevBtn.addEventListener('click', () => changeStep(-1));
-nextBtn.addEventListener('click', () => changeStep(1));
+async function updateRecordInCloud(docId, updates) {
+  if (!FIREBASE_ENABLED || !db || !docId) return;
+  try {
+    await db.collection('households').doc(docId).update({
+      ...updates,
+      _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+    });
+  } catch (e) { console.warn('Cloud update failed:', e); }
+}
 
-document.querySelector('button[data-bs-target="#token"]').addEventListener('shown.bs.tab', () => {
-    stopScanner();
-});
+function startRecordsListener() {
+  if (!FIREBASE_ENABLED || !db) return;
+  if (recordsListener) { recordsListener(); recordsListener = null; }
+  recordsListener = db.collection('households')
+    .orderBy('_updatedAt', 'desc')
+    .onSnapshot((snapshot) => {
+      const cloudRecs = [];
+      snapshot.forEach(doc => { cloudRecs.push(doc.data()); });
+      RECS = cloudRecs;
+      saveRecsLocal();
+      const activeScreen = document.querySelector('#phoneMock .screen.active');
+      if (activeScreen) {
+        if (activeScreen.id === 'sRecords') renderRecords();
+        if (activeScreen.id === 'sTarget') renderTarget();
+      }
+      updateSyncIndicator('online', 'Cloud Sync Active');
+    }, (error) => {
+      console.warn('Listener error:', error);
+      updateSyncIndicator('offline', 'Sync Offline');
+    });
+}
 
-window.addEventListener('resize', () => {
-    if (steps[2] && steps[2].classList.contains('active')) {
-        resizeSignatureCanvas(verifierCanvas, verifierPad);
-        resizeSignatureCanvas(distributorCanvas, distributorPad);
+function startTargetListener() {
+  if (!FIREBASE_ENABLED || !db) return;
+  if (targetListener) { targetListener(); targetListener = null; }
+  targetListener = db.collection('settings').doc('campaign')
+    .onSnapshot((doc) => {
+      if (doc.exists) {
+        const data = doc.data();
+        if (data.target) {
+          localStorage.setItem('itn_target', data.target);
+          const activeScreen = document.querySelector('#phoneMock .screen.active');
+          if (activeScreen && activeScreen.id === 'sTarget') renderTarget();
+        }
+      }
+    });
+}
+
+loadRecsLocal();
+if (FIREBASE_ENABLED && db) { startRecordsListener(); startTargetListener(); }
+
+function finalReg(){
+  if(mDone){openManual();return;}
+  if(!valH()||!valD()){toast('⚠ Complete all fields');return;}
+  const g=id=>document.getElementById(id)?.value||'';
+  const newRec = {
+    name:`${g('mSur')} ${g('mFst')}`,surname:g('mSur'),middleName:g('mMid'),firstName:g('mFst'),
+    region:g('mReg'),district:g('mDis'),chiefdom:g('mChi'),community:g('mCom'),
+    healthFacility:g('mFac'),dp:g('mDp'),mobile:g('mPh'),
+    members:g('mMem'),pregnant:g('mPrg'),under5:g('mU5'),itn:g('mItn'),
+    hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,
+    date:new Date().toLocaleString(),
+    status: 'Pending'
+  };
+  
+  RECS.unshift(newRec);
+  saveRecsLocal();
+  saveRecordToCloud(newRec);
+  
+  document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
+  document.getElementById('mFinBtn').innerHTML='➕ Register Another';
+  mDone=true;
+  
+  if (FIREBASE_ENABLED) toast('✅ Synced to cloud');
+}
+
+// ═══════════════════════════════════════════════════════════════
+// 🔑 Generate QR data URL at a LARGE canvas size (250x250)
+// CSS will scale it down to 60x60 display in the table
+// ═══════════════════════════════════════════════════════════════
+function qrDataUrl(rec, displaySize){
+  const [lat,lng]=(rec.gps||'').split(',');
+  const data=`ITN_REG
+Region:${rec.region||''}
+District:${rec.district||''}
+Chiefdom:${rec.chiefdom||''}
+Community:${rec.community||''}
+Facility:${rec.healthFacility||''}
+Dist. Point:${rec.dp||''}
+Surname:${rec.surname||''}
+Middle Name:${rec.middleName||''}
+First Name:${rec.firstName||''}
+Mobile:${rec.mobile||''}
+Members:${rec.members||''}
+ITN Alloc:${rec.itn||''}
+Pregnant:${rec.pregnant||0}
+Under-5:${rec.under5||0}
+HHR Name:${rec.hhr||''}
+Latitude:${lat||''}
+Longitude:${lng||''}
+Token:${rec.token||''}`;
+  
+  // Always generate at 250x250 for crisp display when CSS scales it down
+  const cv = buildQRCanvas(data, 250);
+  if (!cv) return '';
+  return cv.toDataURL('image/png');
+}
+
+function renderRecords(){
+  const wrap=document.getElementById('recWrap');
+  if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.<br>Complete Manual Entry to see records.</div>';return;}
+  
+  let tableHTML=`<table class="rtable">
+    <thead><tr>
+      <th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th>
+      <th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th>
+      <th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th>
+      <th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th>
+    </tr></thead>
+    <tbody>`;
+  
+  RECS.forEach((r,i)=>{
+    const u=qrDataUrl(r, 60);
+    const [lat,lng]=(r.gps||'').split(',');
+    
+    const isDist = r.status === 'Distributed';
+    const statusBadge = isDist 
+      ? `<span class="status-badge dist" style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
+      : `<span class="status-badge pend" style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;box-shadow:0 0 0 1px #fdba74;" data-i="${i}" title="Click to mark as Distributed">Pending</span>`;
+    
+    const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}" alt="QR Code">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
+    
+    tableHTML+=`<tr>
+      <td>${i+1}</td>
+      <td style="font-size:.42rem;white-space:nowrap">${r.date}</td>
+      <td>${esc(r.region)}</td>
+      <td>${esc(r.district)}</td>
+      <td>${esc(r.chiefdom)}</td>
+      <td>${esc(r.community)}</td>
+      <td>${esc(r.healthFacility)}</td>
+      <td>${esc(r.dp)}</td>
+      <td>${esc(r.surname)}</td>
+      <td>${esc(r.middleName||'')}</td>
+      <td>${esc(r.firstName)}</td>
+      <td>${esc(r.mobile)}</td>
+      <td>${r.members}</td>
+      <td>${r.pregnant||0}</td>
+      <td>${r.under5||0}</td>
+      <td>${r.itn}</td>
+      <td>${esc(r.hhr)}</td>
+      <td style="font-size:.42rem">${esc(lat||'')}</td>
+      <td style="font-size:.42rem">${esc(lng||'')}</td>
+      <td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td>
+      <td>${qrCell}</td>
+      <td style="text-align:center; min-width: 90px;">${statusBadge}</td>
+      <td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td>
+    </tr>`;
+  });
+  
+  tableHTML+=`</tbody></table>`;
+  wrap.innerHTML=tableHTML;
+  
+  wrap.querySelectorAll('.qsm').forEach(img=>{
+    img.onclick=()=>showQRModal(RECS[+img.dataset.i]);
+  });
+  
+  wrap.querySelectorAll('.dl-btn').forEach(btn=>{
+    btn.onclick=()=>{
+      const u=qrDataUrl(RECS[+btn.dataset.i], 300);
+      if(u){
+        const a=document.createElement('a');
+        a.href=u;
+        a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;
+        a.click();
+      } else {
+        toast('⚠️ QR code not available');
+      }
+    };
+  });
+  
+  wrap.querySelectorAll('.status-badge.pend').forEach(badge => {
+    badge.onclick = () => {
+      const idx = +badge.dataset.i;
+      RECS[idx].status = 'Distributed';
+      saveRecsLocal();
+      if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
+      renderRecords();
+      toast('✅ Record marked as Distributed');
+    };
+  });
+}
+
+function showQRModal(rec){
+  const u=qrDataUrl(rec, 220);
+  if(!u){ toast('⚠️ QR code not available'); return; }
+  const d=document.createElement('div');d.className='qr-modal-ov';
+  d.innerHTML=`<div class="qr-modal-c"><h4>🏠 Household QR</h4><div style="font-size:.75rem;font-weight:700;margin-bottom:5px">${esc(rec.surname)} ${esc(rec.firstName)}</div><img src="${u}"><div style="font-size:.55rem;color:#555;margin-bottom:12px">Token: ${esc(rec.token)}</div><button style="background:#1565C0;color:#fff;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer;margin-right:7px" onclick="const a=document.createElement('a');a.href='${u}';a.download='ITN_${rec.token}.png';a.click()">Download</button><button style="background:#ddd;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="this.closest('.qr-modal-ov').remove()">Close</button></div>`;
+  document.body.appendChild(d);
+}
+
+function getTarget(){ return parseInt(localStorage.getItem('itn_target')) || 500; }
+
+async function saveTarget(){
+  const inp = document.getElementById('tTargetInput');
+  const v = parseInt(inp?.value);
+  if(!v || v <= 0){ toast('⚠ Enter a valid target number'); return; }
+  localStorage.setItem('itn_target', v);
+  if (FIREBASE_ENABLED && db) {
+    try {
+      await db.collection('settings').doc('campaign').set({
+        target: v,
+        _updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      toast('✅ Target synced: ' + v + ' households');
+    } catch (e) { toast('✅ Target saved locally'); }
+  } else { toast('✅ Target set to ' + v + ' households'); }
+  renderTarget();
+}
+
+function renderTarget(){
+  const target = getTarget();
+  const total=RECS.length,itn=RECS.reduce((s,r)=>s+(parseInt(r.itn)||0),0),ppl=RECS.reduce((s,r)=>s+(parseInt(r.members)||0),0);
+  const pct=Math.min(100,Math.round(total/target*100));
+  const ts=todayStr(),todayCt=RECS.filter(r=>r.date&&r.date.includes(ts)).length;
+  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
+  set('tToday',todayCt);set('tTotal',total);set('tPpl',ppl);
+  set('tTargetVal',target);set('tTargetTotal',target);
+  set('tRem',Math.max(0,target-total));set('tItn',itn);set('tPct',pct+'%');set('tCurr',total);
+  const f=document.getElementById('tFill');if(f)f.style.width=pct+'%';
+  const cnt=obj=>Object.entries(obj).length?Object.entries(obj).map(([k,v])=>`• ${k}: ${v}<br>`).join(''):'No data';
+  const d={},c={},p={};
+  RECS.forEach(r=>{if(r.district)d[r.district]=(d[r.district]||0)+1;if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1;if(r.healthFacility)p[r.healthFacility]=(p[r.healthFacility]||0)+1;});
+  const dE=document.getElementById('tDist');if(dE)dE.innerHTML=cnt(d);
+  const cE=document.getElementById('tChief');if(cE)cE.innerHTML=cnt(c);
+  const pE=document.getElementById('tPhu');if(pE)pE.innerHTML=cnt(p);
+
+  const editBox = document.getElementById('tEditBox');
+  if(editBox){
+    const canEdit = CU && CU.USERNAME === 'Admin';
+    editBox.style.display = canEdit ? 'block' : 'none';
+    if(canEdit){
+      const inp = document.getElementById('tTargetInput');
+      if(inp) inp.value = target;
     }
-});
+  }
+}
 
-setTimeout(() => {
-    document.getElementById('gpsLat').value = "8.484444";
-    document.getElementById('gpsLng').value = "-13.234444";
-    document.getElementById('gpsStatus').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i> GPS Coordinate auto-captured.';
-    document.getElementById('gpsStatus').className = "text-success small mt-2 d-block fw-bold";
-}, 1500);
+let html5QrCode = null;
+let scannerActive = false;
 
-document.getElementById('distributionForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+function openCameraScanner(){
+  const modal = document.getElementById('camModal');
+  const statusEl = document.getElementById('camStatus');
+  const statusText = document.getElementById('camStatusText');
+  statusEl.classList.remove('err');
+  statusText.textContent = 'Initializing camera...';
+  modal.classList.add('open');
+  
+  if(typeof Html5Qrcode === 'undefined'){
+    statusEl.classList.add('err');
+    statusText.textContent = '❌ Scanner library failed to load';
+    setTimeout(closeCameraScanner, 2000);
+    return;
+  }
+  
+  if(html5QrCode && scannerActive){
+    html5QrCode.stop().then(()=>{ html5QrCode.clear(); startNewScanner(); })
+    .catch(()=>{ html5QrCode.clear(); startNewScanner(); });
+  } else { startNewScanner(); }
+}
 
-    if (!verifierPad || !distributorPad || verifierPad.isEmpty() || distributorPad.isEmpty()) {
-        alert("⚠️ Please ensure both the Voucher Verifier and ITN Distributor have signed.");
-        return;
+function startNewScanner(){
+  const statusText = document.getElementById('camStatusText');
+  const statusEl = document.getElementById('camStatus');
+  try {
+    html5QrCode = new Html5Qrcode("qr-reader");
+    const config = { fps: 10, qrbox: { width: 220, height: 220 }, aspectRatio: 1.0 };
+    const cameraRequest = { facingMode: "environment" };
+    html5QrCode.start(cameraRequest, config, onScanSuccess, onScanFailure)
+    .then(()=>{ scannerActive = true; statusEl.classList.remove('err'); statusText.textContent = 'Scanning... Point camera at QR badge'; })
+    .catch((err)=>{
+      html5QrCode.start({ facingMode: "user" }, config, onScanSuccess, onScanFailure)
+      .then(()=>{ scannerActive = true; statusEl.classList.remove('err'); statusText.textContent = 'Scanning... Point camera at QR badge'; })
+      .catch((err2)=>{
+        statusEl.classList.add('err');
+        if(err2.toString().includes('NotAllowedError')) statusText.textContent = '🚫 Camera permission denied.';
+        else if(err2.toString().includes('NotFoundError')) statusText.textContent = '📷 No camera found.';
+        else statusText.textContent = '❌ Camera error: ' + (err2.message || 'Unable to start');
+      });
+    });
+  } catch(e){ statusEl.classList.add('err'); statusText.textContent = '❌ Failed to initialize scanner'; }
+}
+
+function onScanSuccess(decodedText){
+  if(navigator.vibrate) navigator.vibrate(200);
+  stopScannerQuietly().then(()=>{
+    const parsed = parseQRData(decodedText);
+    if(parsed && parsed.region){ autoFillFromScan(parsed); toast('✅ QR Scanned Successfully!'); }
+    else { toast('⚠ Invalid QR code format'); document.getElementById('camModal').classList.remove('open'); }
+  });
+}
+function onScanFailure(error){}
+
+function stopScannerQuietly(){
+  return new Promise((resolve)=>{
+    if(html5QrCode && scannerActive){
+      html5QrCode.stop().then(()=>{ scannerActive = false; resolve(); }).catch(()=>{ scannerActive = false; resolve(); });
+    } else { resolve(); }
+  });
+}
+
+function closeCameraScanner(){
+  stopScannerQuietly().then(()=>{
+    if(html5QrCode){ try { html5QrCode.clear(); } catch(e){} html5QrCode = null; }
+    document.getElementById('camModal').classList.remove('open');
+  });
+}
+
+function parseQRData(text){
+  if(!text) return null;
+  const result = {};
+  const lines = text.split(/\r?\n/);
+  lines.forEach(line=>{
+    const idx = line.indexOf(':');
+    if(idx > 0){
+      const key = line.substring(0, idx).trim().toLowerCase();
+      const val = line.substring(idx + 1).trim();
+      if(val){
+        if(key === 'region') result.region = val;
+        else if(key === 'district') result.district = val;
+        else if(key === 'chiefdom') result.chiefdom = val;
+        else if(key === 'community') result.community = val;
+        else if(key === 'facility' || key === 'health facility') result.facility = val;
+        else if(key === 'dist. point' || key === 'dist_point' || key === 'dp' || key === 'distribution point') result.distPoint = val;
+        else if(key === 'surname') result.surname = val;
+        else if(key === 'middle name' || key === 'middlename') result.middleName = val;
+        else if(key === 'first name' || key === 'firstname') result.firstName = val;
+        else if(key === 'name') {
+          const parts = val.split(' ');
+          if(parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
+          else result.surname = val;
+        }
+        else if(key === 'mobile') result.mobile = val;
+        else if(key === 'members') result.members = val;
+        else if(key === 'itn alloc' || key === 'itn') result.itn = val;
+        else if(key === 'pregnant') result.pregnant = val;
+        else if(key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
+        else if(key === 'hhr name' || key === 'hhr') result.hhr = val;
+        else if(key === 'latitude' || key === 'lat') result.latitude = val;
+        else if(key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
+        else if(key === 'token') result.token = val;
+      }
     }
+  });
+  return result;
+}
 
-    alert("✅ Distribution record submitted successfully!");
-});
+function normalize(str) {
+  if (!str) return '';
+  return str.trim().toLowerCase().replace(/[^a-z0-9]/g, '');
+}
 
-showStep(currentStep);
+function findBestMatch(selectElement, targetValue) {
+  if (!targetValue) return null;
+  const targetNorm = normalize(targetValue);
+  if (!targetNorm) return null;
+  let match = Array.from(selectElement.options).find(o => normalize(o.value) === targetNorm);
+  if (match && match.value !== '') return match;
+  match = Array.from(selectElement.options).find(o => {
+    const optNorm = normalize(o.value);
+    return optNorm !== '' && (optNorm.includes(targetNorm) || targetNorm.includes(optNorm));
+  });
+  if (match && match.value !== '') return match;
+  return null;
+}
+
+function autoFillFromScan(data){
+  const statusText = document.getElementById('camStatusText');
+  statusText.textContent = '✅ Auto-filling form data...';
+  setTimeout(()=>{ document.getElementById('camModal').classList.remove('open'); }, 400);
+  mStep = 1; updateWiz();
+  
+  setTimeout(()=>{
+    const mReg = document.getElementById('mReg');
+    const regOpt = findBestMatch(mReg, data.region);
+    if(regOpt){
+      mReg.value = regOpt.value; mReg.dispatchEvent(new Event('change'));
+      setTimeout(()=>{
+        const mDis = document.getElementById('mDis');
+        const disOpt = findBestMatch(mDis, data.district);
+        if(disOpt){
+          mDis.value = disOpt.value; mDis.dispatchEvent(new Event('change'));
+          setTimeout(()=>{
+            const mChi = document.getElementById('mChi');
+            const chiOpt = findBestMatch(mChi, data.chiefdom);
+            if(chiOpt){
+              mChi.value = chiOpt.value; mChi.dispatchEvent(new Event('change'));
+              setTimeout(()=>{
+                const mCom = document.getElementById('mCom');
+                const comOpt = findBestMatch(mCom, data.community);
+                if(comOpt){
+                  mCom.value = comOpt.value; mCom.dispatchEvent(new Event('change'));
+                  setTimeout(()=>{
+                    const mFac = document.getElementById('mFac');
+                    const mDp = document.getElementById('mDp');
+                    const facOpt = findBestMatch(mFac, data.facility);
+                    if(facOpt){ mFac.value = facOpt.value; mFac.dispatchEvent(new Event('change')); }
+                    setTimeout(()=>{
+                      if (data.distPoint) {
+                        const dpOpt = findBestMatch(mDp, data.distPoint);
+                        if(dpOpt) mDp.value = dpOpt.value;
+                      }
+                      fillPersonalDetails(data);
+                      toast('✅ Form auto-filled from QR!');
+                    }, 300);
+                  }, 300);
+                } else { toast('⚠ Community not found'); fillPersonalDetails(data); }
+              }, 300);
+            } else { toast('⚠ Chiefdom not found'); fillPersonalDetails(data); }
+          }, 300);
+        } else { toast('⚠ District not found'); fillPersonalDetails(data); }
+      }, 300);
+    } else { toast('⚠ Region not found'); fillPersonalDetails(data); }
+  }, 500);
+}
+
+function fillPersonalDetails(data){
+  if(data.surname) document.getElementById('mSur').value = data.surname;
+  if(data.middleName) document.getElementById('mMid').value = data.middleName;
+  if(data.firstName) document.getElementById('mFst').value = data.firstName;
+  if(data.mobile) document.getElementById('mPh').value = data.mobile;
+  if(data.members) {
+    document.getElementById('mMem').value = data.members;
+    if(!data.itn) calcItn();
+  }
+  if(data.itn) document.getElementById('mItn').value = data.itn;
+  if(data.pregnant) document.getElementById('mPrg').value = data.pregnant;
+  if(data.under5) document.getElementById('mU5').value = data.under5;
+  if(data.hhr) document.getElementById('mHhr').value = data.hhr;
+  if(data.latitude) document.getElementById('mLat').value = data.latitude;
+  if(data.longitude) document.getElementById('mLng').value = data.longitude;
+  if(data.token) {
+    mTok = data.token;
+    const tb = document.getElementById('mTok');
+    if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; }
+  }
+}
+
+window.addEventListener('online', () => { if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active'); });
+window.addEventListener('offline', () => { if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline'); });
+
+const savedU=sessionStorage.getItem('cu');
+if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
+else go('sLogin');
 </script>
-
 </body>
 </html>
