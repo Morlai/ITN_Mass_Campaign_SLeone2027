@@ -187,7 +187,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 .cam-status.err .pulse{background:#ef4444;animation:none}
 
-#sRecords .rtable-wrap{flex:1;overflow:auto;padding:8px}
+/* ═══════════════════════════════════════════════════════════
+   🔑 RECORDS TABLE STYLES (used by both sRecords and sDistRecs)
+═══════════════════════════════════════════════════════════ */
+.rtable-wrap{flex:1;overflow:auto;padding:8px}
 .rtable-wrap::-webkit-scrollbar{height:4px;width:4px}
 .rtable-wrap::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
 .rtable{width:100%;border-collapse:collapse;background:#fff;border-radius:12px;overflow:hidden;font-size:.48rem;min-width:2400px}
@@ -514,7 +517,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
-  <!-- ═══════ RECORDS SCREEN ═══════ -->
+  <!-- ═══════ RECORDS SCREEN (for HHR2027 - Registration Officer) ═══════ -->
   <div class="screen" id="sRecords">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -522,6 +525,20 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div style="width:28px"></div>
    </div>
    <div class="rtable-wrap" id="recWrap"></div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       🔑 DISTRIBUTION RECORDS SCREEN (for HHD2027 - Distribution Officer)
+       Shows the same table columns as sRecords, but with a back button
+       that returns to the Dashboard (where DISTRIBUTION + RECORDS cards are)
+  ═══════════════════════════════════════════════════════════════ -->
+  <div class="screen" id="sDistRecs">
+   <div class="whdr" style="background:linear-gradient(115deg,#A55EEA,#8B5CF6)">
+    <button class="wback" onclick="go('sDash')" title="Back to Dashboard">&#8592;</button>
+    <h3>📋 DISTRIBUTION RECORDS</h3>
+    <div style="width:28px"></div>
+   </div>
+   <div class="rtable-wrap" id="distRecWrap"></div>
   </div>
 
   <!-- ═══════ TARGET SCREEN ═══════ -->
@@ -962,14 +979,13 @@ function buildDash(){
   const allowed=ACTIONS.filter(a=>CU[a.pk]==='Show');
   
   // 🔑 ADD RECORDS CARD for Admin and HHD2027 (Distribution Officer)
-  // This card appears next to DISTRIBUTION in the dashboard grid
   if (CU.USERNAME === 'Admin' || CU.USERNAME === 'HHD2027') {
     allowed.push({
       id:'DIST_RECORDS',
       lbl:'RECORDS',
       ic:'fa-table-list',
-      cl:'a5',  // purple gradient - matches records theme
-      pk:'__DIST_RECORDS__'  // special marker
+      cl:'a5',
+      pk:'__DIST_RECORDS__'
     });
   }
   
@@ -982,10 +998,9 @@ function buildDash(){
         openDistribution();
         return;
       }
-      // 🔑 RECORDS CARD - Opens the distribution records view
+      // 🔑 RECORDS CARD - Opens distribution records screen
       if(aid==='DIST_RECORDS'){
-        openDistribution();
-        setTimeout(()=>showDistRecords(), 100);
+        openDistRecords();
         return;
       }
       if(aid==='REGISTER'){go('sRegHome');return;}
@@ -1298,6 +1313,7 @@ function startRecordsListener() {
     const activeScreen = document.querySelector('#phoneMock .screen.active');
     if (activeScreen) {
       if (activeScreen.id === 'sRecords') renderRecords();
+      if (activeScreen.id === 'sDistRecs') renderDistRecords();
       if (activeScreen.id === 'sTarget') renderTarget();
     }
     updateSyncIndicator('online', 'Cloud Sync Active');
@@ -1351,9 +1367,13 @@ function qrDataUrl(rec, displaySize){
   return cv.toDataURL('image/png');
 }
 
-function renderRecords(){
-  const wrap=document.getElementById('recWrap');
-  if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.<br>Complete Manual Entry to see records.</div>';return;}
+/* ═══════════════════════════════════════════════════════════════
+   🔑 SHARED RECORDS TABLE RENDERER
+   Used by both sRecords (Registration) and sDistRecs (Distribution)
+═══════════════════════════════════════════════════════════════ */
+function renderRecordsTable(wrapId){
+  const wrap=document.getElementById(wrapId);
+  if(!RECS.length){wrap.innerHTML='<div class="no-rec">No records yet.<br>Submit a distribution to see records here.</div>';return;}
   let tableHTML=`<table class="rtable"><thead><tr><th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th><th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th><th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th><th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th></tr></thead><tbody>`;
   RECS.forEach((r,i)=>{
     const u=qrDataUrl(r, 60);
@@ -1367,6 +1387,7 @@ function renderRecords(){
   });
   tableHTML+=`</tbody></table>`;
   wrap.innerHTML=tableHTML;
+  
   wrap.querySelectorAll('.qsm').forEach(img=>{img.onclick=()=>showQRModal(RECS[+img.dataset.i]);});
   wrap.querySelectorAll('.dl-btn').forEach(btn=>{
     btn.onclick=()=>{
@@ -1380,11 +1401,14 @@ function renderRecords(){
       RECS[idx].status = 'Distributed';
       saveRecsLocal();
       if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
-      renderRecords();
+      renderRecordsTable(wrapId);
       toast('✅ Record marked as Distributed');
     };
   });
 }
+
+function renderRecords(){ renderRecordsTable('recWrap'); }
+function renderDistRecords(){ renderRecordsTable('distRecWrap'); }
 
 function showQRModal(rec){
   const u=qrDataUrl(rec, 220);
@@ -1679,6 +1703,18 @@ function openDistribution(){
   updateDistStep();
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   🔑 DISTRIBUTION RECORDS SCREEN OPENER
+   Opens the dedicated records screen (sDistRecs) with the same
+   table columns as the main records screen.
+   Back button returns to Dashboard where DISTRIBUTION + RECORDS
+   cards are visible.
+═══════════════════════════════════════════════════════════════ */
+function openDistRecords(){
+  go('sDistRecs');
+  renderDistRecords();
+}
+
 function updateDistStep(){
   const allSteps = document.querySelectorAll('#sDistribution .dist-step');
   allSteps.forEach((step, i) => {
@@ -1846,16 +1882,6 @@ function submitDistribution(e){
   }
   alert("✅ Distribution record submitted successfully!");
   return false;
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION RECORDS VIEW
-   (Shown when user clicks RECORDS card on dashboard)
-═══════════════════════════════════════════════════════════════ */
-function showDistRecords(){
-  // Navigate to the main records screen
-  go('sRecords');
-  renderRecords();
 }
 
 /* ═══════════════════════════════════════════════════════════════
