@@ -301,6 +301,26 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 
 .dist-recs-header{background:linear-gradient(115deg,#A55EEA,#8B5CF6);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .dist-recs-header h3{font-size:.75rem;font-weight:700}
+
+/* 🔑 Token field highlight styling */
+.dist-token-display{
+  background:linear-gradient(135deg, #E8F5E9, #C8E6C9);
+  border:1.5px solid #4CAF50;
+  border-radius:10px;
+  padding:10px 12px;
+  font-family: 'Courier New', monospace;
+  font-size:.85rem;
+  font-weight:700;
+  color:#1B5E20;
+  letter-spacing:.5px;
+  word-break:break-all;
+}
+.dist-token-display::placeholder{
+  color:#81C784;
+  font-weight:500;
+  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+  letter-spacing:normal;
+}
 </style>
 </head>
 <body>
@@ -728,6 +748,13 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <div class="col-4"><label class="dist-form-label">ITN Alloc</label><input type="number" class="dist-form-control" id="distItnAlloc" placeholder="0" readonly></div>
         <div class="col-4"><label class="dist-form-label">Pregnant</label><input type="number" class="dist-form-control" id="distPregnant" placeholder="0" readonly></div>
         <div class="col-4"><label class="dist-form-label">Under-5</label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly></div>
+       </div>
+       <hr>
+       <!-- 🔑 NEW: Token field added above GPS -->
+       <h6 class="dist-sub-title"><i class="fas fa-key me-2"></i>Token</h6>
+       <div class="mb-3">
+        <label class="dist-form-label">Beneficiary Token</label>
+        <input type="text" class="dist-form-control dist-token-display" id="distTokenDisplay" placeholder="Token will appear here after scanning or auto-fill" readonly>
        </div>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-location-crosshairs me-2"></i>GPS</h6>
@@ -1352,26 +1379,11 @@ function closeCameraScanner(){
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 UNIVERSAL QR PARSER
-   Handles BOTH formats:
-   1. Line-based format (from Registration module):
-      ITN_REG
-      Region:Eastern
-      District:Kailahun
-      ...
-      Token:KAM_JOH_MAR_071234567
-   
-   2. JSON format (for backwards compatibility)
-═══════════════════════════════════════════════════════════════ */
 function parseQRData(text){
   if(!text) return null;
   const result = {};
-  
-  // Try JSON first
   try {
     const jsonData = JSON.parse(text);
-    // Map JSON keys to our standard keys
     const mapping = {
       'region':'region','district':'district','chiefdom':'chiefdom','community':'community',
       'facility':'facility','healthFacility':'facility','health facility':'facility',
@@ -1390,18 +1402,14 @@ function parseQRData(text){
       const stdKey = mapping[k.toLowerCase()] || k.toLowerCase();
       result[stdKey] = v;
     }
-    // Handle "name" field (Surname Firstname)
     if (jsonData.name && !result.surname) {
       const parts = String(jsonData.name).split(' ');
       if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
       else result.surname = jsonData.name;
     }
     return result;
-  } catch (e) {
-    // Not JSON, try line-based format
-  }
+  } catch (e) {}
   
-  // Line-based format parsing
   const lines = text.split(/\r?\n/);
   lines.forEach(line => {
     const idx = line.indexOf(':');
@@ -1409,7 +1417,6 @@ function parseQRData(text){
       const key = line.substring(0, idx).trim().toLowerCase();
       const val = line.substring(idx + 1).trim();
       if (!val) return;
-      
       if (key === 'region') result.region = val;
       else if (key === 'district') result.district = val;
       else if (key === 'chiefdom') result.chiefdom = val;
@@ -1435,13 +1442,9 @@ function parseQRData(text){
       else if (key === 'token') result.token = val;
     }
   });
-  
   return Object.keys(result).length > 0 ? result : null;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 REGISTRATION AUTO-FILL (for sManual)
-═══════════════════════════════════════════════════════════════ */
 function normalize(str) { if (!str) return ''; return str.trim().toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function findBestMatch(selectElement, targetValue) {
   if (!targetValue) return null;
@@ -1510,16 +1513,13 @@ function fillPersonalDetails(data){
   if(data.token) { mTok = data.token; const tb = document.getElementById('mTok'); if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; } }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION MODULE
-═══════════════════════════════════════════════════════════════ */
 let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null, distHtml5Qrcode = null, distScannerRunning = false;
 
 function openDistribution(){
   go('sDistribution');
   distCurrentStep = 0;
   document.getElementById('distDate').value = todayStr();
-  ['distBeneficiaryToken','distRegion','distDistrict','distChiefdom','distCommunity','distFacility','distDistPoint','distSurname','distMiddleName','distFirstName','distMobile','distHhrName','distItnAlloc','distPregnant','distUnder5','distBeneficiaryLat','distBeneficiaryLng','distVerifierName','distVerifierMobile','distDistributorName','distDistributorMobile','distGpsLat','distGpsLng'].forEach(id=>{ const e=document.getElementById(id);if(e)e.value=''; });
+  ['distBeneficiaryToken','distRegion','distDistrict','distChiefdom','distCommunity','distFacility','distDistPoint','distSurname','distMiddleName','distFirstName','distMobile','distHhrName','distItnAlloc','distPregnant','distUnder5','distBeneficiaryLat','distBeneficiaryLng','distVerifierName','distVerifierMobile','distDistributorName','distDistributorMobile','distGpsLat','distGpsLng','distTokenDisplay'].forEach(id=>{ const e=document.getElementById(id);if(e)e.value=''; });
   document.getElementById('distAutoFillDisplay').classList.add('d-none');
   document.getElementById('distHealthTalkGiven').checked = false;
   document.getElementById('distHealthTalksContent').style.display = 'none';
@@ -1574,41 +1574,32 @@ function switchDistTab(tabId){
   if (tabId !== 'dist-qr') stopDistScanner();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION AUTO-FILL (Type Token button)
-   Looks up the record by token in RECS array and fills all fields
-═══════════════════════════════════════════════════════════════ */
 function distAutoFillData(){
   const token = document.getElementById('distBeneficiaryToken').value.trim();
   if (!token) {
     alert("Please enter a token ID.");
     return;
   }
-  
-  // Find record by token
   const rec = RECS.find(r => r.token === token);
   if (!rec) {
     alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
     return;
   }
-  
-  // Fill all fields from the record
   fillDistFormFromRecord(rec);
-  
-  // Show success message
   const displayText = `${rec.firstName || ''} ${rec.surname || ''} (Token: ${rec.token})`;
   document.getElementById('distAutoFillText').innerText = displayText;
   document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-  
   toast('✅ Beneficiary data loaded from registration');
 }
 
 /* ═══════════════════════════════════════════════════════════════
    🔑 FILL DISTRIBUTION FORM FROM RECORD
-   Populates ALL beneficiary information fields from a record
+   Populates ALL beneficiary information fields INCLUDING the
+   new Token display field from a record object
 ═══════════════════════════════════════════════════════════════ */
 function fillDistFormFromRecord(rec){
-  // Token
+  // 🔑 Token (new display field)
+  if (rec.token) document.getElementById('distTokenDisplay').value = rec.token;
   if (rec.token) document.getElementById('distBeneficiaryToken').value = rec.token;
   
   // Location
@@ -1639,10 +1630,6 @@ function fillDistFormFromRecord(rec){
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION QR SCANNER
-   Scans QR and immediately fills all beneficiary fields
-═══════════════════════════════════════════════════════════════ */
 function startDistScanner(){
   if (distScannerRunning) return;
   if (typeof Html5Qrcode === 'undefined') { 
@@ -1654,37 +1641,23 @@ function startDistScanner(){
   const config = { fps: 10, qrbox: { width: 200, height: 200 } };
   
   const onSuccess = (decodedText) => {
-    // 🔑 Parse the QR data (handles both JSON and line-based formats)
     const parsed = parseQRData(decodedText);
-    
     if (parsed) {
-      // 🔑 Immediately fill all beneficiary fields
       fillDistFormFromParsedQR(parsed);
-      
-      // Also fill the token field
-      if (parsed.token) {
-        document.getElementById('distBeneficiaryToken').value = parsed.token;
-      }
-      
-      // Show success message
       const name = (parsed.firstName || '') + ' ' + (parsed.surname || '');
       const token = parsed.token || 'N/A';
       const displayText = `${name.trim()} (Token: ${token})`;
       document.getElementById('distAutoFillText').innerText = displayText;
       document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-      
       document.getElementById('distQrStatus').innerText = '✅ All beneficiary data auto-filled!';
       toast('✅ QR scanned - all fields filled!');
     } else {
-      // If parsing failed, treat as plain token
       document.getElementById('distBeneficiaryToken').value = decodedText;
       document.getElementById('distQrStatus').innerText = 'Token scanned. Other fields not in QR.';
       toast('⚠️ Only token captured');
     }
-    
     stopDistScanner();
   };
-  
   const onFailure = () => {};
   
   distHtml5Qrcode.start({ facingMode: "environment" }, config, onSuccess, onFailure)
@@ -1704,18 +1677,22 @@ function startDistScanner(){
           document.getElementById('distQrFrame').classList.add('scanning');
           document.getElementById('distQrStatus').innerText = "Point camera at beneficiary QR code.";
         })
-        .catch((err2) => { 
-          document.getElementById('distQrStatus').innerText = '❌ Camera unavailable.'; 
-        });
+        .catch((err2) => { document.getElementById('distQrStatus').innerText = '❌ Camera unavailable.'; });
     });
 }
 
 /* ═══════════════════════════════════════════════════════════════
    🔑 FILL DISTRIBUTION FORM FROM PARSED QR DATA
-   This is the key function that populates ALL beneficiary fields
-   immediately when a QR code is scanned in the Distribution tab.
+   Populates ALL beneficiary fields INCLUDING the new Token
+   display field above GPS
 ═══════════════════════════════════════════════════════════════ */
 function fillDistFormFromParsedQR(data){
+  // 🔑 Token (new display field above GPS)
+  if (data.token) {
+    document.getElementById('distTokenDisplay').value = data.token;
+    document.getElementById('distBeneficiaryToken').value = data.token;
+  }
+  
   // Location Information
   if (data.region) document.getElementById('distRegion').value = data.region;
   if (data.district) document.getElementById('distDistrict').value = data.district;
@@ -1766,28 +1743,23 @@ function submitDistribution(e){
     alert("⚠️ Please ensure both signatures are provided.");
     return false;
   }
-  
   const token = document.getElementById('distBeneficiaryToken').value.trim();
   if (!token) {
     alert("⚠️ Please enter or scan a beneficiary token before submitting.");
     return false;
   }
-  
   const matchIndex = RECS.findIndex(r => r.token === token);
   if (matchIndex === -1) {
     alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
     return false;
   }
-  
   if (RECS[matchIndex].status === 'Distributed') {
     alert("ℹ️ This household has already been distributed to.\n\nToken: " + token);
     return false;
   }
-  
   RECS[matchIndex].status = 'Distributed';
   RECS[matchIndex].distributionDate = new Date().toLocaleString();
   RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
-  
   saveRecsLocal();
   if (RECS[matchIndex]._id) {
     updateRecordInCloud(RECS[matchIndex]._id, { 
@@ -1796,14 +1768,12 @@ function submitDistribution(e){
       distributedBy: RECS[matchIndex].distributedBy
     });
   }
-  
   const activeScreen = document.querySelector('#phoneMock .screen.active');
   if (activeScreen) {
     if (activeScreen.id === 'sRecords') renderRecords();
     if (activeScreen.id === 'sDistRecs') renderDistRecords();
     if (activeScreen.id === 'sDistTarget') renderDistTarget();
   }
-  
   alert("✅ Distribution record submitted successfully!\n\nToken: " + token + "\nStatus: Distributed");
   setTimeout(() => { openDistribution(); }, 500);
   return false;
