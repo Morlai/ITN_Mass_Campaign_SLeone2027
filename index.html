@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICF-SL ITN CAMPAIGN PORTAL — Distribution</title>
+<title>ICF-SL ITN Distribution</title>
 
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -69,7 +69,6 @@ body {
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .screen::-webkit-scrollbar, .content-wrapper::-webkit-scrollbar {
@@ -83,7 +82,9 @@ body {
     flex-direction: column;
 }
 
-.container { flex: 1; }
+.container {
+    flex: 1;
+}
 
 /* ============ HEADER ============ */
 .app-header {
@@ -91,7 +92,7 @@ body {
     background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-dark) 100%);
     padding: 22px 20px 20px;
     text-align: center;
-    overflow: hidden;
+    overflow: visible;
 }
 .app-header::before {
     content: "";
@@ -101,36 +102,10 @@ body {
         repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px),
         repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px);
     pointer-events: none;
-    z-index: 1;
-}
-.app-mark {
-    position: relative;
-    width: 46px; height: 46px;
-    margin: 0 auto 10px;
-    z-index: 2;
-}
-.main-title {
-    position: relative;
-    color: #fff;
-    font-weight: 800;
-    letter-spacing: 0.3px;
-    font-size: 1.05rem;
-    margin: 0 0 4px;
-    z-index: 2;
-}
-.sub-title {
-    position: relative;
-    color: rgba(255,255,255,0.85);
-    font-weight: 500;
-    font-size: 0.78rem;
-    margin: 0;
-    z-index: 2;
+    z-index: 0;
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 BACK BUTTON — Uses <a> tag for 100% reliability
-   Works even if JavaScript fails to load
-═══════════════════════════════════════════════════════════════ */
+/* 🔑 BACK BUTTON - Positioned outside the ::before overlay */
 .back-to-dashboard {
     position: absolute;
     top: 14px;
@@ -139,16 +114,16 @@ body {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    background: rgba(255, 255, 255, 0.25);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1.5px solid rgba(255, 255, 255, 0.5);
-    color: #fff;
-    padding: 8px 16px;
+    background: rgba(255, 255, 255, 0.22);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1.5px solid rgba(255, 255, 255, 0.45);
+    color: #fff !important;
+    padding: 8px 14px;
     border-radius: 24px;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
     transition: all 0.2s ease;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
@@ -157,15 +132,13 @@ body {
     touch-action: manipulation;
     -webkit-tap-highlight-color: rgba(255,255,255,0.3);
     user-select: none;
-    min-height: 36px;
-    min-width: 44px;
 }
 .back-to-dashboard:hover {
-    background: rgba(255, 255, 255, 0.4);
-    color: #fff;
+    background: rgba(255, 255, 255, 0.38);
+    color: #fff !important;
     transform: translateX(-2px);
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    text-decoration: none;
+    text-decoration: none !important;
 }
 .back-to-dashboard:active {
     transform: scale(0.95);
@@ -176,7 +149,31 @@ body {
     outline-offset: 2px;
 }
 .back-to-dashboard i {
-    font-size: 0.85rem;
+    font-size: 0.8rem;
+}
+
+.app-mark {
+    position: relative;
+    width: 46px; height: 46px;
+    margin: 0 auto 10px;
+    z-index: 1;
+}
+.main-title {
+    position: relative;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+    z-index: 1;
+}
+.sub-title {
+    position: relative;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    font-size: 0.78rem;
+    margin: 0;
+    z-index: 1;
 }
 
 /* ============ STEP PROGRESS TRACKER ============ */
@@ -460,7 +457,8 @@ body {
 .btn:focus-visible,
 .nav-link:focus-visible,
 .form-control:focus-visible,
-input[type="checkbox"]:focus-visible {
+input[type="checkbox"]:focus-visible,
+.back-to-dashboard:focus-visible {
     outline: 3px solid var(--amber);
     outline-offset: 2px;
 }
@@ -501,12 +499,8 @@ input[type="checkbox"]:focus-visible {
 
 <!-- HEADER -->
 <div class="app-header">
-    <!-- ═══════════════════════════════════════════════════════════
-         🔑 BACK BUTTON — Uses <a> tag with direct href
-         This is 100% reliable — works even without JavaScript
-         because the browser handles <a href> natively
-    ═══════════════════════════════════════════════════════════ -->
-    <a href="index.html" class="back-to-dashboard" onclick="window.location.href='index.html'; return true;">
+    <!-- 🔑 BACK BUTTON - Uses <a> tag for 100% reliability -->
+    <a href="index.html" class="back-to-dashboard">
         <i class="fas fa-arrow-left"></i>
         <span>Dashboard</span>
     </a>
@@ -527,7 +521,6 @@ input[type="checkbox"]:focus-visible {
 
 <div class="container p-3">
 
-<!-- STEP PROGRESS TRACKER -->
 <div class="step-progress" id="stepProgress">
     <div class="progress-track"></div>
     <div class="progress-fill" id="progressFill"></div>
@@ -541,7 +534,6 @@ input[type="checkbox"]:focus-visible {
 
 <form id="distributionForm">
 
-    <!-- STEP 1: DATE -->
     <div class="step active">
         <div class="step-card">
             <div class="step-header">
@@ -555,7 +547,6 @@ input[type="checkbox"]:focus-visible {
         </div>
     </div>
 
-    <!-- STEP 2: BENEFICIARY -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -604,7 +595,6 @@ input[type="checkbox"]:focus-visible {
             </div>
         </div>
 
-        <!-- Beneficiary Details Section -->
         <div class="step-card">
             <div class="step-header">
                 <span class="step-icon"><i class="fas fa-user"></i></span>
@@ -715,7 +705,6 @@ input[type="checkbox"]:focus-visible {
         </div>
     </div>
 
-    <!-- STEP 3: TEAM DETAILS & SIGNATURES -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -758,7 +747,6 @@ input[type="checkbox"]:focus-visible {
         </div>
     </div>
 
-    <!-- STEP 4: HEALTH TALKS -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -820,7 +808,6 @@ input[type="checkbox"]:focus-visible {
         </div>
     </div>
 
-    <!-- STEP 5: CONFIRMATION -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -839,7 +826,6 @@ input[type="checkbox"]:focus-visible {
         </div>
     </div>
 
-    <!-- STEP 6: GPS & SUBMIT -->
     <div class="step">
         <div class="step-card">
             <div class="step-header">
@@ -869,7 +855,6 @@ input[type="checkbox"]:focus-visible {
 </div>
 </div>
 
-<!-- NAVIGATION BUTTONS -->
 <div class="nav-buttons d-flex justify-content-between">
     <button type="button" class="btn btn-secondary px-4" id="prevBtn" style="visibility: hidden;">
         <i class="fas fa-arrow-left me-1"></i> Previous
@@ -887,19 +872,11 @@ Developed By<br>
 </div>
 </div>
 
-<!-- Scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/5.1.1/signature_pad.umd.min.js"></script>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════
-   🔑 BACK BUTTON — NO JAVASCRIPT NEEDED
-   The <a href="index.html"> tag handles navigation natively.
-   The browser does the work — no JS event listeners required.
-   This guarantees it works 100% of the time.
-═══════════════════════════════════════════════════════════════ */
-
 const steps = document.querySelectorAll('.step');
 const prevBtn = document.getElementById('prevBtn');
 const nextBtn = document.getElementById('nextBtn');
