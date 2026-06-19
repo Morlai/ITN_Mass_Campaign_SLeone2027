@@ -92,7 +92,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dfooter{background:#1565C0;padding:7px;text-align:center;flex-shrink:0}
 .dfooter p{font-size:.47rem;color:#fff}.dfooter strong{color:#FFD966}
 
-/* ═══════ SUB-HOME SCREENS (sRegHome, sDistHome) ═══════ */
 .sub-home-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;min-height:0;background:#fff}
 .sub-home-card{background:#fff;padding:20px 16px 18px;flex:1;overflow-y:auto;scrollbar-width:none}
 .sub-home-card::-webkit-scrollbar{display:none}
@@ -104,7 +103,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .sub-home-back{width:28px;height:28px;border-radius:50%;border:2px solid #1565C0;background:transparent;color:#1565C0;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .sub-home-back:hover{background:#1565C0;color:#fff}
 
-/* ═══════ SUB-OPTION CARDS (sc-grid) ═══════ */
 .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sc{border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.13);transition:transform .12s}
 .sc:active{transform:scale(.96)}
@@ -196,7 +194,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .qsm{width:60px;height:60px;display:block;margin:0 auto;cursor:pointer;border:1px solid #ddd;border-radius:7px;image-rendering:pixelated}
 .dlsm{background:#e76f51;color:#fff;border:none;padding:2px 5px;border-radius:7px;font-size:.43rem;margin-top:3px;cursor:pointer;display:block;width:100%}
 
-/* ═══════ TARGET SCREENS (shared styles) ═══════ */
 .tgt-body{flex:1;overflow-y:auto;padding:11px;background:#f0f3f8;scrollbar-width:none}
 .tgt-body::-webkit-scrollbar{display:none}
 .tday{border-radius:20px;padding:15px;text-align:center;margin-bottom:11px;color:#fff}
@@ -245,7 +242,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .sync-indicator.offline .sync-dot{background:#ef4444;animation:none}
 .sync-indicator.local .sync-dot{background:#f59e0b}
 
-/* ═══════ DISTRIBUTION MODULE STYLES ═══════ */
 #sDistribution{background:#F4F7F2}
 .dist-header{background:linear-gradient(135deg,#1565c0,#0d47a1);padding:22px 20px 20px;text-align:center;position:relative;overflow:hidden;flex-shrink:0}
 .dist-header::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.07) 0 2px,transparent 2px 18px),repeating-linear-gradient(-45deg,rgba(255,255,255,0.07) 0 2px,transparent 2px 18px);pointer-events:none}
@@ -303,7 +299,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-footer{background:#1565c0;color:rgba(255,255,255,.85);text-align:center;padding:14px 0;font-size:.8rem;flex-shrink:0}
 .dist-footer strong{color:#fff}
 
-/* ═══════ DISTRIBUTION RECORDS HEADER (purple) ═══════ */
 .dist-recs-header{background:linear-gradient(115deg,#A55EEA,#8B5CF6);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
 .dist-recs-header h3{font-size:.75rem;font-weight:700}
 </style>
@@ -318,7 +313,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 <div class="phone-frame">
  <div class="phone-mock" id="phoneMock">
 
-  <!-- ═══════ LOGIN ═══════ -->
   <div class="screen active" id="sLogin">
    <div class="login-body scroll-y">
     <div class="login-card">
@@ -345,7 +339,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
-  <!-- ═══════ DASHBOARD ═══════ -->
   <div class="screen" id="sDash">
    <div class="dhdr">
     <div class="dhdr-top">
@@ -386,7 +379,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="dfooter"><p>Developed By <strong>Informatics Consultancy Firm-SL</strong> © 2026</p></div>
   </div>
 
-  <!-- ═══════ REGISTRATION SUB-HOME ═══════ -->
   <div class="screen" id="sRegHome">
    <div class="sub-home-body">
     <div class="sub-home-card">
@@ -418,10 +410,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       🔑 DISTRIBUTION SUB-HOME (NEW)
-       Shows 3 cards for Admin, 2 cards for HHD2027
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="screen" id="sDistHome">
    <div class="sub-home-body">
     <div class="sub-home-card">
@@ -430,15 +418,12 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <div class="hdr-icon" style="background:linear-gradient(135deg,#1565C0,#1976d2)"><i class="fa fa-boxes"></i></div>
       <div class="sub-home-hdr-txt"><h2>ITN DISTRIBUTION</h2><p>Distribution Management Portal · ICF-SL</p></div>
      </div>
-     <div class="sc-grid" id="distHomeGrid">
-      <!-- Cards injected by JS based on user role -->
-     </div>
+     <div class="sc-grid" id="distHomeGrid"></div>
     </div>
    </div>
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
-  <!-- ═══════ MANUAL ENTRY ═══════ -->
   <div class="screen" id="sManual">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -524,7 +509,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
-  <!-- ═══════ RECORDS (Registration) ═══════ -->
   <div class="screen" id="sRecords">
    <div class="whdr">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -534,7 +518,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="rtable-wrap" id="recWrap"></div>
   </div>
 
-  <!-- ═══════ REGISTRATION TARGET ═══════ -->
   <div class="screen" id="sTarget">
    <div class="whdr" style="background:linear-gradient(115deg,#dc2626,#ef4444)">
     <button class="wback" onclick="go('sRegHome')">&#8592;</button>
@@ -579,10 +562,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
-  <!-- ═══════════════════════════════════════════════════════════════
-       🔑 DISTRIBUTION TARGET SCREEN (NEW)
-       Similar to sTarget but for distribution stats
-  ═══════════════════════════════════════════════════════════════ -->
   <div class="screen" id="sDistTarget">
    <div class="whdr" style="background:linear-gradient(115deg,#1565C0,#1976d2)">
     <button class="wback" onclick="go('sDistHome')">&#8592;</button>
@@ -591,8 +570,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
    <div class="tgt-body">
     <div class="tday dist"><div class="tday-n" id="dtToday">0</div><div class="tday-l">📦 Distributions Submitted Today</div></div>
-    
-    <!-- Admin-only: Set distribution target -->
     <div class="tstat" id="dtEditBox" style="display:none">
      <h4>⚙️ SET DISTRIBUTION TARGET</h4>
      <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure daily distribution target</p>
@@ -601,7 +578,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <button class="tedit-btn" onclick="saveDistTarget()">💾 Save</button>
      </div>
     </div>
-
     <div class="tstat">
      <h4>📦 DISTRIBUTION COVERAGE</h4>
      <div class="trow"><span class="tlbl">📊 Total Distributions (All Time)</span><span class="tval" id="dtTotal">0</span></div>
@@ -632,7 +608,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    </div>
   </div>
 
-  <!-- ═══════ DISTRIBUTION RECORDS ═══════ -->
   <div class="screen" id="sDistRecs">
    <div class="dist-recs-header">
     <button class="wback" onclick="go('sDistHome')">&#8592;</button>
@@ -642,7 +617,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="rtable-wrap" id="distRecWrap"></div>
   </div>
 
-  <!-- ═══════ DISTRIBUTION FORM ═══════ -->
   <div class="screen" id="sDistribution">
    <div class="dist-header">
     <button class="dist-back" onclick="go('sDistHome')" title="Back to Distribution Home">
@@ -849,7 +823,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
  </div>
 </div>
 
-<!-- Camera Modal -->
 <div class="cam-modal-ov" id="camModal">
  <div class="cam-modal-box">
   <div class="cam-hdr">
@@ -865,7 +838,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 <div class="omodal" id="oNet"><div class="ocard"><div class="oi" id="oNetI"></div><h3 id="oNetT"></h3><p id="oNetD"></p><button class="obtn" onclick="closeO('oNet')">OK</button></div></div>
 
 <script>
-/* ═══════ FIREBASE ═══════ */
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -889,7 +861,6 @@ function updateSyncIndicator(status, text) {
 if (FIREBASE_ENABLED && db) updateSyncIndicator('online', 'Cloud Sync Active');
 else updateSyncIndicator('local', 'Local Mode');
 
-/* ═══════ USER SYSTEM ═══════ */
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
 HHR2027,12345,Show,Hide,Hide,Hide,Hide,Hide,Hide,Hide,Hide
@@ -965,14 +936,10 @@ function buildDash(){
   initCarousel();
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION HOME - Shows 3 cards for Admin, 2 for HHD2027
-═══════════════════════════════════════════════════════════════ */
 function openDistHome(){
   go('sDistHome');
   const grid = document.getElementById('distHomeGrid');
   const isAdmin = CU && CU.USERNAME === 'Admin';
-  
   let html = `
     <div class="sc sc-bl" onclick="openDistribution()">
      <div class="sc-top"><i class="fa fa-boxes"></i><span>DISTRIBUTION</span></div>
@@ -982,8 +949,6 @@ function openDistHome(){
      <div class="sc-top"><i class="fa fa-table-list"></i><span>RECORDS</span></div>
      <div class="sc-bot"><strong>📁 View Records</strong><p>View all distribution records &amp; download QR codes</p></div>
     </div>`;
-  
-  // 🔑 Only Admin sees DAILY TARGET card
   if (isAdmin) {
     html += `
     <div class="sc sc-rd" onclick="openDistTarget()">
@@ -991,7 +956,6 @@ function openDistHome(){
      <div class="sc-bot"><strong>🎯 Set Target</strong><p>Configure &amp; track daily distribution target</p></div>
     </div>`;
   }
-  
   grid.innerHTML = html;
 }
 
@@ -1024,7 +988,6 @@ async function checkNet(){
   openO('oNet');
 }
 
-/* ═══════ GEO DATA ═══════ */
 const GEO = {
   'Eastern': {
     'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
@@ -1237,6 +1200,12 @@ function qrDataUrl(rec, displaySize){
   if (!cv) return '';
   return cv.toDataURL('image/png');
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 RECORDS TABLE - Status badge is NOT clickable
+   Status only changes to "Distributed" when distribution form is
+   submitted via the DISTRIBUTION tab with matching token.
+═══════════════════════════════════════════════════════════════ */
 function renderRecordsTable(wrapId){
   const wrap=document.getElementById(wrapId);
   if(!RECS.length){wrap.innerHTML='<div class="no-rec">No records yet.<br>Submit a record to see it here.</div>';return;}
@@ -1245,9 +1214,10 @@ function renderRecordsTable(wrapId){
     const u=qrDataUrl(r, 60);
     const [lat,lng]=(r.gps||'').split(',');
     const isDist = r.status === 'Distributed';
+    // 🔑 Status badge is DISPLAY ONLY - not clickable
     const statusBadge = isDist 
       ? `<span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
-      : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;cursor:pointer;" data-i="${i}" class="pend-badge">Pending</span>`;
+      : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Pending</span>`;
     const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}" alt="QR">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
     tableHTML+=`<tr><td>${i+1}</td><td style="font-size:.42rem;white-space:nowrap">${r.date}</td><td>${esc(r.region)}</td><td>${esc(r.district)}</td><td>${esc(r.chiefdom)}</td><td>${esc(r.community)}</td><td>${esc(r.healthFacility)}</td><td>${esc(r.dp)}</td><td>${esc(r.surname)}</td><td>${esc(r.middleName||'')}</td><td>${esc(r.firstName)}</td><td>${esc(r.mobile)}</td><td>${r.members}</td><td>${r.pregnant||0}</td><td>${r.under5||0}</td><td>${r.itn}</td><td>${esc(r.hhr)}</td><td style="font-size:.42rem">${esc(lat||'')}</td><td style="font-size:.42rem">${esc(lng||'')}</td><td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td><td>${qrCell}</td><td style="text-align:center;min-width:90px">${statusBadge}</td><td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td></tr>`;
   });
@@ -1255,16 +1225,7 @@ function renderRecordsTable(wrapId){
   wrap.innerHTML=tableHTML;
   wrap.querySelectorAll('.qsm').forEach(img=>{img.onclick=()=>showQRModal(RECS[+img.dataset.i]);});
   wrap.querySelectorAll('.dl-btn').forEach(btn=>{ btn.onclick=()=>{ const u=qrDataUrl(RECS[+btn.dataset.i], 300); if(u){const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();} }; });
-  wrap.querySelectorAll('.pend-badge').forEach(badge => {
-    badge.onclick = () => {
-      const idx = +badge.dataset.i;
-      RECS[idx].status = 'Distributed';
-      saveRecsLocal();
-      if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
-      renderRecordsTable(wrapId);
-      toast('✅ Record marked as Distributed');
-    };
-  });
+  // 🔑 NO pend-badge click handler - status can only change via distribution form
 }
 function renderRecords(){ renderRecordsTable('recWrap'); }
 function renderDistRecords(){ renderRecordsTable('distRecWrap'); }
@@ -1276,7 +1237,6 @@ function showQRModal(rec){
   document.body.appendChild(d);
 }
 
-/* ═══════ REGISTRATION TARGET ═══════ */
 function getTarget(){ return parseInt(localStorage.getItem('itn_target')) || 500; }
 async function saveTarget(){
   const inp = document.getElementById('tTargetInput');
@@ -1313,31 +1273,19 @@ function renderTarget(){
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION TARGET (NEW)
-═══════════════════════════════════════════════════════════════ */
 function getDistTarget(){ return parseInt(localStorage.getItem('itn_dist_target')) || 50; }
-
-function openDistTarget(){
-  go('sDistTarget');
-  renderDistTarget();
-}
-
+function openDistTarget(){ go('sDistTarget'); renderDistTarget(); }
 async function saveDistTarget(){
   const inp = document.getElementById('dtTargetInput');
   const v = parseInt(inp?.value);
   if(!v || v <= 0){ toast('⚠ Enter a valid target number'); return; }
   localStorage.setItem('itn_dist_target', v);
   if (FIREBASE_ENABLED && db) {
-    try { 
-      await db.collection('settings').doc('campaign').set({distTarget: v, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()}, {merge:true}); 
-      toast('✅ Distribution target synced: ' + v); 
-    }
+    try { await db.collection('settings').doc('campaign').set({distTarget: v, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()}, {merge:true}); toast('✅ Distribution target synced: ' + v); }
     catch (e) { toast('✅ Target saved locally'); }
   } else { toast('✅ Distribution target set to ' + v); }
   renderDistTarget();
 }
-
 function renderDistTarget(){
   const target = getDistTarget();
   const total=RECS.length;
@@ -1348,46 +1296,25 @@ function renderDistTarget(){
   const pct=Math.min(100,Math.round(total/target*100));
   const ts=todayStr();
   const todayCt=RECS.filter(r=>r.date&&r.date.includes(ts)).length;
-  
   const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set('dtToday',todayCt);
-  set('dtTotal',total);
-  set('dtDistributed',distributed);
-  set('dtPending',pending);
-  set('dtTargetVal',target);
-  set('dtTargetTotal',target);
-  set('dtRem',Math.max(0,target-todayCt));
-  set('dtItn',itn);
-  set('dtPpl',ppl);
-  set('dtPct',pct+'%');
-  set('dtCurr',todayCt);
-  
+  set('dtToday',todayCt);set('dtTotal',total);set('dtDistributed',distributed);set('dtPending',pending);
+  set('dtTargetVal',target);set('dtTargetTotal',target);set('dtRem',Math.max(0,target-todayCt));
+  set('dtItn',itn);set('dtPpl',ppl);set('dtPct',pct+'%');set('dtCurr',todayCt);
   const f=document.getElementById('dtFill');if(f)f.style.width=pct+'%';
-  
   const cnt=obj=>Object.entries(obj).length?Object.entries(obj).map(([k,v])=>`• ${k}: ${v}<br>`).join(''):'No data';
   const d={},c={},fa={};
-  RECS.forEach(r=>{
-    if(r.district)d[r.district]=(d[r.district]||0)+1;
-    if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1;
-    if(r.healthFacility)fa[r.healthFacility]=(fa[r.healthFacility]||0)+1;
-  });
+  RECS.forEach(r=>{if(r.district)d[r.district]=(d[r.district]||0)+1;if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1;if(r.healthFacility)fa[r.healthFacility]=(fa[r.healthFacility]||0)+1;});
   document.getElementById('dtDist').innerHTML=cnt(d);
   document.getElementById('dtChief').innerHTML=cnt(c);
   document.getElementById('dtFac').innerHTML=cnt(fa);
-  
-  // 🔑 Only Admin can set distribution target
   const editBox = document.getElementById('dtEditBox');
   if(editBox){
     const canEdit = CU && CU.USERNAME === 'Admin';
     editBox.style.display = canEdit ? 'block' : 'none';
-    if(canEdit){
-      const inp = document.getElementById('dtTargetInput');
-      if(inp) inp.value = target;
-    }
+    if(canEdit){const inp = document.getElementById('dtTargetInput');if(inp) inp.value = target;}
   }
 }
 
-/* ═══════ CAMERA SCANNER ═══════ */
 let html5QrCode = null, scannerActive = false;
 function openCameraScanner(){
   const modal = document.getElementById('camModal'), statusEl = document.getElementById('camStatus'), statusText = document.getElementById('camStatusText');
@@ -1531,7 +1458,6 @@ function fillPersonalDetails(data){
   if(data.token) { mTok = data.token; const tb = document.getElementById('mTok'); if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; } }
 }
 
-/* ═══════ DISTRIBUTION FORM ═══════ */
 let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null, distHtml5Qrcode = null, distScannerRunning = false;
 
 function openDistribution(){
@@ -1665,15 +1591,79 @@ function parseDistQRData(qrData){
   }
 }
 function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 SUBMIT DISTRIBUTION - Updates matching record status to
+   "Distributed" based on the beneficiary token entered/scanned.
+   This is the ONLY way a record's status can change from
+   "Pending" to "Distributed".
+═══════════════════════════════════════════════════════════════ */
 function submitDistribution(e){
   e.preventDefault();
-  if (!distVerifierPad || !distDistributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) { alert("⚠️ Please ensure both signatures are provided."); return false; }
-  alert("✅ Distribution record submitted successfully!");
+  if (!distVerifierPad || !distDistributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) {
+    alert("⚠️ Please ensure both signatures are provided.");
+    return false;
+  }
+  
+  // Get the token from the distribution form
+  const token = document.getElementById('distBeneficiaryToken').value.trim();
+  
+  if (!token) {
+    alert("⚠️ Please enter or scan a beneficiary token before submitting.");
+    return false;
+  }
+  
+  // Find the matching record in RECS array by token
+  const matchIndex = RECS.findIndex(r => r.token === token);
+  
+  if (matchIndex === -1) {
+    alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
+    return false;
+  }
+  
+  // Check if already distributed
+  if (RECS[matchIndex].status === 'Distributed') {
+    alert("ℹ️ This household has already been distributed to.\n\nToken: " + token);
+    return false;
+  }
+  
+  // 🔑 Update the status to "Distributed"
+  RECS[matchIndex].status = 'Distributed';
+  RECS[matchIndex].distributionDate = new Date().toLocaleString();
+  RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
+  
+  // Save to localStorage
+  saveRecsLocal();
+  
+  // Save to cloud
+  if (RECS[matchIndex]._id) {
+    updateRecordInCloud(RECS[matchIndex]._id, { 
+      status: 'Distributed',
+      distributionDate: RECS[matchIndex].distributionDate,
+      distributedBy: RECS[matchIndex].distributedBy
+    });
+  }
+  
+  // Refresh any open records views
+  const activeScreen = document.querySelector('#phoneMock .screen.active');
+  if (activeScreen) {
+    if (activeScreen.id === 'sRecords') renderRecords();
+    if (activeScreen.id === 'sDistRecs') renderDistRecords();
+    if (activeScreen.id === 'sDistTarget') renderDistTarget();
+  }
+  
+  alert("✅ Distribution record submitted successfully!\n\nToken: " + token + "\nStatus: Distributed");
+  
+  // Reset the form
+  setTimeout(() => {
+    openDistribution();
+  }, 500);
+  
   return false;
 }
+
 function openDistRecords(){ go('sDistRecs'); renderDistRecords(); }
 
-/* ═══════ INIT ═══════ */
 window.addEventListener('online', () => { if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active'); });
 window.addEventListener('offline', () => { if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline'); });
 const savedU=sessionStorage.getItem('cu');
