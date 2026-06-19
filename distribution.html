@@ -1,0 +1,1088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ICF-SL ITN CAMPAIGN PORTAL</title>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+<style>
+:root {
+    --canopy: #0E7C66;
+    --canopy-dark: #0A5C4C;
+    --canopy-tint: #E4F3EE;
+    --dusk: #16324F;
+    --dusk-deep: #0E2238;
+    --amber: #E8A33D;
+    --amber-dark: #C97F1E;
+    --coral: #D9594A;
+    --sand: #F4F7F2;
+    --ink: #16242A;
+    --paper: #FFFFFF;
+    --mist: #DCE7E2;
+    --muted: #5B6B6E;
+    --brand-blue: #1565c0;
+    --brand-blue-dark: #0d47a1;
+    --brand-blue-light: #1976d2;
+}
+
+* { box-sizing: border-box; }
+
+body {
+    background: radial-gradient(circle at 28% 18%, #1a3a5c 0%, #0d2137 48%, #050d14 100%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
+    margin:0;
+    font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
+    color: var(--ink);
+}
+
+/* PHONE FRAME */
+.phone {
+    width:375px;
+    height:95vh;
+    background: linear-gradient(165deg, #1c2c38, #0c1218);
+    border-radius:42px;
+    padding:10px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.04) inset;
+    position:relative;
+    display: flex;
+    flex-direction: column;
+}
+.notch {
+    position:absolute;
+    top:8px; left:50%;
+    transform:translateX(-50%);
+    width:74px; height:14px;
+    background:#0a0f14;
+    border-radius:0 0 14px 14px;
+    z-index:6;
+}
+
+/* SCREEN */
+.screen {
+    background: var(--sand);
+    flex: 1;
+    border-radius:32px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+}
+
+.screen::-webkit-scrollbar, .content-wrapper::-webkit-scrollbar {
+    display:none;
+}
+
+.content-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    flex: 1;
+}
+
+/* ============ HEADER ============ */
+.app-header {
+    position: relative;
+    background: linear-gradient(135deg, var(--brand-blue) 0%, var(--brand-blue-dark) 100%);
+    padding: 22px 20px 20px;
+    text-align: center;
+    overflow: hidden;
+}
+.app-header::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image:
+        repeating-linear-gradient(45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px),
+        repeating-linear-gradient(-45deg, rgba(255,255,255,0.07) 0 2px, transparent 2px 18px);
+    pointer-events: none;
+}
+.app-mark {
+    position: relative;
+    width: 46px; height: 46px;
+    margin: 0 auto 10px;
+}
+.main-title {
+    position: relative;
+    color: #fff;
+    font-weight: 800;
+    letter-spacing: 0.3px;
+    font-size: 1.05rem;
+    margin: 0 0 4px;
+}
+.sub-title {
+    position: relative;
+    color: rgba(255,255,255,0.85);
+    font-weight: 500;
+    font-size: 0.78rem;
+    margin: 0;
+}
+
+/* ============ STEP PROGRESS TRACKER ============ */
+.step-progress {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 18px 6px 8px;
+    padding: 0 3px;
+}
+.progress-track {
+    position: absolute;
+    top: 13px; left: 17px; right: 17px;
+    height: 3px;
+    background: var(--mist);
+    border-radius: 2px;
+    z-index: 0;
+}
+.progress-fill {
+    position: absolute;
+    top: 13px; left: 17px;
+    height: 3px;
+    width: 0%;
+    background: var(--brand-blue);
+    border-radius: 2px;
+    z-index: 0;
+    transition: width 0.3s ease;
+}
+.progress-step {
+    position: relative;
+    z-index: 1;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    background: var(--paper);
+    border: 2px solid var(--mist);
+    color: var(--muted);
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.25s ease;
+}
+.progress-step.completed {
+    background: var(--brand-blue);
+    border-color: var(--brand-blue);
+    color: #fff;
+}
+.progress-step.active {
+    background: var(--amber);
+    border-color: var(--amber);
+    color: var(--dusk-deep);
+    box-shadow: 0 0 0 4px rgba(232,163,61,0.25);
+    transform: scale(1.1);
+}
+
+/* ============ STEP CARDS ============ */
+.step-card {
+    background: var(--paper);
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 14px rgba(22,50,79,0.07);
+    border: 1px solid rgba(22,50,79,0.04);
+}
+.step-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    margin-bottom: 18px;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--mist);
+}
+.step-icon {
+    flex: 0 0 auto;
+    width: 38px; height: 38px;
+    border-radius: 11px;
+    background: var(--canopy-tint);
+    color: var(--canopy);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+}
+.step-eyebrow {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--brand-blue);
+    margin-bottom: 2px;
+}
+.step-title {
+    margin: 0;
+    font-size: 1.02rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.sub-section-title {
+    color: var(--dusk);
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    letter-spacing: 0.5px;
+}
+.sub-section-title i { color: var(--brand-blue); }
+
+/* ============ FORMS ============ */
+.form-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--dusk);
+    margin-bottom: 5px;
+}
+.form-control {
+    border-radius: 10px;
+    border: 1px solid var(--mist);
+    padding: 0.55rem 0.8rem;
+}
+.form-control:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 0.2rem rgba(21,101,192,0.16);
+}
+.form-control[readonly] { background-color: var(--sand); color: var(--muted); }
+.form-check-input:checked {
+    background-color: var(--brand-blue);
+    border-color: var(--brand-blue);
+}
+.form-check-input:focus {
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 0.2rem rgba(21,101,192,0.16);
+}
+.text-muted { color: var(--muted) !important; }
+.text-success { color: var(--canopy) !important; }
+.text-danger { color: var(--coral) !important; }
+.alert-success {
+    background-color: var(--canopy-tint);
+    border-color: rgba(14,124,102,0.25);
+    color: var(--canopy-dark);
+    border-radius: 10px;
+}
+
+/* ============ BUTTONS ============ */
+.btn { border-radius: 12px; font-weight: 600; }
+.btn-primary { background-color: var(--brand-blue); border-color: var(--brand-blue); }
+.btn-primary:hover, .btn-primary:focus { background-color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+.btn-success { background-color: var(--brand-blue); border-color: var(--brand-blue); }
+.btn-success:hover, .btn-success:focus { background-color: var(--brand-blue-dark); border-color: var(--brand-blue-dark); }
+.btn-outline-primary { color: var(--brand-blue); border-color: var(--brand-blue); }
+.btn-outline-primary:hover { background-color: var(--brand-blue); border-color: var(--brand-blue); }
+.btn-outline-secondary { color: var(--dusk); border-color: var(--mist); }
+.btn-outline-secondary:hover { background-color: var(--dusk); border-color: var(--dusk); }
+.btn-outline-danger { color: var(--coral); border-color: var(--coral); }
+.btn-outline-danger:hover { background-color: var(--coral); border-color: var(--coral); }
+.btn-secondary { background-color: var(--mist); border-color: var(--mist); color: var(--dusk); }
+.btn-secondary:hover { background-color: var(--muted); border-color: var(--muted); color: #fff; }
+
+/* ============ BENEFICIARY TABS (segmented control) ============ */
+#beneficiaryTab {
+    background: var(--sand);
+    border: none;
+    border-radius: 12px;
+    padding: 4px;
+    gap: 4px;
+}
+#beneficiaryTab .nav-link {
+    border: none;
+    border-radius: 9px;
+    color: var(--muted);
+    font-weight: 600;
+    font-size: 0.85rem;
+    padding: 8px 0;
+}
+#beneficiaryTab .nav-link.active {
+    background: var(--paper);
+    color: var(--brand-blue);
+    box-shadow: 0 1px 4px rgba(22,50,79,0.12);
+}
+
+/* ============ QR SCANNER ============ */
+.qr-frame { position: relative; }
+#qr-reader {
+    width: 100% !important;
+    height: 250px !important;
+    border-radius: 14px;
+    overflow: hidden;
+    background: var(--dusk-deep);
+}
+#qr-reader video {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover;
+}
+.qr-corner {
+    position: absolute;
+    width: 26px; height: 26px;
+    border: 3px solid var(--amber);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+    pointer-events: none;
+}
+.qr-frame.scanning .qr-corner { opacity: 1; }
+.qr-corner-tl { top: 10px; left: 10px; border-right: none; border-bottom: none; border-radius: 6px 0 0 0; }
+.qr-corner-tr { top: 10px; right: 10px; border-left: none; border-bottom: none; border-radius: 0 6px 0 0; }
+.qr-corner-bl { bottom: 10px; left: 10px; border-right: none; border-top: none; border-radius: 0 0 0 6px; }
+.qr-corner-br { bottom: 10px; right: 10px; border-left: none; border-top: none; border-radius: 0 0 6px 0; }
+
+/* ============ MULTI-STEP WIZARD ============ */
+.step { display: none; }
+.step.active { display: block; animation: fadeIn 0.3s ease; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateX(10px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+/* ============ NAVIGATION BUTTONS ============ */
+.nav-buttons {
+    background: var(--paper);
+    border-top: 1px solid var(--mist);
+    box-shadow: 0 -2px 8px rgba(22,50,79,0.05);
+    z-index: 10;
+    padding: 12px 15px;
+}
+
+/* ============ SIGNATURE PAD ============ */
+.signature-pad {
+    border: 2px dashed var(--mist);
+    border-radius: 12px;
+    width: 100%;
+    height: 150px;
+    background: #fff;
+    touch-action: none;
+    cursor: crosshair;
+}
+
+/* ============ HEALTH TALKS ============ */
+.health-topic-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    background-color: var(--sand);
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    color: var(--ink);
+}
+.topic-number {
+    flex: 0 0 auto;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--brand-blue);
+    color: #fff;
+    font-size: 0.72rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+}
+.health-topic-item strong {
+    color: var(--dusk);
+    display: block;
+    margin-bottom: 2px;
+}
+
+/* ============ FOOTER ============ */
+.custom-footer {
+    background-color: var(--brand-blue);
+    color: rgba(255,255,255,0.85);
+    text-align: center;
+    padding: 14px 0;
+    font-size: 0.8rem;
+    margin: 0;
+}
+.custom-footer strong { color: #fff; }
+
+/* ============ ACCESSIBILITY / QUALITY FLOOR ============ */
+.btn:focus-visible,
+.nav-link:focus-visible,
+.form-control:focus-visible,
+input[type="checkbox"]:focus-visible {
+    outline: 3px solid var(--amber);
+    outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+@media (max-width: 430px) {
+    body { background: var(--brand-blue-dark); }
+    .phone {
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+        background: none;
+    }
+    .notch { display: none; }
+    .screen { border-radius: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="phone">
+<div class="notch"></div>
+<div class="screen">
+
+<!-- Scrollable Content Area -->
+<div class="content-wrapper">
+
+<!-- HEADER -->
+<div class="app-header">
+    <div class="app-header-mesh"></div>
+    <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+        <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
+            <path d="M9 13 L22 26 M22 13 L9 26"/>
+            <path d="M22 13 L35 26 M35 13 L22 26"/>
+            <path d="M9 26 L22 35"/>
+            <path d="M22 26 L35 35"/>
+        </g>
+        <circle cx="22" cy="19.5" r="3.4" fill="#E8A33D"/>
+    </svg>
+    <h5 class="main-title">ICF-SL ITN Campaign Portal</h5>
+    <p class="sub-title">Insecticide-Treated Net Distribution &middot; Sierra Leone</p>
+</div>
+
+<div class="container p-3">
+
+<!-- STEP PROGRESS TRACKER -->
+<div class="step-progress" id="stepProgress">
+    <div class="progress-track"></div>
+    <div class="progress-fill" id="progressFill"></div>
+    <div class="progress-step"><span>1</span></div>
+    <div class="progress-step"><span>2</span></div>
+    <div class="progress-step"><span>3</span></div>
+    <div class="progress-step"><span>4</span></div>
+    <div class="progress-step"><span>5</span></div>
+    <div class="progress-step"><span>6</span></div>
+</div>
+
+<form id="distributionForm">
+
+    <!-- STEP 1: DATE -->
+    <div class="step active">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-calendar-days"></i></span>
+                <div>
+                    <span class="step-eyebrow"></span>
+                    <h2 class="step-title">Date</h2>
+                </div>
+            </div>
+            <input type="date" class="form-control" id="distDate" required>
+        </div>
+    </div>
+
+    <!-- STEP 2: BENEFICIARY -->
+    <div class="step">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-id-card"></i></span>
+                <div>
+                    <span class="step-eyebrow">Household</span>
+                    <h2 class="step-title">Beneficiary Details</h2>
+                </div>
+            </div>
+            <ul class="nav nav-tabs mb-3" id="beneficiaryTab">
+                <li class="nav-item flex-fill text-center">
+                    <button class="nav-link active w-100" data-bs-toggle="tab" data-bs-target="#token" type="button">Type Token</button>
+                </li>
+                <li class="nav-item flex-fill text-center">
+                    <button class="nav-link w-100" data-bs-toggle="tab" data-bs-target="#qr" type="button">Scan QR</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="token">
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="beneficiaryToken" placeholder="Enter Token ID">
+                        <button class="btn btn-primary" type="button" onclick="autoFillData()">Auto-Fill</button>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="qr">
+                    <div class="qr-frame" id="qrFrame">
+                        <div id="qr-reader"></div>
+                        <span class="qr-corner qr-corner-tl"></span>
+                        <span class="qr-corner qr-corner-tr"></span>
+                        <span class="qr-corner qr-corner-bl"></span>
+                        <span class="qr-corner qr-corner-br"></span>
+                    </div>
+                    <div class="d-flex gap-2 mt-2">
+                        <button type="button" class="btn btn-primary w-100" id="startScanBtn" onclick="startScanner()">
+                            <i class="fas fa-camera me-1"></i> Start Scanning
+                        </button>
+                        <button type="button" class="btn btn-outline-danger w-100 d-none" id="stopScanBtn" onclick="stopScanner()">
+                            <i class="fas fa-stop-circle me-1"></i> Stop Scanning
+                        </button>
+                    </div>
+                    <p class="text-muted text-center mt-2 small" id="qr-status">Tap "Start Scanning" to use the camera.</p>
+                </div>
+            </div>
+            <div id="autoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
+                <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="autoFillText"></span>
+            </div>
+        </div>
+
+        <!-- Beneficiary Details Section -->
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-user"></i></span>
+                <div>
+                    <span class="step-eyebrow">Beneficiary Information</span>
+                    <h2 class="step-title">Personal Details</h2>
+                </div>
+            </div>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-map-marker-alt me-2"></i>Location Information</h6>
+            
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label" for="region">Region</label>
+                    <input type="text" class="form-control" id="region" placeholder="Region" readonly>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="district">District</label>
+                    <input type="text" class="form-control" id="district" placeholder="District" readonly>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label" for="chiefdom">Chiefdom</label>
+                    <input type="text" class="form-control" id="chiefdom" placeholder="Chiefdom" readonly>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="community">Community</label>
+                    <input type="text" class="form-control" id="community" placeholder="Community" readonly>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label" for="facility">Facility</label>
+                    <input type="text" class="form-control" id="facility" placeholder="Facility" readonly>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="distPoint">Dist. Point</label>
+                    <input type="text" class="form-control" id="distPoint" placeholder="Dist. Point" readonly>
+                </div>
+            </div>
+
+            <hr>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-user-circle me-2"></i>Personal Information</h6>
+
+            <div class="row g-2 mb-3">
+                <div class="col-4">
+                    <label class="form-label" for="surname">Surname</label>
+                    <input type="text" class="form-control" id="surname" placeholder="Surname" readonly>
+                </div>
+                <div class="col-4">
+                    <label class="form-label" for="middleName">Middle Name</label>
+                    <input type="text" class="form-control" id="middleName" placeholder="Middle" readonly>
+                </div>
+                <div class="col-4">
+                    <label class="form-label" for="firstName">First Name</label>
+                    <input type="text" class="form-control" id="firstName" placeholder="First" readonly>
+                </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label" for="mobile">Mobile</label>
+                    <input type="tel" class="form-control" id="mobile" placeholder="Mobile" readonly>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="hhrName">HHR Name</label>
+                    <input type="text" class="form-control" id="hhrName" placeholder="HHR Name" readonly>
+                </div>
+            </div>
+
+            <hr>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-box me-2"></i>ITN Allocation</h6>
+
+            <div class="row g-2 mb-3">
+                <div class="col-4">
+                    <label class="form-label" for="itnAlloc">ITN Alloc</label>
+                    <input type="number" class="form-control" id="itnAlloc" placeholder="0" readonly>
+                </div>
+                <div class="col-4">
+                    <label class="form-label" for="pregnant">Pregnant</label>
+                    <input type="number" class="form-control" id="pregnant" placeholder="0" readonly>
+                </div>
+                <div class="col-4">
+                    <label class="form-label" for="under5">Under-5</label>
+                    <input type="number" class="form-control" id="under5" placeholder="0" readonly>
+                </div>
+            </div>
+
+            <hr>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-location-crosshairs me-2"></i>GPS Coordinates</h6>
+
+            <div class="row g-2 mb-3">
+                <div class="col-6">
+                    <label class="form-label" for="beneficiaryLat">Latitude</label>
+                    <input type="text" class="form-control" id="beneficiaryLat" placeholder="Latitude" readonly>
+                </div>
+                <div class="col-6">
+                    <label class="form-label" for="beneficiaryLng">Longitude</label>
+                    <input type="text" class="form-control" id="beneficiaryLng" placeholder="Longitude" readonly>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3: TEAM DETAILS & SIGNATURES -->
+    <div class="step">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-file-signature"></i></span>
+                <div>
+                    <span class="step-eyebrow"></span>
+                    <h2 class="step-title">Team Members</h2>
+                </div>
+            </div>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-user-check me-2"></i>Voucher Verifier</h6>
+
+            <label class="form-label" for="verifierName">Name of Voucher Verifier</label>
+            <input type="text" class="form-control mb-3" id="verifierName" placeholder="Enter full name" required>
+
+            <label class="form-label" for="verifierMobile">Mobile Number</label>
+            <input type="tel" class="form-control mb-3" id="verifierMobile" placeholder="e.g., 07XXXXXXXX" required>
+
+            <label class="form-label">Signature of Voucher Verifier</label>
+            <canvas id="verifierSignature" width="300" height="150" class="signature-pad mb-2"></canvas>
+            <button type="button" class="btn btn-sm btn-outline-secondary mb-4" onclick="clearSignature('verifier')">
+                <i class="fas fa-eraser me-1"></i> Clear Signature
+            </button>
+
+            <hr>
+
+            <h6 class="sub-section-title mb-3"><i class="fas fa-user-shield me-2"></i>ITN Distributor</h6>
+
+            <label class="form-label" for="distributorName">Name of ITN Distributor</label>
+            <input type="text" class="form-control mb-3" id="distributorName" placeholder="Enter full name" required>
+
+            <label class="form-label" for="distributorMobile">Mobile Number</label>
+            <input type="tel" class="form-control mb-3" id="distributorMobile" placeholder="e.g., 07XXXXXXXX" required>
+
+            <label class="form-label">Signature of ITN Distributor</label>
+            <canvas id="distributorSignature" width="300" height="150" class="signature-pad mb-2"></canvas>
+            <button type="button" class="btn btn-sm btn-outline-secondary mb-2" onclick="clearSignature('distributor')">
+                <i class="fas fa-eraser me-1"></i> Clear Signature
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 4: HEALTH TALKS GUIDE ONLY -->
+    <div class="step">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-book-medical"></i></span>
+                <div>
+                    <span class="step-eyebrow"></span>
+                    <h2 class="step-title">Health Talks</h2>
+                </div>
+            </div>
+
+            <button class="btn btn-outline-primary w-100 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#healthTalksContent" aria-expanded="false" aria-controls="healthTalksContent">
+                <i class="fas fa-book-medical me-2"></i> Given Health Talks
+            </button>
+
+            <div class="collapse" id="healthTalksContent">
+                <div class="health-topic-item">
+                    <span class="topic-number">1</span>
+                    <div>
+                        <strong>Proper Hanging</strong>
+                        Hang the net over the sleeping area every evening. Ensure it is tucked securely under the mattress or mat on all sides.
+                    </div>
+                </div>
+                <div class="health-topic-item">
+                    <span class="topic-number">2</span>
+                    <div>
+                        <strong>Consistent Usage</strong>
+                        Sleep under the ITN every night, even during short afternoon naps. Mosquitoes bite mostly between dusk and dawn.
+                    </div>
+                </div>
+                <div class="health-topic-item">
+                    <span class="topic-number">3</span>
+                    <div>
+                        <strong>Protect Vulnerable Groups</strong>
+                        Ensure all children (especially under 5 years) and pregnant women sleep under ITNs every night.
+                    </div>
+                </div>
+                <div class="health-topic-item">
+                    <span class="topic-number">4</span>
+                    <div>
+                        <strong>Washing &amp; Care</strong>
+                        Wash gently with mild soap and cold water. Hang to dry in the shade, never in direct sunlight. Limit washing to 3 times per year.
+                    </div>
+                </div>
+                <div class="health-topic-item">
+                    <span class="topic-number">5</span>
+                    <div>
+                        <strong>Important Don'ts</strong>
+                        Do not use the net for fishing, fencing, or gardening. Do not store the net when it is wet.
+                    </div>
+                </div>
+                <div class="health-topic-item">
+                    <span class="topic-number">6</span>
+                    <div>
+                        <strong>Replacement</strong>
+                        Replace the ITN every 3 years, or sooner if it develops large holes. Report damaged nets to community health workers.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 5: BENEFICIARY CONFIRMATION -->
+    <div class="step">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-clipboard-check"></i></span>
+                <div>
+                    <span class="step-eyebrow"></span>
+                    <h2 class="step-title">Beneficiary Confirmation</h2>
+                </div>
+            </div>
+            <div class="d-flex align-items-start mt-3">
+                <input class="form-check-input mt-1" type="checkbox" id="healthTalkGiven" required style="transform: scale(1.3);">
+                <label class="form-check-label ms-3 fw-bold" for="healthTalkGiven" style="font-size: 0.95rem; line-height: 1.4;">
+                    I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.
+                </label>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 6: GPS & SUBMIT -->
+    <div class="step">
+        <div class="step-card">
+            <div class="step-header">
+                <span class="step-icon"><i class="fas fa-location-dot"></i></span>
+                <div>
+                    <span class="step-eyebrow"></span>
+                    <h2 class="step-title">GPS Coordinates</h2>
+                </div>
+            </div>
+            <label class="form-label" for="gpsLat">Latitude</label>
+            <input type="text" class="form-control mb-3" id="gpsLat" placeholder="Latitude" readonly>
+
+            <label class="form-label" for="gpsLng">Longitude</label>
+            <input type="text" class="form-control mb-2" id="gpsLng" placeholder="Longitude" readonly>
+
+            <small class="text-muted mt-2 d-block" id="gpsStatus">
+                <i class="fas fa-spinner fa-spin me-1"></i> Auto-capturing location...
+            </small>
+        </div>
+        <button type="submit" class="btn btn-success w-100 mb-3 py-3 fw-bold">
+            <i class="fas fa-check-circle me-2"></i> Submit Record
+        </button>
+    </div>
+
+</form>
+
+</div>
+</div>
+
+<!-- NAVIGATION BUTTONS (Fixed at bottom above footer) -->
+<div class="nav-buttons d-flex justify-content-between">
+    <button type="button" class="btn btn-secondary px-4" id="prevBtn" style="visibility: hidden;">
+        <i class="fas fa-arrow-left me-1"></i> Previous
+    </button>
+    <button type="button" class="btn btn-primary px-4 ms-auto" id="nextBtn">
+        Next <i class="fas fa-arrow-right ms-1"></i>
+    </button>
+</div>
+
+<footer class="custom-footer">
+Developed By<br>
+<strong>Informatics Consultancy Firm-SL</strong> &copy; 2026
+</footer>
+
+</div>
+</div>
+
+<!-- Scripts -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.8/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/signature_pad/5.1.1/signature_pad.umd.min.js"></script>
+
+<script>
+const steps = document.querySelectorAll('.step');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const verifierCanvas = document.getElementById('verifierSignature');
+const distributorCanvas = document.getElementById('distributorSignature');
+
+let currentStep = 0;
+let verifierPad = null;
+let distributorPad = null;
+let html5QrcodeScanner = null;
+let isScannerRunning = false;
+
+function updateProgress(n) {
+    document.querySelectorAll('.progress-step').forEach((dot, index) => {
+        dot.classList.toggle('completed', index < n);
+        dot.classList.toggle('active', index === n);
+    });
+    const fill = document.getElementById('progressFill');
+    if (fill) {
+        fill.style.width = (steps.length > 1 ? (n / (steps.length - 1)) * 100 : 0) + '%';
+    }
+}
+
+function showStep(n) {
+    steps.forEach((step, index) => {
+        step.classList.toggle('active', index === n);
+    });
+
+    prevBtn.style.visibility = (n === 0) ? 'hidden' : 'visible';
+    nextBtn.style.display = (n === steps.length - 1) ? 'none' : 'inline-block';
+
+    updateProgress(n);
+
+    document.querySelector('.content-wrapper').scrollTop = 0;
+
+    if (n === 2) {
+        setTimeout(() => {
+            resizeSignatureCanvas(verifierCanvas, verifierPad);
+            resizeSignatureCanvas(distributorCanvas, distributorPad);
+        }, 50);
+    }
+
+    if (n !== 1) {
+        stopScanner();
+    }
+}
+
+function changeStep(n) {
+    currentStep += n;
+    if (currentStep >= steps.length) currentStep = steps.length - 1;
+    if (currentStep < 0) currentStep = 0;
+    showStep(currentStep);
+}
+
+function resizeSignatureCanvas(canvas, pad) {
+    if (!pad) return;
+    const ratio = Math.max(window.devicePixelRatio || 1, 1);
+    const rect = canvas.getBoundingClientRect();
+    if (rect.width === 0 || rect.height === 0) return;
+    canvas.width = rect.width * ratio;
+    canvas.height = rect.height * ratio;
+    canvas.getContext('2d').scale(ratio, ratio);
+    pad.clear();
+}
+
+function clearSignature(role) {
+    if (role === 'verifier' && verifierPad) verifierPad.clear();
+    if (role === 'distributor' && distributorPad) distributorPad.clear();
+}
+
+function setScannerUI(running) {
+    document.getElementById('startScanBtn').classList.toggle('d-none', running);
+    document.getElementById('stopScanBtn').classList.toggle('d-none', !running);
+    const frame = document.getElementById('qrFrame');
+    if (frame) frame.classList.toggle('scanning', running);
+}
+
+function setScannerStatus(text, variant) {
+    const statusEl = document.getElementById('qr-status');
+    statusEl.innerText = text;
+    statusEl.className = `text-${variant} text-center mt-2 small`;
+}
+
+function startScanner() {
+    if (isScannerRunning) return;
+
+    if (typeof Html5Qrcode === 'undefined') {
+        setScannerStatus('QR scanner library failed to load. Use "Type Token" instead.', 'danger');
+        return;
+    }
+
+    setScannerStatus('Requesting camera access...', 'muted');
+
+    html5QrcodeScanner = new Html5Qrcode("qr-reader");
+    const config = { fps: 10, qrbox: { width: 200, height: 200 } };
+
+    const onScanSuccess = (decodedText) => {
+        parseAndFillBeneficiaryData(decodedText);
+        stopScanner();
+    };
+    const onScanFailure = () => { };
+
+    html5QrcodeScanner.start({ facingMode: "environment" }, config, onScanSuccess, onScanFailure)
+        .then(() => {
+            isScannerRunning = true;
+            setScannerUI(true);
+            setScannerStatus("Point the camera at the beneficiary's QR code.", 'muted');
+        })
+        .catch((err) => {
+            console.warn('Rear camera unavailable, trying default camera:', err);
+            html5QrcodeScanner.start({}, config, onScanSuccess, onScanFailure)
+                .then(() => {
+                    isScannerRunning = true;
+                    setScannerUI(true);
+                    setScannerStatus("Point the camera at the beneficiary's QR code.", 'muted');
+                })
+                .catch((err2) => {
+                    console.error('QR Start Error:', err2);
+                    isScannerRunning = false;
+                    setScannerUI(false);
+                    setScannerStatus('Camera unavailable. Check permissions or use "Type Token" instead.', 'danger');
+                });
+        });
+}
+
+function stopScanner() {
+    if (html5QrcodeScanner && isScannerRunning) {
+        html5QrcodeScanner.stop().then(() => {
+            html5QrcodeScanner.clear();
+            isScannerRunning = false;
+            setScannerUI(false);
+            setScannerStatus('Tap "Start Scanning" to use the camera.', 'muted');
+        }).catch((err) => console.log("Stop error:", err));
+    }
+}
+
+function parseAndFillBeneficiaryData(qrData) {
+    try {
+        let data = JSON.parse(qrData);
+        
+        const fieldMapping = {
+            'token': 'beneficiaryToken',
+            'region': 'region',
+            'district': 'district',
+            'chiefdom': 'chiefdom',
+            'community': 'community',
+            'facility': 'facility',
+            'distPoint': 'distPoint',
+            'distributionPoint': 'distPoint',
+            'surname': 'surname',
+            'middleName': 'middleName',
+            'firstName': 'firstName',
+            'mobile': 'mobile',
+            'hhrName': 'hhrName',
+            'itnAlloc': 'itnAlloc',
+            'itnAllocation': 'itnAlloc',
+            'pregnant': 'pregnant',
+            'under5': 'under5',
+            'underFive': 'under5',
+            'latitude': 'beneficiaryLat',
+            'longitude': 'beneficiaryLng'
+        };
+
+        let filledCount = 0;
+        for (const [qrField, formField] of Object.entries(fieldMapping)) {
+            if (data[qrField] !== undefined && data[qrField] !== null) {
+                const element = document.getElementById(formField);
+                if (element) {
+                    element.value = data[qrField];
+                    filledCount++;
+                }
+            }
+        }
+
+        const displayText = data.firstName && data.surname 
+            ? `${data.firstName} ${data.surname} (Token: ${data.token || 'N/A'})`
+            : `Token: ${data.token || 'Scanned successfully'}`;
+        
+        document.getElementById('autoFillText').innerText = displayText;
+        document.getElementById('autoFillDisplay').classList.remove('d-none');
+        
+        setScannerStatus(`Successfully filled ${filledCount} fields.`, 'success');
+        
+    } catch (error) {
+        console.log('QR data is not JSON, treating as plain token:', error);
+        
+        document.getElementById('beneficiaryToken').value = qrData;
+        document.getElementById('autoFillText').innerText = `Token: ${qrData}`;
+        document.getElementById('autoFillDisplay').classList.remove('d-none');
+        
+        setScannerStatus('Token scanned. Other fields not available in QR code.', 'warning');
+    }
+}
+
+function autoFillData() {
+    const token = document.getElementById('beneficiaryToken').value;
+    if (token) {
+        document.getElementById('autoFillText').innerText = `Token: ${token}`;
+        document.getElementById('autoFillDisplay').classList.remove('d-none');
+    } else {
+        alert("Please enter a token ID.");
+    }
+}
+
+if (typeof SignaturePad !== 'undefined') {
+    verifierPad = new SignaturePad(verifierCanvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(22, 36, 42)'
+    });
+    distributorPad = new SignaturePad(distributorCanvas, {
+        backgroundColor: 'rgb(255, 255, 255)',
+        penColor: 'rgb(22, 36, 42)'
+    });
+} else {
+    console.error('SignaturePad library failed to load - signature fields will be disabled.');
+}
+
+prevBtn.addEventListener('click', () => changeStep(-1));
+nextBtn.addEventListener('click', () => changeStep(1));
+
+document.querySelector('button[data-bs-target="#token"]').addEventListener('shown.bs.tab', () => {
+    stopScanner();
+});
+
+window.addEventListener('resize', () => {
+    if (steps[2] && steps[2].classList.contains('active')) {
+        resizeSignatureCanvas(verifierCanvas, verifierPad);
+        resizeSignatureCanvas(distributorCanvas, distributorPad);
+    }
+});
+
+setTimeout(() => {
+    document.getElementById('gpsLat').value = "8.484444";
+    document.getElementById('gpsLng').value = "-13.234444";
+    document.getElementById('gpsStatus').innerHTML = '<i class="fas fa-check-circle text-success me-1"></i> GPS Coordinate auto-captured.';
+    document.getElementById('gpsStatus').className = "text-success small mt-2 d-block fw-bold";
+}, 1500);
+
+document.getElementById('distributionForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    if (!verifierPad || !distributorPad || verifierPad.isEmpty() || distributorPad.isEmpty()) {
+        alert("⚠️ Please ensure both the Voucher Verifier and ITN Distributor have signed.");
+        return;
+    }
+
+    alert("✅ Distribution record submitted successfully!");
+});
+
+showStep(currentStep);
+</script>
+
+</body>
+</html>
