@@ -261,9 +261,26 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-back:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
 .dist-back:active{transform:scale(.92)}
 
-/* 🔑 SCROLLABLE MIDDLE AREA */
+/* 🔑 RECORDS BUTTON in header */
+.dist-records-btn{position:absolute;top:14px;right:14px;z-index:10;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);transition:all .2s ease}
+.dist-records-btn:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
+.dist-records-btn:active{transform:scale(.92)}
+.dist-records-btn .badge-count{position:absolute;top:-4px;right:-4px;background:#E8A33D;color:#0E2238;font-size:.6rem;font-weight:800;min-width:18px;height:18px;border-radius:9px;display:flex;align-items:center;justify-content:center;padding:0 4px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+
 .dist-container{flex:1;overflow-y:auto;padding:12px;scrollbar-width:none;-ms-overflow-style:none}
 .dist-container::-webkit-scrollbar{display:none}
+
+/* 🔑 QUICK ACTION CARDS at top of Distribution */
+.dist-quick-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.dist-quick-card{background:#fff;border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s ease;box-shadow:0 3px 10px rgba(22,50,79,.08);border:1px solid rgba(22,50,79,.04);display:flex;flex-direction:column;align-items:center;gap:6px}
+.dist-quick-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(22,50,79,.15)}
+.dist-quick-card:active{transform:scale(.97)}
+.dist-quick-card i{font-size:1.4rem}
+.dist-quick-card span{font-size:.7rem;font-weight:700;letter-spacing:.3px}
+.dist-quick-card.records-card{background:linear-gradient(135deg,#A55EEA,#8B5CF6);color:#fff}
+.dist-quick-card.records-card i{color:#fff}
+.dist-quick-card.target-card{background:linear-gradient(135deg,#FF8C42,#E67E22);color:#fff}
+.dist-quick-card.target-card i{color:#fff}
 
 .dist-step-card{background:#fff;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 14px rgba(22,50,79,0.07);border:1px solid rgba(22,50,79,0.04)}
 .dist-step-header{display:flex;align-items:flex-start;gap:12px;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid #DCE7E2}
@@ -287,7 +304,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-step{display:none}
 .dist-step.active{display:block;animation:fadeUp .3s ease}
 
-/* 🔑 FIXED NAV BUTTONS - Above footer */
 .dist-nav-buttons{background:#fff;border-top:1px solid #DCE7E2;box-shadow:0 -2px 8px rgba(22,50,79,0.05);z-index:10;padding:12px 15px;display:flex;justify-content:space-between;gap:8px;flex-shrink:0}
 .dist-btn{border-radius:12px;font-weight:600;padding:10px 18px;border:none;cursor:pointer;font-size:.85rem;transition:all .2s ease}
 .dist-btn-prev{background:#DCE7E2;color:#16324F}
@@ -316,7 +332,45 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-beneficiary-tab .nav-link{border:none;border-radius:9px;color:#5B6B6E;font-weight:600;font-size:.85rem;padding:8px 0;flex:1;text-align:center;background:transparent;cursor:pointer}
 .dist-beneficiary-tab .nav-link.active{background:#fff;color:#1565c0;box-shadow:0 1px 4px rgba(22,50,79,.12)}
 
-/* 🔑 FIXED FOOTER - Always at bottom */
+/* 🔑 DISTRIBUTION RECORDS VIEW */
+.dist-records-view{display:none;flex:1;flex-direction:column;overflow:hidden}
+.dist-records-view.active{display:flex}
+.dist-records-header{background:linear-gradient(135deg,#A55EEA,#8B5CF6);padding:18px 20px;color:#fff;flex-shrink:0;position:relative}
+.dist-records-header h3{font-size:1rem;font-weight:800;margin:0 0 3px}
+.dist-records-header p{font-size:.78rem;opacity:.9;margin:0}
+.dist-records-back{position:absolute;top:14px;right:14px;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s ease}
+.dist-records-back:hover{background:rgba(255,255,255,.4)}
+.dist-records-stats{display:flex;gap:8px;padding:10px 12px;background:#fff;border-bottom:1px solid #eef2f8;flex-shrink:0}
+.dist-stat-chip{flex:1;background:linear-gradient(135deg,#f8fafc,#eef2f8);border-radius:10px;padding:8px;text-align:center}
+.dist-stat-chip .num{font-size:1.1rem;font-weight:800;color:#1565c0;display:block}
+.dist-stat-chip .lbl{font-size:.6rem;font-weight:600;color:#5B6B6E;text-transform:uppercase;letter-spacing:.5px}
+.dist-records-body{flex:1;overflow:auto;padding:8px;scrollbar-width:thin}
+.dist-records-body::-webkit-scrollbar{height:4px;width:4px}
+.dist-records-body::-webkit-scrollbar-thumb{background:#c0c9d8;border-radius:4px}
+.dist-records-empty{text-align:center;padding:40px 20px;color:#64748b}
+.dist-records-empty i{font-size:2.5rem;color:#DCE7E2;margin-bottom:10px;display:block}
+
+/* Record cards (mobile-friendly) */
+.dist-rec-card{background:#fff;border-radius:12px;padding:12px;margin-bottom:10px;box-shadow:0 2px 8px rgba(22,50,79,.06);border:1px solid rgba(22,50,79,.04)}
+.dist-rec-card-top{display:flex;align-items:center;gap:10px;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid #f0f3f8}
+.dist-rec-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#1565c0,#0d47a1);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;flex-shrink:0}
+.dist-rec-info{flex:1;min-width:0}
+.dist-rec-name{font-size:.85rem;font-weight:700;color:#16242A;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dist-rec-loc{font-size:.68rem;color:#5B6B6E;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dist-rec-status{padding:3px 8px;border-radius:10px;font-size:.6rem;font-weight:700;text-transform:uppercase;flex-shrink:0}
+.dist-rec-status.pending{background:#ffedd5;color:#c2410c}
+.dist-rec-status.distributed{background:#d1fae5;color:#065f46}
+.dist-rec-card-body{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:.72rem}
+.dist-rec-field{display:flex;flex-direction:column}
+.dist-rec-field .lbl{font-size:.6rem;color:#5B6B6E;font-weight:600;text-transform:uppercase;letter-spacing:.3px}
+.dist-rec-field .val{color:#16242A;font-weight:600}
+.dist-rec-card-actions{display:flex;gap:6px;margin-top:10px;padding-top:8px;border-top:1px solid #f0f3f8}
+.dist-rec-action{flex:1;padding:6px;border-radius:8px;border:none;font-size:.7rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:4px;transition:all .2s ease}
+.dist-rec-action.qr{background:#E4F3EE;color:#0E7C66}
+.dist-rec-action.qr:hover{background:#0E7C66;color:#fff}
+.dist-rec-action.mark{background:#ffedd5;color:#c2410c}
+.dist-rec-action.mark:hover{background:#c2410c;color:#fff}
+
 .dist-footer{background:#1565c0;color:rgba(255,255,255,.85);text-align:center;padding:14px 0;font-size:.8rem;flex-shrink:0}
 .dist-footer strong{color:#fff}
 </style>
@@ -574,267 +628,311 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 
   <!-- ═══════════════════════════════════════════════════════════════
        🔑 DISTRIBUTION MODULE SCREEN
-       Structure: Header (fixed top) → Container (scrollable middle) 
-                  → Nav Buttons (fixed) → Footer (fixed bottom)
   ═══════════════════════════════════════════════════════════════ -->
   <div class="screen" id="sDistribution">
    
-   <!-- 🔑 FIXED HEADER (top) -->
-   <div class="dist-header">
-    <button class="dist-back" onclick="go('sDash')" title="Back to Dashboard">
-     <i class="fas fa-arrow-left"></i>
-    </button>
-    <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-     <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
-      <path d="M9 13 L22 26 M22 13 L9 26"/>
-      <path d="M22 13 L35 26 M35 13 L22 26"/>
-      <path d="M9 26 L22 35"/>
-      <path d="M22 26 L35 35"/>
-     </g>
-     <circle cx="22" cy="19.5" r="3.4" fill="#E8A33D"/>
-    </svg>
-    <h5 class="main-title">ITN Distribution</h5>
-    <p class="sub-title">Net Distribution &middot; Sierra Leone</p>
-   </div>
-
-   <!-- 🔑 SCROLLABLE MIDDLE (form content) -->
-   <div class="dist-container">
-    <div class="dist-progress" id="distProgress">
-     <div class="dist-progress-track"></div>
-     <div class="dist-progress-fill" id="distProgressFill"></div>
-     <div class="dist-progress-step"><span>1</span></div>
-     <div class="dist-progress-step"><span>2</span></div>
-     <div class="dist-progress-step"><span>3</span></div>
-     <div class="dist-progress-step"><span>4</span></div>
-     <div class="dist-progress-step"><span>5</span></div>
-     <div class="dist-progress-step"><span>6</span></div>
+   <!-- 🔑 DISTRIBUTION FORM VIEW -->
+   <div id="distFormView" style="display:flex;flex-direction:column;flex:1;overflow:hidden">
+    <div class="dist-header">
+     <button class="dist-back" onclick="go('sDash')" title="Back to Dashboard">
+      <i class="fas fa-arrow-left"></i>
+     </button>
+     <!-- 🔑 RECORDS BUTTON in header (top-right) -->
+     <button class="dist-records-btn" onclick="showDistRecords()" title="View Records">
+      <i class="fas fa-table-list"></i>
+      <span class="badge-count" id="distRecCount">0</span>
+     </button>
+     <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
+      <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
+       <path d="M9 13 L22 26 M22 13 L9 26"/>
+       <path d="M22 13 L35 26 M35 13 L22 26"/>
+       <path d="M9 26 L22 35"/>
+       <path d="M22 26 L35 35"/>
+      </g>
+      <circle cx="22" cy="19.5" r="3.4" fill="#E8A33D"/>
+     </svg>
+     <h5 class="main-title">ITN Distribution</h5>
+     <p class="sub-title">Net Distribution &middot; Sierra Leone</p>
     </div>
 
-    <form id="distributionForm" onsubmit="return submitDistribution(event)">
-
-     <!-- STEP 1: DATE -->
-     <div class="dist-step active" data-step="0">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-calendar-days"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Step 1 of 6</span>
-         <h2 class="dist-step-title">Date</h2>
-        </div>
-       </div>
-       <input type="date" class="dist-form-control" id="distDate" required>
+    <div class="dist-container">
+     <!-- 🔑 QUICK ACTION CARDS (Records + Target) -->
+     <div class="dist-quick-actions">
+      <div class="dist-quick-card records-card" onclick="showDistRecords()">
+       <i class="fas fa-table-list"></i>
+       <span>VIEW RECORDS</span>
+      </div>
+      <div class="dist-quick-card target-card" onclick="showDistTarget()">
+       <i class="fas fa-bullseye"></i>
+       <span>DAILY TARGET</span>
       </div>
      </div>
 
-     <!-- STEP 2: BENEFICIARY -->
-     <div class="dist-step" data-step="1">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-id-card"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Household</span>
-         <h2 class="dist-step-title">Beneficiary Details</h2>
-        </div>
-       </div>
-       <div class="dist-beneficiary-tab" id="distBeneficiaryTab">
-        <button type="button" class="nav-link active" data-tab="dist-token" onclick="switchDistTab('dist-token')">Type Token</button>
-        <button type="button" class="nav-link" data-tab="dist-qr" onclick="switchDistTab('dist-qr')">Scan QR</button>
-       </div>
-       <div id="dist-token" class="dist-tab-content">
-        <div style="display:flex;gap:8px;margin-bottom:12px">
-         <input type="text" class="dist-form-control" id="distBeneficiaryToken" placeholder="Enter Token ID" style="flex:1">
-         <button type="button" class="dist-btn dist-btn-next" onclick="distAutoFillData()">Auto-Fill</button>
-        </div>
-       </div>
-       <div id="dist-qr" class="dist-tab-content" style="display:none">
-        <div class="dist-qr-frame" id="distQrFrame">
-         <div id="dist-qr-reader"></div>
-         <span class="dist-qr-corner dist-qr-corner-tl"></span>
-         <span class="dist-qr-corner dist-qr-corner-tr"></span>
-         <span class="dist-qr-corner dist-qr-corner-bl"></span>
-         <span class="dist-qr-corner dist-qr-corner-br"></span>
-        </div>
-        <div style="display:flex;gap:8px;margin-top:8px">
-         <button type="button" class="dist-btn dist-btn-next" style="flex:1" id="distStartScanBtn" onclick="startDistScanner()">
-          <i class="fas fa-camera me-1"></i> Start Scanning
-         </button>
-         <button type="button" class="dist-btn dist-btn-prev" style="flex:1;display:none" id="distStopScanBtn" onclick="stopDistScanner()">
-          <i class="fas fa-stop-circle me-1"></i> Stop
-         </button>
-        </div>
-        <p style="color:#5B6B6E;text-align:center;margin-top:8px;font-size:.8rem" id="distQrStatus">Tap "Start Scanning" to use the camera.</p>
-       </div>
-       <div id="distAutoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
-        <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="distAutoFillText"></span>
-       </div>
-      </div>
-
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-user"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Beneficiary Information</span>
-         <h2 class="dist-step-title">Personal Details</h2>
-        </div>
-       </div>
-       <h6 class="dist-sub-title"><i class="fas fa-map-marker-alt me-2"></i>Location</h6>
-       <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Region</label><input type="text" class="dist-form-control" id="distRegion" placeholder="Region" readonly></div>
-        <div class="col-6"><label class="dist-form-label">District</label><input type="text" class="dist-form-control" id="distDistrict" placeholder="District" readonly></div>
-       </div>
-       <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Chiefdom</label><input type="text" class="dist-form-control" id="distChiefdom" placeholder="Chiefdom" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Community</label><input type="text" class="dist-form-control" id="distCommunity" placeholder="Community" readonly></div>
-       </div>
-       <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Facility</label><input type="text" class="dist-form-control" id="distFacility" placeholder="Facility" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Dist. Point</label><input type="text" class="dist-form-control" id="distDistPoint" placeholder="Dist. Point" readonly></div>
-       </div>
-       <hr>
-       <h6 class="dist-sub-title"><i class="fas fa-user-circle me-2"></i>Personal</h6>
-       <div class="row g-2 mb-3">
-        <div class="col-4"><label class="dist-form-label">Surname</label><input type="text" class="dist-form-control" id="distSurname" placeholder="Surname" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Middle</label><input type="text" class="dist-form-control" id="distMiddleName" placeholder="Middle" readonly></div>
-        <div class="col-4"><label class="dist-form-label">First</label><input type="text" class="dist-form-control" id="distFirstName" placeholder="First" readonly></div>
-       </div>
-       <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Mobile</label><input type="tel" class="dist-form-control" id="distMobile" placeholder="Mobile" readonly></div>
-        <div class="col-6"><label class="dist-form-label">HHR Name</label><input type="text" class="dist-form-control" id="distHhrName" placeholder="HHR Name" readonly></div>
-       </div>
-       <hr>
-       <h6 class="dist-sub-title"><i class="fas fa-box me-2"></i>ITN Allocation</h6>
-       <div class="row g-2 mb-3">
-        <div class="col-4"><label class="dist-form-label">ITN Alloc</label><input type="number" class="dist-form-control" id="distItnAlloc" placeholder="0" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Pregnant</label><input type="number" class="dist-form-control" id="distPregnant" placeholder="0" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Under-5</label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly></div>
-       </div>
-       <hr>
-       <h6 class="dist-sub-title"><i class="fas fa-location-crosshairs me-2"></i>GPS</h6>
-       <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Latitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLat" placeholder="Latitude" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Longitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLng" placeholder="Longitude" readonly></div>
-       </div>
-      </div>
+     <div class="dist-progress" id="distProgress">
+      <div class="dist-progress-track"></div>
+      <div class="dist-progress-fill" id="distProgressFill"></div>
+      <div class="dist-progress-step"><span>1</span></div>
+      <div class="dist-progress-step"><span>2</span></div>
+      <div class="dist-progress-step"><span>3</span></div>
+      <div class="dist-progress-step"><span>4</span></div>
+      <div class="dist-progress-step"><span>5</span></div>
+      <div class="dist-progress-step"><span>6</span></div>
      </div>
 
-     <!-- STEP 3: TEAM & SIGNATURES -->
-     <div class="dist-step" data-step="2">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-file-signature"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Step 3 of 6</span>
-         <h2 class="dist-step-title">Team Members</h2>
+     <form id="distributionForm" onsubmit="return submitDistribution(event)">
+
+      <div class="dist-step active" data-step="0">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-calendar-days"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Step 1 of 6</span>
+          <h2 class="dist-step-title">Date</h2>
+         </div>
+        </div>
+        <input type="date" class="dist-form-control" id="distDate" required>
+       </div>
+      </div>
+
+      <div class="dist-step" data-step="1">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-id-card"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Household</span>
+          <h2 class="dist-step-title">Beneficiary Details</h2>
+         </div>
+        </div>
+        <div class="dist-beneficiary-tab" id="distBeneficiaryTab">
+         <button type="button" class="nav-link active" data-tab="dist-token" onclick="switchDistTab('dist-token')">Type Token</button>
+         <button type="button" class="nav-link" data-tab="dist-qr" onclick="switchDistTab('dist-qr')">Scan QR</button>
+        </div>
+        <div id="dist-token" class="dist-tab-content">
+         <div style="display:flex;gap:8px;margin-bottom:12px">
+          <input type="text" class="dist-form-control" id="distBeneficiaryToken" placeholder="Enter Token ID" style="flex:1">
+          <button type="button" class="dist-btn dist-btn-next" onclick="distAutoFillData()">Auto-Fill</button>
+         </div>
+        </div>
+        <div id="dist-qr" class="dist-tab-content" style="display:none">
+         <div class="dist-qr-frame" id="distQrFrame">
+          <div id="dist-qr-reader"></div>
+          <span class="dist-qr-corner dist-qr-corner-tl"></span>
+          <span class="dist-qr-corner dist-qr-corner-tr"></span>
+          <span class="dist-qr-corner dist-qr-corner-bl"></span>
+          <span class="dist-qr-corner dist-qr-corner-br"></span>
+         </div>
+         <div style="display:flex;gap:8px;margin-top:8px">
+          <button type="button" class="dist-btn dist-btn-next" style="flex:1" id="distStartScanBtn" onclick="startDistScanner()">
+           <i class="fas fa-camera me-1"></i> Start Scanning
+          </button>
+          <button type="button" class="dist-btn dist-btn-prev" style="flex:1;display:none" id="distStopScanBtn" onclick="stopDistScanner()">
+           <i class="fas fa-stop-circle me-1"></i> Stop
+          </button>
+         </div>
+         <p style="color:#5B6B6E;text-align:center;margin-top:8px;font-size:.8rem" id="distQrStatus">Tap "Start Scanning" to use the camera.</p>
+        </div>
+        <div id="distAutoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
+         <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="distAutoFillText"></span>
         </div>
        </div>
-       <h6 class="dist-sub-title"><i class="fas fa-user-check me-2"></i>Voucher Verifier</h6>
-       <label class="dist-form-label">Name</label>
-       <input type="text" class="dist-form-control mb-2" id="distVerifierName" placeholder="Full name" required>
-       <label class="dist-form-label">Mobile</label>
-       <input type="tel" class="dist-form-control mb-2" id="distVerifierMobile" placeholder="07XXXXXXXX" required>
-       <label class="dist-form-label">Signature</label>
-       <canvas id="distVerifierSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
-       <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px;margin-bottom:14px" onclick="clearDistSignature('verifier')">
-        <i class="fas fa-eraser me-1"></i> Clear
+
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-user"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Beneficiary Information</span>
+          <h2 class="dist-step-title">Personal Details</h2>
+         </div>
+        </div>
+        <h6 class="dist-sub-title"><i class="fas fa-map-marker-alt me-2"></i>Location</h6>
+        <div class="row g-2 mb-3">
+         <div class="col-6"><label class="dist-form-label">Region</label><input type="text" class="dist-form-control" id="distRegion" placeholder="Region" readonly></div>
+         <div class="col-6"><label class="dist-form-label">District</label><input type="text" class="dist-form-control" id="distDistrict" placeholder="District" readonly></div>
+        </div>
+        <div class="row g-2 mb-3">
+         <div class="col-6"><label class="dist-form-label">Chiefdom</label><input type="text" class="dist-form-control" id="distChiefdom" placeholder="Chiefdom" readonly></div>
+         <div class="col-6"><label class="dist-form-label">Community</label><input type="text" class="dist-form-control" id="distCommunity" placeholder="Community" readonly></div>
+        </div>
+        <div class="row g-2 mb-3">
+         <div class="col-6"><label class="dist-form-label">Facility</label><input type="text" class="dist-form-control" id="distFacility" placeholder="Facility" readonly></div>
+         <div class="col-6"><label class="dist-form-label">Dist. Point</label><input type="text" class="dist-form-control" id="distDistPoint" placeholder="Dist. Point" readonly></div>
+        </div>
+        <hr>
+        <h6 class="dist-sub-title"><i class="fas fa-user-circle me-2"></i>Personal</h6>
+        <div class="row g-2 mb-3">
+         <div class="col-4"><label class="dist-form-label">Surname</label><input type="text" class="dist-form-control" id="distSurname" placeholder="Surname" readonly></div>
+         <div class="col-4"><label class="dist-form-label">Middle</label><input type="text" class="dist-form-control" id="distMiddleName" placeholder="Middle" readonly></div>
+         <div class="col-4"><label class="dist-form-label">First</label><input type="text" class="dist-form-control" id="distFirstName" placeholder="First" readonly></div>
+        </div>
+        <div class="row g-2 mb-3">
+         <div class="col-6"><label class="dist-form-label">Mobile</label><input type="tel" class="dist-form-control" id="distMobile" placeholder="Mobile" readonly></div>
+         <div class="col-6"><label class="dist-form-label">HHR Name</label><input type="text" class="dist-form-control" id="distHhrName" placeholder="HHR Name" readonly></div>
+        </div>
+        <hr>
+        <h6 class="dist-sub-title"><i class="fas fa-box me-2"></i>ITN Allocation</h6>
+        <div class="row g-2 mb-3">
+         <div class="col-4"><label class="dist-form-label">ITN Alloc</label><input type="number" class="dist-form-control" id="distItnAlloc" placeholder="0" readonly></div>
+         <div class="col-4"><label class="dist-form-label">Pregnant</label><input type="number" class="dist-form-control" id="distPregnant" placeholder="0" readonly></div>
+         <div class="col-4"><label class="dist-form-label">Under-5</label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly></div>
+        </div>
+        <hr>
+        <h6 class="dist-sub-title"><i class="fas fa-location-crosshairs me-2"></i>GPS</h6>
+        <div class="row g-2 mb-3">
+         <div class="col-6"><label class="dist-form-label">Latitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLat" placeholder="Latitude" readonly></div>
+         <div class="col-6"><label class="dist-form-label">Longitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLng" placeholder="Longitude" readonly></div>
+        </div>
+       </div>
+      </div>
+
+      <div class="dist-step" data-step="2">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-file-signature"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Step 3 of 6</span>
+          <h2 class="dist-step-title">Team Members</h2>
+         </div>
+        </div>
+        <h6 class="dist-sub-title"><i class="fas fa-user-check me-2"></i>Voucher Verifier</h6>
+        <label class="dist-form-label">Name</label>
+        <input type="text" class="dist-form-control mb-2" id="distVerifierName" placeholder="Full name" required>
+        <label class="dist-form-label">Mobile</label>
+        <input type="tel" class="dist-form-control mb-2" id="distVerifierMobile" placeholder="07XXXXXXXX" required>
+        <label class="dist-form-label">Signature</label>
+        <canvas id="distVerifierSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
+        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px;margin-bottom:14px" onclick="clearDistSignature('verifier')">
+         <i class="fas fa-eraser me-1"></i> Clear
+        </button>
+        <hr>
+        <h6 class="dist-sub-title"><i class="fas fa-user-shield me-2"></i>ITN Distributor</h6>
+        <label class="dist-form-label">Name</label>
+        <input type="text" class="dist-form-control mb-2" id="distDistributorName" placeholder="Full name" required>
+        <label class="dist-form-label">Mobile</label>
+        <input type="tel" class="dist-form-control mb-2" id="distDistributorMobile" placeholder="07XXXXXXXX" required>
+        <label class="dist-form-label">Signature</label>
+        <canvas id="distDistributorSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
+        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px" onclick="clearDistSignature('distributor')">
+         <i class="fas fa-eraser me-1"></i> Clear
+        </button>
+       </div>
+      </div>
+
+      <div class="dist-step" data-step="3">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-book-medical"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Step 4 of 6</span>
+          <h2 class="dist-step-title">Health Talks</h2>
+         </div>
+        </div>
+        <button type="button" class="dist-btn dist-btn-next" style="width:100%;margin-bottom:12px;background:#fff;color:#1565c0;border:1px solid #1565c0" onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'none' ? 'block' : 'none')">
+         <i class="fas fa-book-medical me-2"></i> View Health Talks Guide
+        </button>
+        <div id="distHealthTalksContent" style="display:none">
+         <div class="dist-health-topic"><span class="dist-topic-number">1</span><div><strong>Proper Hanging</strong>Hang the net over the sleeping area every evening. Ensure it is tucked securely under the mattress or mat on all sides.</div></div>
+         <div class="dist-health-topic"><span class="dist-topic-number">2</span><div><strong>Consistent Usage</strong>Sleep under the ITN every night, even during short afternoon naps. Mosquitoes bite mostly between dusk and dawn.</div></div>
+         <div class="dist-health-topic"><span class="dist-topic-number">3</span><div><strong>Protect Vulnerable Groups</strong>Ensure all children (especially under 5 years) and pregnant women sleep under ITNs every night.</div></div>
+         <div class="dist-health-topic"><span class="dist-topic-number">4</span><div><strong>Washing &amp; Care</strong>Wash gently with mild soap and cold water. Hang to dry in the shade, never in direct sunlight. Limit washing to 3 times per year.</div></div>
+         <div class="dist-health-topic"><span class="dist-topic-number">5</span><div><strong>Important Don'ts</strong>Do not use the net for fishing, fencing, or gardening. Do not store the net when it is wet.</div></div>
+         <div class="dist-health-topic"><span class="dist-topic-number">6</span><div><strong>Replacement</strong>Replace the ITN every 3 years, or sooner if it develops large holes. Report damaged nets to community health workers.</div></div>
+        </div>
+       </div>
+      </div>
+
+      <div class="dist-step" data-step="4">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-clipboard-check"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Step 5 of 6</span>
+          <h2 class="dist-step-title">Confirmation</h2>
+         </div>
+        </div>
+        <div style="display:flex;align-items:start;margin-top:12px">
+         <input type="checkbox" id="distHealthTalkGiven" required style="transform:scale(1.3);margin-top:3px">
+         <label for="distHealthTalkGiven" style="margin-left:12px;font-weight:600;font-size:.9rem;line-height:1.4">
+          I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.
+         </label>
+        </div>
+       </div>
+      </div>
+
+      <div class="dist-step" data-step="5">
+       <div class="dist-step-card">
+        <div class="dist-step-header">
+         <span class="dist-step-icon"><i class="fas fa-location-dot"></i></span>
+         <div>
+          <span class="dist-step-eyebrow">Step 6 of 6</span>
+          <h2 class="dist-step-title">GPS Coordinates</h2>
+         </div>
+        </div>
+        <label class="dist-form-label">Latitude</label>
+        <input type="text" class="dist-form-control mb-2" id="distGpsLat" placeholder="Latitude" readonly>
+        <label class="dist-form-label">Longitude</label>
+        <input type="text" class="dist-form-control mb-2" id="distGpsLng" placeholder="Longitude" readonly>
+        <small style="color:#5B6B6E;margin-top:8px;display:block" id="distGpsStatus">
+         <i class="fas fa-spinner fa-spin me-1"></i> Auto-capturing location...
+        </small>
+       </div>
+       <button type="submit" class="dist-btn-submit">
+        <i class="fas fa-check-circle me-2"></i> Submit Distribution Record
        </button>
-       <hr>
-       <h6 class="dist-sub-title"><i class="fas fa-user-shield me-2"></i>ITN Distributor</h6>
-       <label class="dist-form-label">Name</label>
-       <input type="text" class="dist-form-control mb-2" id="distDistributorName" placeholder="Full name" required>
-       <label class="dist-form-label">Mobile</label>
-       <input type="tel" class="dist-form-control mb-2" id="distDistributorMobile" placeholder="07XXXXXXXX" required>
-       <label class="dist-form-label">Signature</label>
-       <canvas id="distDistributorSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
-       <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px" onclick="clearDistSignature('distributor')">
-        <i class="fas fa-eraser me-1"></i> Clear
-       </button>
       </div>
-     </div>
 
-     <!-- STEP 4: HEALTH TALKS -->
-     <div class="dist-step" data-step="3">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-book-medical"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Step 4 of 6</span>
-         <h2 class="dist-step-title">Health Talks</h2>
-        </div>
-       </div>
-       <button type="button" class="dist-btn dist-btn-next" style="width:100%;margin-bottom:12px;background:#fff;color:#1565c0;border:1px solid #1565c0" onclick="this.nextElementSibling.style.display = (this.nextElementSibling.style.display === 'none' ? 'block' : 'none')">
-        <i class="fas fa-book-medical me-2"></i> View Health Talks Guide
-       </button>
-       <div id="distHealthTalksContent" style="display:none">
-        <div class="dist-health-topic"><span class="dist-topic-number">1</span><div><strong>Proper Hanging</strong>Hang the net over the sleeping area every evening. Ensure it is tucked securely under the mattress or mat on all sides.</div></div>
-        <div class="dist-health-topic"><span class="dist-topic-number">2</span><div><strong>Consistent Usage</strong>Sleep under the ITN every night, even during short afternoon naps. Mosquitoes bite mostly between dusk and dawn.</div></div>
-        <div class="dist-health-topic"><span class="dist-topic-number">3</span><div><strong>Protect Vulnerable Groups</strong>Ensure all children (especially under 5 years) and pregnant women sleep under ITNs every night.</div></div>
-        <div class="dist-health-topic"><span class="dist-topic-number">4</span><div><strong>Washing &amp; Care</strong>Wash gently with mild soap and cold water. Hang to dry in the shade, never in direct sunlight. Limit washing to 3 times per year.</div></div>
-        <div class="dist-health-topic"><span class="dist-topic-number">5</span><div><strong>Important Don'ts</strong>Do not use the net for fishing, fencing, or gardening. Do not store the net when it is wet.</div></div>
-        <div class="dist-health-topic"><span class="dist-topic-number">6</span><div><strong>Replacement</strong>Replace the ITN every 3 years, or sooner if it develops large holes. Report damaged nets to community health workers.</div></div>
-       </div>
-      </div>
-     </div>
+     </form>
+    </div>
 
-     <!-- STEP 5: CONFIRMATION -->
-     <div class="dist-step" data-step="4">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-clipboard-check"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Step 5 of 6</span>
-         <h2 class="dist-step-title">Confirmation</h2>
-        </div>
-       </div>
-       <div style="display:flex;align-items:start;margin-top:12px">
-        <input type="checkbox" id="distHealthTalkGiven" required style="transform:scale(1.3);margin-top:3px">
-        <label for="distHealthTalkGiven" style="margin-left:12px;font-weight:600;font-size:.9rem;line-height:1.4">
-         I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.
-        </label>
-       </div>
-      </div>
-     </div>
+    <div class="dist-nav-buttons">
+     <button type="button" class="dist-btn dist-btn-prev" id="distPrevBtn" style="visibility:hidden" onclick="distChangeStep(-1)">
+      <i class="fas fa-arrow-left me-1"></i> Previous
+     </button>
+     <button type="button" class="dist-btn dist-btn-next" id="distNextBtn" onclick="distChangeStep(1)">
+      Next <i class="fas fa-arrow-right ms-1"></i>
+     </button>
+    </div>
 
-     <!-- STEP 6: GPS & SUBMIT -->
-     <div class="dist-step" data-step="5">
-      <div class="dist-step-card">
-       <div class="dist-step-header">
-        <span class="dist-step-icon"><i class="fas fa-location-dot"></i></span>
-        <div>
-         <span class="dist-step-eyebrow">Step 6 of 6</span>
-         <h2 class="dist-step-title">GPS Coordinates</h2>
-        </div>
-       </div>
-       <label class="dist-form-label">Latitude</label>
-       <input type="text" class="dist-form-control mb-2" id="distGpsLat" placeholder="Latitude" readonly>
-       <label class="dist-form-label">Longitude</label>
-       <input type="text" class="dist-form-control mb-2" id="distGpsLng" placeholder="Longitude" readonly>
-       <small style="color:#5B6B6E;margin-top:8px;display:block" id="distGpsStatus">
-        <i class="fas fa-spinner fa-spin me-1"></i> Auto-capturing location...
-       </small>
-      </div>
-      <button type="submit" class="dist-btn-submit">
-       <i class="fas fa-check-circle me-2"></i> Submit Distribution Record
-      </button>
-     </div>
-
-    </form>
+    <div class="dist-footer">
+     Developed By<br>
+     <strong>Informatics Consultancy Firm-SL</strong> © 2026
+    </div>
    </div>
 
-   <!-- 🔑 FIXED NAV BUTTONS (above footer) -->
-   <div class="dist-nav-buttons">
-    <button type="button" class="dist-btn dist-btn-prev" id="distPrevBtn" style="visibility:hidden" onclick="distChangeStep(-1)">
-     <i class="fas fa-arrow-left me-1"></i> Previous
-    </button>
-    <button type="button" class="dist-btn dist-btn-next" id="distNextBtn" onclick="distChangeStep(1)">
-     Next <i class="fas fa-arrow-right ms-1"></i>
-    </button>
-   </div>
-
-   <!-- 🔑 FIXED FOOTER (bottom) -->
-   <div class="dist-footer">
-    Developed By<br>
-    <strong>Informatics Consultancy Firm-SL</strong> © 2026
+   <!-- 🔑 DISTRIBUTION RECORDS VIEW (shown when Records is clicked) -->
+   <div class="dist-records-view" id="distRecordsView">
+    <div class="dist-records-header">
+     <h3><i class="fas fa-table-list me-2"></i>Distribution Records</h3>
+     <p>All submitted distribution records</p>
+     <button class="dist-records-back" onclick="hideDistRecords()" title="Back to Form">
+      <i class="fas fa-times"></i>
+     </button>
+    </div>
+    <div class="dist-records-stats">
+     <div class="dist-stat-chip">
+      <span class="num" id="distRecTotal">0</span>
+      <span class="lbl">Total</span>
+     </div>
+     <div class="dist-stat-chip">
+      <span class="num" id="distRecPending">0</span>
+      <span class="lbl">Pending</span>
+     </div>
+     <div class="dist-stat-chip">
+      <span class="num" id="distRecDistributed">0</span>
+      <span class="lbl">Distributed</span>
+     </div>
+     <div class="dist-stat-chip">
+      <span class="num" id="distRecItn">0</span>
+      <span class="lbl">ITN</span>
+     </div>
+    </div>
+    <div class="dist-records-body" id="distRecBody">
+     <!-- Records will be rendered here -->
+    </div>
+    <div class="dist-footer">
+     Developed By<br>
+     <strong>Informatics Consultancy Firm-SL</strong> © 2026
+    </div>
    </div>
 
   </div>
@@ -1298,6 +1396,12 @@ function startRecordsListener() {
       if (activeScreen.id === 'sRecords') renderRecords();
       if (activeScreen.id === 'sTarget') renderTarget();
     }
+    // 🔑 Update distribution records count badge
+    updateDistRecCount();
+    // 🔑 Re-render distribution records view if visible
+    if (document.getElementById('distRecordsView').classList.contains('active')) {
+      renderDistRecords();
+    }
     updateSyncIndicator('online', 'Cloud Sync Active');
   }, (error) => { updateSyncIndicator('offline', 'Sync Offline'); });
 }
@@ -1339,6 +1443,7 @@ function finalReg(){
   document.getElementById('mFinBtn').innerHTML='➕ Register Another';
   mDone=true;
   if (FIREBASE_ENABLED) toast('✅ Synced to cloud');
+  updateDistRecCount();
 }
 
 function qrDataUrl(rec, displaySize){
@@ -1379,6 +1484,7 @@ function renderRecords(){
       saveRecsLocal();
       if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
       renderRecords();
+      updateDistRecCount();
       toast('✅ Record marked as Distributed');
     };
   });
@@ -1635,6 +1741,10 @@ let distScannerRunning = false;
 
 function openDistribution(){
   go('sDistribution');
+  // Reset to form view
+  document.getElementById('distFormView').style.display = 'flex';
+  document.getElementById('distRecordsView').classList.remove('active');
+  
   distCurrentStep = 0;
   document.getElementById('distDate').value = todayStr();
   ['distBeneficiaryToken','distRegion','distDistrict','distChiefdom','distCommunity','distFacility','distDistPoint','distSurname','distMiddleName','distFirstName','distMobile','distHhrName','distItnAlloc','distPregnant','distUnder5','distBeneficiaryLat','distBeneficiaryLng','distVerifierName','distVerifierMobile','distDistributorName','distDistributorMobile','distGpsLat','distGpsLng'].forEach(id=>{
@@ -1674,6 +1784,7 @@ function openDistribution(){
     }
   }, 100);
   
+  updateDistRecCount();
   updateDistStep();
 }
 
@@ -1847,6 +1958,123 @@ function submitDistribution(e){
 }
 
 /* ═══════════════════════════════════════════════════════════════
+   🔑 DISTRIBUTION RECORDS VIEW
+═══════════════════════════════════════════════════════════════ */
+function updateDistRecCount(){
+  const count = RECS.length;
+  const badge = document.getElementById('distRecCount');
+  if (badge) {
+    badge.textContent = count;
+    badge.style.display = count > 0 ? 'flex' : 'none';
+  }
+}
+
+function showDistRecords(){
+  document.getElementById('distFormView').style.display = 'none';
+  document.getElementById('distRecordsView').classList.add('active');
+  renderDistRecords();
+}
+
+function hideDistRecords(){
+  document.getElementById('distRecordsView').classList.remove('active');
+  document.getElementById('distFormView').style.display = 'flex';
+}
+
+function showDistTarget(){
+  // Navigate to the main target screen
+  go('sTarget');
+  renderTarget();
+}
+
+function renderDistRecords(){
+  const body = document.getElementById('distRecBody');
+  
+  // Update stats
+  const total = RECS.length;
+  const pending = RECS.filter(r => r.status !== 'Distributed').length;
+  const distributed = RECS.filter(r => r.status === 'Distributed').length;
+  const itnTotal = RECS.reduce((s, r) => s + (parseInt(r.itn) || 0), 0);
+  
+  document.getElementById('distRecTotal').textContent = total;
+  document.getElementById('distRecPending').textContent = pending;
+  document.getElementById('distRecDistributed').textContent = distributed;
+  document.getElementById('distRecItn').textContent = itnTotal;
+  
+  if (!RECS.length) {
+    body.innerHTML = `
+      <div class="dist-records-empty">
+       <i class="fas fa-inbox"></i>
+       <h4 style="font-size:1rem;font-weight:700;color:#5B6B6E;margin-bottom:6px">No Records Yet</h4>
+       <p style="font-size:.8rem">Submit distribution records to see them here.</p>
+      </div>`;
+    return;
+  }
+  
+  body.innerHTML = RECS.map((r, i) => {
+    const initials = ((r.surname || '?')[0] + (r.firstName || '?')[0]).toUpperCase();
+    const isDist = r.status === 'Distributed';
+    const statusClass = isDist ? 'distributed' : 'pending';
+    const statusText = isDist ? 'Distributed' : 'Pending';
+    
+    return `
+      <div class="dist-rec-card">
+       <div class="dist-rec-card-top">
+        <div class="dist-rec-avatar">${esc(initials)}</div>
+        <div class="dist-rec-info">
+         <div class="dist-rec-name">${esc(r.surname || '')} ${esc(r.firstName || '')}</div>
+         <div class="dist-rec-loc"><i class="fas fa-map-marker-alt me-1"></i>${esc(r.chiefdom || '')}, ${esc(r.district || '')}</div>
+        </div>
+        <span class="dist-rec-status ${statusClass}">${statusText}</span>
+       </div>
+       <div class="dist-rec-card-body">
+        <div class="dist-rec-field">
+         <span class="lbl">Token</span>
+         <span class="val">${esc(r.token || '-')}</span>
+        </div>
+        <div class="dist-rec-field">
+         <span class="lbl">Mobile</span>
+         <span class="val">${esc(r.mobile || '-')}</span>
+        </div>
+        <div class="dist-rec-field">
+         <span class="lbl">Members</span>
+         <span class="val">${r.members || 0}</span>
+        </div>
+        <div class="dist-rec-field">
+         <span class="lbl">ITN</span>
+         <span class="val">${r.itn || 0}</span>
+        </div>
+        <div class="dist-rec-field">
+         <span class="lbl">Facility</span>
+         <span class="val">${esc(r.healthFacility || '-')}</span>
+        </div>
+        <div class="dist-rec-field">
+         <span class="lbl">Date</span>
+         <span class="val" style="font-size:.65rem">${esc(r.date || '-')}</span>
+        </div>
+       </div>
+       <div class="dist-rec-card-actions">
+        <button class="dist-rec-action qr" onclick="showQRModal(RECS[${i}])">
+         <i class="fas fa-qrcode"></i> QR Code
+        </button>
+        ${!isDist ? `<button class="dist-rec-action mark" onclick="markDistRecDistributed(${i})">
+         <i class="fas fa-check"></i> Mark Distributed
+        </button>` : ''}
+       </div>
+      </div>`;
+  }).join('');
+}
+
+function markDistRecDistributed(idx){
+  if (!RECS[idx]) return;
+  RECS[idx].status = 'Distributed';
+  saveRecsLocal();
+  if (RECS[idx]._id) updateRecordInCloud(RECS[idx]._id, { status: 'Distributed' });
+  renderDistRecords();
+  updateDistRecCount();
+  toast('✅ Marked as Distributed');
+}
+
+/* ═══════════════════════════════════════════════════════════════
    INITIALIZATION
 ═══════════════════════════════════════════════════════════════ */
 window.addEventListener('online', () => { if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active'); });
@@ -1855,6 +2083,9 @@ window.addEventListener('offline', () => { if (FIREBASE_ENABLED) updateSyncIndic
 const savedU=sessionStorage.getItem('cu');
 if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
 else go('sLogin');
+
+// 🔑 Initial records count update
+updateDistRecCount();
 </script>
 </body>
 </html>
