@@ -528,7 +528,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div class="tday reg"><div class="tday-n" id="tToday">0</div><div class="tday-l">🏠 Households Registered Today</div></div>
     <div class="tstat" id="tEditBox" style="display:none">
      <h4>⚙️ SET REGISTRATION TARGET</h4>
-     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure household registration target</p>
+     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only</p>
      <div style="display:flex;gap:8px;align-items:center">
       <input type="number" id="tTargetInput" class="tedit-input" min="1" placeholder="Enter target...">
       <button class="tedit-btn" onclick="saveTarget()">💾 Save</button>
@@ -536,15 +536,15 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     </div>
     <div class="tstat">
      <h4>🏠 REGISTRATION COVERAGE</h4>
-     <div class="trow"><span class="tlbl">📊 Total Registered (All Time)</span><span class="tval" id="tTotal">0</span></div>
-     <div class="trow"><span class="tlbl">👥 Total Individuals Reached</span><span class="tval" id="tPpl">0</span></div>
-     <div class="trow"><span class="tlbl">🎯 Target Households</span><span class="tval" id="tTargetVal">500</span></div>
+     <div class="trow"><span class="tlbl">📊 Total Registered</span><span class="tval" id="tTotal">0</span></div>
+     <div class="trow"><span class="tlbl">👥 Total Individuals</span><span class="tval" id="tPpl">0</span></div>
+     <div class="trow"><span class="tlbl">🎯 Target</span><span class="tval" id="tTargetVal">500</span></div>
      <div class="trow"><span class="tlbl">⏳ Remaining</span><span class="tval" id="tRem">500</span></div>
-     <div class="trow"><span class="tlbl">🦟 Total ITN Issued</span><span class="tval" id="tItn">0</span></div>
+     <div class="trow"><span class="tlbl">🦟 Total ITN</span><span class="tval" id="tItn">0</span></div>
      <div class="tprow">
-      <div class="tphdr"><span>📈 Overall Progress</span><strong id="tPct">0%</strong></div>
+      <div class="tphdr"><span>📈 Progress</span><strong id="tPct">0%</strong></div>
       <div class="tpbg"><div class="tpfill" id="tFill"></div></div>
-      <div class="tpfoot"><span id="tCurr">0</span> of <span id="tTargetTotal">500</span> households registered</div>
+      <div class="tpfoot"><span id="tCurr">0</span> of <span id="tTargetTotal">500</span></div>
      </div>
     </div>
     <div class="tbkdn">
@@ -569,10 +569,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div style="width:28px"></div>
    </div>
    <div class="tgt-body">
-    <div class="tday dist"><div class="tday-n" id="dtToday">0</div><div class="tday-l">📦 Distributions Submitted Today</div></div>
+    <div class="tday dist"><div class="tday-n" id="dtToday">0</div><div class="tday-l">📦 Distributions Today</div></div>
     <div class="tstat" id="dtEditBox" style="display:none">
      <h4>⚙️ SET DISTRIBUTION TARGET</h4>
-     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only: Configure daily distribution target</p>
+     <p style="font-size:.48rem;color:#64748b;text-align:center;margin-bottom:8px">Admin only</p>
      <div style="display:flex;gap:8px;align-items:center">
       <input type="number" id="dtTargetInput" class="tedit-input" min="1" placeholder="Enter target...">
       <button class="tedit-btn" onclick="saveDistTarget()">💾 Save</button>
@@ -580,17 +580,17 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     </div>
     <div class="tstat">
      <h4>📦 DISTRIBUTION COVERAGE</h4>
-     <div class="trow"><span class="tlbl">📊 Total Distributions (All Time)</span><span class="tval" id="dtTotal">0</span></div>
-     <div class="trow"><span class="tlbl">✅ Successfully Distributed</span><span class="tval" id="dtDistributed">0</span></div>
-     <div class="trow"><span class="tlbl">⏳ Pending Distribution</span><span class="tval" id="dtPending">0</span></div>
+     <div class="trow"><span class="tlbl">📊 Total Distributions</span><span class="tval" id="dtTotal">0</span></div>
+     <div class="trow"><span class="tlbl">✅ Distributed</span><span class="tval" id="dtDistributed">0</span></div>
+     <div class="trow"><span class="tlbl">⏳ Pending</span><span class="tval" id="dtPending">0</span></div>
      <div class="trow"><span class="tlbl">🎯 Daily Target</span><span class="tval" id="dtTargetVal">50</span></div>
-     <div class="trow"><span class="tlbl">⏳ Remaining Today</span><span class="tval" id="dtRem">50</span></div>
-     <div class="trow"><span class="tlbl">🦟 Total ITN Distributed</span><span class="tval" id="dtItn">0</span></div>
-     <div class="trow"><span class="tlbl">👥 Total Beneficiaries</span><span class="tval" id="dtPpl">0</span></div>
+     <div class="trow"><span class="tlbl">⏳ Remaining</span><span class="tval" id="dtRem">50</span></div>
+     <div class="trow"><span class="tlbl">🦟 Total ITN</span><span class="tval" id="dtItn">0</span></div>
+     <div class="trow"><span class="tlbl">👥 Beneficiaries</span><span class="tval" id="dtPpl">0</span></div>
      <div class="tprow">
-      <div class="tphdr"><span>📈 Daily Progress</span><strong id="dtPct">0%</strong></div>
+      <div class="tphdr"><span>📈 Progress</span><strong id="dtPct">0%</strong></div>
       <div class="tpbg"><div class="tpfill" id="dtFill"></div></div>
-      <div class="tpfoot"><span id="dtCurr">0</span> of <span id="dtTargetTotal">50</span> distributions today</div>
+      <div class="tpfoot"><span id="dtCurr">0</span> of <span id="dtTargetTotal">50</span></div>
      </div>
     </div>
     <div class="tbkdn">
@@ -943,17 +943,17 @@ function openDistHome(){
   let html = `
     <div class="sc sc-bl" onclick="openDistribution()">
      <div class="sc-top"><i class="fa fa-boxes"></i><span>DISTRIBUTION</span></div>
-     <div class="sc-bot"><strong>📦 New Distribution</strong><p>Submit a new ITN distribution record with beneficiary details</p></div>
+     <div class="sc-bot"><strong>📦 New Distribution</strong><p>Submit a new ITN distribution record</p></div>
     </div>
     <div class="sc sc-pu" onclick="openDistRecords()">
      <div class="sc-top"><i class="fa fa-table-list"></i><span>RECORDS</span></div>
-     <div class="sc-bot"><strong>📁 View Records</strong><p>View all distribution records &amp; download QR codes</p></div>
+     <div class="sc-bot"><strong>📁 View Records</strong><p>View all distribution records</p></div>
     </div>`;
   if (isAdmin) {
     html += `
     <div class="sc sc-rd" onclick="openDistTarget()">
      <div class="sc-top"><i class="fa fa-bullseye"></i><span>DAILY TARGET</span></div>
-     <div class="sc-bot"><strong>🎯 Set Target</strong><p>Configure &amp; track daily distribution target</p></div>
+     <div class="sc-bot"><strong>🎯 Set Target</strong><p>Configure daily distribution target</p></div>
     </div>`;
   }
   grid.innerHTML = html;
@@ -1201,11 +1201,6 @@ function qrDataUrl(rec, displaySize){
   return cv.toDataURL('image/png');
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 RECORDS TABLE - Status badge is NOT clickable
-   Status only changes to "Distributed" when distribution form is
-   submitted via the DISTRIBUTION tab with matching token.
-═══════════════════════════════════════════════════════════════ */
 function renderRecordsTable(wrapId){
   const wrap=document.getElementById(wrapId);
   if(!RECS.length){wrap.innerHTML='<div class="no-rec">No records yet.<br>Submit a record to see it here.</div>';return;}
@@ -1214,7 +1209,6 @@ function renderRecordsTable(wrapId){
     const u=qrDataUrl(r, 60);
     const [lat,lng]=(r.gps||'').split(',');
     const isDist = r.status === 'Distributed';
-    // 🔑 Status badge is DISPLAY ONLY - not clickable
     const statusBadge = isDist 
       ? `<span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
       : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Pending</span>`;
@@ -1225,7 +1219,6 @@ function renderRecordsTable(wrapId){
   wrap.innerHTML=tableHTML;
   wrap.querySelectorAll('.qsm').forEach(img=>{img.onclick=()=>showQRModal(RECS[+img.dataset.i]);});
   wrap.querySelectorAll('.dl-btn').forEach(btn=>{ btn.onclick=()=>{ const u=qrDataUrl(RECS[+btn.dataset.i], 300); if(u){const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();} }; });
-  // 🔑 NO pend-badge click handler - status can only change via distribution form
 }
 function renderRecords(){ renderRecordsTable('recWrap'); }
 function renderDistRecords(){ renderRecordsTable('distRecWrap'); }
@@ -1358,38 +1351,97 @@ function closeCameraScanner(){
     document.getElementById('camModal').classList.remove('open');
   });
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 UNIVERSAL QR PARSER
+   Handles BOTH formats:
+   1. Line-based format (from Registration module):
+      ITN_REG
+      Region:Eastern
+      District:Kailahun
+      ...
+      Token:KAM_JOH_MAR_071234567
+   
+   2. JSON format (for backwards compatibility)
+═══════════════════════════════════════════════════════════════ */
 function parseQRData(text){
   if(!text) return null;
   const result = {};
-  text.split(/\r?\n/).forEach(line=>{
+  
+  // Try JSON first
+  try {
+    const jsonData = JSON.parse(text);
+    // Map JSON keys to our standard keys
+    const mapping = {
+      'region':'region','district':'district','chiefdom':'chiefdom','community':'community',
+      'facility':'facility','healthFacility':'facility','health facility':'facility',
+      'distPoint':'distPoint','dist_point':'distPoint','dp':'distPoint','distributionPoint':'distPoint','distribution point':'distPoint',
+      'surname':'surname','middleName':'middleName','middlename':'middleName',
+      'firstName':'firstName','firstname':'firstName',
+      'mobile':'mobile','members':'members',
+      'itn':'itn','itnAlloc':'itn','itn_alloc':'itn','itnAllocation':'itn',
+      'pregnant':'pregnant','under5':'under5','under_5':'under5','underFive':'under5','u5':'under5',
+      'hhr':'hhr','hhrName':'hhr','hhr_name':'hhr',
+      'latitude':'latitude','lat':'latitude',
+      'longitude':'longitude','lng':'longitude','lon':'longitude',
+      'token':'token'
+    };
+    for (const [k, v] of Object.entries(jsonData)) {
+      const stdKey = mapping[k.toLowerCase()] || k.toLowerCase();
+      result[stdKey] = v;
+    }
+    // Handle "name" field (Surname Firstname)
+    if (jsonData.name && !result.surname) {
+      const parts = String(jsonData.name).split(' ');
+      if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
+      else result.surname = jsonData.name;
+    }
+    return result;
+  } catch (e) {
+    // Not JSON, try line-based format
+  }
+  
+  // Line-based format parsing
+  const lines = text.split(/\r?\n/);
+  lines.forEach(line => {
     const idx = line.indexOf(':');
-    if(idx > 0){
-      const key = line.substring(0, idx).trim().toLowerCase(), val = line.substring(idx + 1).trim();
-      if(val){
-        if(key === 'region') result.region = val;
-        else if(key === 'district') result.district = val;
-        else if(key === 'chiefdom') result.chiefdom = val;
-        else if(key === 'community') result.community = val;
-        else if(key === 'facility' || key === 'health facility') result.facility = val;
-        else if(key === 'dist. point' || key === 'dist_point' || key === 'dp' || key === 'distribution point') result.distPoint = val;
-        else if(key === 'surname') result.surname = val;
-        else if(key === 'middle name' || key === 'middlename') result.middleName = val;
-        else if(key === 'first name' || key === 'firstname') result.firstName = val;
-        else if(key === 'name') { const parts = val.split(' '); if(parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); } else result.surname = val; }
-        else if(key === 'mobile') result.mobile = val;
-        else if(key === 'members') result.members = val;
-        else if(key === 'itn alloc' || key === 'itn') result.itn = val;
-        else if(key === 'pregnant') result.pregnant = val;
-        else if(key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
-        else if(key === 'hhr name' || key === 'hhr') result.hhr = val;
-        else if(key === 'latitude' || key === 'lat') result.latitude = val;
-        else if(key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
-        else if(key === 'token') result.token = val;
+    if (idx > 0) {
+      const key = line.substring(0, idx).trim().toLowerCase();
+      const val = line.substring(idx + 1).trim();
+      if (!val) return;
+      
+      if (key === 'region') result.region = val;
+      else if (key === 'district') result.district = val;
+      else if (key === 'chiefdom') result.chiefdom = val;
+      else if (key === 'community') result.community = val;
+      else if (key === 'facility' || key === 'health facility') result.facility = val;
+      else if (key === 'dist. point' || key === 'dist_point' || key === 'dp' || key === 'distribution point') result.distPoint = val;
+      else if (key === 'surname') result.surname = val;
+      else if (key === 'middle name' || key === 'middlename') result.middleName = val;
+      else if (key === 'first name' || key === 'firstname') result.firstName = val;
+      else if (key === 'name') {
+        const parts = val.split(' ');
+        if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
+        else result.surname = val;
       }
+      else if (key === 'mobile') result.mobile = val;
+      else if (key === 'members') result.members = val;
+      else if (key === 'itn alloc' || key === 'itn') result.itn = val;
+      else if (key === 'pregnant') result.pregnant = val;
+      else if (key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
+      else if (key === 'hhr name' || key === 'hhr') result.hhr = val;
+      else if (key === 'latitude' || key === 'lat') result.latitude = val;
+      else if (key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
+      else if (key === 'token') result.token = val;
     }
   });
-  return result;
+  
+  return Object.keys(result).length > 0 ? result : null;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 REGISTRATION AUTO-FILL (for sManual)
+═══════════════════════════════════════════════════════════════ */
 function normalize(str) { if (!str) return ''; return str.trim().toLowerCase().replace(/[^a-z0-9]/g, ''); }
 function findBestMatch(selectElement, targetValue) {
   if (!targetValue) return null;
@@ -1458,6 +1510,9 @@ function fillPersonalDetails(data){
   if(data.token) { mTok = data.token; const tb = document.getElementById('mTok'); if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; } }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   🔑 DISTRIBUTION MODULE
+═══════════════════════════════════════════════════════════════ */
 let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null, distHtml5Qrcode = null, distScannerRunning = false;
 
 function openDistribution(){
@@ -1518,26 +1573,127 @@ function switchDistTab(tabId){
   document.getElementById('dist-qr').style.display = (tabId === 'dist-qr') ? 'block' : 'none';
   if (tabId !== 'dist-qr') stopDistScanner();
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 DISTRIBUTION AUTO-FILL (Type Token button)
+   Looks up the record by token in RECS array and fills all fields
+═══════════════════════════════════════════════════════════════ */
 function distAutoFillData(){
-  const token = document.getElementById('distBeneficiaryToken').value;
-  if (token) { document.getElementById('distAutoFillText').innerText = `Token: ${token}`; document.getElementById('distAutoFillDisplay').classList.remove('d-none'); }
-  else alert("Please enter a token ID.");
+  const token = document.getElementById('distBeneficiaryToken').value.trim();
+  if (!token) {
+    alert("Please enter a token ID.");
+    return;
+  }
+  
+  // Find record by token
+  const rec = RECS.find(r => r.token === token);
+  if (!rec) {
+    alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
+    return;
+  }
+  
+  // Fill all fields from the record
+  fillDistFormFromRecord(rec);
+  
+  // Show success message
+  const displayText = `${rec.firstName || ''} ${rec.surname || ''} (Token: ${rec.token})`;
+  document.getElementById('distAutoFillText').innerText = displayText;
+  document.getElementById('distAutoFillDisplay').classList.remove('d-none');
+  
+  toast('✅ Beneficiary data loaded from registration');
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FILL DISTRIBUTION FORM FROM RECORD
+   Populates ALL beneficiary information fields from a record
+═══════════════════════════════════════════════════════════════ */
+function fillDistFormFromRecord(rec){
+  // Token
+  if (rec.token) document.getElementById('distBeneficiaryToken').value = rec.token;
+  
+  // Location
+  if (rec.region) document.getElementById('distRegion').value = rec.region;
+  if (rec.district) document.getElementById('distDistrict').value = rec.district;
+  if (rec.chiefdom) document.getElementById('distChiefdom').value = rec.chiefdom;
+  if (rec.community) document.getElementById('distCommunity').value = rec.community;
+  if (rec.healthFacility) document.getElementById('distFacility').value = rec.healthFacility;
+  if (rec.dp) document.getElementById('distDistPoint').value = rec.dp;
+  
+  // Personal
+  if (rec.surname) document.getElementById('distSurname').value = rec.surname;
+  if (rec.middleName) document.getElementById('distMiddleName').value = rec.middleName;
+  if (rec.firstName) document.getElementById('distFirstName').value = rec.firstName;
+  if (rec.mobile) document.getElementById('distMobile').value = rec.mobile;
+  if (rec.hhr) document.getElementById('distHhrName').value = rec.hhr;
+  
+  // ITN Allocation
+  if (rec.itn !== undefined && rec.itn !== null) document.getElementById('distItnAlloc').value = rec.itn;
+  if (rec.pregnant !== undefined && rec.pregnant !== null) document.getElementById('distPregnant').value = rec.pregnant;
+  if (rec.under5 !== undefined && rec.under5 !== null) document.getElementById('distUnder5').value = rec.under5;
+  
+  // GPS
+  if (rec.gps) {
+    const [lat, lng] = rec.gps.split(',');
+    if (lat) document.getElementById('distBeneficiaryLat').value = lat;
+    if (lng) document.getElementById('distBeneficiaryLng').value = lng;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 DISTRIBUTION QR SCANNER
+   Scans QR and immediately fills all beneficiary fields
+═══════════════════════════════════════════════════════════════ */
 function startDistScanner(){
   if (distScannerRunning) return;
-  if (typeof Html5Qrcode === 'undefined') { document.getElementById('distQrStatus').innerText = '❌ Scanner library failed to load.'; return; }
+  if (typeof Html5Qrcode === 'undefined') { 
+    document.getElementById('distQrStatus').innerText = '❌ Scanner library failed to load.'; 
+    return; 
+  }
   document.getElementById('distQrStatus').innerText = 'Requesting camera...';
   distHtml5Qrcode = new Html5Qrcode("dist-qr-reader");
   const config = { fps: 10, qrbox: { width: 200, height: 200 } };
-  const onSuccess = (decodedText) => { parseDistQRData(decodedText); stopDistScanner(); };
+  
+  const onSuccess = (decodedText) => {
+    // 🔑 Parse the QR data (handles both JSON and line-based formats)
+    const parsed = parseQRData(decodedText);
+    
+    if (parsed) {
+      // 🔑 Immediately fill all beneficiary fields
+      fillDistFormFromParsedQR(parsed);
+      
+      // Also fill the token field
+      if (parsed.token) {
+        document.getElementById('distBeneficiaryToken').value = parsed.token;
+      }
+      
+      // Show success message
+      const name = (parsed.firstName || '') + ' ' + (parsed.surname || '');
+      const token = parsed.token || 'N/A';
+      const displayText = `${name.trim()} (Token: ${token})`;
+      document.getElementById('distAutoFillText').innerText = displayText;
+      document.getElementById('distAutoFillDisplay').classList.remove('d-none');
+      
+      document.getElementById('distQrStatus').innerText = '✅ All beneficiary data auto-filled!';
+      toast('✅ QR scanned - all fields filled!');
+    } else {
+      // If parsing failed, treat as plain token
+      document.getElementById('distBeneficiaryToken').value = decodedText;
+      document.getElementById('distQrStatus').innerText = 'Token scanned. Other fields not in QR.';
+      toast('⚠️ Only token captured');
+    }
+    
+    stopDistScanner();
+  };
+  
   const onFailure = () => {};
+  
   distHtml5Qrcode.start({ facingMode: "environment" }, config, onSuccess, onFailure)
     .then(() => {
       distScannerRunning = true;
       document.getElementById('distStartScanBtn').style.display = 'none';
       document.getElementById('distStopScanBtn').style.display = 'inline-block';
       document.getElementById('distQrFrame').classList.add('scanning');
-      document.getElementById('distQrStatus').innerText = "Point camera at QR code.";
+      document.getElementById('distQrStatus').innerText = "Point camera at beneficiary QR code.";
     })
     .catch((err) => {
       distHtml5Qrcode.start({}, config, onSuccess, onFailure)
@@ -1546,11 +1702,51 @@ function startDistScanner(){
           document.getElementById('distStartScanBtn').style.display = 'none';
           document.getElementById('distStopScanBtn').style.display = 'inline-block';
           document.getElementById('distQrFrame').classList.add('scanning');
-          document.getElementById('distQrStatus').innerText = "Point camera at QR code.";
+          document.getElementById('distQrStatus').innerText = "Point camera at beneficiary QR code.";
         })
-        .catch((err2) => { document.getElementById('distQrStatus').innerText = '❌ Camera unavailable.'; });
+        .catch((err2) => { 
+          document.getElementById('distQrStatus').innerText = '❌ Camera unavailable.'; 
+        });
     });
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   🔑 FILL DISTRIBUTION FORM FROM PARSED QR DATA
+   This is the key function that populates ALL beneficiary fields
+   immediately when a QR code is scanned in the Distribution tab.
+═══════════════════════════════════════════════════════════════ */
+function fillDistFormFromParsedQR(data){
+  // Location Information
+  if (data.region) document.getElementById('distRegion').value = data.region;
+  if (data.district) document.getElementById('distDistrict').value = data.district;
+  if (data.chiefdom) document.getElementById('distChiefdom').value = data.chiefdom;
+  if (data.community) document.getElementById('distCommunity').value = data.community;
+  if (data.facility) document.getElementById('distFacility').value = data.facility;
+  if (data.distPoint) document.getElementById('distDistPoint').value = data.distPoint;
+  
+  // Personal Information
+  if (data.surname) document.getElementById('distSurname').value = data.surname;
+  if (data.middleName) document.getElementById('distMiddleName').value = data.middleName;
+  if (data.firstName) document.getElementById('distFirstName').value = data.firstName;
+  if (data.mobile) document.getElementById('distMobile').value = data.mobile;
+  if (data.hhr) document.getElementById('distHhrName').value = data.hhr;
+  
+  // ITN Allocation
+  if (data.itn !== undefined && data.itn !== null && data.itn !== '') {
+    document.getElementById('distItnAlloc').value = data.itn;
+  }
+  if (data.pregnant !== undefined && data.pregnant !== null && data.pregnant !== '') {
+    document.getElementById('distPregnant').value = data.pregnant;
+  }
+  if (data.under5 !== undefined && data.under5 !== null && data.under5 !== '') {
+    document.getElementById('distUnder5').value = data.under5;
+  }
+  
+  // GPS Coordinates
+  if (data.latitude) document.getElementById('distBeneficiaryLat').value = data.latitude;
+  if (data.longitude) document.getElementById('distBeneficiaryLng').value = data.longitude;
+}
+
 function stopDistScanner(){
   if (distHtml5Qrcode && distScannerRunning) {
     distHtml5Qrcode.stop().then(() => {
@@ -1558,46 +1754,12 @@ function stopDistScanner(){
       document.getElementById('distStartScanBtn').style.display = 'inline-block';
       document.getElementById('distStopScanBtn').style.display = 'none';
       document.getElementById('distQrFrame').classList.remove('scanning');
-      document.getElementById('distQrStatus').innerText = 'Tap "Start Scanning" to use the camera.';
     }).catch(err => console.log("Stop error:", err));
   }
 }
-function parseDistQRData(qrData){
-  try {
-    let data = JSON.parse(qrData);
-    const fieldMapping = {
-      'token': 'distBeneficiaryToken', 'region': 'distRegion', 'district': 'distDistrict', 'chiefdom': 'distChiefdom',
-      'community': 'distCommunity', 'facility': 'distFacility', 'distPoint': 'distDistPoint', 'distributionPoint': 'distDistPoint',
-      'surname': 'distSurname', 'middleName': 'distMiddleName', 'firstName': 'distFirstName', 'mobile': 'distMobile',
-      'hhrName': 'distHhrName', 'itnAlloc': 'distItnAlloc', 'itnAllocation': 'distItnAlloc', 'pregnant': 'distPregnant',
-      'under5': 'distUnder5', 'underFive': 'distUnder5', 'latitude': 'distBeneficiaryLat', 'longitude': 'distBeneficiaryLng'
-    };
-    let filledCount = 0;
-    for (const [qrField, formField] of Object.entries(fieldMapping)) {
-      if (data[qrField] !== undefined && data[qrField] !== null) {
-        const element = document.getElementById(formField);
-        if (element) { element.value = data[qrField]; filledCount++; }
-      }
-    }
-    const displayText = data.firstName && data.surname ? `${data.firstName} ${data.surname} (Token: ${data.token || 'N/A'})` : `Token: ${data.token || 'Scanned successfully'}`;
-    document.getElementById('distAutoFillText').innerText = displayText;
-    document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-    document.getElementById('distQrStatus').innerText = `✅ Filled ${filledCount} fields.`;
-  } catch (error) {
-    document.getElementById('distBeneficiaryToken').value = qrData;
-    document.getElementById('distAutoFillText').innerText = `Token: ${qrData}`;
-    document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-    document.getElementById('distQrStatus').innerText = 'Token scanned.';
-  }
-}
+
 function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 SUBMIT DISTRIBUTION - Updates matching record status to
-   "Distributed" based on the beneficiary token entered/scanned.
-   This is the ONLY way a record's status can change from
-   "Pending" to "Distributed".
-═══════════════════════════════════════════════════════════════ */
 function submitDistribution(e){
   e.preventDefault();
   if (!distVerifierPad || !distDistributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) {
@@ -1605,37 +1767,28 @@ function submitDistribution(e){
     return false;
   }
   
-  // Get the token from the distribution form
   const token = document.getElementById('distBeneficiaryToken').value.trim();
-  
   if (!token) {
     alert("⚠️ Please enter or scan a beneficiary token before submitting.");
     return false;
   }
   
-  // Find the matching record in RECS array by token
   const matchIndex = RECS.findIndex(r => r.token === token);
-  
   if (matchIndex === -1) {
     alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
     return false;
   }
   
-  // Check if already distributed
   if (RECS[matchIndex].status === 'Distributed') {
     alert("ℹ️ This household has already been distributed to.\n\nToken: " + token);
     return false;
   }
   
-  // 🔑 Update the status to "Distributed"
   RECS[matchIndex].status = 'Distributed';
   RECS[matchIndex].distributionDate = new Date().toLocaleString();
   RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
   
-  // Save to localStorage
   saveRecsLocal();
-  
-  // Save to cloud
   if (RECS[matchIndex]._id) {
     updateRecordInCloud(RECS[matchIndex]._id, { 
       status: 'Distributed',
@@ -1644,7 +1797,6 @@ function submitDistribution(e){
     });
   }
   
-  // Refresh any open records views
   const activeScreen = document.querySelector('#phoneMock .screen.active');
   if (activeScreen) {
     if (activeScreen.id === 'sRecords') renderRecords();
@@ -1653,12 +1805,7 @@ function submitDistribution(e){
   }
   
   alert("✅ Distribution record submitted successfully!\n\nToken: " + token + "\nStatus: Distributed");
-  
-  // Reset the form
-  setTimeout(() => {
-    openDistribution();
-  }, 500);
-  
+  setTimeout(() => { openDistribution(); }, 500);
   return false;
 }
 
