@@ -1,5 +1,5 @@
-<!DOCTYPE html>  
-<html lang="en"> 
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
@@ -19,7 +19,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .phone-mock{width:100%;height:100%;border-radius:40px;position:relative;overflow:hidden;background:url('background.png') center/cover no-repeat}
 .screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
 .screen.active{display:flex}
-.scroll-y{overflow-y:auto;overflow-x:hidden;scrollbar-width:none;-ms-overflow-style:none}
+.scroll-y{overflow-y:auto;overflow-x:hidden;scrollbar-width:none}
 .scroll-y::-webkit-scrollbar{display:none}
 
 #sLogin{background:url('background.png') center/cover no-repeat}
@@ -29,68 +29,38 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .login-card h2{font-size:.78rem;font-weight:800;color:#1565C0;margin-bottom:3px}
 .login-card p{font-size:.48rem;color:#546e7a;margin-bottom:14px}
 .lfield{background:#fff;border:1.8px solid #2a7fc4;border-radius:40px;padding:10px 16px;margin-bottom:11px;display:flex;align-items:center;gap:9px}
-.lfield:focus-within{border-color:#FF8C42;box-shadow:0 0 0 3px rgba(255,140,66,.2)}
-.lfield input{border:none;background:transparent;width:100%;outline:none;font-size:13px;font-weight:600;color:#1e2f3f}
-.lfield input::placeholder{color:#8a9eb0;font-weight:500}
-.eye-btn{cursor:pointer;font-size:16px;color:#2a7fc4}
+.lfield input{border:none;background:transparent;width:100%;outline:none;font-size:13px;font-weight:600}
 .lerr{color:#c62828;font-size:11px;font-weight:600;padding-left:10px;margin:-6px 0 10px;display:none}
 .lerr.show{display:block}
 .lbtn{width:100%;padding:11px;border-radius:40px;border:none;color:#fff;font-weight:800;font-size:13px;margin-bottom:10px;cursor:pointer}
-.lbtn-blue{background:#1565C0}.lbtn-green{background:#2e7d64}
-.util-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
-.util-tile{border-radius:20px;padding:12px 6px;text-align:center;color:#fff;font-weight:700;font-size:10px;cursor:pointer;backdrop-filter:blur(6px)}
-.util-tile i{display:block;font-size:20px;margin-bottom:4px}
-.tu-or{background:rgba(217,95,26,.88)}.tu-bl{background:rgba(42,127,196,.88)}
-.tu-pu{background:rgba(123,63,160,.88)}.tu-te{background:rgba(27,154,138,.88)}
+.lbtn-blue{background:#1565C0}
+.lbtn-green{background:#2e7d64}
 .pfooter{background:#1565C0;text-align:center;padding:11px;color:#fff;font-size:9.5px;line-height:1.5;flex-shrink:0;margin-top:auto}
 .pfooter strong{color:#FFD966}
 
 #sDash{overflow:hidden;background:#f0f2f7}
-.dash-content{flex:1;overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}
+.dash-content{flex:1;overflow-y:auto;scrollbar-width:none}
 .dash-content::-webkit-scrollbar{display:none}
-.dhdr{background:#1565C0;padding:10px 13px 8px;flex-shrink:0}
-.dhdr-top{display:flex;align-items:center;gap:9px;margin-bottom:6px}
-.dhdr-logo{width:38px;height:38px;background:#fff;border-radius:11px;display:flex;align-items:center;justify-content:center;overflow:hidden;flex-shrink:0}
-.dhdr-logo img{width:100%;object-fit:cover}
-.dhdr-txt h1{font-size:.65rem;font-weight:800;background:linear-gradient(135deg,#fff,#FFE0B5);-webkit-background-clip:text;background-clip:text;color:transparent}
-.dhdr-txt p{font-size:.44rem;color:rgba(255,255,255,.88)}
-.dbadge{background:#FF8C42;padding:4px 10px;border-radius:36px;font-size:.48rem;font-weight:700;color:#fff;text-align:center;margin-bottom:4px}
-.dsub{color:#FFDF8C;font-size:.46rem;font-weight:600;text-align:center}
+.dhdr{background:#1565C0;padding:10px 13px 8px;flex-shrink:0;color:#fff}
+.dhdr h1{font-size:.7rem;font-weight:800}
+.dhdr p{font-size:.44rem;opacity:.88}
 .ubar{background:#1b8a7e;padding:7px 12px;display:flex;align-items:center;justify-content:space-between;color:#fff;font-size:10.5px;font-weight:600;flex-shrink:0}
 .ubar button{background:#e53935;border:none;color:#fff;padding:4px 11px;border-radius:24px;cursor:pointer;font-size:10px;font-weight:700}
-.partners{background:#fff;padding:6px 8px;border-bottom:1px solid #eef2f8;flex-shrink:0}
-.partners h4{text-align:center;font-size:.48rem;font-weight:800;color:#F57C00;margin-bottom:4px}
-.pgrid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px}
-.pitem{text-align:center}
-.plogo{background:#f8fafb;border-radius:8px;padding:2px;display:flex;align-items:center;justify-content:center;min-height:24px}
-.plogo img{max-width:20px;max-height:20px}
-.pname{font-size:.36rem;font-weight:700;color:#E65100;margin-top:1px}
-.caro{position:relative;flex-shrink:0}
-.cslides{display:flex;transition:transform .45s ease}
-.cslide{min-width:100%;flex-shrink:0}
-.cslide img{width:100%;height:140px;display:block;object-fit:cover}
-.cdots{display:flex;justify-content:center;gap:6px;padding:5px;background:#1565C0}
-.cdot{width:5px;height:5px;border-radius:50%;background:#fff;opacity:.6;cursor:pointer;transition:all .3s}
-.cdot.on{background:#FF8C42;width:15px;border-radius:3px;opacity:1}
-.carrow{position:absolute;top:46%;transform:translateY(-50%);width:26px;height:26px;background:rgba(255,255,255,.88);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;color:#FF8C42;z-index:5}
-.carrow.L{left:7px}.carrow.R{right:7px}
-.actsec{padding:8px 10px 10px}
+.actsec{padding:12px}
 .actgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
-.acard{border-radius:15px;padding:9px 4px;text-align:center;cursor:pointer;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.09)}
+.acard{border-radius:15px;padding:9px 4px;text-align:center;cursor:pointer;transition:transform .12s;box-shadow:0 4px 10px rgba(0,0,0,.09);color:#fff}
 .acard:active{transform:scale(.95)}
 .acard i{font-size:22px;display:block;margin-bottom:4px}
 .acard span{font-size:.43rem;font-weight:800}
-.a1{background:linear-gradient(145deg,#FF6B6B,#EE5A24);color:#fff}
-.a2{background:linear-gradient(145deg,#4ECDC4,#2c9e92);color:#fff}
-.a3{background:linear-gradient(145deg,#45B7D1,#2980b9);color:#fff}
+.a1{background:linear-gradient(145deg,#FF6B6B,#EE5A24)}
+.a2{background:linear-gradient(145deg,#4ECDC4,#2c9e92)}
+.a3{background:linear-gradient(145deg,#45B7D1,#2980b9)}
 .a4{background:linear-gradient(145deg,#F9CA24,#F39C12);color:#2c3e50}
-.a5{background:linear-gradient(145deg,#A55EEA,#8B5CF6);color:#fff}
-.a6{background:linear-gradient(145deg,#FF9FF3,#F368E0);color:#fff}
-.a7{background:linear-gradient(145deg,#1DD1A1,#0e9f6e);color:#fff}
-.a8{background:linear-gradient(145deg,#FF8C42,#E67E22);color:#fff}
-.a9{background:linear-gradient(145deg,#5D6D7E,#2C3E50);color:#fff}
-.dfooter{background:#1565C0;padding:7px;text-align:center;flex-shrink:0}
-.dfooter p{font-size:.47rem;color:#fff}.dfooter strong{color:#FFD966}
+.a5{background:linear-gradient(145deg,#A55EEA,#8B5CF6)}
+.a6{background:linear-gradient(145deg,#FF9FF3,#F368E0)}
+.a7{background:linear-gradient(145deg,#1DD1A1,#0e9f6e)}
+.a8{background:linear-gradient(145deg,#FF8C42,#E67E22)}
+.a9{background:linear-gradient(145deg,#5D6D7E,#2C3E50)}
 
 .sub-home-body{flex:1;display:flex;flex-direction:column;padding:0;overflow:hidden;min-height:0;background:#fff}
 .sub-home-card{background:#fff;padding:20px 16px 18px;flex:1;overflow-y:auto;scrollbar-width:none}
@@ -101,22 +71,24 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .sub-home-hdr-txt h2{font-size:.75rem;font-weight:800;color:#1565C0}
 .sub-home-hdr-txt p{font-size:.46rem;color:#546e7a;margin-top:1px}
 .sub-home-back{width:28px;height:28px;border-radius:50%;border:2px solid #1565C0;background:transparent;color:#1565C0;font-size:.85rem;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sub-home-back:hover{background:#1565C0;color:#fff}
-
 .sc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .sc{border-radius:18px;overflow:hidden;cursor:pointer;box-shadow:0 6px 16px rgba(0,0,0,.13);transition:transform .12s}
 .sc:active{transform:scale(.96)}
 .sc-top{padding:18px 8px 13px;text-align:center}
 .sc-top i{font-size:28px;color:#fff;display:block;margin-bottom:5px}
-.sc-top span{font-size:.65rem;font-weight:800;color:#fff;letter-spacing:.3px}
+.sc-top span{font-size:.65rem;font-weight:800;color:#fff}
 .sc-bot{background:#fff;padding:9px 11px 11px;border-top:3px solid transparent}
 .sc-bot strong{display:block;font-size:.5rem;margin-bottom:3px}
 .sc-bot p{font-size:.44rem;color:#334155;line-height:1.45}
-.sc-or .sc-top{background:linear-gradient(135deg,#ea580c,#f97316)}.sc-or .sc-bot{border-color:#f97316}.sc-or .sc-bot strong{color:#c2410c}
-.sc-te .sc-top{background:linear-gradient(135deg,#0d9488,#14b8a6)}.sc-te .sc-bot{border-color:#14b8a6}.sc-te .sc-bot strong{color:#0f766e}
-.sc-rd .sc-top{background:linear-gradient(135deg,#dc2626,#ef4444)}.sc-rd .sc-bot{border-color:#ef4444}.sc-rd .sc-bot strong{color:#b91c1c}
-.sc-pu .sc-top{background:linear-gradient(135deg,#7c3aed,#a855f7)}.sc-pu .sc-bot{border-color:#a855f7}.sc-pu .sc-bot strong{color:#6b21a8}
-.sc-bl .sc-top{background:linear-gradient(135deg,#1565C0,#1976d2)}.sc-bl .sc-bot{border-color:#1565C0}.sc-bl .sc-bot strong{color:#0d47a1}
+.sc-or .sc-top{background:linear-gradient(135deg,#ea580c,#f97316)}
+.sc-or .sc-bot{border-color:#f97316}
+.sc-or .sc-bot strong{color:#c2410c}
+.sc-pu .sc-top{background:linear-gradient(135deg,#7c3aed,#a855f7)}
+.sc-pu .sc-bot{border-color:#a855f7}
+.sc-pu .sc-bot strong{color:#6b21a8}
+.sc-rd .sc-top{background:linear-gradient(135deg,#dc2626,#ef4444)}
+.sc-rd .sc-bot{border-color:#ef4444}
+.sc-rd .sc-bot strong{color:#b91c1c}
 
 #sRegHome{background:url('background.png') center/cover no-repeat}
 
@@ -221,37 +193,20 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .tbkdn-c p{font-size:.49rem;color:#78350f;line-height:1.6}
 .tedit-input{flex:1;padding:9px 12px;border:1.7px solid #cdd5e0;border-radius:18px;font-size:.73rem;font-weight:600;text-align:center;background:#fff;color:#1e293b}
 .tedit-input:focus{border-color:#1565C0;outline:none;box-shadow:0 0 0 3px rgba(21,101,192,.14)}
-.tedit-btn{background:linear-gradient(105deg,#1565C0,#1976d2);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;cursor:pointer;font-size:.68rem;white-space:nowrap;box-shadow:0 3px 8px rgba(21,101,192,.3)}
-.tedit-btn:active{transform:scale(.96)}
-
-.qr-modal-ov{position:fixed;inset:0;background:rgba(0,0,0,.82);display:flex;align-items:center;justify-content:center;z-index:9999}
-.qr-modal-c{background:#fff;border-radius:24px;padding:20px;text-align:center;max-width:300px;width:88%}
-.qr-modal-c h4{margin-bottom:7px;font-size:.88rem}
-.qr-modal-c img{width:210px;height:210px;border-radius:12px;display:block;margin:0 auto 8px}
-.omodal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:8888;align-items:center;justify-content:center}
-.omodal.open{display:flex}
-.ocard{background:#fff;border-radius:30px;padding:22px 18px;text-align:center;max-width:285px;width:84%}
-.ocard .oi{font-size:48px;margin-bottom:9px}
-.ocard h3{font-size:1.05rem;font-weight:800;margin-bottom:7px}
-.ocard p{font-size:.68rem;color:#444;line-height:1.4;margin-bottom:14px}
-.obtn{background:#1565C0;color:#fff;border:none;padding:9px 20px;border-radius:32px;font-weight:700;cursor:pointer}
-
-.sync-indicator{position:fixed;top:12px;right:12px;z-index:9998;background:rgba(30,41,59,.92);color:#fff;padding:6px 12px;border-radius:20px;font-size:11px;font-weight:700;display:flex;align-items:center;gap:6px;box-shadow:0 4px 14px rgba(0,0,0,.3);backdrop-filter:blur(8px);transition:all .3s}
-.sync-dot{width:8px;height:8px;border-radius:50%;background:#94a3b8;animation:pulse 1.5s infinite}
-.sync-indicator.online .sync-dot{background:#22c55e}
-.sync-indicator.offline .sync-dot{background:#ef4444;animation:none}
-.sync-indicator.local .sync-dot{background:#f59e0b}
+.tedit-btn{background:linear-gradient(105deg,#1565C0,#1976d2);color:#fff;border:none;padding:9px 18px;border-radius:24px;font-weight:700;cursor:pointer;font-size:.68rem}
+.wnavs{display:flex;gap:8px;margin-top:14px}
+.wnavs button{flex:1;padding:9px;border-radius:36px;font-weight:700;border:none;cursor:pointer;font-size:.68rem}
+.wnext{background:#1565C0;color:#fff}
+.wprev{background:#e2e8f0;color:#1e293b}
 
 #sDistribution{background:#F4F7F2}
-.dist-header{background:linear-gradient(135deg,#1565c0,#0d47a1);padding:22px 20px 20px;text-align:center;position:relative;overflow:hidden;flex-shrink:0}
+.dist-header{background:linear-gradient(135deg,#1565c0,#0d47a1);padding:22px 20px 20px;text-align:center;position:relative;overflow:hidden;flex-shrink:0;color:#fff}
 .dist-header::before{content:"";position:absolute;inset:0;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,0.07) 0 2px,transparent 2px 18px),repeating-linear-gradient(-45deg,rgba(255,255,255,0.07) 0 2px,transparent 2px 18px);pointer-events:none}
-.dist-header .main-title,.dist-header .sub-title{position:relative;z-index:2}
-.dist-header .main-title{color:#fff;font-weight:800;letter-spacing:.3px;font-size:1.05rem;margin:0 0 4px}
-.dist-header .sub-title{color:rgba(255,255,255,0.85);font-weight:500;font-size:.78rem;margin:0}
-.dist-header .app-mark{position:relative;width:46px;height:46px;margin:0 auto 10px;z-index:2}
-.dist-back{position:absolute;top:14px;left:14px;z-index:10;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);transition:all .2s ease}
-.dist-back:hover{background:rgba(255,255,255,.4);transform:scale(1.05)}
-.dist-back:active{transform:scale(.92)}
+.dist-header>*{position:relative;z-index:2}
+.dist-header h5{font-size:1.05rem;font-weight:800;margin-bottom:4px}
+.dist-header p{font-size:.78rem;opacity:.85}
+.dist-back{position:absolute;top:14px;left:14px;z-index:10;width:32px;height:32px;border-radius:50%;border:none;background:rgba(255,255,255,.25);color:#fff;font-size:.95rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.dist-back:hover{background:rgba(255,255,255,.4)}
 .dist-container{flex:1;overflow-y:auto;padding:12px;scrollbar-width:none}
 .dist-container::-webkit-scrollbar{display:none}
 .dist-step-card{background:#fff;border-radius:16px;padding:18px;margin-bottom:16px;box-shadow:0 4px 14px rgba(22,50,79,0.07);border:1px solid rgba(22,50,79,0.04)}
@@ -262,6 +217,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-sub-title{color:#16324F;font-weight:600;text-transform:uppercase;font-size:.78rem;letter-spacing:.5px;margin-bottom:10px}
 .dist-sub-title i{color:#1565c0}
 .dist-form-label{font-size:.85rem;font-weight:600;color:#16324F;margin-bottom:5px;display:block}
+.dist-form-label .req{color:#e53935;font-weight:800;margin-left:2px}
 .dist-form-control{width:100%;border-radius:10px;border:1px solid #DCE7E2;padding:.55rem .8rem;font-size:.9rem;background:#fff;color:#16242A}
 .dist-form-control:focus{border-color:#1565c0;outline:none;box-shadow:0 0 0 .2rem rgba(21,101,192,.16)}
 .dist-form-control[readonly]{background:#F4F7F2;color:#5B6B6E}
@@ -276,93 +232,41 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-nav-buttons{background:#fff;border-top:1px solid #DCE7E2;box-shadow:0 -2px 8px rgba(22,50,79,0.05);z-index:10;padding:12px 15px;display:flex;justify-content:space-between;gap:8px;flex-shrink:0}
 .dist-btn{border-radius:12px;font-weight:600;padding:10px 18px;border:none;cursor:pointer;font-size:.85rem;transition:all .2s ease}
 .dist-btn-prev{background:#DCE7E2;color:#16324F}
-.dist-btn-prev:hover{background:#5B6B6E;color:#fff}
 .dist-btn-next{background:#1565c0;color:#fff;margin-left:auto}
-.dist-btn-next:hover{background:#0d47a1}
 .dist-btn-submit{background:#1565c0;color:#fff;width:100%;padding:14px;border-radius:12px;border:none;font-weight:700;font-size:.95rem;cursor:pointer;margin-top:12px}
-.dist-btn-submit:hover{background:#0d47a1}
 .dist-signature-pad{border:2px dashed #DCE7E2;border-radius:12px;width:100%;height:140px;background:#fff;touch-action:none;cursor:crosshair}
 .dist-health-topic{display:flex;gap:12px;align-items:flex-start;background:#F4F7F2;padding:12px 14px;margin-bottom:10px;border-radius:12px;font-size:.85rem;color:#16242A}
 .dist-topic-number{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:#1565c0;color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .dist-health-topic strong{color:#16324F;display:block;margin-bottom:2px}
-
-/* ═══════════════════════════════════════════════════════════════
-   🔑 FIXED: QR Scanner CSS - No conflicts with html5-qrcode
-═══════════════════════════════════════════════════════════════ */
-.dist-qr-wrapper{
-  position:relative;
-  width:100%;
-  background:#000;
-  border-radius:14px;
-  overflow:hidden;
-  margin-bottom:12px;
-}
-/* The actual scanner container - explicit dimensions */
-#dist-qr-reader{
-  width:100%;
-  height:260px;
-  background:#000;
-  position:relative;
-}
-/* Let the library handle its own video styling */
-#dist-qr-reader video{
-  width:100%;
-  height:100%;
-  object-fit:cover;
-}
-/* Scanner corner decorations */
+.dist-qr-wrapper{position:relative;width:100%;background:#000;border-radius:14px;overflow:hidden;margin-bottom:12px}
+#dist-qr-reader{width:100%;height:260px;background:#000;position:relative}
+#dist-qr-reader video{width:100%;height:100%;object-fit:cover}
 .dist-qr-corner{position:absolute;width:26px;height:26px;border:3px solid #E8A33D;opacity:0;transition:opacity .2s ease;pointer-events:none;z-index:5}
 .dist-qr-wrapper.scanning .dist-qr-corner{opacity:1}
 .dist-qr-corner-tl{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:6px 0 0 0}
 .dist-qr-corner-tr{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 6px 0 0}
 .dist-qr-corner-bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 6px}
 .dist-qr-corner-br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 6px 0}
-
-/* Tab content visibility */
 .dist-tab-content{display:none;width:100%}
 .dist-tab-content.active{display:block}
-
 .dist-beneficiary-tab{background:#F4F7F2;border:none;border-radius:12px;padding:4px;gap:4px;display:flex;margin-bottom:12px}
 .dist-beneficiary-tab .nav-link{border:none;border-radius:9px;color:#5B6B6E;font-weight:600;font-size:.85rem;padding:8px 0;flex:1;text-align:center;background:transparent;cursor:pointer}
 .dist-beneficiary-tab .nav-link.active{background:#fff;color:#1565c0;box-shadow:0 1px 4px rgba(22,50,79,.12)}
 .dist-footer{background:#1565c0;color:rgba(255,255,255,.85);text-align:center;padding:14px 0;font-size:.8rem;flex-shrink:0}
 .dist-footer strong{color:#fff}
-
-.dist-recs-header{background:linear-gradient(115deg,#A55EEA,#8B5CF6);padding:11px 13px;color:#fff;display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
-.dist-recs-header h3{font-size:.75rem;font-weight:700}
-
-.dist-token-display{
-  background:linear-gradient(135deg, #E8F5E9, #C8E6C9);
-  border:1.5px solid #4CAF50;
-  border-radius:10px;
-  padding:10px 12px;
-  font-family: 'Courier New', monospace;
-  font-size:.85rem;
-  font-weight:700;
-  color:#1B5E20;
-  letter-spacing:.5px;
-  word-break:break-all;
-}
-.dist-token-display::placeholder{
-  color:#81C784;
-  font-weight:500;
-  font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
-  letter-spacing:normal;
-}
-
-/* Camera status indicator */
-.camera-status{
-  padding:10px;
-  border-radius:10px;
-  margin-bottom:12px;
-  font-size:.8rem;
-  font-weight:600;
-  text-align:center;
-}
+.dist-token-display{background:linear-gradient(135deg,#E8F5E9,#C8E6C9);border:1.5px solid #4CAF50;border-radius:10px;padding:10px 12px;font-family:'Courier New',monospace;font-size:.85rem;font-weight:700;color:#1B5E20;letter-spacing:.5px;word-break:break-all}
+.camera-status{padding:10px;border-radius:10px;margin-bottom:12px;font-size:.8rem;font-weight:600;text-align:center}
 .camera-status.ready{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
 .camera-status.scanning{background:#fff3e0;color:#ef6c00;border:1px solid #ffcc80}
 .camera-status.error{background:#ffebee;color:#c62828;border:1px solid #ef9a9a}
 .camera-status.success{background:#e8f5e9;color:#2e7d32;border:1px solid #a5d6a7}
+
+/* Validation error box */
+.validation-error-box{background:#ffebee;border:2px solid #ef5350;border-radius:12px;padding:12px;margin-bottom:16px;display:none}
+.validation-error-box.show{display:block}
+.validation-error-box h4{color:#c62828;font-size:.9rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.validation-error-box ul{margin:0;padding-left:20px;color:#c62828;font-size:.8rem}
+.validation-error-box ul li{margin-bottom:4px}
 </style>
 </head>
 <body>
@@ -381,21 +285,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      <img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt="ICF">
      <h2>ICF-SL ITN CAMPAIGN PORTAL</h2>
      <p>Insecticide-Treated Net Distribution · Sierra Leone</p>
-     <div class="lfield"><i class="fa fa-user" style="color:#2a7fc4"></i><input type="text" id="lusr" placeholder="USERNAME" autocomplete="off"></div>
+     <div class="lfield"><i class="fa fa-user" style="color:#2a7fc4"></i><input type="text" id="lusr" placeholder="USERNAME"></div>
      <div id="lerr" class="lerr"></div>
-     <div class="lfield">
-      <i class="fa fa-lock" style="color:#2a7fc4"></i>
-      <input type="password" id="lpwd" placeholder="PASSWORD" autocomplete="off">
-      <span class="eye-btn" onclick="toggleEye()"><i class="fa-regular fa-eye" id="eyeI"></i></span>
-     </div>
+     <div class="lfield"><i class="fa fa-lock" style="color:#2a7fc4"></i><input type="password" id="lpwd" placeholder="PASSWORD"></div>
      <button class="lbtn lbtn-blue" onclick="doLogin()">LOGIN</button>
-     <button class="lbtn lbtn-green" onclick="toast('📷 QR scan simulated')">SCAN QR BADGE</button>
-    </div>
-    <div class="util-grid">
-     <div class="util-tile tu-or" onclick="checkNet()"><i class="fa fa-wifi"></i>NETWORK CHECK</div>
-     <div class="util-tile tu-bl" onclick="toast('✓ Logs exported')"><i class="fa fa-file-export"></i>EXPORT LOGS</div>
-     <div class="util-tile tu-pu" onclick="toast('✓ Print verified')"><i class="fa fa-fingerprint"></i>VERIFY PRINT</div>
-     <div class="util-tile tu-te" onclick="toast('🌐 Language toggled')"><i class="fa fa-language"></i>LANGUAGE</div>
     </div>
    </div>
    <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
@@ -403,42 +296,19 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 
   <div class="screen" id="sDash">
    <div class="dhdr">
-    <div class="dhdr-top">
-     <div class="dhdr-logo"><img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt=""></div>
-     <div class="dhdr-txt"><h1>Informatics Consultancy Firm-SL (ICF-SL)</h1><p>Driving Data-Driven Solutions for Health and Development</p></div>
-    </div>
-    <div class="dbadge">🏠 HOUSEHOLD ITN DISTRIBUTION CAMPAIGN — SIERRA LEONE</div>
-    <div class="dsub">🦟 Insecticide-Treated Nets Distribution Survey — Sierra Leone</div>
+    <h1>ICF-SL ITN Campaign Portal</h1>
+    <p>Household ITN Distribution Campaign — Sierra Leone</p>
    </div>
    <div class="ubar">
     <span id="ubarLbl"><i class="fa fa-user-circle"></i> —</span>
     <button onclick="doLogout()"><i class="fa fa-sign-out-alt"></i> LOGOUT</button>
    </div>
    <div class="dash-content">
-    <div class="partners">
-     <h4>IMPLEMENTING PARTNERS</h4>
-     <div class="pgrid">
-      <div class="pitem"><div class="plogo"><img src="usa.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>USA</span>'"></div><div class="pname">United States</div></div>
-      <div class="pitem"><div class="plogo"><img src="global_fund.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>GF</span>'"></div><div class="pname">Global Fund</div></div>
-      <div class="pitem"><div class="plogo"><img src="pmi_evolve.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>PMI</span>'"></div><div class="pname">PMI Evolve</div></div>
-      <div class="pitem"><div class="plogo"><img src="moh_logo.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MOH</span>'"></div><div class="pname">MOH</div></div>
-      <div class="pitem"><div class="plogo"><img src="NMCP.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>NMCP</span>'"></div><div class="pname">NMCP</div></div>
-      <div class="pitem"><div class="plogo"><img src="mbsse.png" onerror="this.outerHTML='<span style=font-size:.5rem;color:#E65100;font-weight:800>MB</span>'"></div><div class="pname">MBSSE</div></div>
-     </div>
+    <div class="actsec">
+     <div class="actgrid" id="actGrid"></div>
     </div>
-    <div class="caro">
-     <div class="carrow L" id="cPrev">&#8249;</div>
-     <div class="carrow R" id="cNext">&#8250;</div>
-     <div class="cslides" id="cSlides">
-      <div class="cslide"><img src="infographics.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231565C0%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EITN Campaign%3C/text%3E%3C/svg%3E'"></div>
-      <div class="cslide"><img src="infographics.png" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%23F57C00%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3EData Collection%3C/text%3E%3C/svg%3E'"></div>
-      <div class="cslide"><img src="infographicss.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 370 140%22%3E%3Crect width=%22370%22 height=%22140%22 fill=%22%231B5E20%22/%3E%3Ctext x=%22185%22 y=%2275%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2217%22 font-weight=%22700%22%3ECommunity Impact%3C/text%3E%3C/svg%3E'"></div>
-     </div>
-     <div class="cdots" id="cDots"></div>
-    </div>
-    <div class="actsec"><div class="actgrid" id="actGrid"></div></div>
    </div>
-   <div class="dfooter"><p>Developed By <strong>Informatics Consultancy Firm-SL</strong> © 2026</p></div>
+   <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
   <div class="screen" id="sRegHome">
@@ -447,7 +317,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      <div class="sub-home-hdr">
       <button class="sub-home-back" onclick="go('sDash')">&#8592;</button>
       <div class="hdr-icon" style="background:linear-gradient(135deg,#ea580c,#f97316)"><i class="fa fa-pen-to-square"></i></div>
-      <div class="sub-home-hdr-txt"><h2>ITN REGISTRATION</h2><p>Household Registration Portal · ICF-SL</p></div>
+      <div class="sub-home-hdr-txt">
+       <h2>ITN REGISTRATION</h2>
+       <p>Household Registration Portal · ICF-SL</p>
+      </div>
      </div>
      <div class="sc-grid">
       <div class="sc sc-or" onclick="openManual()">
@@ -460,11 +333,11 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       </div>
       <div class="sc sc-rd" onclick="openTarget()">
        <div class="sc-top"><i class="fa fa-bullseye"></i><span>DAILY TARGET</span></div>
-       <div class="sc-bot"><strong>📊 HHR Goals</strong><p>Track daily household registration target &amp; progress</p></div>
+       <div class="sc-bot"><strong>📊 HHR Goals</strong><p>Track daily household registration target & progress</p></div>
       </div>
       <div class="sc sc-pu" onclick="openRecords()">
        <div class="sc-top"><i class="fa fa-table-list"></i><span>RECORDS</span></div>
-       <div class="sc-bot"><strong>📁 Manage</strong><p>View all households &amp; download QR codes</p></div>
+       <div class="sc-bot"><strong>📁 Manage</strong><p>View all households & download QR codes</p></div>
       </div>
      </div>
     </div>
@@ -478,7 +351,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      <div class="sub-home-hdr">
       <button class="sub-home-back" onclick="go('sDash')">&#8592;</button>
       <div class="hdr-icon" style="background:linear-gradient(135deg,#1565C0,#1976d2)"><i class="fa fa-boxes"></i></div>
-      <div class="sub-home-hdr-txt"><h2>ITN DISTRIBUTION</h2><p>Distribution Management Portal · ICF-SL</p></div>
+      <div class="sub-home-hdr-txt">
+       <h2>ITN DISTRIBUTION</h2>
+       <p>Distribution Management Portal · ICF-SL</p>
+      </div>
      </div>
      <div class="sc-grid" id="distHomeGrid"></div>
     </div>
@@ -501,49 +377,53 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <div class="sitem"><div class="scirc">5</div><div class="slbl">Finish</div></div>
    </div>
    <div class="wbody">
+    <div id="mValidationError" class="validation-error-box">
+     <h4><i class="fas fa-exclamation-triangle"></i> Missing Required Fields</h4>
+     <ul id="mValidationErrorList"></ul>
+    </div>
     <div class="wsec on" id="ms1">
      <div id="scanBtnContainer" class="fg" style="text-align:center; margin-bottom: 16px; display:none;">
       <button class="tok-btn" style="background:linear-gradient(105deg,#1565C0,#1976d2); color:#fff; font-size:.75rem; padding:12px;" onclick="openCameraScanner()">
        <i class="fa fa-camera"></i> 📷 TAP TO SCAN QR BADGE
       </button>
      </div>
-     <div class="fg"><label>📅 Date</label><input id="mDate" readonly></div>
+     <div class="fg"><label>📅 Date<span class="req">*</span></label><input id="mDate" readonly required></div>
      <div class="r2">
-      <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg"><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
-      <div class="fg"><label>🏛 District<span class="req">*</span></label><select id="mDis" disabled><option value="">— District —</option></select><div class="ferr" id="mDisE">Required</div></div>
+      <div class="fg"><label>🌍 Region<span class="req">*</span></label><select id="mReg" required><option value="">— Region —</option></select><div class="ferr" id="mRegE">Required</div></div>
+      <div class="fg"><label>🏛 District<span class="req">*</span></label><select id="mDis" disabled required><option value="">— District —</option></select><div class="ferr" id="mDisE">Required</div></div>
      </div>
      <div class="r2">
-      <div class="fg"><label>⛰ Chiefdom<span class="req">*</span></label><select id="mChi" disabled><option value="">— Chiefdom —</option></select><div class="ferr" id="mChiE">Required</div></div>
-      <div class="fg"><label>🏘 Community<span class="req">*</span></label><select id="mCom" disabled><option value="">— Community —</option></select><div class="ferr" id="mComE">Required</div></div>
+      <div class="fg"><label>⛰ Chiefdom<span class="req">*</span></label><select id="mChi" disabled required><option value="">— Chiefdom —</option></select><div class="ferr" id="mChiE">Required</div></div>
+      <div class="fg"><label>🏘 Community<span class="req">*</span></label><select id="mCom" disabled required><option value="">— Community —</option></select><div class="ferr" id="mComE">Required</div></div>
      </div>
      <div class="r2">
-      <div class="fg"><label>🏥 Facility<span class="req">*</span></label><select id="mFac" disabled><option value="">— Facility —</option></select><div class="ferr" id="mFacE">Required</div></div>
-      <div class="fg"><label>📦 Dist. Point<span class="req">*</span></label><select id="mDp" disabled><option value="">— Dist. Point —</option></select><div class="ferr" id="mDpE">Required</div></div>
+      <div class="fg"><label>🏥 Facility<span class="req">*</span></label><select id="mFac" disabled required><option value="">— Facility —</option></select><div class="ferr" id="mFacE">Required</div></div>
+      <div class="fg"><label>📦 Dist. Point<span class="req">*</span></label><select id="mDp" disabled required><option value="">— Dist. Point —</option></select><div class="ferr" id="mDpE">Required</div></div>
      </div>
      <div class="wnavs"><div></div><button class="wnext" onclick="ms1Next()">Next &#8594;</button></div>
     </div>
     <div class="wsec" id="ms2">
      <div class="r2">
-      <div class="fg"><label>👤 Surname<span class="req">*</span></label><input id="mSur" placeholder="Family name"><div class="ferr" id="mSurE">Required</div></div>
-      <div class="fg"><label>👤 Middle</label><input id="mMid" placeholder="Optional"></div>
+      <div class="fg"><label>👤 Surname<span class="req">*</span></label><input id="mSur" placeholder="Family name" required><div class="ferr" id="mSurE">Required</div></div>
+      <div class="fg"><label>👤 Middle<span class="req">*</span></label><input id="mMid" placeholder="Middle name" required><div class="ferr" id="mMidE">Required</div></div>
      </div>
-     <div class="fg"><label>👤 First Name<span class="req">*</span></label><input id="mFst" placeholder="Given name"><div class="ferr" id="mFstE">Required</div></div>
+     <div class="fg"><label>👤 First Name<span class="req">*</span></label><input id="mFst" placeholder="Given name" required><div class="ferr" id="mFstE">Required</div></div>
      <div class="fg"><label>📞 Mobile<span class="req">*</span></label>
-      <div class="ph-wrap"><div class="ph-sim">📱 SIM</div><input type="tel" id="mPh" class="ph-inp" placeholder="071234567" maxlength="9"></div>
+      <div class="ph-wrap"><div class="ph-sim">📱 SIM</div><input type="tel" id="mPh" class="ph-inp" placeholder="071234567" maxlength="9" required></div>
       <div class="ferr" id="mPhE">Must be 9 digits starting with 0</div>
      </div>
      <div class="r2">
-      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn()"><div class="ferr" id="mMemE">Min 1</div></div>
-      <div class="fg"><label>🦟 ITN Alloc.</label><input id="mItn" readonly placeholder="Auto"></div>
+      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn()" required><div class="ferr" id="mMemE">Min 1</div></div>
+      <div class="fg"><label>🦟 ITN Alloc.<span class="req">*</span></label><input id="mItn" readonly placeholder="Auto" required></div>
      </div>
      <div class="r2">
-      <div class="fg"><label>🤰 Pregnant</label><input type="number" id="mPrg" min="0" value="0"></div>
-      <div class="fg"><label>🧒 Under-5</label><input type="number" id="mU5" min="0" value="0"></div>
+      <div class="fg"><label>🤰 Pregnant<span class="req">*</span></label><input type="number" id="mPrg" min="0" value="0" required></div>
+      <div class="fg"><label>🧒 Under-5<span class="req">*</span></label><input type="number" id="mU5" min="0" value="0" required></div>
      </div>
-     <div class="fg"><label>🧑‍⚕️ HHR Name<span class="req">*</span></label><input id="mHhr" placeholder="Enumerator full name"><div class="ferr" id="mHhrE">Required</div></div>
+     <div class="fg"><label>🧑‍⚕️ HHR Name<span class="req">*</span></label><input id="mHhr" placeholder="Enumerator full name" required><div class="ferr" id="mHhrE">Required</div></div>
      <div class="r2">
-      <div class="fg"><label>📍 Latitude</label><input id="mLat" readonly placeholder="GPS..."></div>
-      <div class="fg"><label>📍 Longitude</label><input id="mLng" readonly placeholder="GPS..."></div>
+      <div class="fg"><label>📍 Latitude<span class="req">*</span></label><input id="mLat" readonly placeholder="GPS..." required></div>
+      <div class="fg"><label>📍 Longitude<span class="req">*</span></label><input id="mLng" readonly placeholder="GPS..." required></div>
      </div>
      <button class="tok-btn" onclick="genToken()">🔐 Generate Household Token</button>
      <div class="tok-box" id="mTok"></div>
@@ -684,18 +564,8 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
     <button class="dist-back" onclick="go('sDistHome')" title="Back to Distribution Home">
      <i class="fas fa-arrow-left"></i>
     </button>
-    <svg class="app-mark" viewBox="0 0 44 44" fill="none" xmlns="http://www.w3.org/2000/svg">
-     <rect x="1" y="1" width="42" height="42" rx="13" fill="rgba(255,255,255,0.14)" stroke="rgba(255,255,255,0.4)" stroke-width="1"/>
-     <g stroke="#FFFFFF" stroke-width="1.4" stroke-linecap="round" opacity="0.9">
-      <path d="M9 13 L22 26 M22 13 L9 26"/>
-      <path d="M22 13 L35 26 M35 13 L22 26"/>
-      <path d="M9 26 L22 35"/>
-      <path d="M22 26 L35 35"/>
-     </g>
-     <circle cx="22" cy="19.5" r="3.4" fill="#E8A33D"/>
-    </svg>
-    <h5 class="main-title">ITN Distribution</h5>
-    <p class="sub-title">Net Distribution &middot; Sierra Leone</p>
+    <h5>ITN Distribution</h5>
+    <p>Net Distribution · Sierra Leone</p>
    </div>
 
    <div class="dist-container">
@@ -710,6 +580,11 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
      <div class="dist-progress-step"><span>6</span></div>
     </div>
 
+    <div id="distValidationError" class="validation-error-box">
+     <h4><i class="fas fa-exclamation-triangle"></i> Missing Required Fields</h4>
+     <ul id="distValidationErrorList"></ul>
+    </div>
+
     <form id="distributionForm" onsubmit="return submitDistribution(event)">
      <div class="dist-step active" data-step="0">
       <div class="dist-step-card">
@@ -717,6 +592,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <span class="dist-step-icon"><i class="fas fa-calendar-days"></i></span>
         <div><span class="dist-step-eyebrow">Step 1 of 6</span><h2 class="dist-step-title">Date</h2></div>
        </div>
+       <label class="dist-form-label">Date<span class="req">*</span></label>
        <input type="date" class="dist-form-control" id="distDate" required>
       </div>
      </div>
@@ -728,28 +604,22 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <div><span class="dist-step-eyebrow">Household</span><h2 class="dist-step-title">Beneficiary Details</h2></div>
        </div>
        
-       <!-- Tab buttons -->
        <div class="dist-beneficiary-tab" id="distBeneficiaryTab">
         <button type="button" class="nav-link active" data-tab="dist-token" onclick="switchDistTab('dist-token')">Type Token</button>
         <button type="button" class="nav-link" data-tab="dist-qr" onclick="switchDistTab('dist-qr')">Scan QR</button>
        </div>
        
-       <!-- Token input tab -->
        <div id="dist-token" class="dist-tab-content active">
         <div style="display:flex;gap:8px;margin-bottom:12px">
-         <input type="text" class="dist-form-control" id="distBeneficiaryToken" placeholder="Enter Token ID" style="flex:1">
+         <input type="text" class="dist-form-control" id="distBeneficiaryToken" placeholder="Enter Token ID" style="flex:1" required>
          <button type="button" class="dist-btn dist-btn-next" onclick="distAutoFillData()">Auto-Fill</button>
         </div>
        </div>
        
-       <!-- 🔑 FIXED: QR Scanner tab with proper camera setup -->
        <div id="dist-qr" class="dist-tab-content">
-        <!-- Camera status indicator -->
         <div id="cameraStatusIndicator" class="camera-status ready">
           📷 Camera ready. Click "Start Scanning" to begin.
         </div>
-        
-        <!-- 🔑 FIXED: Wrapper with explicit dimensions, no overflow:hidden conflicts -->
         <div class="dist-qr-wrapper" id="distQrWrapper">
          <div id="dist-qr-reader"></div>
          <span class="dist-qr-corner dist-qr-corner-tl"></span>
@@ -757,8 +627,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
          <span class="dist-qr-corner dist-qr-corner-bl"></span>
          <span class="dist-qr-corner dist-qr-corner-br"></span>
         </div>
-        
-        <!-- Scanner control buttons -->
         <div style="display:flex;gap:8px;margin-top:8px">
          <button type="button" class="dist-btn dist-btn-next" style="flex:1" id="distStartScanBtn" onclick="startDistScanner()">
           <i class="fas fa-camera me-1"></i> Start Scanning
@@ -767,19 +635,16 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
           <i class="fas fa-stop-circle me-1"></i> Stop Scanning
          </button>
         </div>
-        
-        <!-- 🔑 NEW: Manual retry button if camera fails -->
         <button type="button" id="distRetryCameraBtn" class="dist-btn dist-btn-next" style="width:100%;margin-top:8px;display:none;background:#FF8C42;color:#fff" onclick="retryCamera()">
          <i class="fas fa-redo me-1"></i> Retry Camera
         </button>
        </div>
        
-       <!-- Auto-fill display -->
        <div id="distAutoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
         <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="distAutoFillText"></span>
        </div>
       </div>
-      
+
       <div class="dist-step-card">
        <div class="dist-step-header">
         <span class="dist-step-icon"><i class="fas fa-user"></i></span>
@@ -787,46 +652,46 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
        </div>
        <h6 class="dist-sub-title"><i class="fas fa-map-marker-alt me-2"></i>Location</h6>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Region</label><input type="text" class="dist-form-control" id="distRegion" placeholder="Region" readonly></div>
-        <div class="col-6"><label class="dist-form-label">District</label><input type="text" class="dist-form-control" id="distDistrict" placeholder="District" readonly></div>
+        <div class="col-6"><label class="dist-form-label">Region<span class="req">*</span></label><input type="text" class="dist-form-control" id="distRegion" placeholder="Region" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">District<span class="req">*</span></label><input type="text" class="dist-form-control" id="distDistrict" placeholder="District" readonly required></div>
        </div>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Chiefdom</label><input type="text" class="dist-form-control" id="distChiefdom" placeholder="Chiefdom" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Community</label><input type="text" class="dist-form-control" id="distCommunity" placeholder="Community" readonly></div>
+        <div class="col-6"><label class="dist-form-label">Chiefdom<span class="req">*</span></label><input type="text" class="dist-form-control" id="distChiefdom" placeholder="Chiefdom" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">Community<span class="req">*</span></label><input type="text" class="dist-form-control" id="distCommunity" placeholder="Community" readonly required></div>
        </div>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Facility</label><input type="text" class="dist-form-control" id="distFacility" placeholder="Facility" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Dist. Point</label><input type="text" class="dist-form-control" id="distDistPoint" placeholder="Dist. Point" readonly></div>
+        <div class="col-6"><label class="dist-form-label">Facility<span class="req">*</span></label><input type="text" class="dist-form-control" id="distFacility" placeholder="Facility" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">Dist. Point<span class="req">*</span></label><input type="text" class="dist-form-control" id="distDistPoint" placeholder="Dist. Point" readonly required></div>
        </div>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-user-circle me-2"></i>Personal</h6>
        <div class="row g-2 mb-3">
-        <div class="col-4"><label class="dist-form-label">Surname</label><input type="text" class="dist-form-control" id="distSurname" placeholder="Surname" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Middle</label><input type="text" class="dist-form-control" id="distMiddleName" placeholder="Middle" readonly></div>
-        <div class="col-4"><label class="dist-form-label">First</label><input type="text" class="dist-form-control" id="distFirstName" placeholder="First" readonly></div>
+        <div class="col-4"><label class="dist-form-label">Surname<span class="req">*</span></label><input type="text" class="dist-form-control" id="distSurname" placeholder="Surname" readonly required></div>
+        <div class="col-4"><label class="dist-form-label">Middle<span class="req">*</span></label><input type="text" class="dist-form-control" id="distMiddleName" placeholder="Middle" readonly required></div>
+        <div class="col-4"><label class="dist-form-label">First<span class="req">*</span></label><input type="text" class="dist-form-control" id="distFirstName" placeholder="First" readonly required></div>
        </div>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Mobile</label><input type="tel" class="dist-form-control" id="distMobile" placeholder="Mobile" readonly></div>
-        <div class="col-6"><label class="dist-form-label">HHR Name</label><input type="text" class="dist-form-control" id="distHhrName" placeholder="HHR Name" readonly></div>
+        <div class="col-6"><label class="dist-form-label">Mobile<span class="req">*</span></label><input type="tel" class="dist-form-control" id="distMobile" placeholder="Mobile" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">HHR Name<span class="req">*</span></label><input type="text" class="dist-form-control" id="distHhrName" placeholder="HHR Name" readonly required></div>
        </div>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-box me-2"></i>ITN Allocation</h6>
        <div class="row g-2 mb-3">
-        <div class="col-4"><label class="dist-form-label">ITN Alloc</label><input type="number" class="dist-form-control" id="distItnAlloc" placeholder="0" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Pregnant</label><input type="number" class="dist-form-control" id="distPregnant" placeholder="0" readonly></div>
-        <div class="col-4"><label class="dist-form-label">Under-5</label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly></div>
+        <div class="col-4"><label class="dist-form-label">ITN Alloc<span class="req">*</span></label><input type="number" class="dist-form-control" id="distItnAlloc" placeholder="0" readonly required min="1"></div>
+        <div class="col-4"><label class="dist-form-label">Pregnant<span class="req">*</span></label><input type="number" class="dist-form-control" id="distPregnant" placeholder="0" readonly required min="0"></div>
+        <div class="col-4"><label class="dist-form-label">Under-5<span class="req">*</span></label><input type="number" class="dist-form-control" id="distUnder5" placeholder="0" readonly required min="0"></div>
        </div>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-key me-2"></i>Token</h6>
        <div class="mb-3">
-        <label class="dist-form-label">Beneficiary Token</label>
-        <input type="text" class="dist-form-control dist-token-display" id="distTokenDisplay" placeholder="Token will appear here after scanning or auto-fill" readonly>
+        <label class="dist-form-label">Beneficiary Token<span class="req">*</span></label>
+        <input type="text" class="dist-form-control dist-token-display" id="distTokenDisplay" placeholder="Token will appear here after scanning or auto-fill" readonly required>
        </div>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-location-crosshairs me-2"></i>GPS</h6>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Latitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLat" placeholder="Latitude" readonly></div>
-        <div class="col-6"><label class="dist-form-label">Longitude</label><input type="text" class="dist-form-control" id="distBeneficiaryLng" placeholder="Longitude" readonly></div>
+        <div class="col-6"><label class="dist-form-label">Latitude<span class="req">*</span></label><input type="text" class="dist-form-control" id="distBeneficiaryLat" placeholder="Latitude" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">Longitude<span class="req">*</span></label><input type="text" class="dist-form-control" id="distBeneficiaryLng" placeholder="Longitude" readonly required></div>
        </div>
       </div>
      </div>
@@ -838,20 +703,20 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <div><span class="dist-step-eyebrow">Step 3 of 6</span><h2 class="dist-step-title">Team Members</h2></div>
        </div>
        <h6 class="dist-sub-title"><i class="fas fa-user-check me-2"></i>Voucher Verifier</h6>
-       <label class="dist-form-label">Name</label>
+       <label class="dist-form-label">Name<span class="req">*</span></label>
        <input type="text" class="dist-form-control mb-2" id="distVerifierName" placeholder="Full name" required>
-       <label class="dist-form-label">Mobile</label>
+       <label class="dist-form-label">Mobile<span class="req">*</span></label>
        <input type="tel" class="dist-form-control mb-2" id="distVerifierMobile" placeholder="07XXXXXXXX" required>
-       <label class="dist-form-label">Signature</label>
+       <label class="dist-form-label">Signature<span class="req">*</span></label>
        <canvas id="distVerifierSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px;margin-bottom:14px" onclick="clearDistSignature('verifier')"><i class="fas fa-eraser me-1"></i> Clear</button>
        <hr>
        <h6 class="dist-sub-title"><i class="fas fa-user-shield me-2"></i>ITN Distributor</h6>
-       <label class="dist-form-label">Name</label>
+       <label class="dist-form-label">Name<span class="req">*</span></label>
        <input type="text" class="dist-form-control mb-2" id="distDistributorName" placeholder="Full name" required>
-       <label class="dist-form-label">Mobile</label>
+       <label class="dist-form-label">Mobile<span class="req">*</span></label>
        <input type="tel" class="dist-form-control mb-2" id="distDistributorMobile" placeholder="07XXXXXXXX" required>
-       <label class="dist-form-label">Signature</label>
+       <label class="dist-form-label">Signature<span class="req">*</span></label>
        <canvas id="distDistributorSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px" onclick="clearDistSignature('distributor')"><i class="fas fa-eraser me-1"></i> Clear</button>
       </div>
@@ -883,7 +748,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
        </div>
        <div style="display:flex;align-items:start;margin-top:12px">
         <input type="checkbox" id="distHealthTalkGiven" required style="transform:scale(1.3);margin-top:3px">
-        <label for="distHealthTalkGiven" style="margin-left:12px;font-weight:600;font-size:.9rem;line-height:1.4">I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.</label>
+        <label for="distHealthTalkGiven" style="margin-left:12px;font-weight:600;font-size:.9rem;line-height:1.4">I confirm health education on proper ITN usage, hanging, and care was provided to the beneficiary.<span class="req">*</span></label>
        </div>
       </div>
      </div>
@@ -894,10 +759,10 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <span class="dist-step-icon"><i class="fas fa-location-dot"></i></span>
         <div><span class="dist-step-eyebrow">Step 6 of 6</span><h2 class="dist-step-title">GPS Coordinates</h2></div>
        </div>
-       <label class="dist-form-label">Latitude</label>
-       <input type="text" class="dist-form-control mb-2" id="distGpsLat" placeholder="Latitude" readonly>
-       <label class="dist-form-label">Longitude</label>
-       <input type="text" class="dist-form-control mb-2" id="distGpsLng" placeholder="Longitude" readonly>
+       <label class="dist-form-label">Latitude<span class="req">*</span></label>
+       <input type="text" class="dist-form-control mb-2" id="distGpsLat" placeholder="Latitude" readonly required>
+       <label class="dist-form-label">Longitude<span class="req">*</span></label>
+       <input type="text" class="dist-form-control mb-2" id="distGpsLng" placeholder="Longitude" readonly required>
        <small style="color:#5B6B6E;margin-top:8px;display:block" id="distGpsStatus"><i class="fas fa-spinner fa-spin me-1"></i> Auto-capturing location...</small>
       </div>
       <button type="submit" class="dist-btn-submit"><i class="fas fa-check-circle me-2"></i> Submit Distribution Record</button>
@@ -927,9 +792,6 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
  </div>
 </div>
 
-<div class="omodal" id="oAccess"><div class="ocard"><div class="oi">🔒</div><h3>Access Restricted</h3><p id="oAccessMsg"></p><button class="obtn" onclick="closeO('oAccess')">OK</button></div></div>
-<div class="omodal" id="oNet"><div class="ocard"><div class="oi" id="oNetI"></div><h3 id="oNetT"></h3><p id="oNetD"></p><button class="obtn" onclick="closeO('oNet')">OK</button></div></div>
-
 <script>
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
@@ -940,19 +802,10 @@ const firebaseConfig = {
   appId: "YOUR_APP_ID"
 };
 const FIREBASE_ENABLED = firebaseConfig.apiKey && !firebaseConfig.apiKey.includes("YOUR_") && typeof firebase !== 'undefined';
-let db = null, recordsListener = null, targetListener = null;
+let db = null;
 if (FIREBASE_ENABLED) {
   try { firebase.initializeApp(firebaseConfig); db = firebase.firestore(); } catch (e) { console.warn('Firebase init failed:', e); }
 }
-function updateSyncIndicator(status, text) {
-  const ind = document.getElementById('syncIndicator'), txt = document.getElementById('syncText');
-  if (!ind) return;
-  ind.classList.remove('online', 'offline', 'local');
-  ind.classList.add(status);
-  if (txt) txt.textContent = text;
-}
-if (FIREBASE_ENABLED && db) updateSyncIndicator('online', 'Cloud Sync Active');
-else updateSyncIndicator('local', 'Local Mode');
 
 const CSV=`USERNAME,PASSWORD,REGISTER,DISTRIBUTION,MONITORING,STOCK,DASHBOARD,ATTENDANCE,DEVICE TRACKING,RECONCILIATION,WASTE MANAGEMENT
 Admin,1234,Show,Show,Show,Show,Show,Show,Show,Show,Show
@@ -971,10 +824,6 @@ const ACTIONS=[
   {id:'MONITORING',lbl:'MONITORING',ic:'fa-chart-line',cl:'a3',pk:'MONITORING'},
   {id:'STOCK',lbl:'STOCK',ic:'fa-warehouse',cl:'a4',pk:'STOCK'},
   {id:'DASHBOARD',lbl:'DASHBOARD',ic:'fa-gauge-high',cl:'a5',pk:'DASHBOARD'},
-  {id:'ATTENDANCE',lbl:'ATTENDANCE',ic:'fa-users',cl:'a6',pk:'ATTENDANCE'},
-  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE TRACKING'},
-  {id:'RECONCILIATION',lbl:'RECONCILIATION',ic:'fa-scale-balanced',cl:'a8',pk:'RECONCILIATION'},
-  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE MANAGEMENT'},
 ];
 const ROLES={Admin:'Full Access',HHR2027:'Registration Officer',HHD2027:'Distribution Officer',NATSUP2027:'National Supervisor',CHISUP2027:'CHI Supervisor',PHUSTAFF2027:'PHU Staff',PARTNERS2027:'Partner Viewer'};
 
@@ -989,9 +838,6 @@ function toast(msg){
   t.innerText=msg; document.body.appendChild(t);
   setTimeout(()=>t.remove(),2400);
 }
-function openO(id){document.getElementById(id).classList.add('open');}
-function closeO(id){document.getElementById(id).classList.remove('open');}
-function esc(s){if(!s)return'';return s.replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
 function todayStr(){return new Date().toISOString().split('T')[0];}
 window.toggleEye=function(){
   const p=document.getElementById('lpwd'),i=document.getElementById('eyeI');
@@ -999,34 +845,32 @@ window.toggleEye=function(){
   else{p.type='password';i.className='fa-regular fa-eye';}
 };
 function doLogin(){
-  const u=document.getElementById('lusr').value.trim(), p=document.getElementById('lpwd').value.trim();
+  const u=document.getElementById('lusr').value.trim();
+  const p=document.getElementById('lpwd').value.trim();
   const err=document.getElementById('lerr');
   if(!u||!p){err.textContent='⚠ Enter username and password';err.classList.add('show');return;}
   const user=USERS.find(x=>x.USERNAME===u&&x.PASSWORD===p);
-  if(!user){err.textContent='✗ Invalid username or password';err.classList.add('show');setTimeout(()=>err.classList.remove('show'),3000);return;}
+  if(!user){err.textContent='✗ Invalid credentials';err.classList.add('show');setTimeout(()=>err.classList.remove('show'),3000);return;}
   CU=user;
   sessionStorage.setItem('cu',u);
   buildDash();go('sDash');
 }
 function doLogout(){CU=null;sessionStorage.clear();go('sLogin');}
-document.getElementById('lusr').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
-document.getElementById('lpwd').addEventListener('keypress',e=>{if(e.key==='Enter')doLogin();});
 
 function buildDash(){
-  document.getElementById('ubarLbl').innerHTML=`<i class="fa fa-user-circle"></i> ${CU.USERNAME} (${ROLES[CU.USERNAME]||'User'})`;
+  document.getElementById('ubarLbl').innerHTML=`<i class="fa fa-user-circle"></i> ${CU.USERNAME}`;
   const grid=document.getElementById('actGrid');
   const allowed=ACTIONS.filter(a=>CU[a.pk]==='Show');
-  if(!allowed.length){grid.innerHTML='<div style="grid-column:span 3;text-align:center;padding:18px;color:#555;font-size:.68rem;">⚠️ No modules assigned.</div>';return;}
   grid.innerHTML=allowed.map(a=>`<div class="acard ${a.cl}" data-aid="${a.id}"><i class="fa ${a.ic}"></i><span>${a.lbl}</span></div>`).join('');
   grid.querySelectorAll('.acard').forEach(c=>{
     c.onclick=()=>{
       const aid=c.dataset.aid;
       if(aid==='DISTRIBUTION'){ openDistHome(); return; }
       if(aid==='REGISTER'){ go('sRegHome'); return; }
-      toast('✓ '+ACTIONS.find(a=>a.id===aid)?.lbl+' module opened');
+      if(aid==='DASHBOARD'){ toast('You are on dashboard'); return; }
+      toast('Module: '+ACTIONS.find(a=>a.id===aid)?.lbl);
     };
   });
-  initCarousel();
 }
 
 function openDistHome(){
@@ -1034,7 +878,7 @@ function openDistHome(){
   const grid = document.getElementById('distHomeGrid');
   const isAdmin = CU && CU.USERNAME === 'Admin';
   let html = `
-    <div class="sc sc-bl" onclick="openDistribution()">
+    <div class="sc sc-or" onclick="openDistribution()">
      <div class="sc-top"><i class="fa fa-boxes"></i><span>DISTRIBUTION</span></div>
      <div class="sc-bot"><strong>📦 New Distribution</strong><p>Submit a new ITN distribution record</p></div>
     </div>
@@ -1052,85 +896,363 @@ function openDistHome(){
   grid.innerHTML = html;
 }
 
-function initCarousel(){
-  const slides=document.querySelectorAll('.cslide'), dotsEl=document.getElementById('cDots');
-  if(!slides.length||!dotsEl)return;
-  let idx=0,tmr;
-  dotsEl.innerHTML=Array.from(slides).map((_,i)=>`<div class="cdot${i===0?' on':''}"></div>`).join('');
-  const dots=dotsEl.querySelectorAll('.cdot');
-  const go2=n=>{
-    if(n<0)n=slides.length-1;if(n>=slides.length)n=0;idx=n;
-    document.getElementById('cSlides').style.transform=`translateX(-${idx*100}%)`;
-    dots.forEach((d,i)=>d.classList.toggle('on',i===idx));
-    clearInterval(tmr);tmr=setInterval(()=>go2(idx+1),5000);
-  };
-  document.getElementById('cPrev').onclick=()=>go2(idx-1);
-  document.getElementById('cNext').onclick=()=>go2(idx+1);
-  dots.forEach((d,i)=>d.onclick=()=>go2(i));
-  tmr=setInterval(()=>go2(idx+1),5000);
-}
-
-async function checkNet(){
-  let ok=false,rtt=null,ct='Unknown';
-  try{const t0=Date.now();const r=await fetch('https://www.gstatic.com/generate_204',{method:'HEAD',cache:'no-cache'});rtt=Date.now()-t0;ok=r.ok||r.status===204;}catch(e){}
-  if(!ok)try{const r=await fetch('https://cloudflare.com/cdn-cgi/trace',{method:'HEAD',cache:'no-cache'});ok=r.ok;}catch(e){}
-  if(navigator.connection)ct=navigator.connection.effectiveType||'Unknown';
-  document.getElementById('oNetI').innerText=ok?'✅':'📵';
-  document.getElementById('oNetT').innerText=ok?'INTERNET CONNECTED':'NO CONNECTION';
-  document.getElementById('oNetD').innerHTML=ok?`Active connectivity.<br>📡 ${ct} | ⏱️ ${rtt||'Fast'} ms`:`No connection.<br>📱 ${navigator.onLine?'Online (limited)':'Offline'}`;
-  openO('oNet');
-}
-
-const GEO = {
-  'Eastern': {
-    'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
-    'Kenema': {'Dodo': {'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]}},
-    'Kono': {'Gorama Kono': {'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]}}
-  },
-  'South': {
-    'Bo': {'Badjia': {'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]}},
-    'Bonthe': {'Benducha': {'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]}},
-    'Moyamba': {'Banguawa': {'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]}},
-    'Pujehun': {'Barri': {'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]}}
-  },
-  'North': {
-    'Bombali': {'Biriwa': {'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]}},
-    'Tonkolili': {'Dansigoia': {'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]}},
-    'Koinadugu': {'Diang': {'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]}},
-    'Falaba': {'Barawa': {'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]}}
-  },
-  'North_west': {
-    'Kambia': {'Bramaia': {'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]}},
-    'Port_loko': {
-      'Koya': {'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]},
-      'Bureh Kassiri': {'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]}
+function openDistribution(){
+  go('sDistribution');
+  distCurrentStep = 0;
+  document.getElementById('distDate').value = todayStr();
+  ['distBeneficiaryToken','distRegion','distDistrict','distChiefdom','distCommunity','distFacility','distDistPoint','distSurname','distMiddleName','distFirstName','distMobile','distHhrName','distItnAlloc','distPregnant','distUnder5','distBeneficiaryLat','distBeneficiaryLng','distVerifierName','distVerifierMobile','distDistributorName','distDistributorMobile','distGpsLat','distGpsLng','distTokenDisplay'].forEach(id=>{ const e=document.getElementById(id);if(e)e.value=''; });
+  document.getElementById('distAutoFillDisplay').classList.add('d-none');
+  document.getElementById('distHealthTalkGiven').checked = false;
+  document.getElementById('distValidationError').classList.remove('show');
+  updateDistStep();
+  setTimeout(()=>{
+    const vCanvas = document.getElementById('distVerifierSignature'), dCanvas = document.getElementById('distDistributorSignature');
+    if (typeof SignaturePad !== 'undefined') {
+      if (distVerifierPad) distVerifierPad.clear(); else distVerifierPad = new SignaturePad(vCanvas, {backgroundColor:'rgb(255,255,255)',penColor:'rgb(22,36,42)'});
+      if (distDistributorPad) distDistributorPad.clear(); else distDistributorPad = new SignaturePad(dCanvas, {backgroundColor:'rgb(255,255,255)',penColor:'rgb(22,36,42)'});
     }
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(pos=>{
+        document.getElementById('distGpsLat').value = pos.coords.latitude.toFixed(6);
+        document.getElementById('distGpsLng').value = pos.coords.longitude.toFixed(6);
+        document.getElementById('distGpsStatus').innerHTML = '<i class="fas fa-check-circle" style="color:#0E7C66"></i> GPS captured.';
+      }, ()=>{});
+    }
+  }, 100);
+}
+
+function openDistRecords(){ go('sDistRecs'); renderDistRecords(); }
+function openDistTarget(){ go('sDistTarget'); renderDistTarget(); }
+
+let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null;
+let distScanner = null, distScannerRunning = false;
+
+function updateDistStep(){
+  const allSteps = document.querySelectorAll('#sDistribution .dist-step');
+  allSteps.forEach((step, i) => { step.classList.toggle('active', i === distCurrentStep); });
+  const progressSteps = document.querySelectorAll('#distProgress .dist-progress-step');
+  progressSteps.forEach((dot, i) => { dot.classList.toggle('completed', i < distCurrentStep); dot.classList.toggle('active', i === distCurrentStep); });
+  const fill = document.getElementById('distProgressFill');
+  if (fill) fill.style.width = (allSteps.length > 1 ? (distCurrentStep / (allSteps.length - 1)) * 100 : 0) + '%';
+  const prevBtn = document.getElementById('distPrevBtn'), nextBtn = document.getElementById('distNextBtn');
+  prevBtn.style.visibility = (distCurrentStep === 0) ? 'hidden' : 'visible';
+  nextBtn.style.display = (distCurrentStep === allSteps.length - 1) ? 'none' : 'inline-block';
+  const content = document.querySelector('#sDistribution .dist-container');
+  if (content) content.scrollTop = 0;
+  if (distCurrentStep !== 1) { if (distScanner && distScannerRunning) { distScanner.stop().catch(()=>{}); distScannerRunning = false; } }
+}
+
+function distChangeStep(n){
+  const allSteps = document.querySelectorAll('#sDistribution .dist-step');
+  distCurrentStep += n;
+  if (distCurrentStep >= allSteps.length) distCurrentStep = allSteps.length - 1;
+  if (distCurrentStep < 0) distCurrentStep = 0;
+  updateDistStep();
+}
+
+function switchDistTab(tabId){
+  document.querySelectorAll('#distBeneficiaryTab .nav-link').forEach(btn=>{ btn.classList.toggle('active', btn.dataset.tab === tabId); });
+  document.getElementById('dist-token').classList.toggle('active', tabId === 'dist-token');
+  document.getElementById('dist-qr').classList.toggle('active', tabId === 'dist-qr');
+  if (tabId === 'dist-token' && distScanner && distScannerRunning) { distScanner.stop().catch(()=>{}); distScannerRunning = false; }
+}
+
+function distAutoFillData(){
+  const token = document.getElementById('distBeneficiaryToken').value.trim();
+  if (!token) { alert("Please enter a token ID."); return; }
+  const rec = RECS.find(r => r.token === token);
+  if (!rec) { alert("⚠️ No matching registration found for token: " + token); return; }
+  fillDistFormFromRecord(rec);
+  toast('✅ Beneficiary data loaded');
+}
+
+function fillDistFormFromRecord(rec){
+  if (rec.token) { document.getElementById('distTokenDisplay').value = rec.token; document.getElementById('distBeneficiaryToken').value = rec.token; }
+  if (rec.region) document.getElementById('distRegion').value = rec.region;
+  if (rec.district) document.getElementById('distDistrict').value = rec.district;
+  if (rec.chiefdom) document.getElementById('distChiefdom').value = rec.chiefdom;
+  if (rec.community) document.getElementById('distCommunity').value = rec.community;
+  if (rec.healthFacility) document.getElementById('distFacility').value = rec.healthFacility;
+  if (rec.dp) document.getElementById('distDistPoint').value = rec.dp;
+  if (rec.surname) document.getElementById('distSurname').value = rec.surname;
+  if (rec.middleName) document.getElementById('distMiddleName').value = rec.middleName;
+  if (rec.firstName) document.getElementById('distFirstName').value = rec.firstName;
+  if (rec.mobile) document.getElementById('distMobile').value = rec.mobile;
+  if (rec.hhr) document.getElementById('distHhrName').value = rec.hhr;
+  if (rec.itn !== undefined && rec.itn !== null) document.getElementById('distItnAlloc').value = rec.itn;
+  if (rec.pregnant !== undefined && rec.pregnant !== null) document.getElementById('distPregnant').value = rec.pregnant;
+  if (rec.under5 !== undefined && rec.under5 !== null) document.getElementById('distUnder5').value = rec.under5;
+  if (rec.gps) { const [lat, lng] = rec.gps.split(','); if (lat) document.getElementById('distBeneficiaryLat').value = lat; if (lng) document.getElementById('distBeneficiaryLng').value = lng; }
+}
+
+function startDistScanner(){
+  if (distScannerRunning) return;
+  if (typeof Html5Qrcode === 'undefined') { alert('❌ Scanner library not loaded'); return; }
+  const readerEl = document.getElementById('dist-qr-reader');
+  readerEl.style.width = '100%'; readerEl.style.height = '260px'; readerEl.style.display = 'block';
+  setTimeout(() => {
+    const rect = readerEl.getBoundingClientRect();
+    if (rect.width < 50 || rect.height < 50) { alert('⚠️ Scanner area too small'); return; }
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') { alert('⚠️ Camera requires HTTPS'); return; }
+    document.getElementById('cameraStatusIndicator').className = 'camera-status scanning';
+    document.getElementById('cameraStatusIndicator').innerHTML = '📷 Requesting camera...';
+    if (distScanner) { distScanner.stop().catch(()=>{}); }
+    distScanner = new Html5Qrcode("dist-qr-reader", { verbose: false });
+    const config = { fps: 10, qrbox: { width: 200, height: 200 }, aspectRatio: 1.0 };
+    const onSuccess = (decodedText) => {
+      if (navigator.vibrate) navigator.vibrate(200);
+      const parsed = parseQRData(decodedText);
+      if (parsed && (parsed.token || parsed.region)) {
+        fillDistFormFromParsedQR(parsed);
+        document.getElementById('distAutoFillDisplay').classList.remove('d-none');
+        document.getElementById('distAutoFillText').innerText = `${parsed.firstName || ''} ${parsed.surname || ''} (Token: ${parsed.token || 'N/A'})`;
+        document.getElementById('cameraStatusIndicator').className = 'camera-status success';
+        document.getElementById('cameraStatusIndicator').innerHTML = '✅ QR scanned! All fields filled.';
+        toast('✅ QR scanned - all fields filled!');
+      }
+      distScanner.stop().catch(()=>{});
+      distScannerRunning = false;
+      document.getElementById('distStartScanBtn').style.display = 'inline-block';
+      document.getElementById('distStopScanBtn').style.display = 'none';
+    };
+    const onFailure = () => {};
+    distScanner.start({ facingMode: "environment" }, config, onSuccess, onFailure)
+    .then(() => {
+      distScannerRunning = true;
+      document.getElementById('distStartScanBtn').style.display = 'none';
+      document.getElementById('distStopScanBtn').style.display = 'inline-block';
+      document.getElementById('cameraStatusIndicator').className = 'camera-status scanning';
+      document.getElementById('cameraStatusIndicator').innerHTML = '📷 Camera active. Point at QR code.';
+    })
+    .catch((err) => {
+      distScanner.start({}, config, onSuccess, onFailure)
+      .then(() => {
+        distScannerRunning = true;
+        document.getElementById('distStartScanBtn').style.display = 'none';
+        document.getElementById('distStopScanBtn').style.display = 'inline-block';
+        document.getElementById('cameraStatusIndicator').className = 'camera-status scanning';
+        document.getElementById('cameraStatusIndicator').innerHTML = '📷 Camera active. Point at QR code.';
+      })
+      .catch((err2) => {
+        document.getElementById('cameraStatusIndicator').className = 'camera-status error';
+        document.getElementById('cameraStatusIndicator').innerHTML = '❌ Camera error: ' + (err2.message || 'Unable to start');
+        toast('❌ Camera failed');
+      });
+    });
+  }, 200);
+}
+
+function retryCamera(){
+  document.getElementById('distRetryCameraBtn').style.display = 'none';
+  startDistScanner();
+}
+
+function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
+
+function parseQRData(text){
+  if(!text) return null;
+  const result = {};
+  try {
+    const jsonData = JSON.parse(text);
+    const mapping = { 'region':'region','district':'district','chiefdom':'chiefdom','community':'community','facility':'facility','healthFacility':'facility','distPoint':'distPoint','dp':'distPoint','surname':'surname','middleName':'middleName','firstName':'firstName','mobile':'mobile','members':'members','itn':'itn','itnAlloc':'itn','pregnant':'pregnant','under5':'under5','hhr':'hhr','hhrName':'hhr','latitude':'latitude','lat':'latitude','longitude':'longitude','lng':'longitude','token':'token' };
+    for (const [k, v] of Object.entries(jsonData)) { const stdKey = mapping[k.toLowerCase()] || k.toLowerCase(); result[stdKey] = v; }
+    if (jsonData.name && !result.surname) { const parts = String(jsonData.name).split(' '); if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); } else result.surname = jsonData.name; }
+    return result;
+  } catch (e) {}
+  const lines = text.split(/\r?\n/);
+  lines.forEach(line => {
+    const idx = line.indexOf(':');
+    if (idx > 0) {
+      const key = line.substring(0, idx).trim().toLowerCase();
+      const val = line.substring(idx + 1).trim();
+      if (!val) return;
+      if (key === 'region') result.region = val;
+      else if (key === 'district') result.district = val;
+      else if (key === 'chiefdom') result.chiefdom = val;
+      else if (key === 'community') result.community = val;
+      else if (key === 'facility' || key === 'health facility') result.facility = val;
+      else if (key === 'dist. point' || key === 'dist_point' || key === 'dp') result.distPoint = val;
+      else if (key === 'surname') result.surname = val;
+      else if (key === 'middle name' || key === 'middlename') result.middleName = val;
+      else if (key === 'first name' || key === 'firstname') result.firstName = val;
+      else if (key === 'name') { const parts = val.split(' '); if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); } else result.surname = val; }
+      else if (key === 'mobile') result.mobile = val;
+      else if (key === 'members') result.members = val;
+      else if (key === 'itn alloc' || key === 'itn') result.itn = val;
+      else if (key === 'pregnant') result.pregnant = val;
+      else if (key === 'under-5' || key === 'under5') result.under5 = val;
+      else if (key === 'hhr name' || key === 'hhr') result.hhr = val;
+      else if (key === 'latitude' || key === 'lat') result.latitude = val;
+      else if (key === 'longitude' || key === 'lng') result.longitude = val;
+      else if (key === 'token') result.token = val;
+    }
+  });
+  return Object.keys(result).length > 0 ? result : null;
+}
+
+function fillDistFormFromParsedQR(data){
+  if (data.token) { document.getElementById('distTokenDisplay').value = data.token; document.getElementById('distBeneficiaryToken').value = data.token; }
+  if (data.region) document.getElementById('distRegion').value = data.region;
+  if (data.district) document.getElementById('distDistrict').value = data.district;
+  if (data.chiefdom) document.getElementById('distChiefdom').value = data.chiefdom;
+  if (data.community) document.getElementById('distCommunity').value = data.community;
+  if (data.facility) document.getElementById('distFacility').value = data.facility;
+  if (data.distPoint) document.getElementById('distDistPoint').value = data.distPoint;
+  if (data.surname) document.getElementById('distSurname').value = data.surname;
+  if (data.middleName) document.getElementById('distMiddleName').value = data.middleName;
+  if (data.firstName) document.getElementById('distFirstName').value = data.firstName;
+  if (data.mobile) document.getElementById('distMobile').value = data.mobile;
+  if (data.hhr) document.getElementById('distHhrName').value = data.hhr;
+  if (data.itn !== undefined && data.itn !== null && data.itn !== '') document.getElementById('distItnAlloc').value = data.itn;
+  if (data.pregnant !== undefined && data.pregnant !== null && data.pregnant !== '') document.getElementById('distPregnant').value = data.pregnant;
+  if (data.under5 !== undefined && data.under5 !== null && data.under5 !== '') document.getElementById('distUnder5').value = data.under5;
+  if (data.latitude) document.getElementById('distBeneficiaryLat').value = data.latitude;
+  if (data.longitude) document.getElementById('distBeneficiaryLng').value = data.longitude;
+}
+
+function submitDistribution(e){
+  e.preventDefault();
+  const errors = [];
+  
+  // Validate all required fields
+  if (!document.getElementById('distDate').value) errors.push('Date is required');
+  if (!document.getElementById('distBeneficiaryToken').value.trim()) errors.push('Beneficiary Token is required');
+  if (!document.getElementById('distRegion').value.trim()) errors.push('Region is required');
+  if (!document.getElementById('distDistrict').value.trim()) errors.push('District is required');
+  if (!document.getElementById('distChiefdom').value.trim()) errors.push('Chiefdom is required');
+  if (!document.getElementById('distCommunity').value.trim()) errors.push('Community is required');
+  if (!document.getElementById('distFacility').value.trim()) errors.push('Facility is required');
+  if (!document.getElementById('distDistPoint').value.trim()) errors.push('Distribution Point is required');
+  if (!document.getElementById('distSurname').value.trim()) errors.push('Surname is required');
+  if (!document.getElementById('distMiddleName').value.trim()) errors.push('Middle Name is required');
+  if (!document.getElementById('distFirstName').value.trim()) errors.push('First Name is required');
+  if (!document.getElementById('distMobile').value.trim()) errors.push('Mobile is required');
+  if (!document.getElementById('distHhrName').value.trim()) errors.push('HHR Name is required');
+  const itnAlloc = document.getElementById('distItnAlloc').value;
+  if (!itnAlloc || parseInt(itnAlloc) < 1) errors.push('ITN Allocation is required (min 1)');
+  const pregnant = document.getElementById('distPregnant').value;
+  if (pregnant === '' || pregnant === null) errors.push('Pregnant count is required');
+  const under5 = document.getElementById('distUnder5').value;
+  if (under5 === '' || under5 === null) errors.push('Under-5 count is required');
+  if (!document.getElementById('distBeneficiaryLat').value.trim()) errors.push('Beneficiary Latitude is required');
+  if (!document.getElementById('distBeneficiaryLng').value.trim()) errors.push('Beneficiary Longitude is required');
+  if (!document.getElementById('distVerifierName').value.trim()) errors.push('Voucher Verifier Name is required');
+  if (!document.getElementById('distVerifierMobile').value.trim()) errors.push('Voucher Verifier Mobile is required');
+  if (!distVerifierPad || distVerifierPad.isEmpty()) errors.push('Voucher Verifier Signature is required');
+  if (!document.getElementById('distDistributorName').value.trim()) errors.push('ITN Distributor Name is required');
+  if (!document.getElementById('distDistributorMobile').value.trim()) errors.push('ITN Distributor Mobile is required');
+  if (!distDistributorPad || distDistributorPad.isEmpty()) errors.push('ITN Distributor Signature is required');
+  if (!document.getElementById('distHealthTalkGiven').checked) errors.push('Health Talk confirmation is required');
+  if (!document.getElementById('distGpsLat').value.trim()) errors.push('GPS Latitude is required');
+  if (!document.getElementById('distGpsLng').value.trim()) errors.push('GPS Longitude is required');
+  
+  if (errors.length > 0) {
+    const errorBox = document.getElementById('distValidationError');
+    const errorList = document.getElementById('distValidationErrorList');
+    errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+    errorBox.classList.add('show');
+    const content = document.querySelector('#sDistribution .dist-container');
+    if (content) content.scrollTop = 0;
+    toast('⚠️ Please fill all required fields');
+    return false;
   }
+  
+  document.getElementById('distValidationError').classList.remove('show');
+  
+  const token = document.getElementById('distBeneficiaryToken').value.trim();
+  const matchIndex = RECS.findIndex(r => r.token === token);
+  if (matchIndex === -1) { alert("⚠️ No matching registration found for token: " + token); return false; }
+  if (RECS[matchIndex].status === 'Distributed') { alert("ℹ️ This household has already been distributed to."); return false; }
+  
+  RECS[matchIndex].status = 'Distributed';
+  RECS[matchIndex].distributionDate = new Date().toLocaleString();
+  RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
+  saveRecsLocal();
+  
+  alert("✅ Distribution record submitted!\n\nToken: " + token + "\nStatus: Distributed");
+  setTimeout(() => { openDistribution(); }, 500);
+  return false;
+}
+
+let RECS = [];
+function loadRecsLocal(){ const s = localStorage.getItem('itn_hh'); if (s) RECS = JSON.parse(s); }
+function saveRecsLocal(){ localStorage.setItem('itn_hh', JSON.stringify(RECS)); }
+
+function renderDistRecords(){
+  const wrap = document.getElementById('distRecWrap');
+  if (!RECS.length) { wrap.innerHTML = '<div class="no-rec">No distribution records yet.</div>'; return; }
+  let html = `<table class="rtable"><thead><tr><th>#</th><th>Date</th><th>Token</th><th>Name</th><th>Region</th><th>District</th><th>Community</th><th>Mobile</th><th>ITN</th><th>Status</th></tr></thead><tbody>`;
+  RECS.forEach((r, i) => {
+    const isDist = r.status === 'Distributed';
+    const statusBadge = isDist ? `<span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;">Distributed</span>` : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;">Pending</span>`;
+    html += `<tr><td>${i+1}</td><td style="font-size:.42rem">${r.distributionDate || r.date || '-'}</td><td style="font-size:.42rem">${esc(r.token)}</td><td>${esc(r.surname)} ${esc(r.firstName)}</td><td>${esc(r.region)}</td><td>${esc(r.district)}</td><td>${esc(r.community)}</td><td>${esc(r.mobile)}</td><td>${r.itn}</td><td>${statusBadge}</td></tr>`;
+  });
+  html += `</tbody></table>`;
+  wrap.innerHTML = html;
+}
+
+function renderDistTarget(){
+  const target = parseInt(localStorage.getItem('itn_dist_target')) || 50;
+  const total = RECS.length;
+  const distributed = RECS.filter(r => r.status === 'Distributed').length;
+  const pending = total - distributed;
+  const itn = RECS.reduce((s,r) => s + (parseInt(r.itn) || 0), 0);
+  const pct = Math.min(100, Math.round(total / target * 100));
+  const ts = todayStr();
+  const todayCt = RECS.filter(r => (r.distributionDate || r.date || '').includes(ts)).length;
+  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  set('dtToday', todayCt);
+  set('dtTotal', total);
+  set('dtDistributed', distributed);
+  set('dtPending', pending);
+  set('dtTargetVal', target);
+  set('dtTargetTotal', target);
+  set('dtRem', Math.max(0, target - todayCt));
+  set('dtItn', itn);
+  set('dtPct', pct + '%');
+  set('dtCurr', todayCt);
+  const f = document.getElementById('dtFill');
+  if (f) f.style.width = pct + '%';
+  const editBox = document.getElementById('dtEditBox');
+  if (editBox) {
+    const canEdit = CU && CU.USERNAME === 'Admin';
+    editBox.style.display = canEdit ? 'block' : 'none';
+    if (canEdit) { const inp = document.getElementById('dtTargetInput'); if (inp) inp.value = target; }
+  }
+}
+
+function saveDistTarget(){
+  const inp = document.getElementById('dtTargetInput');
+  const v = parseInt(inp?.value);
+  if (!v || v <= 0) { toast('⚠ Enter a valid target'); return; }
+  localStorage.setItem('itn_dist_target', v);
+  toast('✅ Target set to ' + v);
+  renderDistTarget();
+}
+
+function esc(s){ if(!s) return ''; return s.replace(/[&<>]/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[m])); }
+
+// Registration form functions
+let mStep=1,mTok='',mDone=false;
+const GEO = {
+  'Eastern': { 'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}}, 'Kenema': {'Dodo': {'Dodo': [{ facility: 'Dodo CHC', dp: 'Dodo CHC DP' }]}}, 'Kono': {'Gorama Kono': {'Kangama (Gorama Kono)': [{ facility: 'Kangama (Gorama Kono) CHC', dp: 'Kangama (Gorama Kono) CHC DP' }]}} },
+  'South': { 'Bo': {'Badjia': {'Jokibu': [{ facility: 'Njandama MCHP', dp: 'Njandama MCHP DP' }]}}, 'Bonthe': {'Benducha': {'Bendu (Bendu-Cha)': [{ facility: 'Bendu (Bendu-Cha) CHC', dp: 'Bendu (Bendu-Cha) CHC DP' }]}}, 'Moyamba': {'Banguawa': {'Benkeh': [{ facility: 'Benkeh MCHP', dp: 'Benkeh MCHP DP' }]}}, 'Pujehun': {'Barri': {'Bandasuma (Barri)': [{ facility: 'Bandasuma (Barri) CHC', dp: 'Bandasuma (Barri) CHC DP' }]}} },
+  'North': { 'Bombali': {'Biriwa': {'Bumban': [{ facility: 'Bumban CHP', dp: 'Bumban CHP DP' }]}}, 'Tonkolili': {'Dansigoia': {'Bassaia': [{ facility: 'Bassaia MCHP', dp: 'Bassaia MCHP DP' }]}}, 'Koinadugu': {'Diang': {'Badala': [{ facility: 'Badala MCHP', dp: 'Badala MCHP DP' }]}}, 'Falaba': {'Barawa': {'Banadakafaia': [{ facility: 'Banadakafaia CHP', dp: 'Banadakafaia CHP DP' }]}} },
+  'North_west': { 'Kambia': {'Bramaia': {'Gbolon': [{ facility: 'Gbolon MCHP', dp: 'Gbolon MCHP DP' }]}}, 'Port_loko': { 'Koya': {'Kissy Koya': [{ facility: 'Kissy Koya MCHP', dp: 'Kissy Koya MCHP DP' }]}, 'Bureh Kassiri': {'Kawula': [{ facility: 'Kawula CHC', dp: 'DP Kawula CHC' }]}} }
 };
+
 function fillSel(el,opts,ph){el.innerHTML=`<option value="">${ph}</option>`+opts.map(o=>`<option>${o}</option>`).join('');el.disabled=false;}
 function disSel(el,ph){el.innerHTML=`<option value="">${ph}</option>`;el.disabled=true;}
+
 function setupCascade(){
   const R=document.getElementById('mReg'), D=document.getElementById('mDis'), C=document.getElementById('mChi'), M=document.getElementById('mCom'), F=document.getElementById('mFac'), P=document.getElementById('mDp');
   fillSel(R, Object.keys(GEO), '— Region —');
   R.onchange = () => { const r = GEO[R.value]; r ? fillSel(D, Object.keys(r), '— District —') : disSel(D, '— District —'); disSel(C, '— Chiefdom —'); disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —'); };
   D.onchange = () => { const r = GEO[R.value]?.[D.value]; r ? fillSel(C, Object.keys(r), '— Chiefdom —') : disSel(C, '— Chiefdom —'); disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —'); };
   C.onchange = () => { const r = GEO[R.value]?.[D.value]?.[C.value]; r ? fillSel(M, Object.keys(r), '— Community —') : disSel(M, '— Community —'); disSel(F, '— Facility —'); disSel(P, '— Dist. Point —'); };
-  M.onchange = () => {
-    const facilities = GEO[R.value]?.[D.value]?.[C.value]?.[M.value];
-    if(facilities && facilities.length > 0){
-      fillSel(F, facilities.map(f => f.facility), '— Facility —');
-      disSel(P, '— Dist. Point —');
-      F.onchange = () => {
-        const selectedFac = facilities.find(f => f.facility === F.value);
-        if(selectedFac){ fillSel(P, [selectedFac.dp], '— Dist. Point —'); P.value = selectedFac.dp; }
-        else disSel(P, '— Dist. Point —');
-      };
-      if(F.value) F.onchange();
-    } else { disSel(F, '— Facility —'); disSel(P, '— Dist. Point —'); }
-  };
+  M.onchange = () => { const facilities = GEO[R.value]?.[D.value]?.[C.value]?.[M.value]; if(facilities && facilities.length > 0){ fillSel(F, facilities.map(f => f.facility), '— Facility —'); disSel(P, '— Dist. Point —'); F.onchange = () => { const selectedFac = facilities.find(f => f.facility === F.value); if(selectedFac){ fillSel(P, [selectedFac.dp], '— Dist. Point —'); P.value = selectedFac.dp; } else disSel(P, '— Dist. Point —'); }; if(F.value) F.onchange(); } else { disSel(F, '— Facility —'); disSel(P, '— Dist. Point —'); } };
 }
 
-let mStep=1,mTok='',mDone=false;
 function openManual(){ go('sManual'); resetManual(); document.getElementById('scanBtnContainer').style.display = 'none'; document.getElementById('mHeaderTitle').innerHTML = '&#9997;&#65039; MANUAL ENTRY'; }
 function openManualWithScan(){ go('sManual'); resetManual(); document.getElementById('scanBtnContainer').style.display = 'block'; document.getElementById('mHeaderTitle').innerHTML = '&#128247; SCAN QR ENTRY'; }
 function openRecords(){ go('sRecords'); renderRecords(); }
@@ -1151,12 +1273,15 @@ function resetManual(){
   document.getElementById('mFinBtn').innerHTML='🏠 Register Household';
   updateWiz();captureGPS();
 }
+
 function updateWiz(){
   ['ms1','ms2','ms3','ms4','ms5'].forEach((id,i)=>{const e=document.getElementById(id);if(e)e.classList.toggle('on',i===mStep-1);});
   document.querySelectorAll('#mSBar .sitem').forEach((s,i)=>s.classList.toggle('son',i<mStep));
   const p=document.getElementById('mProg');if(p)p.style.width=((mStep-1)/4*88)+'%';
 }
+
 function mNav(d){mStep=Math.max(1,Math.min(5,mStep+d));updateWiz();}
+
 function valD(){
   let ok=true;
   [['mReg','mRegE'],['mDis','mDisE'],['mChi','mChiE'],['mCom','mComE'],['mFac','mFacE'],['mDp','mDpE']].forEach(([f,e])=>{
@@ -1165,17 +1290,55 @@ function valD(){
   });
   return ok;
 }
+
 function valH(){
   let ok=true;
-  [['mSur','mSurE',v=>!!v.trim()],['mFst','mFstE',v=>!!v.trim()],['mPh','mPhE',v=>/^0\d{8}$/.test(v.trim())],['mMem','mMemE',v=>parseInt(v)>=1],['mHhr','mHhrE',v=>!!v.trim()]].forEach(([f,e,fn])=>{
-    const v=document.getElementById(f)?.value||'',el=document.getElementById(e);
-    if(!fn(v)){if(el)el.style.display='block';ok=false;}else if(el)el.style.display='none';
-  });
+  const errors = [];
+  
+  // Validate all required fields
+  if (!document.getElementById('mSur').value.trim()) { errors.push('Surname is required'); ok=false; }
+  if (!document.getElementById('mMid').value.trim()) { errors.push('Middle Name is required'); ok=false; }
+  if (!document.getElementById('mFst').value.trim()) { errors.push('First Name is required'); ok=false; }
+  const ph = document.getElementById('mPh').value.trim();
+  if (!/^0\d{8}$/.test(ph)) { errors.push('Mobile must be 9 digits starting with 0'); ok=false; }
+  const mem = parseInt(document.getElementById('mMem').value);
+  if (!mem || mem < 1) { errors.push('Members must be at least 1'); ok=false; }
+  if (!document.getElementById('mHhr').value.trim()) { errors.push('HHR Name is required'); ok=false; }
+  const prg = document.getElementById('mPrg').value;
+  if (prg === '' || prg === null) { errors.push('Pregnant count is required'); ok=false; }
+  const u5 = document.getElementById('mU5').value;
+  if (u5 === '' || u5 === null) { errors.push('Under-5 count is required'); ok=false; }
+  if (!document.getElementById('mLat').value.trim()) { errors.push('Latitude is required'); ok=false; }
+  if (!document.getElementById('mLng').value.trim()) { errors.push('Longitude is required'); ok=false; }
+  
+  if (!ok) {
+    const errorBox = document.getElementById('mValidationError');
+    const errorList = document.getElementById('mValidationErrorList');
+    errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
+    errorBox.classList.add('show');
+    const content = document.querySelector('#sManual .wbody');
+    if (content) content.scrollTop = 0;
+  } else {
+    document.getElementById('mValidationError').classList.remove('show');
+  }
+  
   return ok;
 }
-function ms1Next(){if(valD())mNav(1);else toast('⚠ Fill all required fields');}
-function ms2Next(){ if(!valH()){toast('⚠ Fill all required fields');return;} if(!mTok)genToken(); buildReview();mNav(1); }
+
+function ms1Next(){
+  if(valD()) mNav(1);
+  else toast('⚠ Fill all required fields');
+}
+
+function ms2Next(){
+  if(!valH()){ toast('⚠ Fill all required fields'); return; }
+  if(!mTok) genToken();
+  buildReview();
+  mNav(1);
+}
+
 function calcItn(){ const t=parseInt(document.getElementById('mMem')?.value)||0; const e=document.getElementById('mItn');if(e)e.value=t<=2?1:t<=4?2:3; }
+
 function genToken(){
   const f=(document.getElementById('mFst')?.value||'X').slice(0,3).toUpperCase();
   const m=(document.getElementById('mMid')?.value||'X').slice(0,3).toUpperCase();
@@ -1184,11 +1347,10 @@ function genToken(){
   mTok=`${f}_${m}_${s}_${/^0\d{8}$/.test(p)?p:'000000000'}`;
   const tb=document.getElementById('mTok');if(tb){tb.style.display='block';tb.textContent='🔑 TOKEN: '+mTok;}
 }
+
 function buildReview(){
   const g=id=>document.getElementById(id)?.value||'';
-  document.getElementById('mRv').innerHTML=`
-    <div class="rvsec"><h5>📍 Demographics</h5><p>Region: ${esc(g('mReg'))} | District: ${esc(g('mDis'))}<br>Chiefdom: ${esc(g('mChi'))} | Community: ${esc(g('mCom'))}<br>Facility: ${esc(g('mFac'))} | Dist. Point: ${esc(g('mDp'))}</p></div>
-    <div class="rvsec"><h5>🏠 Household</h5><p>Name: ${esc(g('mSur'))} ${esc(g('mMid'))} ${esc(g('mFst'))}<br>Mobile: ${esc(g('mPh'))} | Members: ${esc(g('mMem'))}<br>Pregnant: ${esc(g('mPrg'))} | Under-5: ${esc(g('mU5'))}<br>ITN: ${esc(g('mItn'))} nets | HHR: ${esc(g('mHhr'))}<br>GPS: ${esc(g('mLat'))}, ${esc(g('mLng'))}<br>Token: ${esc(mTok)}</p></div>`;
+  document.getElementById('mRv').innerHTML=`<div class="rvsec"><h5>📍 Demographics</h5><p>Region: ${esc(g('mReg'))} | District: ${esc(g('mDis'))}<br>Chiefdom: ${esc(g('mChi'))} | Community: ${esc(g('mCom'))}<br>Facility: ${esc(g('mFac'))} | Dist. Point: ${esc(g('mDp'))}</p></div><div class="rvsec"><h5>🏠 Household</h5><p>Name: ${esc(g('mSur'))} ${esc(g('mMid'))} ${esc(g('mFst'))}<br>Mobile: ${esc(g('mPh'))} | Members: ${esc(g('mMem'))}<br>Pregnant: ${esc(g('mPrg'))} | Under-5: ${esc(g('mU5'))}<br>ITN: ${esc(g('mItn'))} nets | HHR: ${esc(g('mHhr'))}<br>GPS: ${esc(g('mLat'))}, ${esc(g('mLng'))}<br>Token: ${esc(mTok)}</p></div>`;
 }
 
 function buildQRCanvas(data, canvasSize) {
@@ -1207,6 +1369,7 @@ function buildQRCanvas(data, canvasSize) {
     return cv;
   } catch (e) { return null; }
 }
+
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
   const data=`ITN_REG\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nDist. Point:${g('mDp')}\nSurname:${g('mSur')}\nMiddle Name:${g('mMid')}\nFirst Name:${g('mFst')}\nMobile:${g('mPh')}\nMembers:${g('mMem')}\nITN Alloc:${g('mItn')}\nPregnant:${g('mPrg')}\nUnder-5:${g('mU5')}\nHHR Name:${g('mHhr')}\nLatitude:${g('mLat')}\nLongitude:${g('mLng')}\nToken:${mTok}`;
@@ -1220,53 +1383,12 @@ function genQR(){
     document.getElementById('mDlBtn').disabled = false;
   } else { toast('⚠️ QR generation failed'); }
 }
-function dlQR(){ const cv=document.getElementById('mQrc'); if(!cv||cv.style.display==='none'){toast('Generate QR first');return;} const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=`ITN_${mTok||'QR'}.png`;a.click(); }
-function captureGPS(){ if(!navigator.geolocation)return; navigator.geolocation.getCurrentPosition(pos=>{ const la=pos.coords.latitude.toFixed(6),lo=pos.coords.longitude.toFixed(6); const l=document.getElementById('mLat'),g=document.getElementById('mLng'); if(l)l.value=la;if(g)g.value=lo; },()=>{}); }
-document.getElementById('mPh').addEventListener('input',function(){ const ok=/^0\d{8}$/.test(this.value); document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none'; });
 
-let RECS=[];
-function loadRecsLocal(){ const s=localStorage.getItem('itn_hh'); if(s) RECS=JSON.parse(s); }
-function saveRecsLocal(){ localStorage.setItem('itn_hh', JSON.stringify(RECS)); }
-async function saveRecordToCloud(rec) {
-  if (!FIREBASE_ENABLED || !db) return;
-  try {
-    const docId = rec.token || ('rec_' + Date.now() + '_' + Math.random().toString(36).substr(2,9));
-    await db.collection('households').doc(docId).set({...rec, _id: docId, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()});
-  } catch (e) { console.warn('Cloud save failed:', e); }
-}
-async function updateRecordInCloud(docId, updates) {
-  if (!FIREBASE_ENABLED || !db || !docId) return;
-  try { await db.collection('households').doc(docId).update({...updates, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()}); } catch (e) { console.warn('Cloud update failed:', e); }
-}
-function startRecordsListener() {
-  if (!FIREBASE_ENABLED || !db) return;
-  if (recordsListener) { recordsListener(); recordsListener = null; }
-  recordsListener = db.collection('households').orderBy('_updatedAt', 'desc').onSnapshot((snapshot) => {
-    const cloudRecs = []; snapshot.forEach(doc => { cloudRecs.push(doc.data()); });
-    RECS = cloudRecs; saveRecsLocal();
-    const activeScreen = document.querySelector('#phoneMock .screen.active');
-    if (activeScreen) {
-      if (activeScreen.id === 'sRecords') renderRecords();
-      if (activeScreen.id === 'sDistRecs') renderDistRecords();
-      if (activeScreen.id === 'sTarget') renderTarget();
-      if (activeScreen.id === 'sDistTarget') renderDistTarget();
-    }
-    updateSyncIndicator('online', 'Cloud Sync Active');
-  }, (error) => { updateSyncIndicator('offline', 'Sync Offline'); });
-}
-function startTargetListener() {
-  if (!FIREBASE_ENABLED || !db) return;
-  if (targetListener) { targetListener(); targetListener = null; }
-  targetListener = db.collection('settings').doc('campaign').onSnapshot((doc) => {
-    if (doc.exists) {
-      const data = doc.data();
-      if (data.target) { localStorage.setItem('itn_target', data.target); const a = document.querySelector('#phoneMock .screen.active'); if (a && a.id === 'sTarget') renderTarget(); }
-      if (data.distTarget) { localStorage.setItem('itn_dist_target', data.distTarget); const a = document.querySelector('#phoneMock .screen.active'); if (a && a.id === 'sDistTarget') renderDistTarget(); }
-    }
-  });
-}
-loadRecsLocal();
-if (FIREBASE_ENABLED && db) { startRecordsListener(); startTargetListener(); }
+function dlQR(){ const cv=document.getElementById('mQrc'); if(!cv||cv.style.display==='none'){toast('Generate QR first');return;} const a=document.createElement('a');a.href=cv.toDataURL('image/png');a.download=`ITN_${mTok||'QR'}.png`;a.click(); }
+
+function captureGPS(){ if(!navigator.geolocation)return; navigator.geolocation.getCurrentPosition(pos=>{ const la=pos.coords.latitude.toFixed(6),lo=pos.coords.longitude.toFixed(6); const l=document.getElementById('mLat'),g=document.getElementById('mLng'); if(l)l.value=la;if(g)g.value=lo; },()=>{}); }
+
+document.getElementById('mPh').addEventListener('input',function(){ const ok=/^0\d{8}$/.test(this.value); document.getElementById('mPhE').style.display=(!ok&&this.value.length>0)?'block':'none'; });
 
 function finalReg(){
   if(mDone){openManual();return;}
@@ -1280,12 +1402,12 @@ function finalReg(){
     hhr:g('mHhr'),token:mTok,gps:`${g('mLat')},${g('mLng')}`,
     date:new Date().toLocaleString(), status: 'Pending'
   };
-  RECS.unshift(newRec); saveRecsLocal(); saveRecordToCloud(newRec);
+  RECS.unshift(newRec); saveRecsLocal();
   document.getElementById('mSucc').innerHTML=`✅ Registration Successful!<br><small style="font-size:.64rem;font-weight:400">Token: ${mTok}</small>`;
   document.getElementById('mFinBtn').innerHTML='➕ Register Another';
   mDone=true;
-  if (FIREBASE_ENABLED) toast('✅ Synced to cloud');
 }
+
 function qrDataUrl(rec, displaySize){
   const [lat,lng]=(rec.gps||'').split(',');
   const data=`ITN_REG\nRegion:${rec.region||''}\nDistrict:${rec.district||''}\nChiefdom:${rec.chiefdom||''}\nCommunity:${rec.community||''}\nFacility:${rec.healthFacility||''}\nDist. Point:${rec.dp||''}\nSurname:${rec.surname||''}\nMiddle Name:${rec.middleName||''}\nFirst Name:${rec.firstName||''}\nMobile:${rec.mobile||''}\nMembers:${rec.members||''}\nITN Alloc:${rec.itn||''}\nPregnant:${rec.pregnant||0}\nUnder-5:${rec.under5||0}\nHHR Name:${rec.hhr||''}\nLatitude:${lat||''}\nLongitude:${lng||''}\nToken:${rec.token||''}`;
@@ -1294,47 +1416,41 @@ function qrDataUrl(rec, displaySize){
   return cv.toDataURL('image/png');
 }
 
-function renderRecordsTable(wrapId){
-  const wrap=document.getElementById(wrapId);
-  if(!RECS.length){wrap.innerHTML='<div class="no-rec">No records yet.<br>Submit a record to see it here.</div>';return;}
-  let tableHTML=`<table class="rtable"><thead><tr><th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th><th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th><th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th><th>Token</th><th>QR</th><th>Status</th><th>&#8595;</th></tr></thead><tbody>`;
+function renderRecords(){
+  const wrap=document.getElementById('recWrap');
+  if(!RECS.length){wrap.innerHTML='<div class="no-rec">No registrations yet.</div>';return;}
+  let tableHTML=`<table class="rtable"><thead><tr><th>#</th><th>Date</th><th>Region</th><th>District</th><th>Chiefdom</th><th>Community</th><th>Facility</th><th>Dist Point</th><th>Surname</th><th>Middle Name</th><th>First Name</th><th>Mobile</th><th>Members HH</th><th>Pregnant</th><th>U5</th><th>ITN Alloc</th><th>HHR</th><th>Latitude</th><th>Longitude</th><th>Token</th><th>QR</th><th>Status</th></tr></thead><tbody>`;
   RECS.forEach((r,i)=>{
     const u=qrDataUrl(r, 60);
     const [lat,lng]=(r.gps||'').split(',');
     const isDist = r.status === 'Distributed';
-    const statusBadge = isDist 
-      ? `<span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Distributed</span>`
-      : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;display:inline-block;">Pending</span>`;
+    const statusBadge = isDist ? `<span style="background:#d1fae5;color:#065f46;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;">Distributed</span>` : `<span style="background:#ffedd5;color:#c2410c;padding:2px 6px;border-radius:10px;font-size:.42rem;font-weight:700;">Pending</span>`;
     const qrCell = u ? `<img src="${u}" class="qsm" data-i="${i}" alt="QR">` : '<span style="font-size:.4rem;color:#999;">No QR</span>';
-    tableHTML+=`<tr><td>${i+1}</td><td style="font-size:.42rem;white-space:nowrap">${r.date}</td><td>${esc(r.region)}</td><td>${esc(r.district)}</td><td>${esc(r.chiefdom)}</td><td>${esc(r.community)}</td><td>${esc(r.healthFacility)}</td><td>${esc(r.dp)}</td><td>${esc(r.surname)}</td><td>${esc(r.middleName||'')}</td><td>${esc(r.firstName)}</td><td>${esc(r.mobile)}</td><td>${r.members}</td><td>${r.pregnant||0}</td><td>${r.under5||0}</td><td>${r.itn}</td><td>${esc(r.hhr)}</td><td style="font-size:.42rem">${esc(lat||'')}</td><td style="font-size:.42rem">${esc(lng||'')}</td><td style="font-size:.42rem;max-width:70px;overflow:hidden;text-overflow:ellipsis">${esc(r.token)}</td><td>${qrCell}</td><td style="text-align:center;min-width:90px">${statusBadge}</td><td><button class="dlsm dl-btn" data-i="${i}">&#8595; DL</button></td></tr>`;
+    tableHTML+=`<tr><td>${i+1}</td><td style="font-size:.42rem">${r.date}</td><td>${esc(r.region)}</td><td>${esc(r.district)}</td><td>${esc(r.chiefdom)}</td><td>${esc(r.community)}</td><td>${esc(r.healthFacility)}</td><td>${esc(r.dp)}</td><td>${esc(r.surname)}</td><td>${esc(r.middleName||'')}</td><td>${esc(r.firstName)}</td><td>${esc(r.mobile)}</td><td>${r.members}</td><td>${r.pregnant||0}</td><td>${r.under5||0}</td><td>${r.itn}</td><td>${esc(r.hhr)}</td><td style="font-size:.42rem">${esc(lat||'')}</td><td style="font-size:.42rem">${esc(lng||'')}</td><td style="font-size:.42rem">${esc(r.token)}</td><td>${qrCell}</td><td>${statusBadge}</td></tr>`;
   });
   tableHTML+=`</tbody></table>`;
   wrap.innerHTML=tableHTML;
-  wrap.querySelectorAll('.qsm').forEach(img=>{img.onclick=()=>showQRModal(RECS[+img.dataset.i]);});
-  wrap.querySelectorAll('.dl-btn').forEach(btn=>{ btn.onclick=()=>{ const u=qrDataUrl(RECS[+btn.dataset.i], 300); if(u){const a=document.createElement('a');a.href=u;a.download=`ITN_QR_${RECS[+btn.dataset.i].token}.png`;a.click();} }; });
 }
-function renderRecords(){ renderRecordsTable('recWrap'); }
-function renderDistRecords(){ renderRecordsTable('distRecWrap'); }
+
 function showQRModal(rec){
   const u=qrDataUrl(rec, 220);
   if(!u){ toast('⚠️ QR code not available'); return; }
   const d=document.createElement('div');d.className='qr-modal-ov';
-  d.innerHTML=`<div class="qr-modal-c"><h4>🏠 Household QR</h4><div style="font-size:.75rem;font-weight:700;margin-bottom:5px">${esc(rec.surname)} ${esc(rec.firstName)}</div><img src="${u}"><div style="font-size:.55rem;color:#555;margin-bottom:12px">Token: ${esc(rec.token)}</div><button style="background:#1565C0;color:#fff;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer;margin-right:7px" onclick="const a=document.createElement('a');a.href='${u}';a.download='ITN_${rec.token}.png';a.click()">Download</button><button style="background:#ddd;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="this.closest('.qr-modal-ov').remove()">Close</button></div>`;
+  d.innerHTML=`<div class="qr-modal-c"><h4>🏠 Household QR</h4><div style="font-size:.75rem;font-weight:700;margin-bottom:5px">${esc(rec.surname)} ${esc(rec.firstName)}</div><img src="${u}"><div style="font-size:.55rem;color:#555;margin-bottom:12px">Token: ${esc(rec.token)}</div><button style="background:#1565C0;color:#fff;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="const a=document.createElement('a');a.href='${u}';a.download='ITN_${rec.token}.png';a.click()">Download</button><button style="background:#ddd;border:none;padding:7px 16px;border-radius:26px;font-weight:700;cursor:pointer" onclick="this.closest('.qr-modal-ov').remove()">Close</button></div>`;
   document.body.appendChild(d);
 }
 
 function getTarget(){ return parseInt(localStorage.getItem('itn_target')) || 500; }
-async function saveTarget(){
+
+function saveTarget(){
   const inp = document.getElementById('tTargetInput');
   const v = parseInt(inp?.value);
-  if(!v || v <= 0){ toast('⚠ Enter a valid target number'); return; }
+  if(!v || v <= 0){ toast('⚠ Enter a valid target'); return; }
   localStorage.setItem('itn_target', v);
-  if (FIREBASE_ENABLED && db) {
-    try { await db.collection('settings').doc('campaign').set({target: v, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()}, {merge:true}); toast('✅ Target synced: ' + v + ' households'); }
-    catch (e) { toast('✅ Target saved locally'); }
-  } else { toast('✅ Target set to ' + v + ' households'); }
+  toast('✅ Target set to ' + v);
   renderTarget();
 }
+
 function renderTarget(){
   const target = getTarget();
   const total=RECS.length,itn=RECS.reduce((s,r)=>s+(parseInt(r.itn)||0),0),ppl=RECS.reduce((s,r)=>s+(parseInt(r.members)||0),0);
@@ -1359,49 +1475,8 @@ function renderTarget(){
   }
 }
 
-function getDistTarget(){ return parseInt(localStorage.getItem('itn_dist_target')) || 50; }
-function openDistTarget(){ go('sDistTarget'); renderDistTarget(); }
-async function saveDistTarget(){
-  const inp = document.getElementById('dtTargetInput');
-  const v = parseInt(inp?.value);
-  if(!v || v <= 0){ toast('⚠ Enter a valid target number'); return; }
-  localStorage.setItem('itn_dist_target', v);
-  if (FIREBASE_ENABLED && db) {
-    try { await db.collection('settings').doc('campaign').set({distTarget: v, _updatedAt: firebase.firestore.FieldValue.serverTimestamp()}, {merge:true}); toast('✅ Distribution target synced: ' + v); }
-    catch (e) { toast('✅ Target saved locally'); }
-  } else { toast('✅ Distribution target set to ' + v); }
-  renderDistTarget();
-}
-function renderDistTarget(){
-  const target = getDistTarget();
-  const total=RECS.length;
-  const distributed = RECS.filter(r => r.status === 'Distributed').length;
-  const pending = RECS.filter(r => r.status !== 'Distributed').length;
-  const itn=RECS.reduce((s,r)=>s+(parseInt(r.itn)||0),0);
-  const ppl=RECS.reduce((s,r)=>s+(parseInt(r.members)||0),0);
-  const pct=Math.min(100,Math.round(total/target*100));
-  const ts=todayStr();
-  const todayCt=RECS.filter(r=>r.date&&r.date.includes(ts)).length;
-  const set=(id,v)=>{const e=document.getElementById(id);if(e)e.textContent=v;};
-  set('dtToday',todayCt);set('dtTotal',total);set('dtDistributed',distributed);set('dtPending',pending);
-  set('dtTargetVal',target);set('dtTargetTotal',target);set('dtRem',Math.max(0,target-todayCt));
-  set('dtItn',itn);set('dtPpl',ppl);set('dtPct',pct+'%');set('dtCurr',todayCt);
-  const f=document.getElementById('dtFill');if(f)f.style.width=pct+'%';
-  const cnt=obj=>Object.entries(obj).length?Object.entries(obj).map(([k,v])=>`• ${k}: ${v}<br>`).join(''):'No data';
-  const d={},c={},fa={};
-  RECS.forEach(r=>{if(r.district)d[r.district]=(d[r.district]||0)+1;if(r.chiefdom)c[r.chiefdom]=(c[r.chiefdom]||0)+1;if(r.healthFacility)fa[r.healthFacility]=(fa[r.healthFacility]||0)+1;});
-  document.getElementById('dtDist').innerHTML=cnt(d);
-  document.getElementById('dtChief').innerHTML=cnt(c);
-  document.getElementById('dtFac').innerHTML=cnt(fa);
-  const editBox = document.getElementById('dtEditBox');
-  if(editBox){
-    const canEdit = CU && CU.USERNAME === 'Admin';
-    editBox.style.display = canEdit ? 'block' : 'none';
-    if(canEdit){const inp = document.getElementById('dtTargetInput');if(inp) inp.value = target;}
-  }
-}
-
 let html5QrCode = null, scannerActive = false;
+
 function openCameraScanner(){
   const modal = document.getElementById('camModal'), statusEl = document.getElementById('camStatus'), statusText = document.getElementById('camStatusText');
   statusEl.classList.remove('err'); statusText.textContent = 'Initializing camera...'; modal.classList.add('open');
@@ -1409,6 +1484,7 @@ function openCameraScanner(){
   if(html5QrCode && scannerActive){ html5QrCode.stop().then(()=>{ html5QrCode.clear(); startNewScanner(); }).catch(()=>{ html5QrCode.clear(); startNewScanner(); }); }
   else startNewScanner();
 }
+
 function startNewScanner(){
   const statusText = document.getElementById('camStatusText'), statusEl = document.getElementById('camStatus');
   try {
@@ -1423,6 +1499,7 @@ function startNewScanner(){
     });
   } catch(e){ statusEl.classList.add('err'); statusText.textContent = '❌ Failed to initialize scanner'; }
 }
+
 function onScanSuccess(decodedText){
   if(navigator.vibrate) navigator.vibrate(200);
   stopScannerQuietly().then(()=>{
@@ -1431,13 +1508,16 @@ function onScanSuccess(decodedText){
     else { toast('⚠ Invalid QR code format'); document.getElementById('camModal').classList.remove('open'); }
   });
 }
+
 function onScanFailure(error){}
+
 function stopScannerQuietly(){
   return new Promise((resolve)=>{
     if(html5QrCode && scannerActive){ html5QrCode.stop().then(()=>{ scannerActive = false; resolve(); }).catch(()=>{ scannerActive = false; resolve(); }); }
     else resolve();
   });
 }
+
 function closeCameraScanner(){
   stopScannerQuietly().then(()=>{
     if(html5QrCode){ try { html5QrCode.clear(); } catch(e){} html5QrCode = null; }
@@ -1450,32 +1530,11 @@ function parseQRData(text){
   const result = {};
   try {
     const jsonData = JSON.parse(text);
-    const mapping = {
-      'region':'region','district':'district','chiefdom':'chiefdom','community':'community',
-      'facility':'facility','healthFacility':'facility','health facility':'facility',
-      'distPoint':'distPoint','dist_point':'distPoint','dp':'distPoint','distributionPoint':'distPoint','distribution point':'distPoint',
-      'surname':'surname','middleName':'middleName','middlename':'middleName',
-      'firstName':'firstName','firstname':'firstName',
-      'mobile':'mobile','members':'members',
-      'itn':'itn','itnAlloc':'itn','itn_alloc':'itn','itnAllocation':'itn',
-      'pregnant':'pregnant','under5':'under5','under_5':'under5','underFive':'under5','u5':'under5',
-      'hhr':'hhr','hhrName':'hhr','hhr_name':'hhr',
-      'latitude':'latitude','lat':'latitude',
-      'longitude':'longitude','lng':'longitude','lon':'longitude',
-      'token':'token'
-    };
-    for (const [k, v] of Object.entries(jsonData)) {
-      const stdKey = mapping[k.toLowerCase()] || k.toLowerCase();
-      result[stdKey] = v;
-    }
-    if (jsonData.name && !result.surname) {
-      const parts = String(jsonData.name).split(' ');
-      if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
-      else result.surname = jsonData.name;
-    }
+    const mapping = { 'region':'region','district':'district','chiefdom':'chiefdom','community':'community','facility':'facility','healthFacility':'facility','distPoint':'distPoint','dp':'distPoint','surname':'surname','middleName':'middleName','firstName':'firstName','mobile':'mobile','members':'members','itn':'itn','itnAlloc':'itn','pregnant':'pregnant','under5':'under5','hhr':'hhr','hhrName':'hhr','latitude':'latitude','lat':'latitude','longitude':'longitude','lng':'longitude','token':'token' };
+    for (const [k, v] of Object.entries(jsonData)) { const stdKey = mapping[k.toLowerCase()] || k.toLowerCase(); result[stdKey] = v; }
+    if (jsonData.name && !result.surname) { const parts = String(jsonData.name).split(' '); if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); } else result.surname = jsonData.name; }
     return result;
   } catch (e) {}
-  
   const lines = text.split(/\r?\n/);
   lines.forEach(line => {
     const idx = line.indexOf(':');
@@ -1488,23 +1547,19 @@ function parseQRData(text){
       else if (key === 'chiefdom') result.chiefdom = val;
       else if (key === 'community') result.community = val;
       else if (key === 'facility' || key === 'health facility') result.facility = val;
-      else if (key === 'dist. point' || key === 'dist_point' || key === 'dp' || key === 'distribution point') result.distPoint = val;
+      else if (key === 'dist. point' || key === 'dist_point' || key === 'dp') result.distPoint = val;
       else if (key === 'surname') result.surname = val;
       else if (key === 'middle name' || key === 'middlename') result.middleName = val;
       else if (key === 'first name' || key === 'firstname') result.firstName = val;
-      else if (key === 'name') {
-        const parts = val.split(' ');
-        if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); }
-        else result.surname = val;
-      }
+      else if (key === 'name') { const parts = val.split(' '); if (parts.length >= 2) { result.surname = parts[0]; result.firstName = parts.slice(1).join(' '); } else result.surname = val; }
       else if (key === 'mobile') result.mobile = val;
       else if (key === 'members') result.members = val;
       else if (key === 'itn alloc' || key === 'itn') result.itn = val;
       else if (key === 'pregnant') result.pregnant = val;
-      else if (key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
+      else if (key === 'under-5' || key === 'under5') result.under5 = val;
       else if (key === 'hhr name' || key === 'hhr') result.hhr = val;
       else if (key === 'latitude' || key === 'lat') result.latitude = val;
-      else if (key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
+      else if (key === 'longitude' || key === 'lng') result.longitude = val;
       else if (key === 'token') result.token = val;
     }
   });
@@ -1512,6 +1567,7 @@ function parseQRData(text){
 }
 
 function normalize(str) { if (!str) return ''; return str.trim().toLowerCase().replace(/[^a-z0-9]/g, ''); }
+
 function findBestMatch(selectElement, targetValue) {
   if (!targetValue) return null;
   const targetNorm = normalize(targetValue);
@@ -1522,6 +1578,7 @@ function findBestMatch(selectElement, targetValue) {
   if (match && match.value !== '') return match;
   return null;
 }
+
 function autoFillFromScan(data){
   setTimeout(()=>{ document.getElementById('camModal').classList.remove('open'); }, 400);
   mStep = 1; updateWiz();
@@ -1564,6 +1621,7 @@ function autoFillFromScan(data){
     } else fillPersonalDetails(data);
   }, 500);
 }
+
 function fillPersonalDetails(data){
   if(data.surname) document.getElementById('mSur').value = data.surname;
   if(data.middleName) document.getElementById('mMid').value = data.middleName;
@@ -1579,488 +1637,10 @@ function fillPersonalDetails(data){
   if(data.token) { mTok = data.token; const tb = document.getElementById('mTok'); if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; } }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION MODULE - FIXED CAMERA IMPLEMENTATION
-═══════════════════════════════════════════════════════════════ */
-let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null;
-let distScanner = null;
-let distScannerRunning = false;
-let distStream = null; // 🔑 Direct stream reference for cleanup
-
-function openDistribution(){
-  go('sDistribution');
-  distCurrentStep = 0;
-  document.getElementById('distDate').value = todayStr();
-  ['distBeneficiaryToken','distRegion','distDistrict','distChiefdom','distCommunity','distFacility','distDistPoint','distSurname','distMiddleName','distFirstName','distMobile','distHhrName','distItnAlloc','distPregnant','distUnder5','distBeneficiaryLat','distBeneficiaryLng','distVerifierName','distVerifierMobile','distDistributorName','distDistributorMobile','distGpsLat','distGpsLng','distTokenDisplay'].forEach(id=>{ const e=document.getElementById(id);if(e)e.value=''; });
-  document.getElementById('distAutoFillDisplay').classList.add('d-none');
-  document.getElementById('distHealthTalkGiven').checked = false;
-  document.getElementById('distHealthTalksContent').style.display = 'none';
-  
-  // Reset camera status
-  updateDistCameraStatus('ready', '📷 Camera ready. Click "Start Scanning" to begin.');
-  document.getElementById('distRetryCameraBtn').style.display = 'none';
-  
-  // Stop any existing scanner
-  stopDistScanner();
-  
-  setTimeout(()=>{
-    const vCanvas = document.getElementById('distVerifierSignature'), dCanvas = document.getElementById('distributorSignature');
-    if (typeof SignaturePad !== 'undefined') {
-      if (distVerifierPad) distVerifierPad.clear(); else distVerifierPad = new SignaturePad(vCanvas, {backgroundColor:'rgb(255,255,255)',penColor:'rgb(22,36,42)'});
-      if (distDistributorPad) distDistributorPad.clear(); else distDistributorPad = new SignaturePad(document.getElementById('distributorSignature'), {backgroundColor:'rgb(255,255,255)',penColor:'rgb(22,36,42)'});
-      [vCanvas, document.getElementById('distributorSignature')].forEach(canvas=>{
-        if(!canvas) return;
-        const ratio = Math.max(window.devicePixelRatio || 1, 1);
-        const rect = canvas.getBoundingClientRect();
-        if (rect.width > 0 && rect.height > 0) { canvas.width = rect.width * ratio; canvas.height = rect.height * ratio; canvas.getContext('2d').scale(ratio, ratio); }
-      });
-      if (distVerifierPad) distVerifierPad.clear();
-      if (distDistributorPad) distDistributorPad.clear();
-    }
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(pos=>{
-        document.getElementById('distGpsLat').value = pos.coords.latitude.toFixed(6);
-        document.getElementById('distGpsLng').value = pos.coords.longitude.toFixed(6);
-        document.getElementById('distGpsStatus').innerHTML = '<i class="fas fa-check-circle" style="color:#0E7C66"></i> GPS captured.';
-      }, ()=>{});
-    }
-  }, 100);
-  updateDistStep();
-}
-
-function updateDistStep(){
-  const allSteps = document.querySelectorAll('#sDistribution .dist-step');
-  allSteps.forEach((step, i) => { step.classList.toggle('active', i === distCurrentStep); });
-  const progressSteps = document.querySelectorAll('#distProgress .dist-progress-step');
-  progressSteps.forEach((dot, i) => { dot.classList.toggle('completed', i < distCurrentStep); dot.classList.toggle('active', i === distCurrentStep); });
-  const fill = document.getElementById('distProgressFill');
-  if (fill) fill.style.width = (allSteps.length > 1 ? (distCurrentStep / (allSteps.length - 1)) * 100 : 0) + '%';
-  const prevBtn = document.getElementById('distPrevBtn'), nextBtn = document.getElementById('distNextBtn');
-  prevBtn.style.visibility = (distCurrentStep === 0) ? 'hidden' : 'visible';
-  nextBtn.style.display = (distCurrentStep === allSteps.length - 1) ? 'none' : 'inline-block';
-  const content = document.querySelector('#sDistribution .dist-container');
-  if (content) content.scrollTop = 0;
-  
-  // 🔑 Stop scanner when leaving step 1
-  if (distCurrentStep !== 1) {
-    stopDistScanner();
-  }
-}
-
-function distChangeStep(n){
-  const allSteps = document.querySelectorAll('#sDistribution .dist-step');
-  distCurrentStep += n;
-  if (distCurrentStep >= allSteps.length) distCurrentStep = allSteps.length - 1;
-  if (distCurrentStep < 0) distCurrentStep = 0;
-  updateDistStep();
-}
-
-function switchDistTab(tabId){
-  document.querySelectorAll('#distBeneficiaryTab .nav-link').forEach(btn=>{ 
-    btn.classList.toggle('active', btn.dataset.tab === tabId); 
-  });
-  const tokenPane = document.getElementById('dist-token');
-  const qrPane = document.getElementById('dist-qr');
-  if (tabId === 'dist-token') {
-    tokenPane.classList.add('active');
-    qrPane.classList.remove('active');
-    stopDistScanner();
-  } else {
-    tokenPane.classList.remove('active');
-    qrPane.classList.add('active');
-  }
-}
-
-function distAutoFillData(){
-  const token = document.getElementById('distBeneficiaryToken').value.trim();
-  if (!token) { alert("Please enter a token ID."); return; }
-  const rec = RECS.find(r => r.token === token);
-  if (!rec) { alert("⚠️ No matching registration found for token: " + token); return; }
-  fillDistFormFromRecord(rec);
-  const displayText = `${rec.firstName || ''} ${rec.surname || ''} (Token: ${rec.token})`;
-  document.getElementById('distAutoFillText').innerText = displayText;
-  document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-  toast('✅ Beneficiary data loaded from registration');
-}
-
-function fillDistFormFromRecord(rec){
-  if (rec.token) {
-    document.getElementById('distTokenDisplay').value = rec.token;
-    document.getElementById('distBeneficiaryToken').value = rec.token;
-  }
-  if (rec.region) document.getElementById('distRegion').value = rec.region;
-  if (rec.district) document.getElementById('distDistrict').value = rec.district;
-  if (rec.chiefdom) document.getElementById('distChiefdom').value = rec.chiefdom;
-  if (rec.community) document.getElementById('distCommunity').value = rec.community;
-  if (rec.healthFacility) document.getElementById('distFacility').value = rec.healthFacility;
-  if (rec.dp) document.getElementById('distDistPoint').value = rec.dp;
-  if (rec.surname) document.getElementById('distSurname').value = rec.surname;
-  if (rec.middleName) document.getElementById('distMiddleName').value = rec.middleName;
-  if (rec.firstName) document.getElementById('distFirstName').value = rec.firstName;
-  if (rec.mobile) document.getElementById('distMobile').value = rec.mobile;
-  if (rec.hhr) document.getElementById('distHhrName').value = rec.hhr;
-  if (rec.itn !== undefined && rec.itn !== null) document.getElementById('distItnAlloc').value = rec.itn;
-  if (rec.pregnant !== undefined && rec.pregnant !== null) document.getElementById('distPregnant').value = rec.pregnant;
-  if (rec.under5 !== undefined && rec.under5 !== null) document.getElementById('distUnder5').value = rec.under5;
-  if (rec.gps) {
-    const [lat, lng] = rec.gps.split(',');
-    if (lat) document.getElementById('distBeneficiaryLat').value = lat;
-    if (lng) document.getElementById('distBeneficiaryLng').value = lng;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════════
-   🔑 FIXED: Distribution Scanner - Uses html5-qrcode with proper
-   container handling and direct getUserMedia fallback
-═══════════════════════════════════════════════════════════════ */
-function startDistScanner(){
-  console.log('📷 [Dist] Starting scanner...');
-  
-  if (distScannerRunning) {
-    console.log('[Dist] Scanner already running');
-    return;
-  }
-  
-  // Check library
-  if (typeof Html5Qrcode === 'undefined') {
-    console.error('[Dist] html5-qrcode library not loaded');
-    updateDistCameraStatus('error', '❌ Scanner library not loaded. Please refresh the page.');
-    document.getElementById('distRetryCameraBtn').style.display = 'block';
-    return;
-  }
-  
-  // 🔑 CRITICAL: Ensure container is visible and has dimensions
-  const readerEl = document.getElementById('dist-qr-reader');
-  if (!readerEl) {
-    console.error('[Dist] #dist-qr-reader element not found');
-    updateDistCameraStatus('error', '❌ Scanner container not found.');
-    return;
-  }
-  
-  // Force the container to have dimensions
-  readerEl.style.width = '100%';
-  readerEl.style.height = '260px';
-  readerEl.style.display = 'block';
-  
-  // 🔑 Wait for layout to settle, then check dimensions
-  setTimeout(() => {
-    const rect = readerEl.getBoundingClientRect();
-    console.log('[Dist] Container dimensions:', rect.width, 'x', rect.height);
-    
-    if (rect.width < 50 || rect.height < 50) {
-      console.error('[Dist] Container too small:', rect.width, 'x', rect.height);
-      updateDistCameraStatus('error', '⚠️ Scanner area too small. Please ensure "Scan QR" tab is active.');
-      document.getElementById('distRetryCameraBtn').style.display = 'block';
-      return;
-    }
-    
-    // 🔑 Check HTTPS requirement
-    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
-      console.warn('[Dist] Not on HTTPS - camera may not work');
-      updateDistCameraStatus('error', '⚠️ Camera requires HTTPS. Please use https:// or localhost.');
-      document.getElementById('distRetryCameraBtn').style.display = 'block';
-      return;
-    }
-    
-    updateDistCameraStatus('scanning', '📷 Requesting camera access...');
-    
-    // 🔑 Clean up any previous scanner
-    cleanupDistScanner().then(() => {
-      initDistScanner();
-    });
-  }, 200);
-}
-
-function cleanupDistScanner(){
-  return new Promise((resolve) => {
-    // Stop stream if exists
-    if (distStream) {
-      try {
-        distStream.getTracks().forEach(track => track.stop());
-      } catch(e) {}
-      distStream = null;
-    }
-    
-    if (distScanner) {
-      try {
-        distScanner.stop().then(() => {
-          try { distScanner.clear(); } catch(e) {}
-          distScanner = null;
-          distScannerRunning = false;
-          resolve();
-        }).catch(() => {
-          distScanner = null;
-          distScannerRunning = false;
-          resolve();
-        });
-      } catch(e) {
-        distScanner = null;
-        distScannerRunning = false;
-        resolve();
-      }
-    } else {
-      resolve();
-    }
-  });
-}
-
-function initDistScanner(){
-  try {
-    const readerEl = document.getElementById('dist-qr-reader');
-    
-    // 🔑 CRITICAL: Clear any previous content in the reader element
-    readerEl.innerHTML = '';
-    
-    distScanner = new Html5Qrcode("dist-qr-reader", {
-      verbose: false
-    });
-    
-    const config = { 
-      fps: 10, 
-      qrbox: function(viewfinderWidth, viewfinderHeight) {
-        // 🔑 Dynamic qrbox size based on actual viewfinder size
-        const minEdge = Math.min(viewfinderWidth, viewfinderHeight);
-        const qrboxSize = Math.floor(minEdge * 0.7);
-        return { width: qrboxSize, height: qrboxSize };
-      },
-      aspectRatio: 1.0,
-      formatsToSupport: [
-        Html5QrcodeSupportedFormats.QR_CODE,
-        Html5QrcodeSupportedFormats.DATA_MATRIX
-      ]
-    };
-    
-    const onSuccess = (decodedText) => {
-      console.log('[Dist] ✅ QR scanned:', decodedText);
-      if (navigator.vibrate) navigator.vibrate(200);
-      
-      const parsed = parseQRData(decodedText);
-      if (parsed && (parsed.token || parsed.region || parsed.surname)) {
-        fillDistFormFromParsedQR(parsed);
-        const name = ((parsed.firstName || '') + ' ' + (parsed.surname || '')).trim();
-        const token = parsed.token || 'N/A';
-        const displayText = name ? `${name} (Token: ${token})` : `Token: ${token}`;
-        document.getElementById('distAutoFillText').innerText = displayText;
-        document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-        updateDistCameraStatus('success', '✅ QR scanned successfully! All fields auto-filled.');
-        toast('✅ QR scanned - all fields filled!');
-      } else {
-        document.getElementById('distBeneficiaryToken').value = decodedText;
-        document.getElementById('distTokenDisplay').value = decodedText;
-        updateDistCameraStatus('success', 'ℹ️ Token captured.');
-        toast('⚠️ Only token captured');
-      }
-      stopDistScanner();
-    };
-    
-    const onFailure = (error) => {
-      // Silent - fires every frame when no QR detected
-    };
-    
-    // 🔑 Try rear camera first, then fallback
-    distScanner.start(
-      { facingMode: { exact: "environment" } }, 
-      config, 
-      onSuccess, 
-      onFailure
-    ).then(() => {
-      distScannerRunning = true;
-      document.getElementById('distStartScanBtn').style.display = 'none';
-      document.getElementById('distStopScanBtn').style.display = 'inline-block';
-      document.getElementById('distQrWrapper').classList.add('scanning');
-      updateDistCameraStatus('scanning', '📷 Camera active. Point at QR code.');
-      console.log('[Dist] ✅ Scanner started successfully');
-    }).catch((err) => {
-      console.warn('[Dist] Rear camera failed, trying default:', err);
-      
-      // 🔑 Fallback: try without exact constraint
-      distScanner.start(
-        { facingMode: "environment" }, 
-        config, 
-        onSuccess, 
-        onFailure
-      ).then(() => {
-        distScannerRunning = true;
-        document.getElementById('distStartScanBtn').style.display = 'none';
-        document.getElementById('distStopScanBtn').style.display = 'inline-block';
-        document.getElementById('distQrWrapper').classList.add('scanning');
-        updateDistCameraStatus('scanning', '📷 Camera active. Point at QR code.');
-      }).catch((err2) => {
-        console.warn('[Dist] Environment camera failed, trying any camera:', err2);
-        
-        // 🔑 Final fallback: any camera
-        distScanner.start(
-          {}, 
-          config, 
-          onSuccess, 
-          onFailure
-        ).then(() => {
-          distScannerRunning = true;
-          document.getElementById('distStartScanBtn').style.display = 'none';
-          document.getElementById('distStopScanBtn').style.display = 'inline-block';
-          document.getElementById('distQrWrapper').classList.add('scanning');
-          updateDistCameraStatus('scanning', '📷 Camera active. Point at QR code.');
-        }).catch((err3) => {
-          console.error('[Dist] All camera attempts failed:', err3);
-          let errorMsg = '❌ Camera error: ';
-          const errStr = (err3.message || err3.toString() || '').toLowerCase();
-          
-          if (errStr.includes('notallowed') || errStr.includes('permission')) {
-            errorMsg += 'Permission denied. Please allow camera access in your browser settings.';
-          } else if (errStr.includes('notfound')) {
-            errorMsg += 'No camera found on this device.';
-          } else if (errStr.includes('notreadable') || errStr.includes('inuse')) {
-            errorMsg += 'Camera is being used by another application. Please close other apps and try again.';
-          } else if (errStr.includes('overconstrained')) {
-            errorMsg += 'Camera constraints not supported.';
-          } else {
-            errorMsg += err3.message || 'Unable to start camera. Try the "Retry Camera" button.';
-          }
-          
-          updateDistCameraStatus('error', errorMsg);
-          document.getElementById('distRetryCameraBtn').style.display = 'block';
-          toast('❌ Camera failed to start');
-        });
-      });
-    });
-  } catch(e) {
-    console.error('[Dist] Scanner initialization error:', e);
-    updateDistCameraStatus('error', '❌ Failed to initialize: ' + e.message);
-    document.getElementById('distRetryCameraBtn').style.display = 'block';
-  }
-}
-
-function updateDistCameraStatus(type, message){
-  const statusEl = document.getElementById('cameraStatusIndicator');
-  if (!statusEl) return;
-  statusEl.className = 'camera-status ' + type;
-  statusEl.innerHTML = message;
-}
-
-function retryCamera(){
-  console.log('[Dist] Retrying camera...');
-  document.getElementById('distRetryCameraBtn').style.display = 'none';
-  updateDistCameraStatus('scanning', '📷 Retrying camera...');
-  cleanupDistScanner().then(() => {
-    initDistScanner();
-  });
-}
-
-function stopDistScanner(){
-  if (distScanner && distScannerRunning) {
-    try {
-      distScanner.stop().then(() => {
-        try { distScanner.clear(); } catch(e) {}
-        distScannerRunning = false;
-        document.getElementById('distStartScanBtn').style.display = 'inline-block';
-        document.getElementById('distStopScanBtn').style.display = 'none';
-        document.getElementById('distQrWrapper').classList.remove('scanning');
-        updateDistCameraStatus('ready', '📷 Camera stopped. Click "Start Scanning" to resume.');
-      }).catch(err => {
-        console.log("[Dist] Stop error:", err);
-        distScannerRunning = false;
-        document.getElementById('distStartScanBtn').style.display = 'inline-block';
-        document.getElementById('distStopScanBtn').style.display = 'none';
-        document.getElementById('distQrWrapper').classList.remove('scanning');
-      });
-    } catch(e) {
-      distScannerRunning = false;
-    }
-  } else {
-    document.getElementById('distStartScanBtn').style.display = 'inline-block';
-    document.getElementById('distStopScanBtn').style.display = 'none';
-    document.getElementById('distQrWrapper').classList.remove('scanning');
-  }
-}
-
-function clearDistSignature(role){ 
-  if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); 
-  if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); 
-}
-
-function fillDistFormFromParsedQR(data){
-  if (data.token) {
-    document.getElementById('distTokenDisplay').value = data.token;
-    document.getElementById('distBeneficiaryToken').value = data.token;
-  }
-  if (data.region) document.getElementById('distRegion').value = data.region;
-  if (data.district) document.getElementById('distDistrict').value = data.district;
-  if (data.chiefdom) document.getElementById('distChiefdom').value = data.chiefdom;
-  if (data.community) document.getElementById('distCommunity').value = data.community;
-  if (data.facility) document.getElementById('distFacility').value = data.facility;
-  if (data.distPoint) document.getElementById('distDistPoint').value = data.distPoint;
-  if (data.surname) document.getElementById('distSurname').value = data.surname;
-  if (data.middleName) document.getElementById('distMiddleName').value = data.middleName;
-  if (data.firstName) document.getElementById('distFirstName').value = data.firstName;
-  if (data.mobile) document.getElementById('distMobile').value = data.mobile;
-  if (data.hhr) document.getElementById('distHhrName').value = data.hhr;
-  if (data.itn !== undefined && data.itn !== null && data.itn !== '') {
-    document.getElementById('distItnAlloc').value = data.itn;
-  }
-  if (data.pregnant !== undefined && data.pregnant !== null && data.pregnant !== '') {
-    document.getElementById('distPregnant').value = data.pregnant;
-  }
-  if (data.under5 !== undefined && data.under5 !== null && data.under5 !== '') {
-    document.getElementById('distUnder5').value = data.under5;
-  }
-  if (data.latitude) document.getElementById('distBeneficiaryLat').value = data.latitude;
-  if (data.longitude) document.getElementById('distBeneficiaryLng').value = data.longitude;
-}
-
-function submitDistribution(e){
-  e.preventDefault();
-  if (!distVerifierPad || !distDistributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) {
-    alert("⚠️ Please ensure both signatures are provided.");
-    return false;
-  }
-  const token = document.getElementById('distBeneficiaryToken').value.trim();
-  if (!token) {
-    alert("⚠️ Please enter or scan a beneficiary token before submitting.");
-    return false;
-  }
-  const matchIndex = RECS.findIndex(r => r.token === token);
-  if (matchIndex === -1) {
-    alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
-    return false;
-  }
-  if (RECS[matchIndex].status === 'Distributed') {
-    alert("ℹ️ This household has already been distributed to.\n\nToken: " + token);
-    return false;
-  }
-  RECS[matchIndex].status = 'Distributed';
-  RECS[matchIndex].distributionDate = new Date().toLocaleString();
-  RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
-  saveRecsLocal();
-  if (RECS[matchIndex]._id) {
-    updateRecordInCloud(RECS[matchIndex]._id, { 
-      status: 'Distributed',
-      distributionDate: RECS[matchIndex].distributionDate,
-      distributedBy: RECS[matchIndex].distributedBy
-    });
-  }
-  const activeScreen = document.querySelector('#phoneMock .screen.active');
-  if (activeScreen) {
-    if (activeScreen.id === 'sRecords') renderRecords();
-    if (activeScreen.id === 'sDistRecs') renderDistRecords();
-    if (activeScreen.id === 'sDistTarget') renderDistTarget();
-  }
-  alert("✅ Distribution record submitted successfully!\n\nToken: " + token + "\nStatus: Distributed");
-  setTimeout(() => { openDistribution(); }, 500);
-  return false;
-}
-
-function openDistRecords(){ go('sDistRecs'); renderDistRecords(); }
-
 window.addEventListener('online', () => { if (FIREBASE_ENABLED) updateSyncIndicator('online', 'Cloud Sync Active'); });
 window.addEventListener('offline', () => { if (FIREBASE_ENABLED) updateSyncIndicator('offline', 'Sync Offline'); });
 
-// 🔑 Cleanup on page unload
-window.addEventListener('beforeunload', () => {
-  stopDistScanner();
-  if (distStream) {
-    try { distStream.getTracks().forEach(track => track.stop()); } catch(e) {}
-  }
-});
+loadRecsLocal();
 
 const savedU=sessionStorage.getItem('cu');
 if(savedU){CU=USERS.find(x=>x.USERNAME===savedU);if(CU){buildDash();go('sDash');}else go('sLogin');}
