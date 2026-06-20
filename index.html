@@ -286,8 +286,13 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .dist-topic-number{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:#1565c0;color:#fff;font-size:.72rem;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
 .dist-health-topic strong{color:#16324F;display:block;margin-bottom:2px}
 
-/* 🔑 FIXED: QR Scanner container - explicit dimensions */
-.dist-qr-frame{position:relative;width:100%;min-height:240px}
+/* 🔑 FIXED: QR Scanner container - explicit dimensions, no conflicting display rules */
+.dist-qr-frame{
+  position:relative;
+  width:100%;
+  min-height:240px;
+  margin-bottom:12px;
+}
 #dist-qr-reader{
   width:100% !important;
   height:240px !important;
@@ -305,26 +310,22 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 }
 #dist-qr-reader__scan_region{
   min-height:240px !important;
+  width:100% !important;
 }
-.dist-qr-corner{position:absolute;width:26px;height:26px;border:3px solid #E8A33D;opacity:0;transition:opacity .2s ease;pointer-events:none}
+.dist-qr-corner{position:absolute;width:26px;height:26px;border:3px solid #E8A33D;opacity:0;transition:opacity .2s ease;pointer-events:none;z-index:5}
 .dist-qr-frame.scanning .dist-qr-corner{opacity:1}
 .dist-qr-corner-tl{top:10px;left:10px;border-right:none;border-bottom:none;border-radius:6px 0 0 0}
 .dist-qr-corner-tr{top:10px;right:10px;border-left:none;border-bottom:none;border-radius:0 6px 0 0}
 .dist-qr-corner-bl{bottom:10px;left:10px;border-right:none;border-top:none;border-radius:0 0 0 6px}
 .dist-qr-corner-br{bottom:10px;right:10px;border-left:none;border-top:none;border-radius:0 0 6px 0}
 
-/* 🔑 FIXED: Force tab content to be visible with dimensions */
-#dist-qr.tab-pane,
-#dist-qr.fade,
-#dist-qr.fade.show{
-  display:block !important;
-  opacity:1 !important;
-  visibility:visible !important;
+/* 🔑 FIXED: Tab content visibility - simple show/hide without Bootstrap fade conflicts */
+.dist-tab-content{
+  display:none;
   width:100%;
-  min-height:240px;
 }
-#dist-qr:not(.show){
-  display:none !important;
+.dist-tab-content.active{
+  display:block !important;
 }
 
 .dist-beneficiary-tab{background:#F4F7F2;border:none;border-radius:12px;padding:4px;gap:4px;display:flex;margin-bottom:12px}
@@ -353,6 +354,31 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
   font-weight:500;
   font-family: -apple-system, "Segoe UI", system-ui, sans-serif;
   letter-spacing:normal;
+}
+
+/* 🔑 Camera status indicator */
+.camera-status{
+  padding:10px;
+  border-radius:10px;
+  margin-bottom:12px;
+  font-size:.8rem;
+  font-weight:600;
+  text-align:center;
+}
+.camera-status.ready{
+  background:#e8f5e9;
+  color:#2e7d32;
+  border:1px solid #a5d6a7;
+}
+.camera-status.scanning{
+  background:#fff3e0;
+  color:#ef6c00;
+  border:1px solid #ffcc80;
+}
+.camera-status.error{
+  background:#ffebee;
+  color:#c62828;
+  border:1px solid #ef9a9a;
 }
 </style>
 </head>
@@ -718,18 +744,29 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <span class="dist-step-icon"><i class="fas fa-id-card"></i></span>
         <div><span class="dist-step-eyebrow">Household</span><h2 class="dist-step-title">Beneficiary Details</h2></div>
        </div>
+       
+       <!-- 🔑 Tab buttons -->
        <div class="dist-beneficiary-tab" id="distBeneficiaryTab">
         <button type="button" class="nav-link active" data-tab="dist-token" onclick="switchDistTab('dist-token')">Type Token</button>
         <button type="button" class="nav-link" data-tab="dist-qr" onclick="switchDistTab('dist-qr')">Scan QR</button>
        </div>
-       <div id="dist-token" class="dist-tab-content">
+       
+       <!-- Token input tab -->
+       <div id="dist-token" class="dist-tab-content active">
         <div style="display:flex;gap:8px;margin-bottom:12px">
          <input type="text" class="dist-form-control" id="distBeneficiaryToken" placeholder="Enter Token ID" style="flex:1">
          <button type="button" class="dist-btn dist-btn-next" onclick="distAutoFillData()">Auto-Fill</button>
         </div>
        </div>
-       <!-- 🔑 FIXED: Removed Bootstrap fade class to prevent display:none issues -->
-       <div id="dist-qr" class="dist-tab-content" style="display:none">
+       
+       <!-- 🔑 QR Scanner tab - FIXED -->
+       <div id="dist-qr" class="dist-tab-content">
+        <!-- Camera status indicator -->
+        <div id="cameraStatusIndicator" class="camera-status ready">
+          📷 Camera ready. Click "Start Scanning" to begin.
+        </div>
+        
+        <!-- QR Scanner container -->
         <div class="dist-qr-frame" id="distQrFrame">
          <div id="dist-qr-reader"></div>
          <span class="dist-qr-corner dist-qr-corner-tl"></span>
@@ -737,16 +774,24 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
          <span class="dist-qr-corner dist-qr-corner-bl"></span>
          <span class="dist-qr-corner dist-qr-corner-br"></span>
         </div>
+        
+        <!-- Scanner control buttons -->
         <div style="display:flex;gap:8px;margin-top:8px">
-         <button type="button" class="dist-btn dist-btn-next" style="flex:1" id="distStartScanBtn" onclick="startDistScanner()"><i class="fas fa-camera me-1"></i> Start Scanning</button>
-         <button type="button" class="dist-btn dist-btn-prev" style="flex:1;display:none" id="distStopScanBtn" onclick="stopDistScanner()"><i class="fas fa-stop-circle me-1"></i> Stop</button>
+         <button type="button" class="dist-btn dist-btn-next" style="flex:1" id="distStartScanBtn" onclick="startDistScanner()">
+          <i class="fas fa-camera me-1"></i> Start Scanning
+         </button>
+         <button type="button" class="dist-btn dist-btn-prev" style="flex:1;display:none" id="distStopScanBtn" onclick="stopDistScanner()">
+          <i class="fas fa-stop-circle me-1"></i> Stop Scanning
+         </button>
         </div>
-        <p style="color:#5B6B6E;text-align:center;margin-top:8px;font-size:.8rem" id="distQrStatus">Tap "Start Scanning" to use the camera.</p>
        </div>
+       
+       <!-- Auto-fill display -->
        <div id="distAutoFillDisplay" class="alert alert-success d-none py-2 small mt-3">
         <i class="fas fa-circle-check me-1"></i><strong>Auto-Filled:</strong> <span id="distAutoFillText"></span>
        </div>
       </div>
+      
       <div class="dist-step-card">
        <div class="dist-step-header">
         <span class="dist-step-icon"><i class="fas fa-user"></i></span>
@@ -1556,6 +1601,14 @@ function openDistribution(){
   document.getElementById('distAutoFillDisplay').classList.add('d-none');
   document.getElementById('distHealthTalkGiven').checked = false;
   document.getElementById('distHealthTalksContent').style.display = 'none';
+  
+  // Reset camera status
+  const camStatus = document.getElementById('cameraStatusIndicator');
+  if (camStatus) {
+    camStatus.className = 'camera-status ready';
+    camStatus.innerHTML = '📷 Camera ready. Click "Start Scanning" to begin.';
+  }
+  
   setTimeout(()=>{
     const vCanvas = document.getElementById('distVerifierSignature'), dCanvas = document.getElementById('distDistributorSignature');
     if (typeof SignaturePad !== 'undefined') {
@@ -1579,6 +1632,7 @@ function openDistribution(){
   }, 100);
   updateDistStep();
 }
+
 function updateDistStep(){
   const allSteps = document.querySelectorAll('#sDistribution .dist-step');
   allSteps.forEach((step, i) => { step.classList.toggle('active', i === distCurrentStep); });
@@ -1591,8 +1645,13 @@ function updateDistStep(){
   nextBtn.style.display = (distCurrentStep === allSteps.length - 1) ? 'none' : 'inline-block';
   const content = document.querySelector('#sDistribution .dist-container');
   if (content) content.scrollTop = 0;
-  if (distCurrentStep !== 1) stopDistScanner();
+  
+  // 🔑 Stop scanner when leaving step 1
+  if (distCurrentStep !== 1) {
+    stopDistScanner();
+  }
 }
+
 function distChangeStep(n){
   const allSteps = document.querySelectorAll('#sDistribution .dist-step');
   distCurrentStep += n;
@@ -1602,9 +1661,7 @@ function distChangeStep(n){
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🔑 FIXED: switchDistTab - ensures container is visible before
-   scanner can be started. Uses direct display toggle instead of
-   Bootstrap fade to avoid display:none issues.
+   🔑 FIXED: switchDistTab - Simple show/hide without Bootstrap
 ═══════════════════════════════════════════════════════════════ */
 function switchDistTab(tabId){
   // Update tab button active state
@@ -1612,42 +1669,29 @@ function switchDistTab(tabId){
     btn.classList.toggle('active', btn.dataset.tab === tabId); 
   });
   
-  // Direct display toggle (no Bootstrap fade)
+  // Simple show/hide - no Bootstrap fade conflicts
   const tokenPane = document.getElementById('dist-token');
   const qrPane = document.getElementById('dist-qr');
   
   if (tabId === 'dist-token') {
-    tokenPane.style.display = 'block';
-    qrPane.style.display = 'none';
-    // Stop scanner when switching away from QR tab
+    tokenPane.classList.add('active');
+    qrPane.classList.remove('active');
     stopDistScanner();
   } else {
-    tokenPane.style.display = 'none';
-    // 🔑 CRITICAL: Make QR pane visible FIRST, then wait for layout
-    qrPane.style.display = 'block';
+    tokenPane.classList.remove('active');
+    qrPane.classList.add('active');
     
-    // 🔑 Wait for the container to be fully rendered before allowing scan
+    // Wait for container to be visible before allowing scan
     setTimeout(() => {
       const qrReader = document.getElementById('dist-qr-reader');
       if (qrReader) {
-        // Force a reflow to ensure dimensions are calculated
         const rect = qrReader.getBoundingClientRect();
         console.log('QR Reader dimensions:', rect.width, 'x', rect.height);
-        
-        // If dimensions are 0, try to fix by setting explicit dimensions
-        if (rect.width === 0 || rect.height === 0) {
-          qrReader.style.width = '100%';
-          qrReader.style.height = '240px';
-          qrReader.style.minHeight = '240px';
-        }
       }
-    }, 50);
+    }, 100);
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 FIXED: distAutoFillData - Token lookup
-═══════════════════════════════════════════════════════════════ */
 function distAutoFillData(){
   const token = document.getElementById('distBeneficiaryToken').value.trim();
   if (!token) {
@@ -1693,84 +1737,71 @@ function fillDistFormFromRecord(rec){
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🔑 FIXED: startDistScanner - Now properly waits for container
-   to be visible and has dimensions before starting the scanner.
-   Includes better error handling and status messages.
+   🔑 FIXED: startDistScanner - Real camera implementation
 ═══════════════════════════════════════════════════════════════ */
 function startDistScanner(){
+  console.log('📷 Starting scanner...');
+  
   if (distScannerRunning) {
     console.log('Scanner already running');
     return;
   }
   
-  // 🔑 Check if library is loaded
+  // Check if library is loaded
   if (typeof Html5Qrcode === 'undefined') { 
-    document.getElementById('distQrStatus').innerText = '❌ Scanner library failed to load. Please refresh the page.';
-    document.getElementById('distQrStatus').style.color = '#c62828';
+    updateCameraStatus('error', '❌ Scanner library failed to load. Please refresh the page.');
     return; 
   }
   
-  // 🔑 Verify container is visible and has dimensions
+  // Verify container is visible
   const qrReader = document.getElementById('dist-qr-reader');
   if (!qrReader) {
-    document.getElementById('distQrStatus').innerText = '❌ Scanner container not found.';
+    updateCameraStatus('error', '❌ Scanner container not found.');
     return;
   }
   
   const rect = qrReader.getBoundingClientRect();
-  console.log('Starting scanner. Container size:', rect.width, 'x', rect.height);
+  console.log('Container size:', rect.width, 'x', rect.height);
   
   if (rect.width === 0 || rect.height === 0) {
-    // Container not visible yet - wait and retry
-    document.getElementById('distQrStatus').innerText = '⏳ Preparing camera...';
-    setTimeout(() => startDistScanner(), 200);
+    updateCameraStatus('error', '⚠️ Scanner container not visible. Please ensure you are on the "Scan QR" tab.');
     return;
   }
   
-  document.getElementById('distQrStatus').innerText = '📷 Requesting camera access...';
-  document.getElementById('distQrStatus').style.color = '#5B6B6E';
+  updateCameraStatus('scanning', '📷 Requesting camera access...');
   
-  // 🔑 Clean up any previous scanner instance
+  // Clean up any previous scanner
   if (distHtml5Qrcode) {
     try {
       distHtml5Qrcode.stop().then(() => {
-        distHtml5Qrcode.clear();
+        try { distHtml5Qrcode.clear(); } catch(e) {}
         distHtml5Qrcode = null;
-        initNewScanner();
+        initDistScanner();
       }).catch(() => {
         distHtml5Qrcode = null;
-        initNewScanner();
+        initDistScanner();
       });
     } catch(e) {
       distHtml5Qrcode = null;
-      initNewScanner();
+      initDistScanner();
     }
   } else {
-    initNewScanner();
+    initDistScanner();
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 NEW: initNewScanner - Separate function to initialize a
-   fresh scanner instance
-═══════════════════════════════════════════════════════════════ */
-function initNewScanner(){
+function initDistScanner(){
   try {
-    distHtml5Qrcode = new Html5Qrcode("dist-qr-reader", {
-      verbose: false
-    });
+    distHtml5Qrcode = new Html5Qrcode("dist-qr-reader", { verbose: false });
     
     const config = { 
       fps: 10, 
       qrbox: { width: 200, height: 200 },
-      aspectRatio: 1.0,
-      formatsToSupport: [
-        Html5QrcodeSupportedFormats.QR_CODE
-      ]
+      aspectRatio: 1.0
     };
     
     const onSuccess = (decodedText) => {
-      console.log('QR scanned:', decodedText);
+      console.log('✅ QR scanned:', decodedText);
       if (navigator.vibrate) navigator.vibrate(200);
       
       const parsed = parseQRData(decodedText);
@@ -1781,25 +1812,22 @@ function initNewScanner(){
         const displayText = name ? `${name} (Token: ${token})` : `Token: ${token}`;
         document.getElementById('distAutoFillText').innerText = displayText;
         document.getElementById('distAutoFillDisplay').classList.remove('d-none');
-        document.getElementById('distQrStatus').innerText = '✅ All beneficiary data auto-filled!';
-        document.getElementById('distQrStatus').style.color = '#2e7d64';
+        updateCameraStatus('ready', '✅ QR scanned successfully! All fields auto-filled.');
         toast('✅ QR scanned - all fields filled!');
       } else {
-        // Treat as plain token
         document.getElementById('distBeneficiaryToken').value = decodedText;
         document.getElementById('distTokenDisplay').value = decodedText;
-        document.getElementById('distQrStatus').innerText = 'ℹ️ Token captured. Other fields not in QR.';
-        document.getElementById('distQrStatus').style.color = '#f57c00';
+        updateCameraStatus('ready', 'ℹ️ Token captured. Other fields not in QR.');
         toast('⚠️ Only token captured');
       }
       stopDistScanner();
     };
     
     const onFailure = (error) => {
-      // Silent - this fires every frame when no QR is detected
+      // Silent - fires every frame when no QR detected
     };
     
-    // 🔑 Try rear camera first, then fall back to any camera
+    // Try rear camera first
     distHtml5Qrcode.start(
       { facingMode: "environment" }, 
       config, 
@@ -1810,26 +1838,24 @@ function initNewScanner(){
       document.getElementById('distStartScanBtn').style.display = 'none';
       document.getElementById('distStopScanBtn').style.display = 'inline-block';
       document.getElementById('distQrFrame').classList.add('scanning');
-      document.getElementById('distQrStatus').innerText = '📷 Camera active. Point at QR code.';
-      document.getElementById('distQrStatus').style.color = '#2e7d64';
-      console.log('Scanner started successfully');
+      updateCameraStatus('scanning', '📷 Camera active. Point at QR code.');
+      console.log('✅ Scanner started successfully');
     }).catch((err) => {
       console.warn('Rear camera failed, trying default:', err);
-      // Try with default camera
+      // Try default camera
       distHtml5Qrcode.start({}, config, onSuccess, onFailure)
         .then(() => {
           distScannerRunning = true;
           document.getElementById('distStartScanBtn').style.display = 'none';
           document.getElementById('distStopScanBtn').style.display = 'inline-block';
           document.getElementById('distQrFrame').classList.add('scanning');
-          document.getElementById('distQrStatus').innerText = '📷 Camera active. Point at QR code.';
-          document.getElementById('distQrStatus').style.color = '#2e7d64';
+          updateCameraStatus('scanning', '📷 Camera active. Point at QR code.');
         })
         .catch((err2) => {
           console.error('Camera start failed:', err2);
           let errorMsg = '❌ Camera error: ';
           if (err2.toString().includes('NotAllowedError') || err2.toString().includes('Permission')) {
-            errorMsg += 'Permission denied. Please allow camera access in your browser settings.';
+            errorMsg += 'Permission denied. Please allow camera access in browser settings.';
           } else if (err2.toString().includes('NotFoundError')) {
             errorMsg += 'No camera found on this device.';
           } else if (err2.toString().includes('NotReadableError')) {
@@ -1837,16 +1863,22 @@ function initNewScanner(){
           } else {
             errorMsg += err2.message || 'Unable to start camera.';
           }
-          document.getElementById('distQrStatus').innerText = errorMsg;
-          document.getElementById('distQrStatus').style.color = '#c62828';
+          updateCameraStatus('error', errorMsg);
           toast('❌ Camera failed to start');
         });
     });
   } catch(e) {
     console.error('Scanner initialization error:', e);
-    document.getElementById('distQrStatus').innerText = '❌ Failed to initialize scanner: ' + e.message;
-    document.getElementById('distQrStatus').style.color = '#c62828';
+    updateCameraStatus('error', '❌ Failed to initialize scanner: ' + e.message);
   }
+}
+
+function updateCameraStatus(type, message){
+  const statusEl = document.getElementById('cameraStatusIndicator');
+  if (!statusEl) return;
+  
+  statusEl.className = 'camera-status ' + type;
+  statusEl.innerHTML = message;
 }
 
 function stopDistScanner(){
@@ -1857,6 +1889,7 @@ function stopDistScanner(){
       document.getElementById('distStartScanBtn').style.display = 'inline-block';
       document.getElementById('distStopScanBtn').style.display = 'none';
       document.getElementById('distQrFrame').classList.remove('scanning');
+      updateCameraStatus('ready', '📷 Camera stopped. Click "Start Scanning" to resume.');
     }).catch(err => {
       console.log("Stop error:", err);
       distScannerRunning = false;
@@ -1869,9 +1902,6 @@ function stopDistScanner(){
 
 function clearDistSignature(role){ if (role === 'verifier' && distVerifierPad) distVerifierPad.clear(); if (role === 'distributor' && distDistributorPad) distDistributorPad.clear(); }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 fillDistFormFromParsedQR - Fills all fields from parsed QR
-═══════════════════════════════════════════════════════════════ */
 function fillDistFormFromParsedQR(data){
   if (data.token) {
     document.getElementById('distTokenDisplay').value = data.token;
@@ -1903,7 +1933,7 @@ function fillDistFormFromParsedQR(data){
 
 function submitDistribution(e){
   e.preventDefault();
-  if (!distVerifierPad || !distDistributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) {
+  if (!distVerifierPad || !distributorPad || distVerifierPad.isEmpty() || distDistributorPad.isEmpty()) {
     alert("⚠️ Please ensure both signatures are provided.");
     return false;
   }
