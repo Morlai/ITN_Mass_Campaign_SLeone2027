@@ -15,7 +15,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#dde4f0;display:flex;align-items:center;justify-content:center;min-height:100vh;font-family:'Inter',system-ui,sans-serif;padding:16px}
-.phone-frame{width:390px;height:760px;background:#1a1e2c;border-radius:48px;padding:10px;box-shadow:0 28px 50px rgba(0,0,0,0.45);flex-shrink:0}
+.phone-frame{width:390px;height:760px;background:#1a1e2c;border-radius:48px;padding:10px;box-shadow:0 28px 50px rgba(0,0,0,.45);flex-shrink:0}
 .phone-mock{width:100%;height:100%;border-radius:40px;position:relative;overflow:hidden;background:url('background.png') center/cover no-repeat}
 .screen{position:absolute;inset:0;display:none;flex-direction:column;overflow:hidden}
 .screen.active{display:flex}
@@ -498,7 +498,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <div class="ferr" id="mPhE">Must be 9 digits starting with 0</div>
      </div>
      <div class="r2">
-      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn();validatePregnantUnder5()" required><div class="ferr" id="mMemE">Min 1</div></div>
+      <div class="fg"><label>👥 Members in the Household<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn();validatePregnantUnder5()" required><div class="ferr" id="mMemE">Min 1</div></div>
       <div class="fg"><label>🦟 ITN Alloc.<span class="req">*</span></label><input id="mItn" readonly placeholder="Auto" required></div>
      </div>
      <div class="r2">
@@ -934,7 +934,7 @@ const ACTIONS=[
   {id:'ATTENDANCE',lbl:'ATTENDANCE',ic:'fa-users',cl:'a6',pk:'ATTENDANCE'},
   {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE TRACKING'},
   {id:'RECONCILIATION',lbl:'RECONCILIATION',ic:'fa-scale-balanced',cl:'a8',pk:'RECONCILIATION'},
-  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE MANAGEMENT'},
+  {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE_MANAGEMENT'},
 ];
 const ROLES={Admin:'Full Access',HHR2027:'Registration Officer',HHD2027:'Distribution Officer',NATSUP2027:'National Supervisor',CHISUP2027:'CHI Supervisor',PHUSTAFF2027:'PHU Staff',PARTNERS2027:'Partner Viewer'};
 
@@ -1118,7 +1118,7 @@ function updateWiz(){
 }
 function mNav(d){mStep=Math.max(1,Math.min(5,mStep+d));updateWiz();}
 
-// 🔑 Validation: Pregnant and Under-5 must not exceed Members
+// 🔑 Validation: Pregnant and Under-5 must not exceed Members in the Household
 function validatePregnantUnder5(){
   const mem = parseInt(document.getElementById('mMem')?.value) || 0;
   const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
@@ -1165,15 +1165,15 @@ function valH(){
   if(!document.getElementById('mMid').value.trim()) { errors.push('Middle Name'); ok=false; }
   if(!document.getElementById('mFst').value.trim()) { errors.push('First Name'); ok=false; }
   if(!/^0\d{8}$/.test(document.getElementById('mPh').value.trim())) { errors.push('Mobile (9 digits starting with 0)'); ok=false; }
-  if(!document.getElementById('mMem').value || parseInt(document.getElementById('mMem').value) < 1) { errors.push('Members (minimum 1)'); ok=false; }
+  if(!document.getElementById('mMem').value || parseInt(document.getElementById('mMem').value) < 1) { errors.push('Members in the Household (minimum 1)'); ok=false; }
   
-  // 🔑 Validate Pregnant and Under-5 do not exceed Members
+  // 🔑 Validate Pregnant and Under-5 do not exceed Members in the Household
   const mem = parseInt(document.getElementById('mMem')?.value) || 0;
   const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
   const u5 = parseInt(document.getElementById('mU5')?.value) || 0;
   
-  if(prg > mem) { errors.push('Pregnant cannot exceed Members'); ok=false; }
-  if(u5 > mem) { errors.push('Under-5 cannot exceed Members'); ok=false; }
+  if(prg > mem) { errors.push('Pregnant cannot exceed Members in the Household'); ok=false; }
+  if(u5 > mem) { errors.push('Under-5 cannot exceed Members in the Household'); ok=false; }
   
   if(!document.getElementById('mHhr').value.trim()) { errors.push('HHR Name'); ok=false; }
   if(!document.getElementById('mLat').value.trim()) { errors.push('Latitude'); ok=false; }
@@ -1203,7 +1203,7 @@ function buildReview(){
   const g=id=>document.getElementById(id)?.value||'';
   document.getElementById('mRv').innerHTML=`
     <div class="rvsec"><h5>📍 Demographics</h5><p>Region: ${esc(g('mReg'))} | District: ${esc(g('mDis'))}<br>Chiefdom: ${esc(g('mChi'))} | Community: ${esc(g('mCom'))}<br>Facility: ${esc(g('mFac'))} | Dist. Point: ${esc(g('mDp'))}</p></div>
-    <div class="rvsec"><h5>🏠 Household</h5><p>Name: ${esc(g('mSur'))} ${esc(g('mMid'))} ${esc(g('mFst'))}<br>Mobile: ${esc(g('mPh'))} | Members: ${esc(g('mMem'))}<br>Pregnant: ${esc(g('mPrg'))} | Under-5: ${esc(g('mU5'))}<br>ITN: ${esc(g('mItn'))} nets | HHR: ${esc(g('mHhr'))}<br>GPS: ${esc(g('mLat'))}, ${esc(g('mLng'))}<br>Token: ${esc(mTok)}</p></div>`;
+    <div class="rvsec"><h5>🏠 Household</h5><p>Name: ${esc(g('mSur'))} ${esc(g('mMid'))} ${esc(g('mFst'))}<br>Mobile: ${esc(g('mPh'))} | Members in Household: ${esc(g('mMem'))}<br>Pregnant: ${esc(g('mPrg'))} | Under-5: ${esc(g('mU5'))}<br>ITN: ${esc(g('mItn'))} nets | HHR: ${esc(g('mHhr'))}<br>GPS: ${esc(g('mLat'))}, ${esc(g('mLng'))}<br>Token: ${esc(mTok)}</p></div>`;
 }
 
 function buildQRCanvas(data, canvasSize) {
@@ -1224,7 +1224,7 @@ function buildQRCanvas(data, canvasSize) {
 }
 function genQR(){
   const g=id=>document.getElementById(id)?.value||'';
-  const data=`ITN_REG\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nDist. Point:${g('mDp')}\nSurname:${g('mSur')}\nMiddle Name:${g('mMid')}\nFirst Name:${g('mFst')}\nMobile:${g('mPh')}\nMembers:${g('mMem')}\nITN Alloc:${g('mItn')}\nPregnant:${g('mPrg')}\nUnder-5:${g('mU5')}\nHHR Name:${g('mHhr')}\nLatitude:${g('mLat')}\nLongitude:${g('mLng')}\nToken:${mTok}`;
+  const data=`ITN_REG\nRegion:${g('mReg')}\nDistrict:${g('mDis')}\nChiefdom:${g('mChi')}\nCommunity:${g('mCom')}\nFacility:${g('mFac')}\nDist. Point:${g('mDp')}\nSurname:${g('mSur')}\nMiddle Name:${g('mMid')}\nFirst Name:${g('mFst')}\nMobile:${g('mPh')}\nMembers in Household:${g('mMem')}\nITN Alloc:${g('mItn')}\nPregnant:${g('mPrg')}\nUnder-5:${g('mU5')}\nHHR Name:${g('mHhr')}\nLatitude:${g('mLat')}\nLongitude:${g('mLng')}\nToken:${mTok}`;
   const cv = buildQRCanvas(data, 250);
   if (cv) {
     const target = document.getElementById('mQrc');
@@ -1303,7 +1303,7 @@ function finalReg(){
 }
 function qrDataUrl(rec, displaySize){
   const [lat,lng]=(rec.gps||'').split(',');
-  const data=`ITN_REG\nRegion:${rec.region||''}\nDistrict:${rec.district||''}\nChiefdom:${rec.chiefdom||''}\nCommunity:${rec.community||''}\nFacility:${rec.healthFacility||''}\nDist. Point:${rec.dp||''}\nSurname:${rec.surname||''}\nMiddle Name:${rec.middleName||''}\nFirst Name:${rec.firstName||''}\nMobile:${rec.mobile||''}\nMembers:${rec.members||''}\nITN Alloc:${rec.itn||''}\nPregnant:${rec.pregnant||0}\nUnder-5:${rec.under5||0}\nHHR Name:${rec.hhr||''}\nLatitude:${lat||''}\nLongitude:${lng||''}\nToken:${rec.token||''}`;
+  const data=`ITN_REG\nRegion:${rec.region||''}\nDistrict:${rec.district||''}\nChiefdom:${rec.chiefdom||''}\nCommunity:${rec.community||''}\nFacility:${rec.healthFacility||''}\nDist. Point:${rec.dp||''}\nSurname:${rec.surname||''}\nMiddle Name:${rec.middleName||''}\nFirst Name:${rec.firstName||''}\nMobile:${rec.mobile||''}\nMembers in Household:${rec.members||''}\nITN Alloc:${rec.itn||''}\nPregnant:${rec.pregnant||0}\nUnder-5:${rec.under5||0}\nHHR Name:${rec.hhr||''}\nLatitude:${lat||''}\nLongitude:${lng||''}\nToken:${rec.token||''}`;
   const cv = buildQRCanvas(data, 250);
   if (!cv) return '';
   return cv.toDataURL('image/png');
@@ -1513,7 +1513,7 @@ function parseQRData(text){
         else result.surname = val;
       }
       else if (key === 'mobile') result.mobile = val;
-      else if (key === 'members') result.members = val;
+      else if (key === 'members' || key === 'members in household') result.members = val;
       else if (key === 'itn alloc' || key === 'itn') result.itn = val;
       else if (key === 'pregnant') result.pregnant = val;
       else if (key === 'under-5' || key === 'under5' || key === 'u5') result.under5 = val;
