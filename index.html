@@ -325,21 +325,9 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .validation-error-box h4{color:#c62828;font-size:.9rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .validation-error-box ul{margin:0;padding-left:20px;color:#c62828;font-size:.8rem}
 .validation-error-box ul li{margin-bottom:4px}
-
-/* Language toggle styles */
-.lang-indicator{position:fixed;top:12px;left:12px;z-index:9998;background:rgba(30,41,59,.92);color:#fff;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:5px;box-shadow:0 4px 14px rgba(0,0,0,.3);backdrop-filter:blur(8px)}
-.lang-indicator button{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:1px 8px;border-radius:12px;font-size:9px;font-weight:700;cursor:pointer;transition:all .2s}
-.lang-indicator button:hover{background:rgba(255,255,255,.2)}
-.lang-indicator button.active{background:#FF8C42;border-color:#FF8C42}
 </style>
 </head>
 <body>
-
-<div class="lang-indicator">
-  <i class="fas fa-globe"></i>
-  <button id="langEnBtn" class="active" onclick="setLanguage('en')">EN</button>
-  <button id="langFrBtn" onclick="setLanguage('fr')">FR</button>
-</div>
 
 <div class="sync-indicator local" id="syncIndicator">
   <span class="sync-dot"></span>
@@ -963,10 +951,6 @@ function setLanguage(lang) {
   if (!translations[lang]) return;
   currentLang = lang;
   
-  // Update language buttons
-  document.getElementById('langEnBtn').classList.toggle('active', lang === 'en');
-  document.getElementById('langFrBtn').classList.toggle('active', lang === 'fr');
-  
   // Apply translations to login page
   const t = translations[lang];
   document.getElementById('loginTitle').textContent = t.loginTitle;
@@ -1307,10 +1291,6 @@ async function checkNet(){
 }
 
 // ===== REST OF THE CODE (GEO, Registration, Distribution, etc.) =====
-// ... (all the existing code from the original file goes here)
-// For brevity, I'm including the full GEO data and all functions
-// But since this is a complete file, I'll include everything
-
 const GEO = {
   'Eastern': {
     'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
