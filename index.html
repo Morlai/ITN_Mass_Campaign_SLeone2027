@@ -801,7 +801,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
        <label class="dist-form-label">Name<span class="req">*</span></label>
        <input type="text" class="dist-form-control mb-2" id="distVerifierName" placeholder="Full name" required>
        <label class="dist-form-label">Mobile<span class="req">*</span></label>
-       <input type="tel" class="dist-form-control mb-2" id="distVerifierMobile" placeholder="07XXXXXXXX" required>
+       <input type="tel" class="dist-form-control mb-2" id="distVerifierMobile" placeholder="07XXXXXXXX" required maxlength="9">
        <label class="dist-form-label">Signature<span class="req">*</span></label>
        <canvas id="distVerifierSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px;margin-bottom:14px" onclick="clearDistSignature('verifier')"><i class="fas fa-eraser me-1"></i> Clear</button>
@@ -810,7 +810,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
        <label class="dist-form-label">Name<span class="req">*</span></label>
        <input type="text" class="dist-form-control mb-2" id="distDistributorName" placeholder="Full name" required>
        <label class="dist-form-label">Mobile<span class="req">*</span></label>
-       <input type="tel" class="dist-form-control mb-2" id="distDistributorMobile" placeholder="07XXXXXXXX" required>
+       <input type="tel" class="dist-form-control mb-2" id="distDistributorMobile" placeholder="07XXXXXXXX" required maxlength="9">
        <label class="dist-form-label">Signature<span class="req">*</span></label>
        <canvas id="distDistributorSignature" width="300" height="140" class="dist-signature-pad mb-2"></canvas>
        <button type="button" class="dist-btn dist-btn-prev" style="font-size:.75rem;padding:6px 12px" onclick="clearDistSignature('distributor')"><i class="fas fa-eraser me-1"></i> Clear</button>
@@ -1891,12 +1891,28 @@ function validateDistributionForm() {
   
   // Step 3: Voucher Verifier
   if (!document.getElementById('distVerifierName').value.trim()) errors.push('Voucher Verifier Name is required');
-  if (!document.getElementById('distVerifierMobile').value.trim()) errors.push('Voucher Verifier Mobile is required');
+  
+  // 🔑 VOUCHER VERIFIER MOBILE: Must be 9 digits starting with 0
+  const verifierMobile = document.getElementById('distVerifierMobile').value.trim();
+  if (!verifierMobile) {
+    errors.push('Voucher Verifier Mobile is required');
+  } else if (!/^0\d{8}$/.test(verifierMobile)) {
+    errors.push('Voucher Verifier Mobile must be 9 digits starting with 0');
+  }
+  
   if (!distVerifierPad || distVerifierPad.isEmpty()) errors.push('Voucher Verifier Signature is required');
   
   // Step 3: ITN Distributor
   if (!document.getElementById('distDistributorName').value.trim()) errors.push('ITN Distributor Name is required');
-  if (!document.getElementById('distDistributorMobile').value.trim()) errors.push('ITN Distributor Mobile is required');
+  
+  // 🔑 ITN DISTRIBUTOR MOBILE: Must be 9 digits starting with 0
+  const distributorMobile = document.getElementById('distDistributorMobile').value.trim();
+  if (!distributorMobile) {
+    errors.push('ITN Distributor Mobile is required');
+  } else if (!/^0\d{8}$/.test(distributorMobile)) {
+    errors.push('ITN Distributor Mobile must be 9 digits starting with 0');
+  }
+  
   if (!distDistributorPad || distDistributorPad.isEmpty()) errors.push('ITN Distributor Signature is required');
   
   // Step 5: Confirmation
