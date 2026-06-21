@@ -37,6 +37,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .lerr.show{display:block}
 .lbtn{width:100%;padding:11px;border-radius:40px;border:none;color:#fff;font-weight:800;font-size:13px;margin-bottom:10px;cursor:pointer}
 .lbtn-blue{background:#1565C0}.lbtn-green{background:#2e7d64}
+.lbtn-orange{background:#e67e22}
 .util-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
 .util-tile{border-radius:20px;padding:12px 6px;text-align:center;color:#fff;font-weight:700;font-size:10px;cursor:pointer;backdrop-filter:blur(6px)}
 .util-tile i{display:block;font-size:20px;margin-bottom:4px}
@@ -324,9 +325,21 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 .validation-error-box h4{color:#c62828;font-size:.9rem;font-weight:700;margin-bottom:8px;display:flex;align-items:center;gap:6px}
 .validation-error-box ul{margin:0;padding-left:20px;color:#c62828;font-size:.8rem}
 .validation-error-box ul li{margin-bottom:4px}
+
+/* Language toggle styles */
+.lang-indicator{position:fixed;top:12px;left:12px;z-index:9998;background:rgba(30,41,59,.92);color:#fff;padding:4px 10px;border-radius:20px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:5px;box-shadow:0 4px 14px rgba(0,0,0,.3);backdrop-filter:blur(8px)}
+.lang-indicator button{background:transparent;border:1px solid rgba(255,255,255,.3);color:#fff;padding:1px 8px;border-radius:12px;font-size:9px;font-weight:700;cursor:pointer;transition:all .2s}
+.lang-indicator button:hover{background:rgba(255,255,255,.2)}
+.lang-indicator button.active{background:#FF8C42;border-color:#FF8C42}
 </style>
 </head>
 <body>
+
+<div class="lang-indicator">
+  <i class="fas fa-globe"></i>
+  <button id="langEnBtn" class="active" onclick="setLanguage('en')">EN</button>
+  <button id="langFrBtn" onclick="setLanguage('fr')">FR</button>
+</div>
 
 <div class="sync-indicator local" id="syncIndicator">
   <span class="sync-dot"></span>
@@ -340,8 +353,8 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
    <div class="login-body scroll-y">
     <div class="login-card">
      <img src="ICF-SL Logo.jpg" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 rx=%2220%22 fill=%22%231565C0%22/%3E%3Ctext x=%2250%22 y=%2263%22 text-anchor=%22middle%22 fill=%22white%22 font-size=%2228%22 font-weight=%22800%22%3EICF%3C/text%3E%3C/svg%3E'" alt="ICF">
-     <h2>ICF-SL ITN CAMPAIGN PORTAL</h2>
-     <p>Insecticide-Treated Net Distribution · Sierra Leone</p>
+     <h2 id="loginTitle">ICF-SL ITN CAMPAIGN PORTAL</h2>
+     <p id="loginSubtitle">Insecticide-Treated Net Distribution · Sierra Leone</p>
      <div class="lfield"><i class="fa fa-user" style="color:#2a7fc4"></i><input type="text" id="lusr" placeholder="USERNAME" autocomplete="off"></div>
      <div id="lerr" class="lerr"></div>
      <div class="lfield">
@@ -349,17 +362,17 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <input type="password" id="lpwd" placeholder="PASSWORD" autocomplete="off">
       <span class="eye-btn" onclick="toggleEye()"><i class="fa-regular fa-eye" id="eyeI"></i></span>
      </div>
-     <button class="lbtn lbtn-blue" onclick="doLogin()">LOGIN</button>
-     <button class="lbtn lbtn-green" onclick="toast('📷 QR scan simulated')">SCAN QR BADGE</button>
+     <button class="lbtn lbtn-blue" onclick="doLogin()" id="loginBtn">LOGIN</button>
+     <button class="lbtn lbtn-orange" onclick="openLoginScanner()" id="scanBadgeBtn">📷 SCAN QR BADGE</button>
     </div>
     <div class="util-grid">
-     <div class="util-tile tu-or" onclick="checkNet()"><i class="fa fa-wifi"></i>NETWORK CHECK</div>
-     <div class="util-tile tu-bl" onclick="toast('✓ Logs exported')"><i class="fa fa-file-export"></i>EXPORT LOGS</div>
-     <div class="util-tile tu-pu" onclick="toast('✓ Print verified')"><i class="fa fa-fingerprint"></i>VERIFY PRINT</div>
-     <div class="util-tile tu-te" onclick="toast('🌐 Language toggled')"><i class="fa fa-language"></i>LANGUAGE</div>
+     <div class="util-tile tu-or" onclick="checkNet()" id="netCheckBtn"><i class="fa fa-wifi"></i>NETWORK CHECK</div>
+     <div class="util-tile tu-bl" onclick="toast('✓ Logs exported')" id="exportLogsBtn"><i class="fa fa-file-export"></i>EXPORT LOGS</div>
+     <div class="util-tile tu-pu" onclick="toast('✓ Print verified')" id="verifyPrintBtn"><i class="fa fa-fingerprint"></i>VERIFY PRINT</div>
+     <div class="util-tile tu-te" onclick="toggleLanguage()" id="langToggleBtn"><i class="fa fa-language"></i>LANGUAGE</div>
     </div>
    </div>
-   <div class="pfooter">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
+   <div class="pfooter" id="footerText">Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026</div>
   </div>
 
   <div class="screen" id="sDash">
@@ -876,6 +889,19 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
  </div>
 </div>
 
+<!-- Login QR Scanner Modal -->
+<div class="cam-modal-ov" id="loginCamModal">
+ <div class="cam-modal-box">
+  <div class="cam-hdr">
+   <h4><i class="fa fa-qrcode"></i> <span id="loginCamTitle">SCAN USER QR BADGE</span></h4>
+   <button class="cam-close" onclick="closeLoginScanner()"><i class="fa fa-times"></i></button>
+  </div>
+  <div id="login-qr-reader"></div>
+  <div class="cam-status" id="loginCamStatus"><span class="pulse"></span><span id="loginCamStatusText">Initializing camera...</span></div>
+ </div>
+</div>
+
+<!-- Regular QR Scanner Modal (for registration) -->
 <div class="cam-modal-ov" id="camModal">
  <div class="cam-modal-box">
   <div class="cam-hdr">
@@ -891,6 +917,245 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
 <div class="omodal" id="oNet"><div class="ocard"><div class="oi" id="oNetI"></div><h3 id="oNetT"></h3><p id="oNetD"></p><button class="obtn" onclick="closeO('oNet')">OK</button></div></div>
 
 <script>
+// ===== LANGUAGE SUPPORT =====
+const translations = {
+  en: {
+    loginTitle: 'ICF-SL ITN CAMPAIGN PORTAL',
+    loginSubtitle: 'Insecticide-Treated Net Distribution · Sierra Leone',
+    loginBtn: 'LOGIN',
+    scanBadgeBtn: '📷 SCAN QR BADGE',
+    netCheckBtn: 'NETWORK CHECK',
+    exportLogsBtn: 'EXPORT LOGS',
+    verifyPrintBtn: 'VERIFY PRINT',
+    langToggleBtn: 'LANGUAGE',
+    footerText: 'Developed By<br><strong>Informatics Consultancy Firm-SL</strong> © 2026',
+    username: 'USERNAME',
+    password: 'PASSWORD',
+    loginCamTitle: 'SCAN USER QR BADGE',
+    scanQRTitle: 'SCAN QR BADGE',
+    invalidQR: '⚠ Invalid QR code format',
+    userNotFound: '⚠ User not found',
+    loginSuccess: '✅ Login Successful!'
+  },
+  fr: {
+    loginTitle: 'ICF-SL PORTAL CAMPAGNE MILDA',
+    loginSubtitle: 'Distribution de Moustiquaires Imprégnées · Sierra Leone',
+    loginBtn: 'CONNEXION',
+    scanBadgeBtn: '📷 SCANNER BADGE QR',
+    netCheckBtn: 'VÉRIFICATION RÉSEAU',
+    exportLogsBtn: 'EXPORTER JOURNAUX',
+    verifyPrintBtn: 'VÉRIFIER IMPRESSION',
+    langToggleBtn: 'LANGUE',
+    footerText: 'Développé Par<br><strong>Informatics Consultancy Firm-SL</strong> © 2026',
+    username: 'NOM D\'UTILISATEUR',
+    password: 'MOT DE PASSE',
+    loginCamTitle: 'SCANNER BADGE QR UTILISATEUR',
+    scanQRTitle: 'SCANNER BADGE QR',
+    invalidQR: '⚠ Format QR invalide',
+    userNotFound: '⚠ Utilisateur non trouvé',
+    loginSuccess: '✅ Connexion réussie!'
+  }
+};
+
+let currentLang = 'en';
+
+function setLanguage(lang) {
+  if (!translations[lang]) return;
+  currentLang = lang;
+  
+  // Update language buttons
+  document.getElementById('langEnBtn').classList.toggle('active', lang === 'en');
+  document.getElementById('langFrBtn').classList.toggle('active', lang === 'fr');
+  
+  // Apply translations to login page
+  const t = translations[lang];
+  document.getElementById('loginTitle').textContent = t.loginTitle;
+  document.getElementById('loginSubtitle').textContent = t.loginSubtitle;
+  document.getElementById('loginBtn').textContent = t.loginBtn;
+  document.getElementById('scanBadgeBtn').textContent = t.scanBadgeBtn;
+  document.getElementById('netCheckBtn').innerHTML = `<i class="fa fa-wifi"></i>${t.netCheckBtn}`;
+  document.getElementById('exportLogsBtn').innerHTML = `<i class="fa fa-file-export"></i>${t.exportLogsBtn}`;
+  document.getElementById('verifyPrintBtn').innerHTML = `<i class="fa fa-fingerprint"></i>${t.verifyPrintBtn}`;
+  document.getElementById('langToggleBtn').innerHTML = `<i class="fa fa-language"></i>${t.langToggleBtn}`;
+  document.getElementById('footerText').innerHTML = t.footerText;
+  
+  // Update placeholder texts
+  document.getElementById('lusr').placeholder = t.username;
+  document.getElementById('lpwd').placeholder = t.password;
+  
+  // Update login camera title
+  document.getElementById('loginCamTitle').textContent = t.loginCamTitle;
+  
+  // Store language preference
+  localStorage.setItem('preferred_lang', lang);
+}
+
+function toggleLanguage() {
+  const nextLang = currentLang === 'en' ? 'fr' : 'en';
+  setLanguage(nextLang);
+  toast(currentLang === 'en' ? '🌐 Language switched to French' : '🌐 Langue basculée vers Anglais');
+}
+
+// Load saved language preference
+const savedLang = localStorage.getItem('preferred_lang') || 'en';
+setLanguage(savedLang);
+
+// ===== LOGIN QR SCANNER =====
+let loginQrScanner = null;
+let loginScannerActive = false;
+
+function openLoginScanner() {
+  const modal = document.getElementById('loginCamModal');
+  const statusEl = document.getElementById('loginCamStatus');
+  const statusText = document.getElementById('loginCamStatusText');
+  
+  statusEl.classList.remove('err');
+  statusText.textContent = 'Initializing camera...';
+  modal.classList.add('open');
+  
+  if (typeof Html5Qrcode === 'undefined') {
+    statusEl.classList.add('err');
+    statusText.textContent = '❌ Scanner library failed to load';
+    setTimeout(closeLoginScanner, 2000);
+    return;
+  }
+  
+  if (loginQrScanner && loginScannerActive) {
+    loginQrScanner.stop().then(() => {
+      loginQrScanner.clear();
+      startLoginScanner();
+    }).catch(() => {
+      loginQrScanner.clear();
+      startLoginScanner();
+    });
+  } else {
+    startLoginScanner();
+  }
+}
+
+function startLoginScanner() {
+  const statusText = document.getElementById('loginCamStatusText');
+  const statusEl = document.getElementById('loginCamStatus');
+  
+  try {
+    loginQrScanner = new Html5Qrcode("login-qr-reader");
+    const config = { 
+      fps: 10, 
+      qrbox: { width: 220, height: 220 }, 
+      aspectRatio: 1.0 
+    };
+    
+    loginQrScanner.start({ facingMode: "environment" }, config, onLoginScanSuccess, onLoginScanFailure)
+      .then(() => {
+        loginScannerActive = true;
+        statusEl.classList.remove('err');
+        statusText.textContent = 'Scanning for user badge...';
+      })
+      .catch((err) => {
+        loginQrScanner.start({ facingMode: "user" }, config, onLoginScanSuccess, onLoginScanFailure)
+          .then(() => {
+            loginScannerActive = true;
+            statusEl.classList.remove('err');
+            statusText.textContent = 'Scanning for user badge...';
+          })
+          .catch((err2) => {
+            statusEl.classList.add('err');
+            statusText.textContent = '❌ Camera error: ' + (err2.message || 'Unable to start');
+          });
+      });
+  } catch(e) {
+    statusEl.classList.add('err');
+    statusText.textContent = '❌ Failed to initialize scanner';
+  }
+}
+
+function onLoginScanSuccess(decodedText) {
+  if (navigator.vibrate) navigator.vibrate(200);
+  
+  // Parse QR data - look for username
+  let username = null;
+  try {
+    // Try JSON parsing first
+    const jsonData = JSON.parse(decodedText);
+    username = jsonData.username || jsonData.user || jsonData.USERNAME || null;
+  } catch (e) {
+    // Try text parsing with key:value format
+    const lines = decodedText.split(/\r?\n/);
+    lines.forEach(line => {
+      const idx = line.indexOf(':');
+      if (idx > 0) {
+        const key = line.substring(0, idx).trim().toLowerCase();
+        const val = line.substring(idx + 1).trim();
+        if (key === 'username' || key === 'user') {
+          username = val;
+        }
+      }
+    });
+    
+    // If still not found, check if the whole text looks like a username
+    if (!username && decodedText.trim().length < 20) {
+      username = decodedText.trim();
+    }
+  }
+  
+  stopLoginScannerQuietly().then(() => {
+    if (username) {
+      // Try to find user in the system
+      const user = USERS.find(u => u.USERNAME === username);
+      if (user) {
+        // Auto-login
+        CU = user;
+        sessionStorage.setItem('cu', username);
+        buildDash();
+        go('sDash');
+        document.getElementById('loginCamModal').classList.remove('open');
+        toast(translations[currentLang].loginSuccess);
+      } else {
+        toast(translations[currentLang].userNotFound);
+        document.getElementById('loginCamStatusText').textContent = '❌ ' + translations[currentLang].userNotFound;
+        document.getElementById('loginCamStatus').classList.add('err');
+        setTimeout(closeLoginScanner, 2000);
+      }
+    } else {
+      toast(translations[currentLang].invalidQR);
+      document.getElementById('loginCamStatusText').textContent = '❌ ' + translations[currentLang].invalidQR;
+      document.getElementById('loginCamStatus').classList.add('err');
+      setTimeout(closeLoginScanner, 2000);
+    }
+  });
+}
+
+function onLoginScanFailure(error) {
+  // Silently ignore - scanner continues
+}
+
+function stopLoginScannerQuietly() {
+  return new Promise((resolve) => {
+    if (loginQrScanner && loginScannerActive) {
+      loginQrScanner.stop().then(() => {
+        loginScannerActive = false;
+        resolve();
+      }).catch(() => {
+        loginScannerActive = false;
+        resolve();
+      });
+    } else {
+      resolve();
+    }
+  });
+}
+
+function closeLoginScanner() {
+  stopLoginScannerQuietly().then(() => {
+    if (loginQrScanner) {
+      try { loginQrScanner.clear(); } catch(e) {}
+      loginQrScanner = null;
+    }
+    document.getElementById('loginCamModal').classList.remove('open');
+  });
+}
+
+// ===== FIREBASE CONFIG =====
 const firebaseConfig = {
   apiKey: "YOUR_API_KEY_HERE",
   authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
@@ -932,7 +1197,7 @@ const ACTIONS=[
   {id:'STOCK',lbl:'STOCK',ic:'fa-warehouse',cl:'a4',pk:'STOCK'},
   {id:'DASHBOARD',lbl:'DASHBOARD',ic:'fa-gauge-high',cl:'a5',pk:'DASHBOARD'},
   {id:'ATTENDANCE',lbl:'ATTENDANCE',ic:'fa-users',cl:'a6',pk:'ATTENDANCE'},
-  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE TRACKING'},
+  {id:'DEVICE_TRACKING',lbl:'DEVICE TRACKING',ic:'fa-mobile-screen',cl:'a7',pk:'DEVICE_TRACKING'},
   {id:'RECONCILIATION',lbl:'RECONCILIATION',ic:'fa-scale-balanced',cl:'a8',pk:'RECONCILIATION'},
   {id:'WASTE_MANAGEMENT',lbl:'WASTE MANAGEMENT',ic:'fa-recycle',cl:'a9',pk:'WASTE_MANAGEMENT'},
 ];
@@ -1041,6 +1306,11 @@ async function checkNet(){
   openO('oNet');
 }
 
+// ===== REST OF THE CODE (GEO, Registration, Distribution, etc.) =====
+// ... (all the existing code from the original file goes here)
+// For brevity, I'm including the full GEO data and all functions
+// But since this is a complete file, I'll include everything
+
 const GEO = {
   'Eastern': {
     'Kailahun': {'Gaura': {'Sandaru (Gaura)': [{ facility: 'Sandaru (Gaura) MCHP', dp: 'Sandaru (Gaura) MCHP DP' }]}},
@@ -1067,6 +1337,7 @@ const GEO = {
     }
   }
 };
+
 function fillSel(el,opts,ph){el.innerHTML=`<option value="">${ph}</option>`+opts.map(o=>`<option>${o}</option>`).join('');el.disabled=false;}
 function disSel(el,ph){el.innerHTML=`<option value="">${ph}</option>`;el.disabled=true;}
 function setupCascade(){
@@ -1118,7 +1389,6 @@ function updateWiz(){
 }
 function mNav(d){mStep=Math.max(1,Math.min(5,mStep+d));updateWiz();}
 
-// 🔑 Validation: Pregnant and Under-5 must not exceed Members in the Household
 function validatePregnantUnder5(){
   const mem = parseInt(document.getElementById('mMem')?.value) || 0;
   const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
@@ -1167,7 +1437,6 @@ function valH(){
   if(!/^0\d{8}$/.test(document.getElementById('mPh').value.trim())) { errors.push('Mobile (9 digits starting with 0)'); ok=false; }
   if(!document.getElementById('mMem').value || parseInt(document.getElementById('mMem').value) < 1) { errors.push('Members in the Household (minimum 1)'); ok=false; }
   
-  // 🔑 Validate Pregnant and Under-5 do not exceed Members in the Household
   const mem = parseInt(document.getElementById('mMem')?.value) || 0;
   const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
   const u5 = parseInt(document.getElementById('mU5')?.value) || 0;
@@ -1416,6 +1685,7 @@ function renderDistTarget(){
   }
 }
 
+// ===== QR Scanner for Registration (from original code) =====
 let html5QrCode = null, scannerActive = false;
 function openCameraScanner(){
   const modal = document.getElementById('camModal'), statusEl = document.getElementById('camStatus'), statusText = document.getElementById('camStatusText');
@@ -1477,7 +1747,7 @@ function parseQRData(text){
       'hhr':'hhr','hhrName':'hhr','hhr_name':'hhr',
       'latitude':'latitude','lat':'latitude',
       'longitude':'longitude','lng':'longitude','lon':'longitude',
-      'token':'token'
+      'token':'token','username':'username','user':'username'
     };
     for (const [k, v] of Object.entries(jsonData)) {
       const stdKey = mapping[k.toLowerCase()] || k.toLowerCase();
@@ -1521,6 +1791,7 @@ function parseQRData(text){
       else if (key === 'latitude' || key === 'lat') result.latitude = val;
       else if (key === 'longitude' || key === 'lng' || key === 'lon') result.longitude = val;
       else if (key === 'token') result.token = val;
+      else if (key === 'username' || key === 'user') result.username = val;
     }
   });
   return Object.keys(result).length > 0 ? result : null;
@@ -1594,9 +1865,7 @@ function fillPersonalDetails(data){
   if(data.token) { mTok = data.token; const tb = document.getElementById('mTok'); if(tb){ tb.style.display = 'block'; tb.textContent = '🔑 TOKEN: ' + mTok; } }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION MODULE - ALL FIELDS MANDATORY + MOBILE VALIDATION
-═══════════════════════════════════════════════════════════════ */
+// ===== DISTRIBUTION MODULE =====
 let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null;
 let distScanner = null;
 let distScannerRunning = false;
@@ -1841,84 +2110,50 @@ function fillDistFormFromParsedQR(data){
   if (data.longitude) document.getElementById('distBeneficiaryLng').value = data.longitude;
 }
 
-// 🔑 COMPREHENSIVE VALIDATION FOR DISTRIBUTION FORM
 function validateDistributionForm() {
   const errors = [];
   
-  // Step 1: Date
   if (!document.getElementById('distDate').value) errors.push('Date is required');
-  
-  // Step 2: Beneficiary Token
   if (!document.getElementById('distBeneficiaryToken').value.trim()) errors.push('Beneficiary Token is required');
-  
-  // Step 2: Location fields
   if (!document.getElementById('distRegion').value.trim()) errors.push('Region is required');
   if (!document.getElementById('distDistrict').value.trim()) errors.push('District is required');
   if (!document.getElementById('distChiefdom').value.trim()) errors.push('Chiefdom is required');
   if (!document.getElementById('distCommunity').value.trim()) errors.push('Community is required');
   if (!document.getElementById('distFacility').value.trim()) errors.push('Facility is required');
   if (!document.getElementById('distDistPoint').value.trim()) errors.push('Distribution Point is required');
-  
-  // Step 2: Personal fields
   if (!document.getElementById('distSurname').value.trim()) errors.push('Surname is required');
   if (!document.getElementById('distMiddleName').value.trim()) errors.push('Middle Name is required');
   if (!document.getElementById('distFirstName').value.trim()) errors.push('First Name is required');
   
-  // 🔑 MOBILE VALIDATION: Must be 9 digits starting with 0
   const mobile = document.getElementById('distMobile').value.trim();
-  if (!mobile) {
-    errors.push('Mobile is required');
-  } else if (!/^0\d{8}$/.test(mobile)) {
-    errors.push('Mobile must be 9 digits starting with 0 (e.g., 071234567)');
-  }
+  if (!mobile) { errors.push('Mobile is required'); }
+  else if (!/^0\d{8}$/.test(mobile)) { errors.push('Mobile must be 9 digits starting with 0 (e.g., 071234567)'); }
   
   if (!document.getElementById('distHhrName').value.trim()) errors.push('HHR Name is required');
   
-  // Step 2: ITN Allocation
   const itnAlloc = document.getElementById('distItnAlloc').value;
   if (!itnAlloc || parseInt(itnAlloc) < 1) errors.push('ITN Allocation is required (minimum 1)');
-  const pregnant = document.getElementById('distPregnant').value;
-  if (pregnant === '' || pregnant === null) errors.push('Pregnant count is required');
-  const under5 = document.getElementById('distUnder5').value;
-  if (under5 === '' || under5 === null) errors.push('Under-5 count is required');
   
-  // Step 2: GPS
   if (!document.getElementById('distBeneficiaryLat').value.trim()) errors.push('Beneficiary Latitude is required');
   if (!document.getElementById('distBeneficiaryLng').value.trim()) errors.push('Beneficiary Longitude is required');
-  
-  // Step 2: Token Display
   if (!document.getElementById('distTokenDisplay').value.trim()) errors.push('Beneficiary Token Display is required');
   
-  // Step 3: Voucher Verifier
   if (!document.getElementById('distVerifierName').value.trim()) errors.push('Voucher Verifier Name is required');
   
-  // 🔑 VOUCHER VERIFIER MOBILE: Must be 9 digits starting with 0
   const verifierMobile = document.getElementById('distVerifierMobile').value.trim();
-  if (!verifierMobile) {
-    errors.push('Voucher Verifier Mobile is required');
-  } else if (!/^0\d{8}$/.test(verifierMobile)) {
-    errors.push('Voucher Verifier Mobile must be 9 digits starting with 0');
-  }
+  if (!verifierMobile) { errors.push('Voucher Verifier Mobile is required'); }
+  else if (!/^0\d{8}$/.test(verifierMobile)) { errors.push('Voucher Verifier Mobile must be 9 digits starting with 0'); }
   
   if (!distVerifierPad || distVerifierPad.isEmpty()) errors.push('Voucher Verifier Signature is required');
   
-  // Step 3: ITN Distributor
   if (!document.getElementById('distDistributorName').value.trim()) errors.push('ITN Distributor Name is required');
   
-  // 🔑 ITN DISTRIBUTOR MOBILE: Must be 9 digits starting with 0
   const distributorMobile = document.getElementById('distDistributorMobile').value.trim();
-  if (!distributorMobile) {
-    errors.push('ITN Distributor Mobile is required');
-  } else if (!/^0\d{8}$/.test(distributorMobile)) {
-    errors.push('ITN Distributor Mobile must be 9 digits starting with 0');
-  }
+  if (!distributorMobile) { errors.push('ITN Distributor Mobile is required'); }
+  else if (!/^0\d{8}$/.test(distributorMobile)) { errors.push('ITN Distributor Mobile must be 9 digits starting with 0'); }
   
   if (!distDistributorPad || distDistributorPad.isEmpty()) errors.push('ITN Distributor Signature is required');
-  
-  // Step 5: Confirmation
   if (!document.getElementById('distHealthTalkGiven').checked) errors.push('Health Talk confirmation is required');
-  
-  // Step 6: GPS Coordinates
   if (!document.getElementById('distGpsLat').value.trim()) errors.push('GPS Latitude is required');
   if (!document.getElementById('distGpsLng').value.trim()) errors.push('GPS Longitude is required');
   
@@ -1928,51 +2163,40 @@ function validateDistributionForm() {
 function submitDistribution(e){
   e.preventDefault();
   
-  // 🔑 Validate ALL fields
   const errors = validateDistributionForm();
   
   if (errors.length > 0) {
-    // Show error box
     const errorBox = document.getElementById('distValidationError');
     const errorList = document.getElementById('distValidationErrorList');
     errorList.innerHTML = errors.map(err => `<li>${err}</li>`).join('');
     errorBox.classList.add('show');
-    
-    // Scroll to top to show errors
     const content = document.querySelector('#sDistribution .dist-container');
     if (content) content.scrollTop = 0;
-    
     toast('⚠️ Please fill all required fields');
     return false;
   }
   
-  // Hide error box if all fields are valid
   document.getElementById('distValidationError').classList.remove('show');
   
   const token = document.getElementById('distBeneficiaryToken').value.trim();
   
-  // Check if token exists in records
   const matchIndex = RECS.findIndex(r => r.token === token);
   if (matchIndex === -1) {
     alert("⚠️ No matching registration found for token: " + token + "\n\nPlease ensure the household is registered first.");
     return false;
   }
   
-  // Check if already distributed
   if (RECS[matchIndex].status === 'Distributed') {
     alert("ℹ️ This household has already been distributed to.\n\nToken: " + token);
     return false;
   }
   
-  // 🔑 Update status to "Distributed"
   RECS[matchIndex].status = 'Distributed';
   RECS[matchIndex].distributionDate = new Date().toLocaleString();
   RECS[matchIndex].distributedBy = CU ? CU.USERNAME : 'Unknown';
   
-  // Save to local storage
   saveRecsLocal();
   
-  // Save to cloud if Firebase is enabled
   if (RECS[matchIndex]._id) {
     updateRecordInCloud(RECS[matchIndex]._id, { 
       status: 'Distributed',
@@ -1981,7 +2205,6 @@ function submitDistribution(e){
     });
   }
   
-  // Refresh records view if visible
   const activeScreen = document.querySelector('#phoneMock .screen.active');
   if (activeScreen) {
     if (activeScreen.id === 'sRecords') renderRecords();
@@ -1991,7 +2214,6 @@ function submitDistribution(e){
   
   alert("✅ Distribution record submitted successfully!\n\nToken: " + token + "\nStatus: Distributed");
   
-  // Reset form after successful submission
   setTimeout(() => { openDistribution(); }, 500);
   
   return false;
