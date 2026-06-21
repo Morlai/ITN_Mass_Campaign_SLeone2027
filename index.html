@@ -498,12 +498,12 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
       <div class="ferr" id="mPhE">Must be 9 digits starting with 0</div>
      </div>
      <div class="r2">
-      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn()" required><div class="ferr" id="mMemE">Min 1</div></div>
+      <div class="fg"><label>👥 Members<span class="req">*</span></label><input type="number" id="mMem" min="1" placeholder="e.g. 5" oninput="calcItn();validatePregnantUnder5()" required><div class="ferr" id="mMemE">Min 1</div></div>
       <div class="fg"><label>🦟 ITN Alloc.<span class="req">*</span></label><input id="mItn" readonly placeholder="Auto" required></div>
      </div>
      <div class="r2">
-      <div class="fg"><label>🤰 Pregnant<span class="req">*</span></label><input type="number" id="mPrg" min="0" value="0" required></div>
-      <div class="fg"><label>🧒 Under-5<span class="req">*</span></label><input type="number" id="mU5" min="0" value="0" required></div>
+      <div class="fg"><label>🤰 Pregnant<span class="req">*</span></label><input type="number" id="mPrg" min="0" value="0" required oninput="validatePregnantUnder5()"><div class="ferr" id="mPrgE">Cannot exceed Members</div></div>
+      <div class="fg"><label>🧒 Under-5<span class="req">*</span></label><input type="number" id="mU5" min="0" value="0" required oninput="validatePregnantUnder5()"><div class="ferr" id="mU5E">Cannot exceed Members</div></div>
      </div>
      <div class="fg"><label>🧑‍⚕️ HHR Name<span class="req">*</span></label><input id="mHhr" placeholder="Enumerator full name" required><div class="ferr" id="mHhrE">Required</div></div>
      <div class="r2">
@@ -766,7 +766,7 @@ body{background:#dde4f0;display:flex;align-items:center;justify-content:center;m
         <div class="col-4"><label class="dist-form-label">First Name<span class="req">*</span></label><input type="text" class="dist-form-control" id="distFirstName" placeholder="First" readonly required></div>
        </div>
        <div class="row g-2 mb-3">
-        <div class="col-6"><label class="dist-form-label">Mobile<span class="req">*</span></label><input type="tel" class="dist-form-control" id="distMobile" placeholder="Mobile" readonly required></div>
+        <div class="col-6"><label class="dist-form-label">Mobile<span class="req">*</span></label><input type="tel" class="dist-form-control" id="distMobile" placeholder="07XXXXXXXX" readonly required></div>
         <div class="col-6"><label class="dist-form-label">HHR Name<span class="req">*</span></label><input type="text" class="dist-form-control" id="distHhrName" placeholder="HHR Name" readonly required></div>
        </div>
        <hr>
@@ -1118,7 +1118,29 @@ function updateWiz(){
 }
 function mNav(d){mStep=Math.max(1,Math.min(5,mStep+d));updateWiz();}
 
-// 🔑 Enhanced validation for Manual Entry Form
+// 🔑 Validation: Pregnant and Under-5 must not exceed Members
+function validatePregnantUnder5(){
+  const mem = parseInt(document.getElementById('mMem')?.value) || 0;
+  const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
+  const u5 = parseInt(document.getElementById('mU5')?.value) || 0;
+  const prgErr = document.getElementById('mPrgE');
+  const u5Err = document.getElementById('mU5E');
+  
+  let valid = true;
+  
+  if(prg > mem){
+    if(prgErr) prgErr.style.display = 'block';
+    valid = false;
+  } else if(prgErr) prgErr.style.display = 'none';
+  
+  if(u5 > mem){
+    if(u5Err) u5Err.style.display = 'block';
+    valid = false;
+  } else if(u5Err) u5Err.style.display = 'none';
+  
+  return valid;
+}
+
 function valD(){
   let ok=true;
   const errors = [];
@@ -1144,8 +1166,15 @@ function valH(){
   if(!document.getElementById('mFst').value.trim()) { errors.push('First Name'); ok=false; }
   if(!/^0\d{8}$/.test(document.getElementById('mPh').value.trim())) { errors.push('Mobile (9 digits starting with 0)'); ok=false; }
   if(!document.getElementById('mMem').value || parseInt(document.getElementById('mMem').value) < 1) { errors.push('Members (minimum 1)'); ok=false; }
-  if(!document.getElementById('mPrg').value && document.getElementById('mPrg').value !== '0') { errors.push('Pregnant count'); ok=false; }
-  if(!document.getElementById('mU5').value && document.getElementById('mU5').value !== '0') { errors.push('Under-5 count'); ok=false; }
+  
+  // 🔑 Validate Pregnant and Under-5 do not exceed Members
+  const mem = parseInt(document.getElementById('mMem')?.value) || 0;
+  const prg = parseInt(document.getElementById('mPrg')?.value) || 0;
+  const u5 = parseInt(document.getElementById('mU5')?.value) || 0;
+  
+  if(prg > mem) { errors.push('Pregnant cannot exceed Members'); ok=false; }
+  if(u5 > mem) { errors.push('Under-5 cannot exceed Members'); ok=false; }
+  
   if(!document.getElementById('mHhr').value.trim()) { errors.push('HHR Name'); ok=false; }
   if(!document.getElementById('mLat').value.trim()) { errors.push('Latitude'); ok=false; }
   if(!document.getElementById('mLng').value.trim()) { errors.push('Longitude'); ok=false; }
@@ -1566,7 +1595,7 @@ function fillPersonalDetails(data){
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   🔑 DISTRIBUTION MODULE - ALL FIELDS MANDATORY
+   🔑 DISTRIBUTION MODULE - ALL FIELDS MANDATORY + MOBILE VALIDATION
 ═══════════════════════════════════════════════════════════════ */
 let distCurrentStep = 0, distVerifierPad = null, distDistributorPad = null;
 let distScanner = null;
@@ -1834,7 +1863,15 @@ function validateDistributionForm() {
   if (!document.getElementById('distSurname').value.trim()) errors.push('Surname is required');
   if (!document.getElementById('distMiddleName').value.trim()) errors.push('Middle Name is required');
   if (!document.getElementById('distFirstName').value.trim()) errors.push('First Name is required');
-  if (!document.getElementById('distMobile').value.trim()) errors.push('Mobile is required');
+  
+  // 🔑 MOBILE VALIDATION: Must be 9 digits starting with 0
+  const mobile = document.getElementById('distMobile').value.trim();
+  if (!mobile) {
+    errors.push('Mobile is required');
+  } else if (!/^0\d{8}$/.test(mobile)) {
+    errors.push('Mobile must be 9 digits starting with 0 (e.g., 071234567)');
+  }
+  
   if (!document.getElementById('distHhrName').value.trim()) errors.push('HHR Name is required');
   
   // Step 2: ITN Allocation
